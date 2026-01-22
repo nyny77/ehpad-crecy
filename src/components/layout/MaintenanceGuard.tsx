@@ -5,10 +5,13 @@ import Image from "next/image";
 import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
 
+import SignupModal from "@/components/blog/SignupModal";
+
 export default function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<NetlifyUser | null>(null);
     const [isAuthorizedUser, setIsAuthorizedUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSignupOpen, setIsSignupOpen] = useState(false);
 
     useEffect(() => {
         console.log("MaintenanceGuard: Mounted");
@@ -39,8 +42,14 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
         const unsubscribe = onAuthChange((newUser) => {
             console.log("MaintenanceGuard: Auth Changed", newUser);
             setUser(newUser);
-            setIsAuthorizedUser(!!newUser && isAuthorized());
+            const isNowAuthorized = !!newUser && isAuthorized();
+            setIsAuthorizedUser(isNowAuthorized);
             setIsLoading(false);
+
+            // Si l'utilisateur vient de se connecter, on ferme la modale
+            if (newUser) {
+                setIsSignupOpen(false);
+            }
         });
 
         return () => unsubscribe();
@@ -108,7 +117,7 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                                 Connexion
                             </button>
                             <button
-                                onClick={() => openLoginWidget("signup")}
+                                onClick={() => setIsSignupOpen(true)}
                                 className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
                             >
                                 Inscription
@@ -121,6 +130,15 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
             <footer className="mt-8 text-charcoal-400 text-sm">
                 &copy; 2025 {EHPAD_INFO.name}
             </footer>
+
+            {/* Modale d'inscription personnalisée */}
+            <SignupModal
+                isOpen={isSignupOpen}
+                onClose={() => setIsSignupOpen(false)}
+                onSuccess={() => {
+                    // Optionnel : afficher un message ou laisser la modale gérer son état "success"
+                }}
+            />
         </main>
     );
 }
