@@ -45,23 +45,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
             });
 
             if (response.ok) {
-                // Notifier l'admin via le formulaire de contact
-                try {
-                    const formData = new FormData();
-                    formData.append("form-name", "contact");
-                    formData.append("firstName", "Système");
-                    formData.append("lastName", "Inscription");
-                    formData.append("email", email);
-                    formData.append("subject", "recrutement"); // ou autre catégorie
-                    formData.append("message", `NOUVELLE INSCRIPTION FAMILLE :\n\nNom: ${fullName}\nEmail: ${email}\nLien: ${relation}\nPour le résident: ${residentName}\n\nCet utilisateur doit confirmer son email. Vérifiez l'onglet Identity sur Netlify.`);
 
-                    await fetch("/contact?success=true", {
-                        method: "POST",
-                        body: formData,
-                    });
-                } catch (err) {
-                    console.error("Erreur notification admin", err);
-                }
 
                 setStep("success");
             } else {
