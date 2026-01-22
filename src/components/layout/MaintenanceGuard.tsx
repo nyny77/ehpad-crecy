@@ -72,15 +72,15 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                     />
                 </div>
 
-                <h1 className="text-3xl font-serif text-charcoal-900 mb-2">Site en Construction</h1>
-                <p className="text-terracotta-600 font-medium mb-6 uppercase tracking-widest text-sm">Ouverture Prochaine</p>
+                <h1 className="text-3xl font-serif text-charcoal-900 mb-2">Espace Privé</h1>
+                <p className="text-terracotta-600 font-medium mb-6 uppercase tracking-widest text-sm">Accès Restreint</p>
 
                 <div className="space-y-4 text-charcoal-600 mb-8">
                     <p>
-                        Le nouveau site web de l&apos;<strong>{EHPAD_INFO.fullName}</strong> est actuellement en cours de finalisation.
+                        L&apos;accès au site de l&apos;<strong>{EHPAD_INFO.fullName}</strong> est actuellement limité.
                     </p>
                     <p>
-                        Nous avons hâte de vous présenter nos nouveaux espaces de vie et nos services.
+                        Veuillez vous identifier pour accéder au portail.
                     </p>
                 </div>
 
