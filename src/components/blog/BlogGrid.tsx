@@ -31,7 +31,7 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                 {isAdminUser && (
                     <Link
                         href="/admin/#/collections/blog/new"
-                        className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
+                        className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 !text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
