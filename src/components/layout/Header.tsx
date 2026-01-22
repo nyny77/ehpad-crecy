@@ -83,10 +83,10 @@ export default function Header() {
                             />
                         </motion.div>
                         <div className={`hidden sm:flex flex-col transition-all duration-300 ${isScrolled ? 'opacity-0 w-0' : 'opacity-100'}`}>
-                            <span className="font-serif text-xl md:text-2xl font-semibold text-charcoal-900 leading-tight">
+                            <span className="font-serif text-xl md:text-2xl font-semibold text-charcoal-900 leading-tight whitespace-nowrap">
                                 {EHPAD_INFO.name}
                             </span>
-                            <span className="text-xs text-terracotta-500 font-medium tracking-wide">
+                            <span className="text-xs text-terracotta-500 font-medium tracking-wide whitespace-nowrap">
                                 {EHPAD_INFO.address.region}
                             </span>
                         </div>
@@ -111,7 +111,7 @@ export default function Header() {
                                 <div className="relative">
                                     <button
                                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                                        className="flex items-center gap-2 px-4 py-2 bg-cream-200 text-charcoal-800 rounded-full hover:bg-cream-300 transition-colors text-sm font-medium"
+                                        className="flex items-center gap-2 px-4 py-2 bg-cream-200 text-charcoal-800 rounded-full hover:bg-cream-300 transition-colors text-sm font-medium whitespace-nowrap"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -171,7 +171,7 @@ export default function Header() {
                             ) : (
                                 <button
                                     onClick={handleLogin}
-                                    className="flex items-center gap-2 px-4 py-2 border border-charcoal-200 text-charcoal-700 rounded-full hover:border-terracotta-500 hover:text-terracotta-500 transition-colors text-sm font-medium"
+                                    className="flex items-center gap-2 px-4 py-2 border border-charcoal-200 text-charcoal-700 rounded-full hover:border-terracotta-500 hover:text-terracotta-500 transition-colors text-sm font-medium whitespace-nowrap"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -189,7 +189,7 @@ export default function Header() {
                             <motion.button
                                 whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
                                 whileTap={{ scale: 0.98 }}
-                                className="btn-primary text-sm px-5 py-2.5"
+                                className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
                             >
                                 Nous rencontrer
                             </motion.button>
