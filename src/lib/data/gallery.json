@@ -1,0 +1,25 @@
+{
+    "photos": [
+        {
+            "id": "default-1",
+            "src": "/images/gallery/bedroom.png",
+            "alt": "Chambre type lumineuse avec vue sur le parc",
+            "category": "chamber",
+            "title": "Chambre Confort"
+        },
+        {
+            "id": "default-2",
+            "src": "/images/gallery/lounge.png",
+            "alt": "Grand salon de vie sociale baigné de lumière",
+            "category": "lounge",
+            "title": "Le Grand Salon"
+        },
+        {
+            "id": "default-3",
+            "src": "/images/gallery/garden.png",
+            "alt": "Jardin thérapeutique et sentiers de promenade",
+            "category": "garden",
+            "title": "Le Jardin Sensoriel"
+        }
+    ]
+}

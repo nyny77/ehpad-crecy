@@ -1,0 +1,6 @@
+# Admin SPA fallback
+/admin/*  /admin/index.html  200
+
+# Next.js export fallbacks (if needed for client-side routing)
+# Note: Since we use output: export, we have files for routes. 
+# But this helps if deep linking to non-existent dynamic routes.

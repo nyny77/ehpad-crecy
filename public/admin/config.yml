@@ -1,0 +1,47 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "galerie"
+    label: "Galerie Photos"
+    files:
+      - name: "photos"
+        label: "Photos"
+        file: "src/lib/data/gallery.json"
+        fields:
+          - { name: "photos", label: "Liste des photos", widget: "list", fields: [
+              { name: "id", label: "ID Unique", widget: "string", default: "img-{{now}}" },
+              { name: "title", label: "Titre", widget: "string" },
+              { name: "category", label: "Catégorie", widget: "select", options: ["chamber", "lounge", "garden", "restaurant", "other"], default: "other" },
+              { name: "src", label: "Image", widget: "image" },
+              { name: "alt", label: "Description Alt (Accessibilité)", widget: "string" }
+            ]}
+
+  - name: "recrutement"
+    label: "Recrutement"
+    files:
+      - name: "offres"
+        label: "Offres d'Emploi"
+        file: "src/lib/data/jobs.json"
+        fields:
+          - { name: "offers", label: "Liste des offres", widget: "list", fields: [
+              { name: "id", label: "ID", widget: "string", default: "job-{{now}}" },
+              { name: "title", label: "Titre du poste", widget: "string" },
+              { name: "contract", label: "Type de contrat", widget: "string", default: "CDI" },
+              { name: "description", label: "Description", widget: "markdown" },
+              { name: "requirements", label: "Pré-requis", widget: "list", field: { name: "req", label: "Pré-requis", widget: "string" } }
+            ]}
+
+  - name: "gazette"
+    label: "La Gazette"
+    files:
+      - name: "latest"
+        label: "Dernière Gazette"
+        file: "src/lib/data/gazette.json"
+        fields:
+            - { name: "file", label: "Fichier PDF", widget: "file", allowed_extensions: ["pdf"] }
+            - { name: "date", label: "Date de mise en ligne", widget: "datetime" }
