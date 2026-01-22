@@ -120,7 +120,7 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                                 onClick={() => setIsSignupOpen(true)}
                                 className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
                             >
-                                Inscription
+                                Créer un compte
                             </button>
                         </div>
                     )}
