@@ -18,6 +18,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
+    const [role, setRole] = useState("famille");
     const [relation, setRelation] = useState("");
     const [residentName, setResidentName] = useState("");
 
@@ -35,9 +36,10 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
                     password,
                     data: {
                         full_name: fullName,
-                        relation: relation,
-                        resident_name: residentName,
-                        relation_display: `${relation} de ${residentName}`,
+                        role_requested: role,
+                        relation: role === "famille" ? relation : role,
+                        resident_name: role === "famille" ? residentName : "",
+                        relation_display: role === "famille" ? `${relation} de ${residentName}` : role,
                     },
                 }),
             });
@@ -80,6 +82,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
         setEmail("");
         setPassword("");
         setFullName("");
+        setRole("famille");
         setRelation("");
         setResidentName("");
         setErrorMessage("");
@@ -166,42 +169,60 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
                                     />
                                 </div>
 
-                                {/* Séparateur */}
-                                <div className="flex items-center py-1">
-                                    <div className="flex-1 h-px bg-cream-200" />
-                                    <span className="px-3 text-xs text-charcoal-400">Lien avec le résident</span>
-                                    <div className="flex-1 h-px bg-cream-200" />
-                                </div>
-
-                                {/* Relation et nom du résident sur 2 colonnes */}
-                                <div className="grid grid-cols-2 gap-2">
+                                {/* Rôle */}
+                                <div className="mb-3">
+                                    <label className="block text-xs font-semibold text-charcoal-500 mb-1 ml-1 uppercase tracking-wide">Je suis...</label>
                                     <select
-                                        value={relation}
-                                        onChange={(e) => setRelation(e.target.value)}
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
                                         className="w-full px-3 py-2.5 rounded-lg border border-cream-300 focus:border-forest-400 focus:ring-1 focus:ring-forest-100 outline-none bg-white text-sm"
                                         required
                                     >
-                                        <option value="">Vous êtes...</option>
-                                        <option value="Fils">Fils</option>
-                                        <option value="Fille">Fille</option>
-                                        <option value="Époux">Époux</option>
-                                        <option value="Épouse">Épouse</option>
-                                        <option value="Petit-fils">Petit-fils</option>
-                                        <option value="Petite-fille">Petite-fille</option>
-                                        <option value="Neveu">Neveu</option>
-                                        <option value="Nièce">Nièce</option>
-                                        <option value="Ami(e)">Ami(e)</option>
-                                        <option value="Autre">Autre</option>
+                                        <option value="famille">Membre de la famille</option>
+                                        <option value="personnel">Personnel de l&apos;EHPAD</option>
+                                        <option value="admin">Administrateur</option>
                                     </select>
-                                    <input
-                                        type="text"
-                                        value={residentName}
-                                        onChange={(e) => setResidentName(e.target.value)}
-                                        placeholder="De Mr/Mme..."
-                                        className="w-full px-3 py-2.5 rounded-lg border border-cream-300 focus:border-forest-400 focus:ring-1 focus:ring-forest-100 outline-none text-sm"
-                                        required
-                                    />
                                 </div>
+
+                                {/* Champs conditionnels FAMILLE */}
+                                {role === "famille" && (
+                                    <>
+                                        <div className="flex items-center py-1">
+                                            <div className="flex-1 h-px bg-cream-200" />
+                                            <span className="px-3 text-xs text-charcoal-400">Lien avec le résident</span>
+                                            <div className="flex-1 h-px bg-cream-200" />
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <select
+                                                value={relation}
+                                                onChange={(e) => setRelation(e.target.value)}
+                                                className="w-full px-3 py-2.5 rounded-lg border border-cream-300 focus:border-forest-400 focus:ring-1 focus:ring-forest-100 outline-none bg-white text-sm"
+                                                required
+                                            >
+                                                <option value="">Lien...</option>
+                                                <option value="Fils">Fils</option>
+                                                <option value="Fille">Fille</option>
+                                                <option value="Époux">Époux</option>
+                                                <option value="Épouse">Épouse</option>
+                                                <option value="Petit-fils">Petit-fils</option>
+                                                <option value="Petite-fille">Petite-fille</option>
+                                                <option value="Neveu">Neveu</option>
+                                                <option value="Nièce">Nièce</option>
+                                                <option value="Ami(e)">Ami(e)</option>
+                                                <option value="Autre">Autre</option>
+                                            </select>
+                                            <input
+                                                type="text"
+                                                value={residentName}
+                                                onChange={(e) => setResidentName(e.target.value)}
+                                                placeholder="De Mr/Mme..."
+                                                className="w-full px-3 py-2.5 rounded-lg border border-cream-300 focus:border-forest-400 focus:ring-1 focus:ring-forest-100 outline-none text-sm"
+                                                required
+                                            />
+                                        </div>
+                                    </>
+                                )}
 
                                 {/* Bouton submit */}
                                 <motion.button

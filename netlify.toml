@@ -5,3 +5,7 @@
 # Disable the Next.js runtime plugin since we use static export
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"

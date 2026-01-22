@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAdmin, NetlifyUser } from "@/lib/netlifyAuth";
+import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export default function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<NetlifyUser | null>(null);
-    const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [isAuthorizedUser, setIsAuthorizedUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -18,28 +18,28 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
 
         // Check initial state
         let currentUser = null;
-        let isAdminUser = false;
+        let isAuth = false;
 
         try {
             if (isAuthenticated()) {
                 currentUser = (window.netlifyIdentity?.currentUser() as NetlifyUser) || null;
-                isAdminUser = isAdmin();
+                isAuth = isAuthorized();
             }
         } catch (e) {
             console.error("MaintenanceGuard: Error checking auth state", e);
         }
 
-        console.log("MaintenanceGuard: Initial State", { currentUser, isAdminUser });
+        console.log("MaintenanceGuard: Initial State", { currentUser, isAuth });
 
         setUser(currentUser);
-        setIsUserAdmin(isAdminUser);
+        setIsAuthorizedUser(isAuth);
         setIsLoading(false);
 
         // Listen for changes
         const unsubscribe = onAuthChange((newUser) => {
             console.log("MaintenanceGuard: Auth Changed", newUser);
             setUser(newUser);
-            setIsUserAdmin(!!newUser && isAdmin());
+            setIsAuthorizedUser(!!newUser && isAuthorized());
             setIsLoading(false);
         });
 
@@ -54,8 +54,8 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
         );
     }
 
-    // Si l'utilisateur est admin, on affiche le site
-    if (isUserAdmin) {
+    // Si l'utilisateur est autorisé (admin ou famille validée), on affiche le site
+    if (isAuthorizedUser) {
         return <>{children}</>;
     }
 
