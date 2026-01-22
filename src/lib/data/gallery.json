@@ -13,6 +13,48 @@
       "src": "/images/uploads/gemini_generated_image_aiclk3aiclk3aicl.png",
       "title": "Batiment",
       "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/05.png",
+      "title": "Batiment",
+      "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/06.png",
+      "title": "Batiment",
+      "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/618934987_1275353754617630_3350859517941962359_n.jpg",
+      "title": "Batiment",
+      "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/619072146_1275353671284305_8556990753465559996_n.jpg",
+      "title": "Batiment",
+      "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/619086734_1275353564617649_3308024949503674612_n.jpg",
+      "title": "Batiment",
+      "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
+      "title": "Batiment",
+      "alt": "Batiment"
     }
   ]
 }
