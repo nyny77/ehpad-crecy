@@ -6,6 +6,13 @@
       "src": "/images/uploads/04.png",
       "title": "Batiment",
       "alt": "Batiment"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/gemini_generated_image_aiclk3aiclk3aicl.png",
+      "title": "Batiment",
+      "alt": "Batiment"
     }
   ]
 }
