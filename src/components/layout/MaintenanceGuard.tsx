@@ -100,23 +100,20 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                             </button>
                         </>
                     ) : (
-                        <>
-                            <p className="text-sm text-gray-500 mb-2">Accès réservé au personnel</p>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => openLoginWidget("login")}
-                                    className="flex-1 py-2 px-4 bg-forest-600 text-white rounded-lg hover:bg-forest-700 transition-colors shadow-sm font-medium"
-                                >
-                                    Connexion
-                                </button>
-                                <button
-                                    onClick={() => openLoginWidget("signup")}
-                                    className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
-                                >
-                                    Inscription
-                                </button>
-                            </div>
-                        </>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => openLoginWidget("login")}
+                                className="flex-1 py-2 px-4 bg-forest-600 text-white rounded-lg hover:bg-forest-700 transition-colors shadow-sm font-medium"
+                            >
+                                Connexion
+                            </button>
+                            <button
+                                onClick={() => openLoginWidget("signup")}
+                                className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
+                            >
+                                Inscription
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>
