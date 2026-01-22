@@ -139,18 +139,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                 <>
                                     {/* Actions : Gazette + Déconnexion */}
                                     <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
-                                        {/* Bouton Admin CMS */}
-                                        {adminMode && (
-                                            <Link
-                                                href="/admin"
-                                                className="cursor-pointer flex items-center gap-2 px-5 py-2.5 bg-terracotta-500 text-white font-medium rounded-full shadow-md hover:bg-terracotta-600 transition-colors"
-                                            >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                                                </svg>
-                                                Gérer le site (CMS)
-                                            </Link>
-                                        )}
+
 
                                         <a
                                             href={gazetteData.file}

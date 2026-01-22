@@ -82,14 +82,6 @@ export default function Header() {
                                 priority
                             />
                         </motion.div>
-                        <div className={`hidden sm:flex flex-col transition-all duration-300 ${isScrolled ? 'opacity-0 w-0' : 'opacity-100'}`}>
-                            <span className="font-serif text-xl md:text-2xl font-semibold text-charcoal-900 leading-tight whitespace-nowrap">
-                                {EHPAD_INFO.name}
-                            </span>
-                            <span className="text-xs text-terracotta-500 font-medium tracking-wide whitespace-nowrap">
-                                {EHPAD_INFO.address.region}
-                            </span>
-                        </div>
                     </Link>
 
                     {/* Navigation Desktop */}
