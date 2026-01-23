@@ -50,6 +50,14 @@ export function isAdmin(): boolean {
     return roles.includes("admin");
 }
 
+// Vérifie si l'utilisateur est autorisé (admin ou famille)
+export function isAuthorized(): boolean {
+    const user = getCurrentUser();
+    if (!user) return false;
+    const roles = user.app_metadata?.roles || [];
+    return roles.includes("admin") || roles.includes("famille");
+}
+
 // Ouvre le widget d'authentification
 export function openLoginWidget(tab: "signup" | "login" = "login"): void {
     if (typeof window !== "undefined" && window.netlifyIdentity) {

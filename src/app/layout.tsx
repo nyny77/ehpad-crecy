@@ -63,9 +63,11 @@ export default function RootLayout({
       <body className="font-sans text-charcoal-800 bg-cream-50 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
         <NetlifyIdentityRedirect />
         <ErrorBoundary>
-          <Header />
-          {children}
-          <Footer />
+          <MaintenanceGuard>
+            <Header />
+            {children}
+            <Footer />
+          </MaintenanceGuard>
         </ErrorBoundary>
       </body>
     </html>

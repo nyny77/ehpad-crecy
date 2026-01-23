@@ -45,3 +45,16 @@ collections:
         fields:
             - { name: "file", label: "Fichier PDF", widget: "file", allowed_extensions: ["pdf"] }
             - { name: "date", label: "Date de mise en ligne", widget: "datetime" }
+
+  - name: "blog"
+    label: "Actualités"
+    folder: "content/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de publication", name: "date", widget: "datetime" }
+      - { label: "Catégorie", name: "category", widget: "select", options: ["activite", "evenement", "sortie", "fete", "autre"], default: "activite" }
+      - { label: "Image principale", name: "image", widget: "image", required: false }
+      - { label: "Extrait", name: "excerpt", widget: "text" }
+      - { label: "Contenu", name: "body", widget: "markdown" }

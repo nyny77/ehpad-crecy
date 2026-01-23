@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAdmin, NetlifyUser } from "@/lib/netlifyAuth";
+import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
+
+import SignupModal from "@/components/blog/SignupModal";
 
 export default function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<NetlifyUser | null>(null);
-    const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [isAuthorizedUser, setIsAuthorizedUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSignupOpen, setIsSignupOpen] = useState(false);
 
     useEffect(() => {
         console.log("MaintenanceGuard: Mounted");
@@ -18,29 +21,35 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
 
         // Check initial state
         let currentUser = null;
-        let isAdminUser = false;
+        let isAuth = false;
 
         try {
             if (isAuthenticated()) {
                 currentUser = (window.netlifyIdentity?.currentUser() as NetlifyUser) || null;
-                isAdminUser = isAdmin();
+                isAuth = isAuthorized();
             }
         } catch (e) {
             console.error("MaintenanceGuard: Error checking auth state", e);
         }
 
-        console.log("MaintenanceGuard: Initial State", { currentUser, isAdminUser });
+        console.log("MaintenanceGuard: Initial State", { currentUser, isAuth });
 
         setUser(currentUser);
-        setIsUserAdmin(isAdminUser);
+        setIsAuthorizedUser(isAuth);
         setIsLoading(false);
 
         // Listen for changes
         const unsubscribe = onAuthChange((newUser) => {
             console.log("MaintenanceGuard: Auth Changed", newUser);
             setUser(newUser);
-            setIsUserAdmin(!!newUser && isAdmin());
+            const isNowAuthorized = !!newUser && isAuthorized();
+            setIsAuthorizedUser(isNowAuthorized);
             setIsLoading(false);
+
+            // Si l'utilisateur vient de se connecter, on ferme la modale
+            if (newUser) {
+                setIsSignupOpen(false);
+            }
         });
 
         return () => unsubscribe();
@@ -54,8 +63,8 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
         );
     }
 
-    // Si l'utilisateur est admin, on affiche le site
-    if (isUserAdmin) {
+    // Si l'utilisateur est autorisé (admin ou famille validée), on affiche le site
+    if (isAuthorizedUser) {
         return <>{children}</>;
     }
 
@@ -72,15 +81,15 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                     />
                 </div>
 
-                <h1 className="text-3xl font-serif text-charcoal-900 mb-2">Site en Construction</h1>
-                <p className="text-terracotta-600 font-medium mb-6 uppercase tracking-widest text-sm">Ouverture Prochaine</p>
+                <h1 className="text-3xl font-serif text-charcoal-900 mb-2">Espace Privé</h1>
+                <p className="text-terracotta-600 font-medium mb-6 uppercase tracking-widest text-sm">Accès Restreint</p>
 
                 <div className="space-y-4 text-charcoal-600 mb-8">
                     <p>
-                        Le nouveau site web de l&apos;<strong>{EHPAD_INFO.fullName}</strong> est actuellement en cours de finalisation.
+                        L&apos;accès au site de l&apos;<strong>{EHPAD_INFO.fullName}</strong> est actuellement limité.
                     </p>
                     <p>
-                        Nous avons hâte de vous présenter nos nouveaux espaces de vie et nos services.
+                        Veuillez vous identifier pour accéder au portail.
                     </p>
                 </div>
 
@@ -100,23 +109,20 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                             </button>
                         </>
                     ) : (
-                        <>
-                            <p className="text-sm text-gray-500 mb-2">Accès réservé au personnel</p>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => openLoginWidget("login")}
-                                    className="flex-1 py-2 px-4 bg-forest-600 text-white rounded-lg hover:bg-forest-700 transition-colors shadow-sm font-medium"
-                                >
-                                    Connexion
-                                </button>
-                                <button
-                                    onClick={() => openLoginWidget("signup")}
-                                    className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
-                                >
-                                    Inscription
-                                </button>
-                            </div>
-                        </>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => openLoginWidget("login")}
+                                className="flex-1 py-2 px-4 bg-forest-600 text-white rounded-lg hover:bg-forest-700 transition-colors shadow-sm font-medium"
+                            >
+                                Connexion
+                            </button>
+                            <button
+                                onClick={() => setIsSignupOpen(true)}
+                                className="flex-1 py-2 px-4 bg-white border border-forest-600 text-forest-600 rounded-lg hover:bg-forest-50 transition-colors font-medium"
+                            >
+                                Créer un compte
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>
@@ -124,6 +130,15 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
             <footer className="mt-8 text-charcoal-400 text-sm">
                 &copy; 2025 {EHPAD_INFO.name}
             </footer>
+
+            {/* Modale d'inscription personnalisée */}
+            <SignupModal
+                isOpen={isSignupOpen}
+                onClose={() => setIsSignupOpen(false)}
+                onSuccess={() => {
+                    // Optionnel : afficher un message ou laisser la modale gérer son état "success"
+                }}
+            />
         </main>
     );
 }

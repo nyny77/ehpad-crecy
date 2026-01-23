@@ -2,44 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { getArticles, deleteArticle, Article } from "@/lib/articleStorage";
-import { isAdmin } from "@/lib/netlifyAuth";
+import Link from "next/link";
+import { Article } from "@/lib/articleStorage";
 import ArticleCard from "./ArticleCard";
-import ArticleEditor from "./ArticleEditor";
 import ArticleModal from "./ArticleModal";
 
 interface BlogGridProps {
     isAdminUser?: boolean;
+    articles?: Article[];
 }
 
-export default function BlogGrid({ isAdminUser = false }: BlogGridProps) {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [isEditorOpen, setIsEditorOpen] = useState(false);
+export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGridProps) {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-    const [adminMode, setAdminMode] = useState(isAdminUser);
-
-    useEffect(() => {
-        setArticles(getArticles());
-    }, []);
-
-    useEffect(() => {
-        setAdminMode(isAdminUser);
-    }, [isAdminUser]);
-
-    const handleSaveArticle = (newArticle: Article) => {
-        setArticles((prev) => [newArticle, ...prev]);
-    };
-
-    const handleDeleteArticle = (id: string) => {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
-            deleteArticle(id);
-            setArticles((prev) => prev.filter((a) => a.id !== id));
-        }
-    };
 
     return (
         <>
-            {/* Header avec bouton ajouter */}
+            {/* Header avec lien admin */}
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h2 className="font-serif text-2xl md:text-3xl text-charcoal-900">
@@ -50,18 +28,16 @@ export default function BlogGrid({ isAdminUser = false }: BlogGridProps) {
                     </p>
                 </div>
 
-                {adminMode && (
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setIsEditorOpen(true)}
-                        className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
+                {isAdminUser && (
+                    <Link
+                        href="/admin/#/collections/blog/new"
+                        className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 !text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
                         Nouvel article
-                    </motion.button>
+                    </Link>
                 )}
             </div>
 
@@ -78,8 +54,7 @@ export default function BlogGrid({ isAdminUser = false }: BlogGridProps) {
                             <ArticleCard
                                 article={article}
                                 onClick={() => setSelectedArticle(article)}
-                                isAdmin={adminMode}
-                                onDelete={() => handleDeleteArticle(article.id)}
+                                isAdmin={false} // On désactive l'édition directe sur la carte
                             />
                         </motion.div>
                     ))}
@@ -92,23 +67,16 @@ export default function BlogGrid({ isAdminUser = false }: BlogGridProps) {
                         </svg>
                     </div>
                     <p className="text-charcoal-600">Aucun article pour le moment</p>
-                    {adminMode && (
-                        <button
-                            onClick={() => setIsEditorOpen(true)}
-                            className="mt-4 text-terracotta-500 font-medium hover:underline"
+                    {isAdminUser && (
+                        <Link
+                            href="/admin/#/collections/blog/new"
+                            className="mt-4 text-terracotta-500 font-medium hover:underline inline-block"
                         >
                             Créer le premier article
-                        </button>
+                        </Link>
                     )}
                 </div>
             )}
-
-            {/* Modal éditeur */}
-            <ArticleEditor
-                isOpen={isEditorOpen}
-                onClose={() => setIsEditorOpen(false)}
-                onSave={handleSaveArticle}
-            />
 
             {/* Modal article */}
             <ArticleModal

@@ -1,25 +1,60 @@
 {
-    "photos": [
-        {
-            "id": "default-1",
-            "src": "/images/gallery/bedroom.png",
-            "alt": "Chambre type lumineuse avec vue sur le parc",
-            "category": "chamber",
-            "title": "Chambre Confort"
-        },
-        {
-            "id": "default-2",
-            "src": "/images/gallery/lounge.png",
-            "alt": "Grand salon de vie sociale baigné de lumière",
-            "category": "lounge",
-            "title": "Le Grand Salon"
-        },
-        {
-            "id": "default-3",
-            "src": "/images/gallery/garden.png",
-            "alt": "Jardin thérapeutique et sentiers de promenade",
-            "category": "garden",
-            "title": "Le Jardin Sensoriel"
-        }
-    ]
+  "photos": [
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/04.png",
+      "title": "Batiment D",
+      "alt": "Batiment D"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/gemini_generated_image_aiclk3aiclk3aicl.png",
+      "title": "Batiment D",
+      "alt": "Batiment D"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/05.png",
+      "title": "Vue aérienne",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/06.png",
+      "title": "Vue aérienne",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/618934987_1275353754617630_3350859517941962359_n.jpg",
+      "title": "Retro",
+      "alt": "Retro"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/619072146_1275353671284305_8556990753465559996_n.jpg",
+      "title": "Retro",
+      "alt": "Retro"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/619086734_1275353564617649_3308024949503674612_n.jpg",
+      "title": "Retro",
+      "alt": "Retro"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
+      "title": "Retro",
+      "alt": "Retro"
+    }
+  ]
 }
