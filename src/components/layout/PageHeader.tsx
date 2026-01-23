@@ -17,7 +17,7 @@ export default function PageHeader({
     title,
     subtitle,
     description,
-    image = "/images/facade-sketch.jpg",
+    image = "/images/global-hero.jpg",
     alt = "En-tête de page",
     children,
 }: PageHeaderProps) {

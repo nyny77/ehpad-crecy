@@ -90,7 +90,6 @@ export default function VieSocialePage() {
             <PageHeader
                 title="Nos moments de partage"
                 subtitle="Vie sociale"
-                image="/images/garden-sketch.jpg"
                 description="Découvrez les activités, animations et moments de joie qui rythment le quotidien de notre établissement."
             >
                 {/* Badge admin */}

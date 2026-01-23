@@ -70,7 +70,7 @@ export const EHPAD_INFO = {
     aplEligible: true,
 
     // Images
-    heroImage: "/images/hero.jpg",
+    heroImage: "/images/global-hero.jpg",
 };
 
 // Services et équipe - Descriptions améliorées depuis le site Wix

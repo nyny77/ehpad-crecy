@@ -56,7 +56,6 @@ export default function HebergementPage() {
             <PageHeader
                 title="Hébergement & Tarifs"
                 subtitle="Votre futur chez-vous"
-                image="/images/garden-sketch.jpg"
                 description={`${EHPAD_INFO.capacity.description} dans un cadre chaleureux et confortable. Découvrez nos tarifs transparents et les aides disponibles.`}
             />
 

@@ -43,7 +43,6 @@ export default function GaleriePage() {
             <PageHeader
                 title="Découvrez nos espaces de vie"
                 subtitle="Visite Virtuelle"
-                image="/images/garden-sketch.jpg"
                 description="Une architecture pensée pour le bien-être, alliant confort hôtelier, sécurité médicale et convivialité."
             >
                 {/* Categories */}
