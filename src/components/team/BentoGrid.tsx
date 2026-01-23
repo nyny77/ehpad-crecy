@@ -4,36 +4,27 @@ import ServiceCard from "./ServiceCard";
 import { SERVICES } from "@/lib/constants";
 
 export default function BentoGrid() {
-    // Configuration "Tetris" pour 10 cartes
-    // 0: La soignante (Large)
-    // 1: L'infirmière (Vertical)
-    // 2: Animatrice (Small)
-    // 3: Cuisinier (Small)
-    // 4: Coiffeuse (Horizontal)
-    // 5: Kiné (Small)
-    // 6: Lingère (Small)
-    // 7: Admin (Vertical)
-    // 8: Technicien (Large)
-    // 9: Hôtelier (Vertical)
+    // Configuration "Tetris" optimisée pour 16 tuiles
+    // Layout équilibré: 2 large + 3 horizontal + 3 vertical + 8 small = 28 cells (7 rows)
 
     const getSize = (index: number): "small" | "large" | "horizontal" | "vertical" => {
         const sizes: Record<number, "small" | "large" | "horizontal" | "vertical"> = {
-            0: "large",
-            1: "vertical",
-            2: "small",
-            3: "small",
-            4: "horizontal",
-            5: "small",
-            6: "small",
-            7: "vertical",
-            8: "large",
-            9: "vertical",
-            10: "small", // RH
-            11: "large", // Direction
+            0: "large",       // Soignante - tuile principale
+            1: "vertical",    // Infirmière
+            2: "small",       // Animatrice
+            3: "small",       // Cuisinier
+            4: "horizontal",  // Coiffeuse
+            5: "small",       // Kiné
+            6: "small",       // Lingère
+            7: "vertical",    // Admin
+            8: "horizontal",  // Technicien
+            9: "vertical",    // Hôtelier
+            10: "small",      // RH
+            11: "large",      // Direction - tuile importante
             12: "horizontal", // Psychologue
-            13: "vertical", // IDEC
-            14: "small", // Médecins
-            15: "large", // Bénévoles
+            13: "small",      // IDEC
+            14: "small",      // Médecins
+            15: "small",      // Bénévoles
         };
         return sizes[index] || "small";
     };
