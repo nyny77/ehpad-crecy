@@ -190,4 +190,118 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
         image: "/images/services/hotelier.png",
         detailImage: "/images/services/hotelier_detail.png",
     },
+    {
+        id: "rh",
+        title: "L'agent RH",
+        subtitle: "Ressources Humaines & Bien-être au travail",
+        shortDescription: "La responsable RH veille au bon climat social et à l'épanouissement de tous les collaborateurs.",
+        fullDescription: `La responsable des Ressources Humaines de l'EHPAD de Crécy joue un rôle central dans la vie de l'établissement. Elle est le point de contact privilégié pour l'ensemble des collaborateurs et veille au maintien d'un climat social serein et bienveillant.
+
+Son action s'articule autour de plusieurs missions essentielles : le recrutement de nouveaux talents, l'accompagnement des carrières, la formation continue et le développement des compétences. Elle s'assure que chaque membre de l'équipe dispose des moyens nécessaires pour exercer son métier dans les meilleures conditions.
+
+Au-delà de la gestion administrative, elle porte une attention particulière à la qualité de vie au travail. Son écoute attentive et sa disponibilité contribuent à créer un environnement où chacun se sent reconnu et valorisé.`,
+        highlights: [
+            "Formation continue",
+            "Qualité de vie au travail",
+            "Recrutement et intégration",
+            "Accompagnement des carrières",
+        ],
+        image: "/images/services/rh.png",
+        detailImage: "/images/services/rh.png",
+    },
+    {
+        id: "direction",
+        title: "La direction multisite",
+        subtitle: "Pilotage & Vision stratégique",
+        shortDescription: "La directrice multisite coordonne l'ensemble des activités avec une vision stratégique et humaine.",
+        fullDescription: `La directrice multisite de l'EHPAD de Crécy assure le pilotage stratégique de l'établissement avec une vision à la fois globale et attentive aux détails du quotidien. Elle garantit la cohérence du projet d'établissement et veille au respect des valeurs qui nous unissent.
+
+Son rôle est de coordonner l'ensemble des services, d'impulser une dynamique d'amélioration continue et de maintenir des liens étroits avec les familles, les partenaires et les autorités de tutelle. Elle est garante de la qualité de l'accompagnement proposé aux résidents.
+
+Accessible et à l'écoute, elle accorde une importance particulière à la communication avec les équipes et les familles. Sa présence régulière et son implication personnelle contribuent à maintenir un climat de confiance et de sérénité au sein de l'établissement.`,
+        highlights: [
+            "Vision stratégique",
+            "Coordination multisite",
+            "Projet d'établissement",
+            "Valeurs humaines",
+        ],
+        image: "/images/services/direction.png",
+        detailImage: "/images/services/direction.png",
+    },
+    {
+        id: "psychologue",
+        title: "La psychologue",
+        subtitle: "Écoute & Accompagnement émotionnel",
+        shortDescription: "La psychologue accompagne les résidents et leurs familles dans les moments de vie importants.",
+        fullDescription: `La psychologue de l'EHPAD de Crécy offre un espace d'écoute bienveillant et confidentiel aux résidents, à leurs familles et aux équipes. Son rôle est essentiel dans l'accompagnement des transitions et des moments de vie parfois difficiles.
+
+Elle intervient auprès des résidents pour les aider à s'adapter à leur nouvelle vie, à maintenir leur estime de soi et à traverser les épreuves du quotidien. Elle anime également des groupes de parole et des ateliers thérapeutiques favorisant le bien-être émotionnel.
+
+Auprès des familles, elle propose un soutien dans les moments de questionnement, lors de l'entrée en établissement ou face à l'évolution de l'état de santé de leur proche. Elle les aide à maintenir un lien serein et à traverser ensemble les étapes du vieillissement.`,
+        highlights: [
+            "Écoute bienveillante",
+            "Accompagnement des familles",
+            "Groupes de parole",
+            "Soutien émotionnel",
+        ],
+        image: "/images/services/psychologue.png",
+        detailImage: "/images/services/psychologue.png",
+    },
+    {
+        id: "idec",
+        title: "L'IDEC",
+        subtitle: "Coordination des Soins & Qualité",
+        shortDescription: "L'Infirmière Diplômée d'État Coordinatrice organise et supervise l'ensemble des soins.",
+        fullDescription: `L'Infirmière Diplômée d'État Coordinatrice (IDEC) de l'EHPAD de Crécy est la pierre angulaire de l'organisation des soins. Elle coordonne l'ensemble des interventions médicales et paramédicales pour garantir une prise en charge optimale de chaque résident.
+
+Son expertise lui permet d'élaborer et de suivre les protocoles de soins, de superviser les équipes infirmières et aides-soignantes, et d'assurer la liaison avec les médecins traitants et spécialistes. Elle veille à la qualité et à la continuité des soins 24h/24.
+
+L'IDEC est également l'interlocutrice privilégiée des familles pour toutes les questions relatives à la santé de leur proche. Elle organise les réunions de coordination, participe aux projets de soins personnalisés et garantit le respect des bonnes pratiques professionnelles.`,
+        highlights: [
+            "Coordination des soins",
+            "Protocoles médicaux",
+            "Liaison avec les familles",
+            "Qualité des soins",
+        ],
+        image: "/images/services/idec.png",
+        detailImage: "/images/services/idec.png",
+    },
+    {
+        id: "medecins",
+        title: "Les médecins",
+        subtitle: "Suivi Médical & Prévention",
+        shortDescription: "Les médecins assurent le suivi médical des résidents en collaboration avec leurs médecins traitants.",
+        fullDescription: `L'équipe médicale de l'EHPAD de Crécy comprend un médecin coordonnateur qui travaille en étroite collaboration avec les médecins traitants de chaque résident. Cette organisation garantit un suivi personnalisé et une continuité des soins optimale.
+
+Le médecin coordonnateur élabore le projet de soins de l'établissement, valide les admissions, et veille à la bonne application des protocoles médicaux. Il intervient également en cas d'urgence et assure la liaison avec les établissements hospitaliers de la région.
+
+Les résidents conservent bien sûr leur médecin traitant qui continue de les suivre au sein de l'établissement. Cette collaboration étroite entre médecins permet d'allier la connaissance de l'histoire médicale de chaque résident et l'expertise gériatrique nécessaire à leur accompagnement.`,
+        highlights: [
+            "Suivi personnalisé",
+            "Médecin coordonnateur",
+            "Liaison médecins traitants",
+            "Prévention et dépistage",
+        ],
+        image: "/images/services/medecins.png",
+        detailImage: "/images/services/medecins.png",
+    },
+    {
+        id: "benevoles",
+        title: "Les bénévoles",
+        subtitle: "Solidarité & Moments de partage",
+        shortDescription: "Nos bénévoles apportent leur temps et leur sourire pour créer des moments de partage et de convivialité.",
+        fullDescription: `Les bénévoles de l'EHPAD de Crécy sont des acteurs précieux de la vie sociale de l'établissement. Ils donnent de leur temps avec générosité pour apporter aux résidents des moments de partage, de convivialité et de chaleur humaine.
+
+Leurs interventions sont variées : accompagnement lors de sorties, animation d'ateliers créatifs ou de jeux de société, lectures, discussions... Ils créent des liens uniques avec les résidents, leur offrant une présence amicale et désintéressée qui enrichit leur quotidien.
+
+Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent harmonieusement dans le projet de vie de l'établissement. Leur engagement est une source d'enrichissement mutuel : ils apportent autant qu'ils reçoivent de ces échanges intergénérationnels.`,
+        highlights: [
+            "Présence chaleureuse",
+            "Animations variées",
+            "Lien social",
+            "Accompagnement individuel",
+        ],
+        image: "/images/services/benevoles.png",
+        detailImage: "/images/services/benevoles.png",
+    },
 ];
