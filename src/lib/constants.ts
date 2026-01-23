@@ -159,6 +159,34 @@ export const SERVICES = [
         description: "La directrice multisite coordonne l'ensemble des activités avec une vision stratégique et humaine. Elle garantit la cohérence du projet d'établissement et le respect des valeurs qui nous unissent.",
         image: "/images/services/direction.png",
     },
+    {
+        id: "psychologue",
+        title: "La psychologue",
+        subtitle: "Écoute & Accompagnement",
+        description: "La psychologue accompagne les résidents et leurs familles dans les moments de vie importants. Elle offre un espace d'écoute bienveillant et contribue au bien-être émotionnel de chacun.",
+        image: "/images/services/psychologue.png",
+    },
+    {
+        id: "idec",
+        title: "L'IDEC",
+        subtitle: "Coordination des Soins",
+        description: "L'Infirmière Diplômée d'État Coordinatrice (IDEC) organise et supervise l'ensemble des soins. Elle assure la liaison entre les équipes, les familles et les médecins pour une prise en charge optimale.",
+        image: "/images/services/idec.png",
+    },
+    {
+        id: "medecins",
+        title: "Les médecins",
+        subtitle: "Suivi Médical",
+        description: "Les médecins assurent le suivi médical des résidents en collaboration avec leur médecin traitant. Ils interviennent régulièrement pour garantir une prise en charge médicale de qualité.",
+        image: "/images/services/medecins.png",
+    },
+    {
+        id: "benevoles",
+        title: "Les bénévoles",
+        subtitle: "Solidarité & Partage",
+        description: "Nos bénévoles apportent leur temps et leur sourire pour animer des activités, accompagner les résidents et créer des moments de partage et de convivialité au quotidien.",
+        image: "/images/services/benevoles.png",
+    },
 ];
 
 // Navigation

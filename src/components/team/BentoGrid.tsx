@@ -30,6 +30,10 @@ export default function BentoGrid() {
             9: "vertical",
             10: "small", // RH
             11: "large", // Direction
+            12: "horizontal", // Psychologue
+            13: "vertical", // IDEC
+            14: "small", // Médecins
+            15: "large", // Bénévoles
         };
         return sizes[index] || "small";
     };
