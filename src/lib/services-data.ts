@@ -292,7 +292,7 @@ Les résidents conservent bien sûr leur médecin traitant qui continue de les s
         shortDescription: "Nos bénévoles apportent leur temps et leur sourire pour créer des moments de partage et de convivialité.",
         fullDescription: `Les bénévoles de l'EHPAD de Crécy sont des acteurs précieux de la vie sociale de l'établissement. Ils donnent de leur temps avec générosité pour apporter aux résidents des moments de partage, de convivialité et de chaleur humaine.
 
-Leurs interventions sont variées : accompagnement lors de sorties, animation d'ateliers créatifs ou de jeux de société, lectures, discussions... Ils créent des liens uniques avec les résidents, leur offrant une présence amicale et désintéressée qui enrichit leur quotidien.
+Leurs interventions sont variées : accompagnement lors de sorties, animation d'ateliers créatifs ou de jeux de société, lectures, discussions... Ils créent des liens uniques avec les résidents, leur offrant une présence amicale et généreuse qui enrichit leur quotidien.
 
 Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent harmonieusement dans le projet de vie de l'établissement. Leur engagement est une source d'enrichissement mutuel : ils apportent autant qu'ils reçoivent de ces échanges intergénérationnels.`,
         highlights: [
