@@ -201,12 +201,12 @@ export default function AdmissionsPage() {
                                 une partie des frais d'hébergement (récupérable sur succession).
                             </p>
                             <a
-                                href="https://www.pour-les-personnes-agees.gouv.fr/beneficier-d-aides-financieres/l-aide-sociale-a-l-hebergement-ash"
+                                href="https://www.service-public.fr/particuliers/vosdroits/F2444"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-charcoal-700 font-medium hover:underline flex items-center gap-1 group"
                             >
-                                En savoir plus
+                                En savoir plus (Service Public)
                                 <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </a>
                         </div>
