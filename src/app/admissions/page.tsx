@@ -2,16 +2,16 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { MoveRight, FileText, Eye, Users, DoorOpen, Download, Euro } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
+import { EHPAD_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
     title: "Admissions | EHPAD de Crécy-la-Chapelle",
-    description: "Tout savoir sur les démarches d'admission, les tarifs et les aides financières (APA, APL, ASH). Téléchargez le dossier d'inscription.",
+    description: "Tout savoir sur les démarches d'admission via ViaTrajectoire, les tarifs et les aides financières (APA, APL, ASH).",
 };
 
 export default function AdmissionsPage() {
     return (
         <main className="bg-cream-100 min-h-screen">
-            {/* Hero Section */}
             {/* Hero Section */}
             <PageHeader
                 title={
@@ -20,7 +20,7 @@ export default function AdmissionsPage() {
                     </>
                 }
                 subtitle="Démarches simplifiées"
-                description="Nous vous accompagnons à chaque étape pour faciliter votre entrée et vos démarches administratives."
+                description="Nous vous accompagnons à chaque étape. Faites votre demande en ligne simplement via ViaTrajectoire."
             />
 
             {/* Timeline Section */}
@@ -45,9 +45,9 @@ export default function AdmissionsPage() {
                                         <FileText className="w-8 h-8" />
                                     </div>
                                 </div>
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">1. Le Dossier</h3>
+                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">1. La Demande</h3>
                                 <p className="text-sm text-charcoal-600 px-4">
-                                    Téléchargez et remplissez le dossier médical et administratif (Cerfa).
+                                    Faites votre demande en ligne sur <strong>ViaTrajectoire</strong> (méthode rapide et recommandée).
                                 </p>
                             </div>
 
@@ -103,28 +103,38 @@ export default function AdmissionsPage() {
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                             <div>
                                 <h2 className="font-serif text-3xl md:text-4xl mb-4 text-white">
-                                    Documents à télécharger
+                                    Faire une demande
                                 </h2>
                                 <p className="text-white/90 text-lg mb-8">
-                                    Pour gagner du temps, préparez votre dossier dès maintenant.
-                                    Le dossier d'admission unique (Cerfa) est national.
+                                    La méthode la plus simple et la plus rapide est d'utiliser le service public <strong>ViaTrajectoire</strong>.
+                                    C'est sécurisé, gratuit, et vous pouvez suivre votre dossier en temps réel.
                                 </p>
-                                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20">
-                                    <p className="text-sm text-white/80 uppercase tracking-widest mb-2 font-medium">Bon à savoir</p>
-                                    <p>
-                                        Vous pouvez également faire votre demande en ligne directement sur le site gouvernemental <strong>ViaTrajectoire</strong>.
-                                    </p>
-                                </div>
+                                <a
+                                    href={EHPAD_INFO.viaTrajectoireUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-8 py-4 bg-white text-terracotta-600 rounded-full font-bold text-lg hover:bg-cream-100 transition-colors shadow-lg transform hover:-translate-y-0.5"
+                                >
+                                    Faire ma demande sur ViaTrajectoire
+                                    <MoveRight className="w-5 h-5" />
+                                </a>
                             </div>
 
                             <div className="flex flex-col gap-4">
+                                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20 mb-4">
+                                    <p className="text-sm text-white/80 uppercase tracking-widest mb-2 font-medium">Vous préférez le papier ?</p>
+                                    <p className="mb-4 text-white/90">
+                                        Le dossier papier reste accepté. Vous pouvez le télécharger ci-dessous.
+                                    </p>
+                                </div>
+
                                 <a href="#" className="group flex items-center justify-between bg-white text-charcoal-900 p-5 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-cream-100 text-terracotta-500 rounded-lg flex items-center justify-center">
                                             <FileText className="w-6 h-6" />
                                         </div>
                                         <div className="text-left">
-                                            <div className="font-bold text-lg">Dossier d'admission</div>
+                                            <div className="font-bold text-lg">Dossier d'admission papier</div>
                                             <div className="text-sm text-charcoal-500">Formulaire Cerfa 14732*03</div>
                                         </div>
                                     </div>
@@ -139,19 +149,6 @@ export default function AdmissionsPage() {
                                         <div className="text-left">
                                             <div className="font-bold text-lg">Pièces à fournir</div>
                                             <div className="text-sm text-charcoal-500">Liste des documents obligatoires</div>
-                                        </div>
-                                    </div>
-                                    <Download className="w-5 h-5 text-charcoal-400 group-hover:text-terracotta-500 transition-colors" />
-                                </a>
-
-                                <a href="#" className="group flex items-center justify-between bg-white text-charcoal-900 p-5 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-cream-100 text-terracotta-500 rounded-lg flex items-center justify-center">
-                                            <FileText className="w-6 h-6" />
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="font-bold text-lg">Livret d'accueil</div>
-                                            <div className="text-sm text-charcoal-500">Découvrir la vie à l'EHPAD</div>
                                         </div>
                                     </div>
                                     <Download className="w-5 h-5 text-charcoal-400 group-hover:text-terracotta-500 transition-colors" />

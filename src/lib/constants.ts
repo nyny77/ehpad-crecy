@@ -23,6 +23,9 @@ export const EHPAD_INFO = {
         description: "63 lits en chambres simples et doubles",
     },
 
+    // Liens externes
+    viaTrajectoireUrl: "https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-maisons-de-retraite/ehpad/seine-et-marne-77/crecy-la-chapelle-77580/ehpad-de-crecy/770701050",
+
     // Tarifs (mis à jour 2025)
     pricing: {
         accommodation: {
