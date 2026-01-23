@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 import BlogGrid from "@/components/blog/BlogGrid";
 import SignupModal from "@/components/blog/SignupModal";
+import DayTimeline from "@/components/social/DayTimeline";
 import { BlogPost } from "@/lib/blog";
 import {
     isAuthenticated,
@@ -240,6 +241,9 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                     )}
                 </div>
             </section>
+
+            {/* Timeline Journée Type */}
+            <DayTimeline />
 
             {/* Section activités (toujours visible) */}
             <section className="section-padding bg-white">

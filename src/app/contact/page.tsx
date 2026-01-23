@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
-import ContactForm from "@/components/contact/ContactForm";
+import ConversationalForm from "@/components/contact/ConversationalForm";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export default function ContactPage() {
@@ -171,7 +171,7 @@ export default function ContactPage() {
                             transition={{ duration: 0.6 }}
                             className="lg:col-span-2"
                         >
-                            <ContactForm />
+                            <ConversationalForm />
                         </motion.div>
                     </div>
                 </div>
