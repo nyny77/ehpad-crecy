@@ -47,7 +47,7 @@ export default function AdmissionsPage() {
                                 </div>
                                 <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">1. La Demande</h3>
                                 <p className="text-sm text-charcoal-600 px-4">
-                                    Faites votre demande en ligne sur <strong>ViaTrajectoire</strong> (méthode rapide et recommandée).
+                                    Faites votre demande directement en ligne sur <strong>ViaTrajectoire</strong> (méthode rapide et recommandée).
                                 </p>
                             </div>
 
@@ -122,24 +122,11 @@ export default function AdmissionsPage() {
 
                             <div className="flex flex-col gap-4">
                                 <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20 mb-4">
-                                    <p className="text-sm text-white/80 uppercase tracking-widest mb-2 font-medium">Vous préférez le papier ?</p>
-                                    <p className="mb-4 text-white/90">
-                                        Le dossier papier reste accepté. Vous pouvez le télécharger ci-dessous.
+                                    <p className="text-sm text-white/80 uppercase tracking-widest mb-2 font-medium">Information</p>
+                                    <p className="mb-0 text-white/90">
+                                        L'inscription se fait désormais prioritairement en ligne pour simplifier vos démarches.
                                     </p>
                                 </div>
-
-                                <a href="#" className="group flex items-center justify-between bg-white text-charcoal-900 p-5 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-cream-100 text-terracotta-500 rounded-lg flex items-center justify-center">
-                                            <FileText className="w-6 h-6" />
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="font-bold text-lg">Dossier d'admission papier</div>
-                                            <div className="text-sm text-charcoal-500">Formulaire Cerfa 14732*03</div>
-                                        </div>
-                                    </div>
-                                    <Download className="w-5 h-5 text-charcoal-400 group-hover:text-terracotta-500 transition-colors" />
-                                </a>
 
                                 <a href="#" className="group flex items-center justify-between bg-white text-charcoal-900 p-5 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                                     <div className="flex items-center gap-4">
@@ -239,6 +226,6 @@ export default function AdmissionsPage() {
                     </div>
                 </div>
             </section>
-        </main>
+        </main >
     );
 }
