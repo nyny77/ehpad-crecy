@@ -78,8 +78,8 @@ export const SERVICES = [
     {
         id: "soignants",
         title: "La soignante",
-        subtitle: "Aides-soignants & Médecin",
-        description: "Notre équipe médicale et soignante accompagne chaque résident au quotidien, en lien étroit avec leur médecin traitant et les professionnels de santé locaux. Nous collaborons avec les hôpitaux et spécialistes pour garantir un suivi complet et personnalisé.",
+        subtitle: "Aides-soignants & Accompagnement",
+        description: "Notre équipe soignante accompagne chaque résident au quotidien, avec professionnalisme et bienveillance. Une présence rassurante 24h/24 pour tous les gestes de la vie quotidienne.",
         image: "/images/services/soignants.png",
     },
     {
@@ -99,7 +99,7 @@ export const SERVICES = [
     {
         id: "cuisine",
         title: "Le cuisinier",
-        subtitle: "Équipe & Responsable",
+        subtitle: "Équipe & Responsable cuisine",
         description: "Notre équipe de cuisiniers, pilotée par une responsable cuisine, concocte chaque jour des repas variés, équilibrés et savoureux. Nous adaptons les menus aux régimes particuliers tout en préservant le plaisir de la table.",
         image: "/images/services/cuisine.png",
     },
@@ -127,8 +127,8 @@ export const SERVICES = [
     {
         id: "admin",
         title: "L'agent administratif",
-        subtitle: "Accueil, RH & Direction",
-        description: "L'agent administratif, en lien avec la direction et les RH, vous accueille et vous accompagne dans toutes vos démarches avec bienveillance et efficacité.",
+        subtitle: "Accueil & Administration",
+        description: "L'agent administratif vous accueille et vous accompagne dans toutes vos démarches administratives avec bienveillance et efficacité. Il est votre interlocuteur privilégié pour la gestion de votre dossier.",
         image: "/images/services/admin.png",
     },
     {
