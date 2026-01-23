@@ -85,7 +85,7 @@ export const SERVICES = [
     {
         id: "infirmiere",
         title: "L'infirmière",
-        subtitle: "Coordination des soins",
+        subtitle: "Soins infirmiers & Suivi médical",
         description: "Nos infirmières assurent la coordination des soins 24h/24, garantissant un suivi médical rigoureux et rassurant. Elles sont le lien essentiel entre résidents, familles et l'ensemble de l'équipe médicale.",
         image: "/images/services/infirmiere.png",
     },
@@ -127,7 +127,7 @@ export const SERVICES = [
     {
         id: "admin",
         title: "L'agent administratif",
-        subtitle: "Accueil & Administration",
+        subtitle: "Accueil, Administration & Facturation",
         description: "L'agent administratif vous accueille et vous accompagne dans toutes vos démarches administratives avec bienveillance et efficacité. Il est votre interlocuteur privilégié pour la gestion de votre dossier.",
         image: "/images/services/admin.png",
     },

@@ -22,7 +22,7 @@ Nos aides-soignants sont présents 24h/24, de jour comme de nuit, pour accompagn
     {
         id: "infirmiere",
         title: "L'infirmière",
-        subtitle: "Coordination des soins",
+        subtitle: "Soins infirmiers & Suivi médical",
         shortDescription: "Nos infirmières assurent la coordination des soins 24h/24.",
         fullDescription: `L'équipe infirmière de l'EHPAD de Crécy joue un rôle central dans la qualité des soins prodigués à nos résidents. Nos infirmières diplômées d'État assurent une coordination rigoureuse des soins, garantissant un suivi médical optimal.
 
@@ -136,7 +136,7 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
     {
         id: "admin",
         title: "L'agent administratif",
-        subtitle: "Accueil & Administration",
+        subtitle: "Accueil, Administration & Facturation",
         shortDescription: "Un accueil chaleureux et une gestion rigoureuse.",
         fullDescription: `L'agent administratif de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
 
