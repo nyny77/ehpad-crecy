@@ -29,7 +29,7 @@ export default function BentoGrid() {
             8: "large",
             9: "vertical",
             10: "small", // RH
-            11: "horizontal", // Direction
+            11: "large", // Direction
         };
         return sizes[index] || "small";
     };
