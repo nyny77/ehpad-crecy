@@ -145,6 +145,20 @@ export const SERVICES = [
         description: "L'agent de service hospitalier veille chaque jour à maintenir un cadre de vie impeccable. Son attention aux détails crée une atmosphère confortable et accueillante.",
         image: "/images/services/hotelier.png",
     },
+    {
+        id: "rh",
+        title: "L'agent RH",
+        subtitle: "Ressources Humaines",
+        description: "La responsable RH est à l'écoute de tous les collaborateurs. Elle veille au bon climat social, accompagne les carrières et participe activement à la qualité de vie au travail.",
+        image: "/images/services/rh.png",
+    },
+    {
+        id: "direction",
+        title: "La direction multisite",
+        subtitle: "Pilotage & Vision",
+        description: "La directrice multisite coordonne l'ensemble des activités avec une vision stratégique et humaine. Elle garantit la cohérence du projet d'établissement et le respect des valeurs qui nous unissent.",
+        image: "/images/services/direction.png",
+    },
 ];
 
 // Navigation
