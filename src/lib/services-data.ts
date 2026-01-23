@@ -17,7 +17,7 @@ Nos aides-soignants sont présents 24h/24, de jour comme de nuit, pour accompagn
             "Collaboration avec spécialistes",
         ],
         image: "/images/services/soignants.png",
-        detailImage: "/images/services/soignants_detail.png",
+        detailImage: "/images/services/soignants.png",
     },
     {
         id: "infirmiere",
@@ -36,7 +36,7 @@ Au-delà des soins techniques, nos infirmières apportent une présence rassuran
             "Lien avec les familles",
         ],
         image: "/images/services/infirmiere.png",
-        detailImage: "/images/services/infirmiere_detail.png",
+        detailImage: "/images/services/infirmiere.png",
     },
     {
         id: "animation",
@@ -55,7 +55,7 @@ Elle organise également des événements festifs tout au long de l'année : fê
             "Sorties et événements",
         ],
         image: "/images/services/animation.png",
-        detailImage: "/images/services/animation_detail.png",
+        detailImage: "/images/services/animation.png",
     },
     {
         id: "cuisine",
@@ -74,7 +74,7 @@ Les régimes particuliers sont bien sûr pris en compte : textures modifiées, r
             "Menus adaptés aux régimes",
         ],
         image: "/images/services/cuisine.png",
-        detailImage: "/images/services/cuisine_detail.png",
+        detailImage: "/images/services/cuisine.png",
     },
     {
         id: "bienetre",
@@ -93,7 +93,7 @@ Au-delà de l'aspect esthétique, elle participe au maintien des liens sociaux. 
             "Échanges et écoute",
         ],
         image: "/images/services/bienetre.png",
-        detailImage: "/images/services/bienetre_detail.png",
+        detailImage: "/images/services/bienetre.png",
     },
     {
         id: "kine",
@@ -112,7 +112,7 @@ Il travaille en étroite collaboration avec l'équipe soignante et médicale. Ce
             "Soulagement des douleurs",
         ],
         image: "/images/services/kine.png",
-        detailImage: "/images/services/kine_detail.png",
+        detailImage: "/images/services/kine.png",
     },
     {
         id: "lingerie",
@@ -131,7 +131,7 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
             "Service personnalisé",
         ],
         image: "/images/services/lingerie.png",
-        detailImage: "/images/services/lingerie_detail.png",
+        detailImage: "/images/services/lingerie.png",
     },
     {
         id: "admin",
@@ -150,7 +150,7 @@ Il vous accueille avec chaleur et disponibilité. De la constitution du dossier 
             "Gestion des dossiers",
         ],
         image: "/images/services/admin.png",
-        detailImage: "/images/services/admin_detail.png",
+        detailImage: "/images/services/admin.png",
     },
     {
         id: "technique",
@@ -169,7 +169,7 @@ Leur champ d'action est vaste : sécurité incendie, maintenance préventive et 
             "Sécurité des locaux",
         ],
         image: "/images/services/technique.png",
-        detailImage: "/images/services/technique_detail.png",
+        detailImage: "/images/services/technique.png",
     },
     {
         id: "hotelier",
@@ -188,7 +188,7 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
             "Présence bienveillante",
         ],
         image: "/images/services/hotelier.png",
-        detailImage: "/images/services/hotelier_detail.png",
+        detailImage: "/images/services/hotelier.png",
     },
     {
         id: "rh",
