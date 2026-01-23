@@ -197,7 +197,7 @@ export default function ContactPage() {
                             {
                                 question: "Quels documents pour un dossier d'admission ?",
                                 answer:
-                                    "Contactez notre service administratif qui vous fournira la liste complète des documents nécessaires.",
+                                    "L'inscription se fait désormais exclusivement en ligne via le portail national ViaTrajectoire. Le site vous guidera pour téléverser les justificatifs nécessaires.",
                             },
                             {
                                 question: "L'établissement est-il habilité à l'aide sociale ?",

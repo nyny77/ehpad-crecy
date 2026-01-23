@@ -14,11 +14,7 @@ export default function AdmissionsPage() {
         <main className="bg-cream-100 min-h-screen">
             {/* Hero Section */}
             <PageHeader
-                title={
-                    <>
-                        Admissions & <span className="text-terracotta-500 italic">Tarifs</span>
-                    </>
-                }
+                title="Admissions"
                 subtitle="Démarches simplifiées"
                 description="Nous vous accompagnons à chaque étape. Faites votre demande en ligne simplement via ViaTrajectoire."
             />
@@ -128,18 +124,7 @@ export default function AdmissionsPage() {
                                     </p>
                                 </div>
 
-                                <a href="#" className="group flex items-center justify-between bg-white text-charcoal-900 p-5 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-cream-100 text-terracotta-500 rounded-lg flex items-center justify-center">
-                                            <FileText className="w-6 h-6" />
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="font-bold text-lg">Pièces à fournir</div>
-                                            <div className="text-sm text-charcoal-500">Liste des documents obligatoires</div>
-                                        </div>
-                                    </div>
-                                    <Download className="w-5 h-5 text-charcoal-400 group-hover:text-terracotta-500 transition-colors" />
-                                </a>
+
                             </div>
                         </div>
                     </div>
@@ -173,11 +158,12 @@ export default function AdmissionsPage() {
                                 Son montant dépend du niveau de dépendance (GIR) et des revenus.
                             </p>
                             <a
-                                href="https://www.seine-et-marne.fr/fr/allocation-personnalisee-dautonomie-apa-domicile-et-etablissement"
+                                href="https://www.pour-les-personnes-agees.gouv.fr/preserver-son-autonomie-s-informer-et-anticiper/perte-d-autonomie-evaluation-et-droits/l-allocation-personnalisee-d-autonomie-apa"
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-forest-600 font-medium hover:underline flex items-center gap-1 group"
                             >
-                                En savoir plus (77)
+                                En savoir plus
                                 <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </a>
                         </div>
@@ -215,11 +201,12 @@ export default function AdmissionsPage() {
                                 une partie des frais d'hébergement (récupérable sur succession).
                             </p>
                             <a
-                                href="https://www.seine-et-marne.fr/fr/aide-sociale-lhebergement-ash-pour-personnes-agees"
+                                href="https://www.pour-les-personnes-agees.gouv.fr/beneficier-d-aides-financieres/l-aide-sociale-a-l-hebergement-ash"
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-charcoal-700 font-medium hover:underline flex items-center gap-1 group"
                             >
-                                Infos Département 77
+                                En savoir plus
                                 <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </a>
                         </div>
