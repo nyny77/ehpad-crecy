@@ -118,7 +118,7 @@ export default function HeroSection() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
-                            className="btn-secondary text-lg px-8 py-4 shadow-md"
+                            className="btn-primary text-lg px-8 py-4 shadow-md"
                         >
                             Découvrir nos tarifs
                         </motion.button>
