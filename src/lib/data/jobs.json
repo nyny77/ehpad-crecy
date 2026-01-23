@@ -1,32 +1,3 @@
 {
-    "offers": [
-        {
-            "id": "ide",
-            "title": "Infirmier(ère) Diplômé(e) d'État (IDE)",
-            "contract": "CDI / CDD",
-            "description": "Vous assurez les soins infirmiers, la surveillance clinique et le suivi des résidents en collaboration avec l'équipe soignante et le médecin coordonnateur.",
-            "requirements": [
-                {
-                    "req": "Diplôme d'État infirmier exigé"
-                },
-                {
-                    "req": "Esprit d'équipe et bienveillance"
-                }
-            ]
-        },
-        {
-            "id": "aide-soignant",
-            "title": "Aide-Soignant(e)",
-            "contract": "CDI / CDD / Vacations",
-            "description": "Vous accompagnez les résidents dans les gestes de la vie quotidienne, participez aux soins d'hygiène et de confort, et contribuez au maintien de leur autonomie.",
-            "requirements": [
-                {
-                    "req": "Diplôme AS ou expérience significative"
-                },
-                {
-                    "req": "Sens de l'écoute et patience"
-                }
-            ]
-        }
-    ]
+  "offers": []
 }
