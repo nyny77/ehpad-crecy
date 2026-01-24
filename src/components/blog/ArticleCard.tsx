@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
-import { getArticleStats, toggleLike, incrementViews, hasLiked } from "@/lib/supabaseClient";
 
 interface ArticleCardProps {
     article: Article;
@@ -14,51 +13,33 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article, onClick, isAdmin, onDelete }: ArticleCardProps) {
     const categoryInfo = getCategoryInfo(article.category);
-    const [likes, setLikes] = useState(0);
-    const [views, setViews] = useState(0);
-    const [liked, setLiked] = useState(false);
-    const [isLiking, setIsLiking] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
-        // Charger les stats au montage
-        const loadStats = async () => {
-            try {
-                const stats = await getArticleStats(article.id);
-                setLikes(stats.likes);
-                setViews(stats.views);
-                setLiked(hasLiked(article.id));
-            } catch (error) {
-                console.error('Erreur chargement stats:', error);
-            }
-        };
-        loadStats();
+        // Vérifier si l'article est dans les favoris
+        if (typeof window !== 'undefined') {
+            const favorites = JSON.parse(localStorage.getItem('ehpad_favorites') || '[]');
+            setIsFavorite(favorites.includes(article.id));
+        }
     }, [article.id]);
 
-    const handleLike = async (e: React.MouseEvent) => {
+    const handleToggleFavorite = (e: React.MouseEvent) => {
         e.stopPropagation();
-        if (isLiking) return;
+        
+        if (typeof window === 'undefined') return;
 
-        setIsLiking(true);
-        try {
-            const result = await toggleLike(article.id);
-            setLiked(result.liked);
-            setLikes(result.newCount);
-        } catch (error) {
-            console.error('Erreur like:', error);
-        } finally {
-            setIsLiking(false);
+        const favorites = JSON.parse(localStorage.getItem('ehpad_favorites') || '[]');
+        let newFavorites;
+        
+        if (favorites.includes(article.id)) {
+            newFavorites = favorites.filter((id: string) => id !== article.id);
+            setIsFavorite(false);
+        } else {
+            newFavorites = [...favorites, article.id];
+            setIsFavorite(true);
         }
-    };
-
-    const handleClick = async () => {
-        // Incrémenter les vues quand on clique pour lire
-        try {
-            await incrementViews(article.id);
-            setViews(v => v + 1);
-        } catch (error) {
-            console.error('Erreur vues:', error);
-        }
-        onClick?.();
+        
+        localStorage.setItem('ehpad_favorites', JSON.stringify(newFavorites));
     };
 
     const formatDate = (dateStr: string) => {
@@ -120,21 +101,11 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
 
             {/* Contenu */}
             <div className="p-5">
-                {/* Date et stats */}
+                {/* Date */}
                 <div className="flex items-center justify-between mb-2">
                     <p className="text-sm text-charcoal-500">
                         {formatDate(article.date)}
                     </p>
-                    <div className="flex items-center gap-3 text-sm text-charcoal-400">
-                        {/* Vues */}
-                        <span className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                            {views}
-                        </span>
-                    </div>
                 </div>
 
                 {/* Titre */}
@@ -149,32 +120,32 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
 
                 {/* Actions */}
                 <div className="flex items-center justify-between">
-                    {/* Bouton Like */}
+                    {/* Bouton Favorite */}
                     <motion.button
                         whileTap={{ scale: 0.9 }}
-                        onClick={handleLike}
-                        disabled={isLiking}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all ${liked
+                        onClick={handleToggleFavorite}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all ${isFavorite
                                 ? 'bg-red-50 text-red-500'
                                 : 'bg-cream-100 text-charcoal-500 hover:bg-red-50 hover:text-red-500'
                             }`}
+                        title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                     >
                         <motion.svg
-                            animate={liked ? { scale: [1, 1.3, 1] } : {}}
+                            animate={isFavorite ? { scale: [1, 1.3, 1] } : {}}
                             className="w-5 h-5"
-                            fill={liked ? "currentColor" : "none"}
+                            fill={isFavorite ? "currentColor" : "none"}
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </motion.svg>
-                        <span className="text-sm font-medium">{likes}</span>
+                        {/* Indicateur textuel optionnel - supprimé pour simplifier */}
                     </motion.button>
 
                     {/* Lire plus */}
                     {onClick && (
                         <button
-                            onClick={handleClick}
+                            onClick={onClick}
                             className="text-terracotta-500 font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all"
                         >
                             Lire la suite

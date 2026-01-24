@@ -11,7 +11,6 @@
   "dependencies": {
     "@netlify/functions": "^5.1.2",
     "@studio-freight/lenis": "^1.0.42",
-    "@supabase/supabase-js": "^2.90.1",
     "archiver": "^7.0.1",
     "framer-motion": "^12.26.1",
     "gray-matter": "^4.0.3",
