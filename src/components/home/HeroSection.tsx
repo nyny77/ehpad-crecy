@@ -43,34 +43,42 @@ export default function HeroSection() {
                 style={{ opacity }}
                 className="relative z-10 container-custom text-center px-4 pt-20"
             >
-                {/* Titre principal */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal-900 mb-8 max-w-5xl mx-auto leading-tight drop-shadow-sm"
+                {/* Container Glassmorphism pour le titre et slogan */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="inline-block bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-12 mb-10 shadow-2xl max-w-5xl mx-auto"
                 >
-                    {EHPAD_INFO.name}
-                </motion.h1>
+                    {/* Titre principal */}
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal-900 mb-6 leading-tight drop-shadow-sm"
+                    >
+                        {EHPAD_INFO.name}
+                    </motion.h1>
 
-                {/* Slogan avec animation mot par mot */}
-                <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-10 max-w-4xl mx-auto">
-                    {sloganWords.map((word, index) => (
-                        <motion.span
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.5,
-                                delay: 0.6 + index * 0.1,
-                                ease: "easeOut",
-                            }}
-                            className="text-2xl md:text-3xl lg:text-4xl text-terracotta-800 font-serif italic drop-shadow-sm opacity-95"
-                        >
-                            {word}
-                        </motion.span>
-                    ))}
-                </div>
+                    {/* Slogan avec animation mot par mot */}
+                    <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
+                        {sloganWords.map((word, index) => (
+                            <motion.span
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.5,
+                                    delay: 0.6 + index * 0.1,
+                                    ease: "easeOut",
+                                }}
+                                className="text-2xl md:text-3xl lg:text-4xl text-terracotta-800 font-serif italic drop-shadow-sm"
+                            >
+                                {word}
+                            </motion.span>
+                        ))}
+                    </div>
+                </motion.div>
 
                 {/* Description - Carte Glassmorphism plus propre */}
                 <motion.div
