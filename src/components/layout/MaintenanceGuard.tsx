@@ -49,6 +49,7 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
             // Si l'utilisateur vient de se connecter, on ferme la modale
             if (newUser) {
                 setIsSignupOpen(false);
+                closeWidget();
             }
         });
 

@@ -4,16 +4,19 @@ import { useEffect } from "react";
 
 export default function NetlifyIdentityRedirect() {
     useEffect(() => {
-        // Gestion de la redirection après login (pour les SPA)
-        if (typeof window !== "undefined" && window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", (user) => {
-                if (!user) {
-                    window.netlifyIdentity?.on("login", () => {
-                        document.location.href = "/";
-                    });
-                }
-            });
+        // Simple and robust login listener
+        const handleLogin = () => {
+            console.log("Login detected in Redirect, reloading...");
+            window.location.href = "/";
+        };
+
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("login", handleLogin);
         }
+
+        return () => {
+            window.netlifyIdentity?.off("login", handleLogin);
+        };
     }, []);
 
     return null;
