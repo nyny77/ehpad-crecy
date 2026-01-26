@@ -54,12 +54,12 @@ export default function PageHeader({
                 style={{ opacity }}
                 className="relative z-10 container-custom text-center px-4 pt-20"
             >
-                {/* Container Glassmorphism global pour l'en-tête */}
+                {/* Container Glassmorphism global pour l'en-tête - UN SEUL encadré comme l'accueil */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="inline-block bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-10 mb-8 shadow-2xl max-w-4xl mx-auto"
+                    className="inline-block bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-12 mb-10 shadow-2xl max-w-5xl mx-auto"
                 >
                     {/* Badge/Subtitle */}
                     {subtitle && (
@@ -80,22 +80,23 @@ export default function PageHeader({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal-900 mx-auto leading-tight drop-shadow-sm"
+                        className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal-900 mx-auto leading-tight drop-shadow-sm mb-6"
                     >
                         {title}
                     </motion.h1>
-                </motion.div>
 
-                {description && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto mb-8 bg-white/40 backdrop-blur-sm rounded-2xl px-6 py-4"
-                    >
-                        {typeof description === 'string' ? <p>{description}</p> : description}
-                    </motion.div>
-                )}
+                    {/* Description - DANS le même encadré */}
+                    {description && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.5 }}
+                            className="text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto font-serif italic"
+                        >
+                            {typeof description === 'string' ? <p>{description}</p> : description}
+                        </motion.div>
+                    )}
+                </motion.div>
 
                 {/* Children / Extra content */}
                 {children && (
