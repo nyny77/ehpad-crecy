@@ -86,7 +86,7 @@ export default function Header() {
 
                     {/* Navigation Desktop */}
                     <div className="hidden lg:flex items-center gap-6">
-                        {NAV_LINKS.filter(link => link.href !== '/contact').map((link) => (
+                        {NAV_LINKS.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
@@ -97,20 +97,27 @@ export default function Header() {
                             </Link>
                         ))}
 
+                        <Link href="/contact">
+                            <motion.button
+                                whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
+                                whileTap={{ scale: 0.98 }}
+                                className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
+                            >
+                                Nous rencontrer
+                            </motion.button>
+                        </Link>
+
                         {/* Login / User Menu Button */}
                         <div className="relative">
                             {user ? (
                                 <div className="relative">
                                     <button
                                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                                        className="flex items-center gap-2 px-4 py-2 bg-cream-200 text-charcoal-800 rounded-full hover:bg-cream-300 transition-colors text-sm font-medium whitespace-nowrap"
+                                        className="flex items-center justify-center w-10 h-10 bg-cream-200 text-charcoal-800 rounded-full hover:bg-cream-300 transition-colors"
+                                        title="Mon Compte"
                                     >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                        <span>Mon Compte</span>
-                                        <svg className={`w-3 h-3 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </button>
 
@@ -163,12 +170,12 @@ export default function Header() {
                             ) : (
                                 <button
                                     onClick={handleLogin}
-                                    className="flex items-center gap-2 px-4 py-2 border border-charcoal-200 text-charcoal-700 rounded-full hover:border-terracotta-500 hover:text-terracotta-500 transition-colors text-sm font-medium whitespace-nowrap"
+                                    className="flex items-center justify-center w-10 h-10 border border-charcoal-200 text-charcoal-700 rounded-full hover:border-terracotta-500 hover:text-terracotta-500 transition-colors"
+                                    title="Espace Famille & Admin"
                                 >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
-                                    Espace Famille & Admin
                                 </button>
                             )}
                             {/* Overlay to close user menu when clicking outside */}
@@ -177,15 +184,7 @@ export default function Header() {
                             )}
                         </div>
 
-                        <Link href="/contact">
-                            <motion.button
-                                whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
-                                whileTap={{ scale: 0.98 }}
-                                className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
-                            >
-                                Nous rencontrer
-                            </motion.button>
-                        </Link>
+
                     </div>
 
                     {/* Mobile Menu Button */}

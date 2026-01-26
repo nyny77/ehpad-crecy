@@ -195,13 +195,12 @@ export const SERVICES = [
 // Navigation
 export const NAV_LINKS = [
     { href: "/", label: "Accueil" },
-    { href: "/vie-sociale", label: "Vie Sociale" },
-    { href: "/galerie", label: "Galerie Photos" },
     { href: "/equipe", label: "Notre Équipe" },
-    { href: "/hebergement", label: "Hébergement & Tarifs" },
+    { href: "/galerie", label: "Galerie Photos" },
+    { href: "/vie-sociale", label: "Vie Sociale" },
     { href: "/admissions", label: "Admissions" },
+    { href: "/hebergement", label: "Hébergement" },
     { href: "/recrutement", label: "Recrutement" },
-    { href: "/contact", label: "Contact" },
 ];
 
 // Valeurs de l'établissement
