@@ -33,7 +33,7 @@ export default function PageHeader({
     return (
         <section
             ref={containerRef}
-            className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-cream-100"
+            className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-cream-100"
         >
             {/* Image de fond avec parallax */}
             <motion.div style={{ y }} className="absolute inset-0 z-0">
@@ -52,7 +52,7 @@ export default function PageHeader({
             {/* Contenu */}
             <motion.div
                 style={{ opacity }}
-                className="relative z-10 container-custom text-center px-4 pt-36 pb-12"
+                className="relative z-10 container-custom text-center px-4 pt-32 pb-12"
             >
                 {/* Container Glassmorphism global pour l'en-tête */}
                 <motion.div
