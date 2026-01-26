@@ -52,7 +52,7 @@ export default function PageHeader({
             {/* Contenu */}
             <motion.div
                 style={{ opacity }}
-                className="relative z-10 container-custom text-center px-4 pt-20"
+                className="relative z-10 container-custom text-center px-4 pt-36 pb-12"
             >
                 {/* Container Glassmorphism global pour l'en-tête */}
                 <motion.div
