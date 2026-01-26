@@ -44,9 +44,11 @@ export default function GaleriePage() {
                 title="Découvrez nos espaces de vie"
                 subtitle="Visite Virtuelle"
                 description="Une architecture pensée pour le bien-être, alliant confort hôtelier, sécurité médicale et convivialité."
-            >
-                {/* Categories */}
-                <div className="flex flex-wrap justify-center gap-3 mb-10 mt-8">
+            />
+
+            {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}
+            <section className="container-custom px-4 -mt-8 mb-12">
+                <div className="flex flex-wrap justify-center gap-3">
                     {CATEGORIES.map(cat => (
                         <button
                             key={cat.id}
@@ -63,7 +65,7 @@ export default function GaleriePage() {
 
                 {/* Admin Button */}
                 {adminMode && (
-                    <div className="mb-0">
+                    <div className="text-center mt-6">
                         <Link
                             href="/admin"
                             className="inline-flex items-center gap-2 bg-charcoal-800 text-white px-6 py-3 rounded-full hover:bg-charcoal-700 shadow-lg font-bold transition-transform hover:scale-105"
@@ -73,7 +75,7 @@ export default function GaleriePage() {
                         </Link>
                     </div>
                 )}
-            </PageHeader>
+            </section>
 
             {/* Grid */}
             <section className="container-custom px-4">
