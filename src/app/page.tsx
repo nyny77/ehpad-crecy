@@ -3,7 +3,6 @@ import IntroSection from "@/components/home/IntroSection";
 import TeamPreview from "@/components/home/TeamPreview";
 import CTASection from "@/components/home/CTASection";
 import FlashNewsTicker from "@/components/home/FlashNewsTicker";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 export default function HomePage() {
   return (
@@ -12,7 +11,6 @@ export default function HomePage() {
       <FlashNewsTicker />
       <IntroSection />
       <TeamPreview />
-      <TestimonialsSection />
       <CTASection />
     </>
   );

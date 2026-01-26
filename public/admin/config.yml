@@ -63,17 +63,3 @@ collections:
       - { label: "Extrait", name: "excerpt", widget: "text" }
       - { label: "Contenu", name: "body", widget: "markdown" }
 
-  - name: "temoignages"
-    label: "Livre d'or"
-    files:
-      - name: "livredor"
-        label: "Témoignages"
-        file: "content/testimonials.json"
-        fields:
-          - { name: "testimonials", label: "Liste des témoignages", widget: "list", fields: [
-              { name: "id", label: "ID (Unique)", widget: "number", default: 1 },
-              { name: "author", label: "Auteur", widget: "string" },
-              { name: "role", label: "Rôle (ex: Fille d'une résidente)", widget: "string" },
-              { name: "rating", label: "Note (/5)", widget: "number", value_type: "int", min: 1, max: 5, default: 5 },
-              { name: "content", label: "Message", widget: "text" }
-            ]}
