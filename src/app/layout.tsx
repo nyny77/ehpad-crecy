@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
 };
 
-import MaintenanceGuard from "@/components/layout/MaintenanceGuard";
+
 import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 
 export default function RootLayout({
@@ -63,11 +63,9 @@ export default function RootLayout({
       <body className="font-sans text-charcoal-800 bg-cream-50 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
         <NetlifyIdentityRedirect />
         <ErrorBoundary>
-          <MaintenanceGuard>
-            <Header />
-            {children}
-            <Footer />
-          </MaintenanceGuard>
+          <Header />
+          {children}
+          <Footer />
         </ErrorBoundary>
       </body>
     </html>
