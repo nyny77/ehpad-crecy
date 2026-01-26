@@ -4,7 +4,7 @@ declare global {
     interface Window {
         netlifyIdentity?: {
             on: (event: string, callback: (user?: NetlifyUser) => void) => void;
-            off: (event: string) => void;
+            off: (event: string, callback?: (user?: NetlifyUser) => void) => void;
             open: (tab?: "signup" | "login") => void;
             close: () => void;
             logout: () => Promise<void>;

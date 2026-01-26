@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser } from "@/lib/netlifyAuth";
+import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser, closeWidget } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
 
 import SignupModal from "@/components/blog/SignupModal";
