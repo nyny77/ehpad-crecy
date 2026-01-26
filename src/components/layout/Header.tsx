@@ -13,6 +13,7 @@ import {
     onAuthChange,
     initNetlifyIdentity,
     getCurrentUser,
+    closeWidget,
     NetlifyUser
 } from "@/lib/netlifyAuth";
 
@@ -37,6 +38,9 @@ export default function Header() {
         const unsubscribe = onAuthChange((currentUser) => {
             setUser(currentUser);
             setIsAdminUser(isAdmin());
+            if (currentUser) {
+                closeWidget();
+            }
         });
 
         return () => {
