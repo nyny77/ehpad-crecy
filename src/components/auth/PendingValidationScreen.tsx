@@ -35,7 +35,7 @@ export default function PendingValidationScreen({ onLogout, userName }: PendingV
                     l'accès à l'espace "Vie Sociale" est soumis à une validation manuelle par l'équipe technique.
                     <br /><br />
                     <span className="bg-amber-50 px-3 py-1 rounded-lg text-amber-800 text-sm font-medium">
-                        Vous recevrez un email dès que votre accès sera activé.
+                        Veuillez vous reconnecter ultérieurement pour vérifier si votre accès a été validé.
                     </span>
                 </p>
 
