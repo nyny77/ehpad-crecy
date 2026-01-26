@@ -3,9 +3,9 @@ export const SERVICES_EXTENDED = [
     {
         id: "soignants",
         title: "La soignante",
-        subtitle: "Aides-soignants & Médecin coordinateur",
-        shortDescription: "Notre équipe médicale et soignante accompagne chaque résident au quotidien.",
-        fullDescription: `Notre équipe médicale et soignante constitue le cœur de l'EHPAD de Crécy. Composée d'aides-soignants dévoués et d'un médecin coordinateur, elle accompagne chaque résident au quotidien avec professionnalisme et bienveillance.
+        subtitle: "Aides-soignants & Accompagnement quotidien",
+        shortDescription: "Notre équipe soignante accompagne chaque résident au quotidien.",
+        fullDescription: `Notre équipe soignante constitue le cœur de l'EHPAD de Crécy. Composée d'aides-soignants dévoués, elle accompagne chaque résident au quotidien avec professionnalisme et bienveillance.
 
 En lien étroit avec le médecin traitant de chaque résident, notre équipe assure un suivi personnalisé et attentif. Nous collaborons également avec les hôpitaux, spécialistes et professionnels libéraux de la région pour garantir une prise en charge complète.
 
@@ -59,19 +59,19 @@ Elle organise également des événements festifs tout au long de l'année : fê
     },
     {
         id: "cuisine",
-        title: "Le cuisinier",
-        subtitle: "Équipe & Responsable cuisine",
-        shortDescription: "Des repas maison, savoureux et équilibrés chaque jour.",
-        fullDescription: `La cuisine de l'EHPAD de Crécy est un lieu d'où s'échappent chaque jour des arômes appétissants. Notre équipe de cuisiniers, pilotée par une responsable cuisine, prépare avec passion des repas maison, variés et équilibrés.
+        title: "La restauration",
+        subtitle: "Service hôtelier & Repas équilibrés",
+        shortDescription: "Des repas savoureux et équilibrés chaque jour, servis avec attention.",
+        fullDescription: `Le service de restauration de l'EHPAD de Crécy propose chaque jour des menus variés et équilibrés. Une attention particulière est portée à la qualité des repas pour garantir le plaisir gustatif de chacun.
 
-Nous attachons une importance particulière à la qualité des produits et privilégions les circuits courts et les produits de saison. Chaque menu est élaboré avec soin pour allier plaisir gustatif et équilibre nutritionnel.
+Les menus sont élaborés pour répondre aux besoins nutritionnels de nos résidents, tout en respectant leurs goûts et leurs habitudes. Le service est effectué à l'assiette, dans une ambiance conviviale et chaleureuse.
 
-Les régimes particuliers sont bien sûr pris en compte : textures modifiées, régimes sans sel, diabétiques... Le pilotage par notre responsable cuisine garantit que les besoins de chacun sont respectés tout en préservant le plaisir de la table.`,
+Les régimes particuliers sont scrupuleusement suivis (textures modifiées, sans sel, diabétiques...) pour assurer la sécurité et le bien-être de tous, sans jamais négliger le plaisir de la table.`,
         highlights: [
-            "Équipe de cuisiniers",
-            "Pilotage par responsable cuisine",
-            "Produits frais et de saison",
-            "Menus adaptés aux régimes",
+            "Menus variés et équilibrés",
+            "Service à l'assiette",
+            "Respect des régimes",
+            "Ambiance conviviale",
         ],
         image: "/images/services/cuisine.png",
         detailImage: "/images/services/cuisine.png",
@@ -135,17 +135,17 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
     },
     {
         id: "admin",
-        title: "L'agent administratif",
+        title: "L'agente administrative",
         subtitle: "Accueil, Administration & Facturation",
-        shortDescription: "Un accueil chaleureux et une gestion rigoureuse.",
-        fullDescription: `L'agent administratif de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
+        shortDescription: "Un accueil chaleureux et une gestion rigoureuse des dossiers et facturations.",
+        fullDescription: `L'agente administrative de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
 
-Bien plus qu'un simple gestionnaire, il joue un rôle central. Il assure l'interface administrative tout en veillant à la qualité de l'accueil.
+Bien plus qu'une simple gestionnaire, elle joue un rôle central. Elle assure l'interface administrative tout en veillant à la qualité de l'accueil.
 
-Il vous accueille avec chaleur et disponibilité. De la constitution du dossier aux questions de facturation, il vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
+Elle vous accueille avec chaleur et disponibilité. De la constitution du dossier à la gestion des facturations (résidents et prestataires), elle vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
         highlights: [
             "Accueil personnalisé",
-            "Accompagnement administratif",
+            "Facturation résidents & prestataires",
             "Lien avec les familles",
             "Gestion des dossiers",
         ],
@@ -192,19 +192,19 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
     },
     {
         id: "rh",
-        title: "L'agent RH",
+        title: "La Responsable RH",
         subtitle: "Ressources Humaines & Bien-être au travail",
         shortDescription: "La responsable RH veille au bon climat social et à l'épanouissement de tous les collaborateurs.",
         fullDescription: `La responsable des Ressources Humaines de l'EHPAD de Crécy joue un rôle central dans la vie de l'établissement. Elle est le point de contact privilégié pour l'ensemble des collaborateurs et veille au maintien d'un climat social serein et bienveillant.
 
-Son action s'articule autour de plusieurs missions essentielles : le recrutement de nouveaux talents, l'accompagnement des carrières, la formation continue et le développement des compétences. Elle s'assure que chaque membre de l'équipe dispose des moyens nécessaires pour exercer son métier dans les meilleures conditions.
+Son action s'articule autour de plusieurs missions essentielles : la gestion de la paie, le recrutement de nouveaux talents, l'accompagnement des carrières, la formation continue et le développement des compétences. Elle s'assure que chaque membre de l'équipe dispose des moyens nécessaires pour exercer son métier dans les meilleures conditions.
 
 Au-delà de la gestion administrative, elle porte une attention particulière à la qualité de vie au travail. Son écoute attentive et sa disponibilité contribuent à créer un environnement où chacun se sent reconnu et valorisé.`,
         highlights: [
+            "Gestion de la paie",
             "Formation continue",
             "Qualité de vie au travail",
             "Recrutement et intégration",
-            "Accompagnement des carrières",
         ],
         image: "/images/services/rh.png",
         detailImage: "/images/services/rh.png",
@@ -230,14 +230,14 @@ Accessible et à l'écoute, elle accorde une importance particulière à la comm
     },
     {
         id: "psychologue",
-        title: "La psychologue",
+        title: "Le psychologue",
         subtitle: "Écoute & Accompagnement émotionnel",
-        shortDescription: "La psychologue accompagne les résidents et leurs familles dans les moments de vie importants.",
-        fullDescription: `La psychologue de l'EHPAD de Crécy offre un espace d'écoute bienveillant et confidentiel aux résidents, à leurs familles et aux équipes. Son rôle est essentiel dans l'accompagnement des transitions et des moments de vie parfois difficiles.
+        shortDescription: "Le psychologue accompagne les résidents et leurs familles dans les moments de vie importants.",
+        fullDescription: `Le psychologue de l'EHPAD de Crécy offre un espace d'écoute bienveillant et confidentiel aux résidents, à leurs familles et aux équipes. Son rôle est essentiel dans l'accompagnement des transitions et des moments de vie parfois difficiles.
 
-Elle intervient auprès des résidents pour les aider à s'adapter à leur nouvelle vie, à maintenir leur estime de soi et à traverser les épreuves du quotidien. Elle anime également des groupes de parole et des ateliers thérapeutiques favorisant le bien-être émotionnel.
+Il intervient auprès des résidents pour les aider à s'adapter à leur nouvelle vie, à maintenir leur estime de soi et à traverser les épreuves du quotidien. Il anime également des groupes de parole et des ateliers thérapeutiques favorisant le bien-être émotionnel.
 
-Auprès des familles, elle propose un soutien dans les moments de questionnement, lors de l'entrée en établissement ou face à l'évolution de l'état de santé de leur proche. Elle les aide à maintenir un lien serein et à traverser ensemble les étapes du vieillissement.`,
+Auprès des familles, il propose un soutien dans les moments de questionnement, lors de l'entrée en établissement ou face à l'évolution de l'état de santé de leur proche. Il les aide à maintenir un lien serein et à traverser ensemble les étapes du vieillissement.`,
         highlights: [
             "Écoute bienveillante",
             "Accompagnement des familles",
@@ -269,18 +269,18 @@ L'IDEC est également l'interlocutrice privilégiée des familles pour toutes le
     {
         id: "medecins",
         title: "Les médecins",
-        subtitle: "Suivi Médical & Prévention",
-        shortDescription: "Les médecins assurent le suivi médical des résidents en collaboration avec leurs médecins traitants.",
-        fullDescription: `L'équipe médicale de l'EHPAD de Crécy comprend un médecin coordonnateur qui travaille en étroite collaboration avec les médecins traitants de chaque résident. Cette organisation garantit un suivi personnalisé et une continuité des soins optimale.
+        subtitle: "Suivi Médical & Médecins traitants",
+        shortDescription: "Les résidents conservent leur médecin traitant pour leur suivi médical.",
+        fullDescription: `Chaque résident conserve le libre choix de son médecin traitant. Ce dernier assure le suivi médical régulier au sein de l'établissement, en étroite collaboration avec l'équipe soignante.
 
-Le médecin coordonnateur élabore le projet de soins de l'établissement, valide les admissions, et veille à la bonne application des protocoles médicaux. Il intervient également en cas d'urgence et assure la liaison avec les établissements hospitaliers de la région.
+Les médecins traitants interviennent pour les consultations, les renouvellements d'ordonnances et le suivi des pathologies. Ils sont les interlocuteurs privilégiés des familles concernant la santé des résidents.
 
-Les résidents conservent bien sûr leur médecin traitant qui continue de les suivre au sein de l'établissement. Cette collaboration étroite entre médecins permet d'allier la connaissance de l'histoire médicale de chaque résident et l'expertise gériatrique nécessaire à leur accompagnement.`,
+Cette organisation permet de maintenir une relation de confiance établie de longue date et garantit une continuité des soins respectueuse des habitudes de chacun.`,
         highlights: [
-            "Suivi personnalisé",
-            "Médecin coordonnateur",
-            "Liaison médecins traitants",
-            "Prévention et dépistage",
+            "Libre choix du médecin",
+            "Suivi par médecin traitant",
+            "Continuité des soins",
+            "Collaboration équipe soignante",
         ],
         image: "/images/services/medecins.png",
         detailImage: "/images/services/medecins.png",

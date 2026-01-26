@@ -7,7 +7,7 @@ const EVENTS = [
     {
         time: "08h00",
         title: "Réveil en douceur & Petit déjeuner",
-        description: "Un réveil personnalisé respectant le rythme de chacun, suivi d'un petit déjeuner gourmand servi en chambre ou en salle de restauration.",
+        description: "Un réveil personnalisé respectant le rythme de chacun, suivi d'un petit déjeuner gourmand servi en chambre.",
         icon: <Sun className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         side: "left"
@@ -23,7 +23,7 @@ const EVENTS = [
     {
         time: "12h30",
         title: "Déjeuner du Chef",
-        description: "Une cuisine faite maison, savoureuse et équilibrée, servie à l'assiette dans notre restaurant convivial.",
+        description: "Une cuisine savoureuse et équilibrée, servie à l'assiette.",
         icon: <Utensils className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         side: "left"
@@ -39,7 +39,7 @@ const EVENTS = [
     {
         time: "16h30",
         title: "Goûter Gourmand",
-        description: "Le moment plaisir de la journée avec pâtisseries maison et boissons chaudes.",
+        description: "Le moment plaisir de la journée avec pâtisseries et boissons chaudes.",
         icon: <Coffee className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         side: "left"
