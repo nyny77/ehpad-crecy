@@ -1,30 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import testimonialsData from "../../../content/testimonials.json";
 
-const TESTIMONIALS = [
-    {
-        id: 1,
-        content: "Maman a retrouvé le sourire depuis son arrivée. L'équipe est d'une bienveillance rare, toujours à l'écoute. On sent une véritable ambiance familiale.",
-        author: "Sophie D.",
-        role: "Fille d'une résidente",
-        rating: 5,
-    },
-    {
-        id: 2,
-        content: "La cuisine est excellente, faite sur place, ce qui change tout ! Les animations sont variées, mon père ne s'ennuie jamais.",
-        author: "Marc L.",
-        role: "Fils d'un résident",
-        rating: 5,
-    },
-    {
-        id: 3,
-        content: "Une transition en douceur grâce à un accompagnement formidable. Les espaces sont lumineux, propres et chaleureux. Un grand merci.",
-        author: "Isabelle M.",
-        role: "Nièce d'une résidente",
-        rating: 5,
-    },
-];
+const TESTIMONIALS = testimonialsData.testimonials;
 
 export default function TestimonialsSection() {
     return (
