@@ -17,7 +17,8 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
         lastName: '',
         email: '',
         password: '',
-        role: ''
+        role: '',
+        relationship: '' // New field
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -42,8 +43,6 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
             const gotrue = window.netlifyIdentity.gotrue;
 
             if (!gotrue) {
-                // Fallback if gotrue isn't immediately available (shouldn't happen if initialized)
-                // We might need to handle this by initializing manually if needed, but usually it sits on the window.
                 throw new Error("Erreur interne d'authentification.");
             }
 
@@ -51,7 +50,8 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                 full_name: `${formData.firstName} ${formData.lastName}`,
                 first_name: formData.firstName,
                 last_name: formData.lastName,
-                fonction: formData.role
+                fonction: formData.role,
+                lien_parente: formData.relationship
             });
 
             // Notification silencieuse via Netlify Forms
@@ -70,6 +70,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         prenom: formData.firstName,
                         nom: formData.lastName,
                         fonction: formData.role,
+                        lien_parente: formData.relationship,
                         email: formData.email
                     })
                 });
@@ -175,6 +176,31 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     ))}
                                 </select>
                             </div>
+
+                            {/* Champ conditionnel pour la famille */}
+                            <AnimatePresence>
+                                {formData.role === 'famille' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            Lien de parenté (ex: Fils de Mme Martin)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="relationship"
+                                            required={formData.role === 'famille'}
+                                            value={formData.relationship}
+                                            onChange={handleChange}
+                                            placeholder="Fille de Mr Dupont, ..."
+                                            className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] transition-all bg-amber-50/50"
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">

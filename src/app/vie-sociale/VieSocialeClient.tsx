@@ -6,7 +6,7 @@ import gazetteData from "@/lib/data/gazette.json";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 import BlogGrid from "@/components/blog/BlogGrid";
-import SignupModal from "@/components/blog/SignupModal";
+import SignupModal from "@/components/auth/SignupModal";
 import DayTimeline from "@/components/social/DayTimeline";
 import { BlogPost } from "@/lib/blog";
 import {
@@ -346,8 +346,10 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <SignupModal
                 isOpen={showSignupModal}
                 onClose={() => setShowSignupModal(false)}
-                onSuccess={() => {
+                onSignupSuccess={() => {
+                    setShowSignupModal(false);
                     // L'utilisateur devra confirmer son email puis se connecter
+                    alert("Inscription réussie ! Votre compte est en attente de validation par l'équipe technique.");
                 }}
             />
         </>

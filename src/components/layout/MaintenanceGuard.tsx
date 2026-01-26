@@ -5,7 +5,7 @@ import Image from "next/image";
 import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser, closeWidget } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
 
-import SignupModal from "@/components/blog/SignupModal";
+import SignupModal from "@/components/auth/SignupModal";
 
 export default function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<NetlifyUser | null>(null);
@@ -136,8 +136,9 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
             <SignupModal
                 isOpen={isSignupOpen}
                 onClose={() => setIsSignupOpen(false)}
-                onSuccess={() => {
+                onSignupSuccess={() => {
                     // Optionnel : afficher un message ou laisser la modale gérer son état "success"
+                    setIsSignupOpen(false);
                 }}
             />
         </main>
