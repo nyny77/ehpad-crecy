@@ -101,9 +101,9 @@ export const SERVICES = [
     },
     {
         id: "cuisine",
-        title: "Le cuisinier",
-        subtitle: "Équipe & Responsable cuisine",
-        description: "Notre équipe de cuisiniers, pilotée par une responsable cuisine, concocte chaque jour des repas variés, équilibrés et savoureux. Nous adaptons les menus aux régimes particuliers tout en préservant le plaisir de la table.",
+        title: "La restauration",
+        subtitle: "Service hôtelier & Repas équilibrés",
+        description: "Le service de restauration propose chaque jour des menus variés et équilibrés, servis à l'assiette. Nous respectons scrupuleusement les régimes tout en préservant le plaisir de la table.",
         image: "/images/services/cuisine.png",
     },
     {
@@ -129,9 +129,9 @@ export const SERVICES = [
     },
     {
         id: "admin",
-        title: "L'agent administratif",
+        title: "L'agente administrative",
         subtitle: "Accueil, Administration & Facturation",
-        description: "L'agent administratif vous accueille et vous accompagne dans toutes vos démarches administratives avec bienveillance et efficacité. Il est votre interlocuteur privilégié pour la gestion de votre dossier.",
+        description: "L'agente administrative vous accueille et vous accompagne dans toutes vos démarches (dossiers, facturations résidents & prestataires) avec bienveillance et efficacité.",
         image: "/images/services/admin.png",
     },
     {
@@ -150,9 +150,9 @@ export const SERVICES = [
     },
     {
         id: "rh",
-        title: "L'agent RH",
+        title: "La Responsable RH",
         subtitle: "Ressources Humaines",
-        description: "La responsable RH est à l'écoute de tous les collaborateurs. Elle veille au bon climat social, accompagne les carrières et participe activement à la qualité de vie au travail.",
+        description: "La responsable RH veille au bon climat social, gère la paie et accompagne les carrières. Elle participe activement à la qualité de vie au travail de tous les collaborateurs.",
         image: "/images/services/rh.png",
     },
     {
@@ -164,9 +164,9 @@ export const SERVICES = [
     },
     {
         id: "psychologue",
-        title: "La psychologue",
+        title: "Le psychologue",
         subtitle: "Écoute & Accompagnement",
-        description: "La psychologue accompagne les résidents et leurs familles dans les moments de vie importants. Elle offre un espace d'écoute bienveillant et contribue au bien-être émotionnel de chacun.",
+        description: "Le psychologue accompagne les résidents et leurs familles dans les moments de vie importants. Il offre un espace d'écoute bienveillant et contribue au bien-être émotionnel de chacun.",
         image: "/images/services/psychologue.png",
     },
     {
