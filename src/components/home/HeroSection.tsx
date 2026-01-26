@@ -48,7 +48,7 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold !text-white mb-8 max-w-5xl mx-auto leading-tight drop-shadow-md"
+                    className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal-900 mb-8 max-w-5xl mx-auto leading-tight drop-shadow-sm"
                 >
                     {EHPAD_INFO.name}
                 </motion.h1>
@@ -65,7 +65,7 @@ export default function HeroSection() {
                                 delay: 0.6 + index * 0.1,
                                 ease: "easeOut",
                             }}
-                            className="text-2xl md:text-3xl lg:text-4xl text-cream-50 font-serif italic drop-shadow-sm opacity-95"
+                            className="text-2xl md:text-3xl lg:text-4xl text-terracotta-800 font-serif italic drop-shadow-sm opacity-95"
                         >
                             {word}
                         </motion.span>
