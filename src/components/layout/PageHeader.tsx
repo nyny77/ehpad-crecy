@@ -33,7 +33,7 @@ export default function PageHeader({
     return (
         <section
             ref={containerRef}
-            className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-cream-100"
+            className="relative h-[60vh] min-h-[500px] flex flex-col items-center overflow-hidden bg-cream-100"
         >
             {/* Image de fond avec parallax */}
             <motion.div style={{ y }} className="absolute inset-0 z-0">
@@ -45,14 +45,14 @@ export default function PageHeader({
                     priority
                 />
                 {/* Overlays pour lisibilité - Plus léger pour mieux voir le dessin */}
-                <div className="absolute inset-0 bg-gradient-to-b from-cream-100/30 via-transparent to-cream-100/90" />
+                <div className="absolute inset-0 bg-gradient-to-b from-cream-100/40 via-transparent to-cream-100/90" />
                 <div className="absolute inset-0 bg-gradient-to-t from-cream-100/90 via-transparent to-transparent" />
             </motion.div>
 
             {/* Contenu */}
             <motion.div
                 style={{ opacity }}
-                className="relative z-10 container-custom text-center px-4 pt-32 pb-12"
+                className="relative z-10 container-custom text-center px-4 pt-44 md:pt-52 pb-16"
             >
                 {/* Container Glassmorphism global pour l'en-tête */}
                 <motion.div
