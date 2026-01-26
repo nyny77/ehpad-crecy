@@ -22,7 +22,7 @@ export default function HeroSection() {
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-100"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-50"
         >
             {/* Image de fond avec parallax */}
             <motion.div style={{ y }} className="absolute inset-0 z-0">
@@ -33,9 +33,9 @@ export default function HeroSection() {
                     className="object-cover object-center"
                     priority
                 />
-                {/* Overlays pour lisibilité */}
-                <div className="absolute inset-0 bg-gradient-to-b from-cream-100/30 via-transparent to-cream-100/90" />
-                <div className="absolute inset-0 bg-gradient-to-t from-cream-100/90 via-transparent to-transparent" />
+                {/* Overlays pour lisibilité - Plus chaud/gold */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-terracotta-500/20 via-transparent to-cream-50/30 mix-blend-overlay" />
             </motion.div>
 
             {/* Contenu */}
@@ -43,20 +43,18 @@ export default function HeroSection() {
                 style={{ opacity }}
                 className="relative z-10 container-custom text-center px-4 pt-20"
             >
-                {/* Badge déplacé en bas */}
-
                 {/* Titre principal */}
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-glow font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold !text-white mb-6 max-w-4xl mx-auto leading-tight drop-shadow-sm"
+                    className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold !text-white mb-8 max-w-5xl mx-auto leading-tight drop-shadow-md"
                 >
                     {EHPAD_INFO.name}
                 </motion.h1>
 
                 {/* Slogan avec animation mot par mot */}
-                <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-8 max-w-3xl mx-auto">
+                <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-10 max-w-4xl mx-auto">
                     {sloganWords.map((word, index) => (
                         <motion.span
                             key={index}
@@ -67,36 +65,40 @@ export default function HeroSection() {
                                 delay: 0.6 + index * 0.1,
                                 ease: "easeOut",
                             }}
-                            className="text-glow text-xl md:text-2xl lg:text-3xl !text-white font-serif italic drop-shadow-sm"
+                            className="text-2xl md:text-3xl lg:text-4xl text-cream-50 font-serif italic drop-shadow-sm opacity-95"
                         >
                             {word}
                         </motion.span>
                     ))}
                 </div>
 
-                {/* Description */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                {/* Description - Carte Glassmorphism plus propre */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.2 }}
-                    className="text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto mb-10 bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-4"
+                    className="max-w-3xl mx-auto mb-12"
                 >
-                    Un lieu de vie chaleureux au cœur de la Seine-et-Marne,
-                    où chaque résident trouve sa place dans une ambiance familiale.
-                </motion.p>
+                    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl p-6 md:p-8 shadow-xl">
+                        <p className="text-lg md:text-xl text-white font-medium drop-shadow-sm leading-relaxed">
+                            Un lieu de vie chaleureux au cœur de la Seine-et-Marne,<br className="hidden md:block" />
+                            où chaque résident trouve sa place dans une ambiance familiale.
+                        </p>
+                    </div>
+                </motion.div>
 
                 {/* CTAs */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 1.4 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-5"
                 >
-                    <Link href="/contact">
+                    <Link href="/contact" className="w-full sm:w-auto">
                         <motion.button
-                            whileHover={{ scale: 1.05, boxShadow: "0 10px 30px -5px rgba(193, 119, 103, 0.4)" }}
+                            whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
-                            className="btn-primary text-lg px-8 py-4 shadow-lg"
+                            className="btn-primary w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-terracotta-900/20"
                         >
                             Venir nous rencontrer
                             <svg
@@ -108,32 +110,35 @@ export default function HeroSection() {
                                 <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    strokeWidth={2}
+                                    strokeWidth={2.5}
                                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                                 />
                             </svg>
                         </motion.button>
                     </Link>
-                    <Link href="/hebergement">
+                    <Link href="/hebergement" className="w-full sm:w-auto">
                         <motion.button
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,1)" }}
                             whileTap={{ scale: 0.98 }}
-                            className="btn-primary text-lg px-8 py-4 shadow-md"
+                            className="btn-secondary w-full sm:w-auto text-lg px-8 py-4 bg-white/90 backdrop-blur-sm border-white !text-terracotta-600 hover:!text-terracotta-700 shadow-lg"
                         >
                             Découvrir nos tarifs
                         </motion.button>
                     </Link>
                 </motion.div>
 
-                {/* Badge déplacé ici */}
+                {/* Badge élégant */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 1.6 }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-lg mt-12 border border-cream-200"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-full shadow-lg mt-14 border border-white/50"
                 >
-                    <span className="w-2.5 h-2.5 bg-forest-500 rounded-full animate-pulse" />
-                    <span className="text-sm font-medium text-charcoal-700">
+                    <span className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-forest-500"></span>
+                    </span>
+                    <span className="text-sm md:text-base font-semibold text-charcoal-700 tracking-wide">
                         Établissement public · {EHPAD_INFO.capacity.total} résidents
                     </span>
                 </motion.div>
@@ -144,16 +149,15 @@ export default function HeroSection() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 2, duration: 0.6 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
             >
                 <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="flex flex-col items-center gap-2 text-charcoal-600"
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-white/80 hover:text-white transition-colors cursor-pointer"
                 >
-                    <span className="text-sm font-medium">Découvrir</span>
                     <svg
-                        className="w-6 h-6"
+                        className="w-10 h-10 drop-shadow-md"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
