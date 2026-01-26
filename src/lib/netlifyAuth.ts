@@ -10,6 +10,7 @@ declare global {
             logout: () => Promise<void>;
             currentUser: () => NetlifyUser | null;
             init: () => void;
+            gotrue?: any; // Exposing gotrue instance for custom calls
         };
     }
 }
@@ -50,12 +51,21 @@ export function isAdmin(): boolean {
     return roles.includes("admin");
 }
 
-// Vérifie si l'utilisateur est autorisé (admin ou famille)
+// Vérifie si l'utilisateur est autorisé (admin ou a un rôle validé)
 export function isAuthorized(): boolean {
     const user = getCurrentUser();
     if (!user) return false;
     const roles = user.app_metadata?.roles || [];
-    return roles.includes("admin") || roles.includes("famille");
+    // Strict : Doit avoir au moins un rôle
+    return roles.length > 0;
+}
+
+// Vérifie si l'utilisateur est connecté mais en attente de validation (pas de rôle)
+export function isPendingValidation(): boolean {
+    const user = getCurrentUser();
+    if (!user) return false;
+    const roles = user.app_metadata?.roles || [];
+    return roles.length === 0;
 }
 
 // Ouvre le widget d'authentification

@@ -226,3 +226,25 @@ export const VALUES = [
         icon: "users",
     },
 ];
+
+// Rôles pour le formulaire d'inscription
+export const SIGNUP_ROLES = [
+    { value: "famille", label: "Famille de résident" },
+    { value: "soignants", label: "Aide-soignante" },
+    { value: "infirmiere", label: "Infirmière" },
+    { value: "animation", label: "Animation" },
+    { value: "cuisine", label: "Restauration" },
+    { value: "bienetre", label: "Coiffure / Esthétique" },
+    { value: "kine", label: "Kinésithérapeute" },
+    { value: "lingerie", label: "Lingerie" },
+    { value: "admin", label: "Administration" },
+    { value: "technique", label: "Technique / Sécurité" },
+    { value: "hotelier", label: "Agent Hôtelier" },
+    { value: "rh", label: "Ressources Humaines" },
+    { value: "direction", label: "Direction" },
+    { value: "psychologue", label: "Psychologue" },
+    { value: "idec", label: "IDEC" },
+    { value: "medecins", label: "Médecin" },
+    { value: "benevoles", label: "Bénévole" },
+    { value: "autre", label: "Autre" },
+];

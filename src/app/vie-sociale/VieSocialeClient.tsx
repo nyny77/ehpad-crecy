@@ -17,7 +17,9 @@ import {
     onAuthChange,
     initNetlifyIdentity,
     getCurrentUser,
+    isPendingValidation, // Imported helper
 } from "@/lib/netlifyAuth";
+import PendingValidationScreen from "@/components/auth/PendingValidationScreen";
 
 interface VieSocialeClientProps {
     initialArticles: BlogPost[];
@@ -26,6 +28,7 @@ interface VieSocialeClientProps {
 export default function VieSocialeClient({ initialArticles }: VieSocialeClientProps) {
     const [authenticated, setAuthenticated] = useState(false);
     const [adminMode, setAdminMode] = useState(false);
+    const [pendingValidation, setPendingValidation] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [showSignupModal, setShowSignupModal] = useState(false);
 
@@ -35,8 +38,10 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
 
         // Vérifier l'état initial
         const checkAuth = () => {
-            setAuthenticated(isAuthenticated());
+            const isAuth = isAuthenticated();
+            setAuthenticated(isAuth);
             setAdminMode(isAdmin());
+            setPendingValidation(isPendingValidation());
             setIsLoading(false);
         };
 
@@ -51,9 +56,11 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                     if (user) {
                         setAuthenticated(true);
                         setAdminMode(isAdmin());
+                        setPendingValidation(isPendingValidation());
                     } else {
                         setAuthenticated(false);
                         setAdminMode(false);
+                        setPendingValidation(false);
                     }
                 });
 
@@ -85,9 +92,24 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
         await logout();
         setAuthenticated(false);
         setAdminMode(false);
+        setPendingValidation(false);
     };
 
     const userName = getCurrentUser()?.user_metadata?.full_name || getCurrentUser()?.email || "";
+
+    // Affichage "En attente de validation"
+    if (authenticated && pendingValidation) {
+        return (
+            <>
+                <PageHeader
+                    title="Espace Famille"
+                    subtitle="Vie sociale"
+                    description="Accès sécurisé réservé aux familles et résidents."
+                />
+                <PendingValidationScreen onLogout={handleLogout} userName={userName} />
+            </>
+        );
+    }
 
     return (
         <>
