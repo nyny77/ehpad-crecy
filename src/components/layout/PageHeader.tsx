@@ -54,29 +54,37 @@ export default function PageHeader({
                 style={{ opacity }}
                 className="relative z-10 container-custom text-center px-4 pt-20"
             >
-                {/* Badge/Subtitle */}
-                {subtitle && (
-                    <motion.div
+                {/* Container Glassmorphism global pour l'en-tête */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="inline-block bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-10 mb-8 shadow-2xl max-w-4xl mx-auto"
+                >
+                    {/* Badge/Subtitle */}
+                    {subtitle && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="inline-block mb-4"
+                        >
+                            <span className="text-sm md:text-base font-semibold text-terracotta-700 uppercase tracking-wider">
+                                {subtitle}
+                            </span>
+                        </motion.div>
+                    )}
+
+                    {/* Titre principal */}
+                    <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 backdrop-blur-sm rounded-full shadow-sm mb-6 border border-cream-200"
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal-900 mx-auto leading-tight drop-shadow-sm"
                     >
-                        <span className="text-sm font-medium text-terracotta-600 uppercase tracking-wide">
-                            {subtitle}
-                        </span>
-                    </motion.div>
-                )}
-
-                {/* Titre principal */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-glow font-serif text-4xl md:text-5xl lg:text-6xl font-bold !text-white mb-6 mx-auto leading-tight drop-shadow-sm"
-                >
-                    {title}
-                </motion.h1>
+                        {title}
+                    </motion.h1>
+                </motion.div>
 
                 {description && (
                     <motion.div
