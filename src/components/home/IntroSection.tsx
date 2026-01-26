@@ -61,10 +61,9 @@ export default function IntroSection() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-lg text-charcoal-600 leading-relaxed"
                     >
-                        L&apos;EHPAD de Crécy-la-Chapelle est un établissement public chaleureux et familial,
-                        niché au cœur de la Seine-et-Marne. Ici, nous avons à cœur de créer
-                        un véritable foyer pour nos 63 résidents, où chaleur humaine,
-                        respect et joie de vivre sont au rendez-vous chaque jour.
+                        L&apos;EHPAD de Crécy-la-Chapelle est bien plus qu&apos;un simple établissement : c&apos;est un véritable lieu de vie chaleureux, niché au cœur de la Seine-et-Marne.
+                        <br /><br />
+                        Dans une ambiance familiale et bienveillante, nous avons à cœur d&apos;offrir à nos 63 résidents un quotidien serein, rythmé par l&apos;écoute, le respect et la joie de vivre. Ici, chacun trouve sa place et se sent chez soi.
                     </motion.p>
                 </div>
 

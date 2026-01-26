@@ -80,20 +80,7 @@ export default function HeroSection() {
                     </div>
                 </motion.div>
 
-                {/* Description - Carte Glassmorphism plus propre */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                    className="max-w-3xl mx-auto mb-12"
-                >
-                    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl p-6 md:p-8 shadow-xl">
-                        <p className="text-lg md:text-xl text-white font-medium drop-shadow-sm leading-relaxed">
-                            Un lieu de vie chaleureux au cœur de la Seine-et-Marne,<br className="hidden md:block" />
-                            où chaque résident trouve sa place dans une ambiance familiale.
-                        </p>
-                    </div>
-                </motion.div>
+
 
                 {/* CTAs */}
                 <motion.div
