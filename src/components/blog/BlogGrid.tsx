@@ -31,6 +31,8 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                 {isAdminUser && (
                     <Link
                         href="/admin/#/collections/blog/new"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 !text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,6 +72,8 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                     {isAdminUser && (
                         <Link
                             href="/admin/#/collections/blog/new"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="mt-4 text-terracotta-500 font-medium hover:underline inline-block"
                         >
                             Créer le premier article
