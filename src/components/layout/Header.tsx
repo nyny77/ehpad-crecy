@@ -6,207 +6,145 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS, EHPAD_INFO } from "@/lib/constants";
 
-import { openLoginWidget } from "@/lib/netlifyAuth";
-import SignupModal from "@/components/auth/SignupModal";
-import AuthSelectionModal from "@/components/auth/AuthSelectionModal";
+const [isScrolled, setIsScrolled] = useState(false);
+const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-export default function Header() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [showAuthChoice, setShowAuthChoice] = useState(false);
-    const [showSignup, setShowSignup] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    const handleFamiliesClick = () => {
-        setIsMobileMenuOpen(false);
-        setShowAuthChoice(true);
+useEffect(() => {
+    const handleScroll = () => {
+        setIsScrolled(window.scrollY > 50);
     };
+    window.addEventListener("scroll", handleScroll);
 
-    return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled
-                ? "bg-white/95 backdrop-blur-md shadow-lg py-2"
-                : "bg-cream-100/80 backdrop-blur-sm py-4"
-                }`}
-        >
-            <div className="container-custom">
-                <nav className="flex items-center justify-between">
-                    {/* Logo + Nom */}
-                    <Link href="/" className="group flex items-center gap-3">
-                        <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            className="relative flex-shrink-0 overflow-hidden rounded-full shadow-md"
-                            style={{ width: isScrolled ? 55 : 70, height: isScrolled ? 55 : 70 }}
-                        >
-                            <Image
-                                src="/images/logo.png"
-                                alt="EHPAD de Crécy"
-                                fill
-                                className="object-cover object-center transition-all duration-300"
-                                priority
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                        </motion.div>
-                    </Link>
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+}, []);
 
-                    {/* Navigation Desktop */}
-                    <div className="hidden lg:flex items-center gap-6">
-                        {NAV_LINKS.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="relative text-charcoal-700 hover:text-terracotta-500 font-medium transition-colors duration-300 group text-sm whitespace-nowrap"
-                            >
-                                {link.label}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-terracotta-500 transition-all duration-300 group-hover:w-full rounded-full" />
-                            </Link>
-                        ))}
-
-                        {/* Espace Famille Button */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={handleFamiliesClick}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-terracotta-500 text-terracotta-600 font-bold hover:bg-terracotta-50 transition-colors text-sm whitespace-nowrap cursor-pointer"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            Espace Famille et Personnel
-                        </motion.button>
-
-                        <Link href="/contact">
-                            <motion.button
-                                whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
-                                whileTap={{ scale: 0.98 }}
-                                className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
-                            >
-                                Nous rencontrer
-                            </motion.button>
-                        </Link>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white/50 rounded-full"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label="Menu"
-                    >
-                        <motion.span
-                            animate={{
-                                rotate: isMobileMenuOpen ? 45 : 0,
-                                y: isMobileMenuOpen ? 8 : 0,
-                            }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
-                        />
-                        <motion.span
-                            animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full"
-                        />
-                        <motion.span
-                            animate={{
-                                rotate: isMobileMenuOpen ? -45 : 0,
-                                y: isMobileMenuOpen ? -8 : 0,
-                            }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
-                        />
-                    </button>
-                </nav>
-            </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
+return (
+    <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled
+            ? "bg-white/95 backdrop-blur-md shadow-lg py-2"
+            : "bg-cream-100/80 backdrop-blur-sm py-4"
+            }`}
+    >
+        <div className="container-custom">
+            <nav className="flex items-center justify-between gap-4 lg:gap-12">
+                {/* Logo + Nom */}
+                <Link href="/" className="group flex items-center gap-3">
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="lg:hidden bg-white/95 backdrop-blur-md border-t border-cream-200 mt-2 overflow-hidden"
+                        whileHover={{ scale: 1.05 }}
+                        className="relative flex-shrink-0 overflow-hidden rounded-full shadow-md"
+                        style={{ width: isScrolled ? 55 : 70, height: isScrolled ? 55 : 70 }}
                     >
-                        <div className="container-custom py-6 flex flex-col gap-3">
-                            {NAV_LINKS.map((link, index) => (
-                                <motion.div
-                                    key={link.href}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.08 }}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="block py-3 px-4 text-lg font-medium text-charcoal-700 hover:text-terracotta-500 hover:bg-cream-100 rounded-xl transition-all"
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
+                        <Image
+                            src="/images/logo.png"
+                            alt="EHPAD de Crécy"
+                            fill
+                            className="object-cover object-center transition-all duration-300"
+                            priority
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </motion.div>
+                </Link>
 
-                            {/* Espace Famille Mobile */}
+                {/* Navigation Desktop */}
+                <div className="hidden lg:flex items-center gap-6">
+                    {NAV_LINKS.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className="relative text-charcoal-700 hover:text-terracotta-500 font-medium transition-colors duration-300 group text-sm whitespace-nowrap"
+                        >
+                            {link.label}
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-terracotta-500 transition-all duration-300 group-hover:w-full rounded-full" />
+                        </Link>
+                    ))}
+
+                    <Link href="/contact">
+                        <motion.button
+                            whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
+                            whileTap={{ scale: 0.98 }}
+                            className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
+                        >
+                            Nous rencontrer
+                        </motion.button>
+                    </Link>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <button
+                    className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white/50 rounded-full"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    aria-label="Menu"
+                >
+                    <motion.span
+                        animate={{
+                            rotate: isMobileMenuOpen ? 45 : 0,
+                            y: isMobileMenuOpen ? 8 : 0,
+                        }}
+                        className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
+                    />
+                    <motion.span
+                        animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
+                        className="w-5 h-0.5 bg-charcoal-900 rounded-full"
+                    />
+                    <motion.span
+                        animate={{
+                            rotate: isMobileMenuOpen ? -45 : 0,
+                            y: isMobileMenuOpen ? -8 : 0,
+                        }}
+                        className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
+                    />
+                </button>
+            </nav>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+            {isMobileMenuOpen && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="lg:hidden bg-white/95 backdrop-blur-md border-t border-cream-200 mt-2 overflow-hidden"
+                >
+                    <div className="container-custom py-6 flex flex-col gap-3">
+                        {NAV_LINKS.map((link, index) => (
                             <motion.div
+                                key={link.href}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: NAV_LINKS.length * 0.08 }}
+                                transition={{ delay: index * 0.08 }}
                             >
-                                <button
-                                    onClick={handleFamiliesClick}
-                                    className="w-full text-left py-3 px-4 text-lg font-bold text-terracotta-600 hover:bg-terracotta-50 rounded-xl transition-all flex items-center gap-2"
+                                <Link
+                                    href={link.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block py-3 px-4 text-lg font-medium text-charcoal-700 hover:text-terracotta-500 hover:bg-cream-100 rounded-xl transition-all"
                                 >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                    </svg>
-                                    Espace Famille 🔒
-                                </button>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: (NAV_LINKS.length + 1) * 0.08 }}
-                                className="pt-2"
-                            >
-                                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <button className="btn-primary w-full text-lg py-4">
-                                        Nous rencontrer
-                                    </button>
+                                    {link.label}
                                 </Link>
                             </motion.div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        ))}
 
-            <AuthSelectionModal
-                isOpen={showAuthChoice}
-                onClose={() => setShowAuthChoice(false)}
-                onLogin={() => {
-                    setShowAuthChoice(false);
-                    openLoginWidget('login');
-                }}
-                onSignup={() => {
-                    setShowAuthChoice(false);
-                    setShowSignup(true);
-                }}
-            />
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: (NAV_LINKS.length + 1) * 0.08 }}
+                            className="pt-2"
+                        >
+                            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                                <button className="btn-primary w-full text-lg py-4">
+                                    Nous rencontrer
+                                </button>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
 
-            <SignupModal
-                isOpen={showSignup}
-                onClose={() => setShowSignup(false)}
-                onSignupSuccess={() => {
-                    setShowSignup(false);
-                    alert("Inscription réussie ! Votre compte est en attente de validation.");
-                }}
-            />
-        </header>
-    );
+
+    </header >
+);
 }

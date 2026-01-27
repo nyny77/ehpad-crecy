@@ -9,7 +9,9 @@ import PrivateGallery from "@/components/social/PrivateGallery";
 import BlogGrid from "@/components/blog/BlogGrid";
 import DayTimeline from "@/components/social/DayTimeline";
 import { BlogPost } from "@/lib/blog";
-import { isAuthenticated, isAdmin, logout, onAuthChange } from "@/lib/netlifyAuth";
+import { isAuthenticated, isAdmin, logout, onAuthChange, openLoginWidget } from "@/lib/netlifyAuth";
+import AuthSelectionModal from "@/components/auth/AuthSelectionModal";
+import SignupModal from "@/components/auth/SignupModal";
 
 interface VieSocialeClientProps {
     initialArticles: BlogPost[];
@@ -22,6 +24,8 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
 
     // Onglet actif : 'news' ou 'gallery'
     const [activeTab, setActiveTab] = useState<"news" | "gallery">("news");
+    const [showAuthChoice, setShowAuthChoice] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
 
     useEffect(() => {
         // Initial check
@@ -155,8 +159,14 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                         <p className="text-charcoal-600">
                                             L'accès aux actualités détaillées et à la galerie photos est réservé aux familles.
                                             <br />
-                                            Veuillez utiliser le bouton <span className="font-bold text-terracotta-600">"Espace Famille et Personnel"</span> dans le menu pour vous connecter ou créer un compte.
+                                            Veuillez utiliser le bouton ci-dessous pour vous connecter ou créer un compte.
                                         </p>
+                                        <button
+                                            onClick={() => setShowAuthChoice(true)}
+                                            className="px-6 py-3 bg-terracotta-500 text-white font-bold rounded-full hover:bg-terracotta-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 duration-200" // Added style
+                                        >
+                                            Espace Famille et Personnel
+                                        </button>
                                     </div>
                                 </motion.div>
                             )}
@@ -164,6 +174,28 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                     )}
                 </div>
             </section>
+
+            <AuthSelectionModal
+                isOpen={showAuthChoice}
+                onClose={() => setShowAuthChoice(false)}
+                onLogin={() => {
+                    setShowAuthChoice(false);
+                    openLoginWidget('login');
+                }}
+                onSignup={() => {
+                    setShowAuthChoice(false);
+                    setShowSignup(true);
+                }}
+            />
+
+            <SignupModal
+                isOpen={showSignup}
+                onClose={() => setShowSignup(false)}
+                onSignupSuccess={() => {
+                    setShowSignup(false);
+                    alert("Inscription réussie ! Votre compte est en attente de validation.");
+                }}
+            />
 
             {/* Timeline Journée Type */}
             <DayTimeline />
