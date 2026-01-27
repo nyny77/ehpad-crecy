@@ -73,15 +73,17 @@ export default function Header() {
                         ))}
 
                         {/* Espace Famille Button */}
-                        <button
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={handleFamiliesClick}
-                            className="relative text-terracotta-600 hover:text-terracotta-700 font-bold transition-colors duration-300 flex items-center gap-1 text-sm whitespace-nowrap"
+                            className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-terracotta-500 text-terracotta-600 font-bold hover:bg-terracotta-50 transition-colors text-sm whitespace-nowrap"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                             Espace Famille
-                        </button>
+                        </motion.button>
 
                         <Link href="/contact">
                             <motion.button

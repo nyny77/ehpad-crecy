@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -16,7 +18,16 @@ export default function AuthSelectionModal({
     onLogin,
     onSignup,
 }: AuthSelectionModalProps) {
-    return (
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
+
+    if (!mounted) return null;
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -25,13 +36,13 @@ export default function AuthSelectionModal({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/60 z-[9999] backdrop-blur-sm"
                     />
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-white rounded-2xl shadow-xl z-50 p-6 overflow-hidden"
+                        initial={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
+                        animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
+                        className="fixed left-1/2 top-1/2 w-full max-w-sm bg-white rounded-2xl shadow-xl z-[10000] p-6 overflow-hidden"
                     >
                         <button
                             onClick={onClose}
@@ -99,6 +110,7 @@ export default function AuthSelectionModal({
                     </motion.div>
                 </>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 }
