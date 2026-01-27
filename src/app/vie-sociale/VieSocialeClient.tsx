@@ -83,9 +83,9 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                         <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex">
                                             <motion.button
                                                 onClick={() => setActiveTab("news")}
-                                                animate={activeTab === "news" ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                                                animate={activeTab === "news" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
                                                 transition={{
-                                                    duration: 2,
+                                                    duration: 1.5,
                                                     repeat: Infinity,
                                                     ease: "easeInOut"
                                                 }}
@@ -98,9 +98,9 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                             </motion.button>
                                             <motion.button
                                                 onClick={() => setActiveTab("gallery")}
-                                                animate={activeTab === "gallery" ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                                                animate={activeTab === "gallery" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
                                                 transition={{
-                                                    duration: 2,
+                                                    duration: 1.5,
                                                     repeat: Infinity,
                                                     ease: "easeInOut"
                                                 }}
