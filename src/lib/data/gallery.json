@@ -17,6 +17,13 @@
     {
       "id": "img-{{now}}",
       "category": "other",
+      "title": "Patio",
+      "src": "/images/uploads/066.png",
+      "alt": "Vue patio"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
       "src": "/images/uploads/05.png",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
