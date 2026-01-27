@@ -65,7 +65,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <PageHeader
                 title="Vie Sociale"
                 subtitle="Le cœur battant de notre maison"
-                image="/images/entree.jpg"
+                image="/images/hero-v2.jpg"
             />
 
             <section className="py-8 pb-16 bg-cream-100">
