@@ -47,7 +47,7 @@ export default function GaleriePage() {
             />
 
             {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}
-            <section className="container-custom px-4 mt-16 mb-12">
+            <section className="container-custom px-4 mb-12" style={{ paddingTop: "40px" }}>
                 <div className="flex flex-wrap justify-center gap-3">
                     {CATEGORIES.map(cat => (
                         <button
