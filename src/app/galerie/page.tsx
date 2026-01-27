@@ -65,7 +65,7 @@ export default function GaleriePage() {
 
                 {/* Admin Button */}
                 {adminMode && (
-                    <div className="text-center mt-6">
+                    <div className="text-center mt-3">
                         <Link
                             href="/admin"
                             target="_blank"
