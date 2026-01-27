@@ -81,24 +81,36 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                     {/* Navigation des Onglets */}
                                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-2">
                                         <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex">
-                                            <button
+                                            <motion.button
                                                 onClick={() => setActiveTab("news")}
-                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === "news"
+                                                animate={activeTab === "news" ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                                                transition={{
+                                                    duration: 2,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 ${activeTab === "news"
                                                     ? "bg-terracotta-500 text-white shadow-md"
                                                     : "text-charcoal-600 hover:bg-cream-50"
                                                     }`}
                                             >
                                                 Actualités
-                                            </button>
-                                            <button
+                                            </motion.button>
+                                            <motion.button
                                                 onClick={() => setActiveTab("gallery")}
-                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === "gallery"
+                                                animate={activeTab === "gallery" ? { scale: [1, 1.05, 1] } : { scale: 1 }}
+                                                transition={{
+                                                    duration: 2,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 ${activeTab === "gallery"
                                                     ? "bg-terracotta-500 text-white shadow-md"
                                                     : "text-charcoal-600 hover:bg-cream-50"
                                                     }`}
                                             >
                                                 Galerie Privée 🔒
-                                            </button>
+                                            </motion.button>
                                         </div>
 
                                         <div className="flex items-center gap-3">
