@@ -6,29 +6,71 @@ import gazetteData from "@/lib/data/gazette.json";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 import PrivateGallery from "@/components/social/PrivateGallery";
+import BlogGrid from "@/components/blog/BlogGrid";
+import DayTimeline from "@/components/social/DayTimeline";
+import SignupModal from "@/components/auth/SignupModal";
+import { BlogPost } from "@/lib/blog";
+import { isAuthenticated, isAdmin, openLoginWidget, logout, onAuthChange } from "@/lib/netlifyAuth";
 
-// ... existing imports
+interface VieSocialeClientProps {
+    initialArticles: BlogPost[];
+}
 
 export default function VieSocialeClient({ initialArticles }: VieSocialeClientProps) {
     const [authenticated, setAuthenticated] = useState(false);
     const [adminMode, setAdminMode] = useState(false);
-    const [pendingValidation, setPendingValidation] = useState(false);
+    const [pendingValidation, setPendingValidation] = useState(false); // Used for UI feedback if needed
     const [isLoading, setIsLoading] = useState(true);
     const [showSignupModal, setShowSignupModal] = useState(false);
 
     // Onglet actif : 'news' ou 'gallery'
     const [activeTab, setActiveTab] = useState<"news" | "gallery">("news");
 
-    // ... existing useEffect ...
+    useEffect(() => {
+        // Initial check
+        const checkAuth = () => {
+            const isAuth = isAuthenticated();
+            setAuthenticated(isAuth);
+            setAdminMode(isAdmin());
+            setIsLoading(false);
+        };
+
+        checkAuth();
+
+        // Subscribe to changes
+        const unsubscribe = onAuthChange((user) => {
+            checkAuth();
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    const handleLogin = () => {
+        openLoginWidget("login");
+    };
+
+    const handleSignup = () => {
+        setShowSignupModal(true);
+    };
+
+    const handleLogout = () => {
+        logout();
+        setAuthenticated(false);
+        setAdminMode(false);
+        setActiveTab("news"); // Reset tab on logout
+    };
 
     return (
         <>
-            {/* ... PageHeader ... */}
+            <PageHeader
+                title="Vie Sociale"
+                subtitle="Le cœur battant de notre maison"
+                backgroundImage="/images/entree.jpg"
+            />
 
             <section className="py-8 pb-16 bg-cream-100">
                 <div className="container-custom">
                     {isLoading ? (
-                        /* ... Loading ... */
                         <div className="flex items-center justify-center py-20">
                             <div className="w-12 h-12 border-4 border-terracotta-200 border-t-terracotta-500 rounded-full animate-spin" />
                         </div>
@@ -96,7 +138,6 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                     </motion.div>
                                 </>
                             ) : (
-                                /* ... Login State ... */
                                 // Message d'accueil et boutons de connexion/inscription
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
@@ -257,4 +298,3 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
         </>
     );
 }
-
