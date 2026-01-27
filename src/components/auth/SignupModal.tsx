@@ -20,6 +20,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
         role: '',
         relationship: '' // New field
     });
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
@@ -231,10 +232,37 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                 />
                             </div>
 
+                            <div className="bg-cream-50 p-4 rounded-xl border border-cream-200 text-xs text-charcoal-600 max-h-40 overflow-y-auto mb-4 custom-scrollbar">
+                                <h4 className="font-bold text-charcoal-800 mb-2">Charte de confidentialité & Droit à l'image</h4>
+                                <p className="mb-2">
+                                    Cet espace privé contient des photos de la vie sociale de l'EHPAD. En demandant un accès, vous vous engagez formellement à :
+                                </p>
+                                <ul className="list-disc pl-4 space-y-1 mb-3">
+                                    <li>Ne <strong>jamais diffuser</strong> ces photos en dehors de ce cadre (interdiction formelle de partage sur Facebook, Instagram, etc.).</li>
+                                    <li>Utiliser ces images uniquement dans un cadre strictement privé et familial.</li>
+                                    <li>Respecter la dignité et le droit à l'image des résidents et du personnel photographiés.</li>
+                                </ul>
+                                <p className="mb-2">
+                                    <strong>Information RGPD :</strong> Les personnes figurant sur ces photos (ou leurs représentants) ont été informées et n'ont pas exprimé d'opposition à leur publication dans cet espace sécurisé.
+                                </p>
+                                <p>
+                                    Conformément à la loi, vous pouvez à tout moment demander le retrait d'une photo vous concernant en contactant la direction.
+                                </p>
+                            </div>
+
+                            <div className="flex items-start gap-3 mb-6 group cursor-pointer" onClick={() => setTermsAccepted(!termsAccepted)}>
+                                <div className={`mt-0.5 w-5 h-5 rounded border flex items-center justify-center transition-colors ${termsAccepted ? 'bg-forest-500 border-forest-500 text-white' : 'border-gray-300 bg-white group-hover:border-forest-400'}`}>
+                                    {termsAccepted && <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                                </div>
+                                <span className="text-sm text-charcoal-700 select-none">
+                                    Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-semibold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
+                                </span>
+                            </div>
+
                             <button
                                 type="submit"
-                                disabled={isLoading}
-                                className="w-full py-3 px-4 bg-[#8B4513] text-white rounded-xl font-medium hover:bg-[#6d360f] transition-all transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
+                                disabled={isLoading || !termsAccepted}
+                                className="w-full py-3 px-4 bg-[#8B4513] text-white rounded-xl font-medium hover:bg-[#6d360f] transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {isLoading ? (
                                     <>
