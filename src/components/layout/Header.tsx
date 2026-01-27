@@ -6,9 +6,15 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS, EHPAD_INFO } from "@/lib/constants";
 
+import { openLoginWidget } from "@/lib/netlifyAuth";
+import SignupModal from "@/components/auth/SignupModal";
+import AuthSelectionModal from "@/components/auth/AuthSelectionModal";
+
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showAuthChoice, setShowAuthChoice] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,6 +26,11 @@ export default function Header() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    const handleFamiliesClick = () => {
+        setIsMobileMenuOpen(false);
+        setShowAuthChoice(true);
+    };
 
     return (
         <header
@@ -60,6 +71,17 @@ export default function Header() {
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-terracotta-500 transition-all duration-300 group-hover:w-full rounded-full" />
                             </Link>
                         ))}
+
+                        {/* Espace Famille Button */}
+                        <button
+                            onClick={handleFamiliesClick}
+                            className="relative text-terracotta-600 hover:text-terracotta-700 font-bold transition-colors duration-300 flex items-center gap-1 text-sm whitespace-nowrap"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            Espace Famille
+                        </button>
 
                         <Link href="/contact">
                             <motion.button
@@ -128,6 +150,23 @@ export default function Header() {
                                 </motion.div>
                             ))}
 
+                            {/* Espace Famille Mobile */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: NAV_LINKS.length * 0.08 }}
+                            >
+                                <button
+                                    onClick={handleFamiliesClick}
+                                    className="w-full text-left py-3 px-4 text-lg font-bold text-terracotta-600 hover:bg-terracotta-50 rounded-xl transition-all flex items-center gap-2"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    Espace Famille 🔒
+                                </button>
+                            </motion.div>
+
                             <motion.div
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -144,6 +183,28 @@ export default function Header() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <AuthSelectionModal
+                isOpen={showAuthChoice}
+                onClose={() => setShowAuthChoice(false)}
+                onLogin={() => {
+                    setShowAuthChoice(false);
+                    openLoginWidget('login');
+                }}
+                onSignup={() => {
+                    setShowAuthChoice(false);
+                    setShowSignup(true);
+                }}
+            />
+
+            <SignupModal
+                isOpen={showSignup}
+                onClose={() => setShowSignup(false)}
+                onSignupSuccess={() => {
+                    setShowSignup(false);
+                    alert("Inscription réussie ! Votre compte est en attente de validation.");
+                }}
+            />
         </header>
     );
 }
