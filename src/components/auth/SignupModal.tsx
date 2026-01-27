@@ -246,13 +246,13 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     <strong>Information RGPD :</strong> Les personnes figurant sur ces photos (ou leurs représentants) ont été informées et n'ont pas exprimé d'opposition à leur publication dans cet espace sécurisé.
                                 </p>
                                 <p>
-                                    Conformément à la loi, vous pouvez à tout moment demander le retrait d'une photo vous concernant en contactant la direction.
+                                    Conformément à la loi, vous pouvez à tout moment demander le retrait d'une photo vous concernant en contactant le support technique.
                                 </p>
                             </div>
 
-                            <div className="flex items-start gap-3 mb-6 group cursor-pointer" onClick={() => setTermsAccepted(!termsAccepted)}>
-                                <div className={`mt-0.5 w-5 h-5 rounded border flex items-center justify-center transition-colors ${termsAccepted ? 'bg-forest-500 border-forest-500 text-white' : 'border-gray-300 bg-white group-hover:border-forest-400'}`}>
-                                    {termsAccepted && <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                            <div className="flex items-start gap-4 mb-6 group cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors" onClick={() => setTermsAccepted(!termsAccepted)}>
+                                <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200 shadow-sm ${termsAccepted ? 'bg-forest-600 border-forest-600 text-white scale-110' : 'border-gray-400 bg-white group-hover:border-forest-500'}`}>
+                                    {termsAccepted && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                                 </div>
                                 <span className="text-sm text-charcoal-700 select-none">
                                     Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-semibold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
