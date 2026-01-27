@@ -21,6 +21,18 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
         relationship: '' // New field
     });
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const [hasReadTerms, setHasReadTerms] = useState(false);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+            // Si on est à moins de 10px du bas ou si le contenu est petit
+            if (scrollTop + clientHeight >= scrollHeight - 20) {
+                setHasReadTerms(true);
+            }
+        }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
@@ -232,7 +244,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                 />
                             </div>
 
-                            <div className="bg-cream-50 p-4 rounded-xl border border-cream-200 text-xs text-charcoal-600 max-h-40 overflow-y-auto mb-4 custom-scrollbar">
+                            <div
+                                ref={scrollRef}
+                                onScroll={handleScroll}
+                                className="bg-cream-50 p-4 rounded-xl border border-cream-200 text-xs text-charcoal-600 max-h-40 overflow-y-auto mb-4 custom-scrollbar"
+                            >
                                 <h4 className="font-bold text-charcoal-800 mb-2">Charte de confidentialité & Droit à l'image</h4>
                                 <p className="mb-2">
                                     Cet espace privé contient des photos de la vie sociale de l'EHPAD. En demandant un accès, vous vous engagez formellement à :
@@ -245,18 +261,33 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                 <p className="mb-2">
                                     <strong>Information RGPD :</strong> Les personnes figurant sur ces photos (ou leurs représentants) ont été informées et n'ont pas exprimé d'opposition à leur publication dans cet espace sécurisé.
                                 </p>
-                                <p>
+                                <p className="mb-4">
                                     Conformément à la loi, vous pouvez à tout moment demander le retrait d'une photo vous concernant en contactant le support technique.
                                 </p>
+                                <div className="text-center pt-4 pb-2 text-forest-600 font-medium text-[10px] uppercase tracking-wider opacity-60">
+                                    — Fin du document —
+                                </div>
                             </div>
 
-                            <div className="flex items-start gap-4 mb-6 group cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors" onClick={() => setTermsAccepted(!termsAccepted)}>
+                            <div
+                                className={`flex items-start gap-4 mb-6 group p-2 rounded-lg transition-colors ${hasReadTerms ? 'cursor-pointer hover:bg-gray-50' : 'cursor-not-allowed opacity-50'}`}
+                                onClick={() => {
+                                    if (hasReadTerms) setTermsAccepted(!termsAccepted);
+                                }}
+                            >
                                 <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200 shadow-sm ${termsAccepted ? 'bg-forest-600 border-forest-600 text-white scale-110' : 'border-gray-400 bg-white group-hover:border-forest-500'}`}>
                                     {termsAccepted && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                                 </div>
-                                <span className="text-sm text-charcoal-700 select-none">
-                                    Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-semibold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
-                                </span>
+                                <div className="flex flex-col">
+                                    <span className="text-sm text-charcoal-700 select-none">
+                                        Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-semibold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
+                                    </span>
+                                    {!hasReadTerms && (
+                                        <span className="text-xs text-orange-600 mt-1 font-medium">
+                                            ⚠️ Veuillez lire la charte jusqu'en bas pour activer la case.
+                                        </span>
+                                    )}
+                                </div>
                             </div>
 
                             <button
