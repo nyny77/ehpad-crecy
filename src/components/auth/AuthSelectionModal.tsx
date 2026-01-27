@@ -60,7 +60,7 @@ export default function AuthSelectionModal({
                             </div>
 
                             <h2 className="font-serif text-xl text-charcoal-900 mb-1">
-                                Espace Famille
+                                Espace Famille et Personnel
                             </h2>
                             <p className="text-sm text-charcoal-600 mb-6">
                                 Accédez aux photos et actualités

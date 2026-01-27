@@ -155,7 +155,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                         <p className="text-charcoal-600">
                                             L'accès aux actualités détaillées et à la galerie photos est réservé aux familles.
                                             <br />
-                                            Veuillez utiliser le bouton <span className="font-bold text-terracotta-600">"Espace Famille"</span> dans le menu pour vous connecter ou créer un compte.
+                                            Veuillez utiliser le bouton <span className="font-bold text-terracotta-600">"Espace Famille et Personnel"</span> dans le menu pour vous connecter ou créer un compte.
                                         </p>
                                     </div>
                                 </motion.div>
