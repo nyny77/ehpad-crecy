@@ -55,6 +55,13 @@
       "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
       "title": "Retro",
       "alt": "Retro"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Patio",
+      "src": "/images/uploads/066.png",
+      "alt": "Vue patio"
     }
   ]
 }
