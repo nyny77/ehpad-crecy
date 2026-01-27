@@ -1,0 +1,375 @@
+{
+  "photos": [
+    {
+      "id": "private-0",
+      "src": "/images/private/1000003518.jpg",
+      "title": "Photo 1",
+      "category": "event",
+      "alt": "Photo privée 1"
+    },
+    {
+      "id": "private-1",
+      "src": "/images/private/1000003523.jpg",
+      "title": "Photo 2",
+      "category": "event",
+      "alt": "Photo privée 2"
+    },
+    {
+      "id": "private-2",
+      "src": "/images/private/1000003533.jpg",
+      "title": "Photo 3",
+      "category": "event",
+      "alt": "Photo privée 3"
+    },
+    {
+      "id": "private-3",
+      "src": "/images/private/1000003535.jpg",
+      "title": "Photo 4",
+      "category": "event",
+      "alt": "Photo privée 4"
+    },
+    {
+      "id": "private-4",
+      "src": "/images/private/1000003546.jpg",
+      "title": "Photo 5",
+      "category": "event",
+      "alt": "Photo privée 5"
+    },
+    {
+      "id": "private-5",
+      "src": "/images/private/1000003570.jpg",
+      "title": "Photo 6",
+      "category": "event",
+      "alt": "Photo privée 6"
+    },
+    {
+      "id": "private-6",
+      "src": "/images/private/1000003626.jpg",
+      "title": "Photo 7",
+      "category": "event",
+      "alt": "Photo privée 7"
+    },
+    {
+      "id": "private-7",
+      "src": "/images/private/1000003651.jpg",
+      "title": "Photo 8",
+      "category": "event",
+      "alt": "Photo privée 8"
+    },
+    {
+      "id": "private-8",
+      "src": "/images/private/1000039275.jpg",
+      "title": "Photo 9",
+      "category": "event",
+      "alt": "Photo privée 9"
+    },
+    {
+      "id": "private-9",
+      "src": "/images/private/1000039983.jpg",
+      "title": "Photo 10",
+      "category": "event",
+      "alt": "Photo privée 10"
+    },
+    {
+      "id": "private-10",
+      "src": "/images/private/1000040104.jpg",
+      "title": "Photo 11",
+      "category": "event",
+      "alt": "Photo privée 11"
+    },
+    {
+      "id": "private-11",
+      "src": "/images/private/1000040106.jpg",
+      "title": "Photo 12",
+      "category": "event",
+      "alt": "Photo privée 12"
+    },
+    {
+      "id": "private-12",
+      "src": "/images/private/1000040178.jpg",
+      "title": "Photo 13",
+      "category": "event",
+      "alt": "Photo privée 13"
+    },
+    {
+      "id": "private-13",
+      "src": "/images/private/1000040236.jpg",
+      "title": "Photo 14",
+      "category": "event",
+      "alt": "Photo privée 14"
+    },
+    {
+      "id": "private-14",
+      "src": "/images/private/1000040248.jpg",
+      "title": "Photo 15",
+      "category": "event",
+      "alt": "Photo privée 15"
+    },
+    {
+      "id": "private-15",
+      "src": "/images/private/1000040376.jpg",
+      "title": "Photo 16",
+      "category": "event",
+      "alt": "Photo privée 16"
+    },
+    {
+      "id": "private-16",
+      "src": "/images/private/1000040378.jpg",
+      "title": "Photo 17",
+      "category": "event",
+      "alt": "Photo privée 17"
+    },
+    {
+      "id": "private-17",
+      "src": "/images/private/1000040381.jpg",
+      "title": "Photo 18",
+      "category": "event",
+      "alt": "Photo privée 18"
+    },
+    {
+      "id": "private-18",
+      "src": "/images/private/1000040565.jpg",
+      "title": "Photo 19",
+      "category": "event",
+      "alt": "Photo privée 19"
+    },
+    {
+      "id": "private-19",
+      "src": "/images/private/1000040571.jpg",
+      "title": "Photo 20",
+      "category": "event",
+      "alt": "Photo privée 20"
+    },
+    {
+      "id": "private-20",
+      "src": "/images/private/1000040572.jpg",
+      "title": "Photo 21",
+      "category": "event",
+      "alt": "Photo privée 21"
+    },
+    {
+      "id": "private-21",
+      "src": "/images/private/1000040583.jpg",
+      "title": "Photo 22",
+      "category": "event",
+      "alt": "Photo privée 22"
+    },
+    {
+      "id": "private-22",
+      "src": "/images/private/1000040630.jpg",
+      "title": "Photo 23",
+      "category": "event",
+      "alt": "Photo privée 23"
+    },
+    {
+      "id": "private-23",
+      "src": "/images/private/1000040874.jpg",
+      "title": "Photo 24",
+      "category": "event",
+      "alt": "Photo privée 24"
+    },
+    {
+      "id": "private-24",
+      "src": "/images/private/1000040875.jpg",
+      "title": "Photo 25",
+      "category": "event",
+      "alt": "Photo privée 25"
+    },
+    {
+      "id": "private-25",
+      "src": "/images/private/1000041560.jpg",
+      "title": "Photo 26",
+      "category": "event",
+      "alt": "Photo privée 26"
+    },
+    {
+      "id": "private-26",
+      "src": "/images/private/1000041787.jpg",
+      "title": "Photo 27",
+      "category": "event",
+      "alt": "Photo privée 27"
+    },
+    {
+      "id": "private-27",
+      "src": "/images/private/1000041853.jpg",
+      "title": "Photo 28",
+      "category": "event",
+      "alt": "Photo privée 28"
+    },
+    {
+      "id": "private-28",
+      "src": "/images/private/1423645839701121267.jpg",
+      "title": "Photo 29",
+      "category": "event",
+      "alt": "Photo privée 29"
+    },
+    {
+      "id": "private-29",
+      "src": "/images/private/20250404_160034.jpg",
+      "title": "Photo 30",
+      "category": "event",
+      "alt": "Photo privée 30"
+    },
+    {
+      "id": "private-30",
+      "src": "/images/private/20250404_160309.jpg",
+      "title": "Photo 31",
+      "category": "event",
+      "alt": "Photo privée 31"
+    },
+    {
+      "id": "private-31",
+      "src": "/images/private/20250606_144351.jpg",
+      "title": "Photo 32",
+      "category": "event",
+      "alt": "Photo privée 32"
+    },
+    {
+      "id": "private-32",
+      "src": "/images/private/20250616_101211.jpg",
+      "title": "Photo 33",
+      "category": "event",
+      "alt": "Photo privée 33"
+    },
+    {
+      "id": "private-33",
+      "src": "/images/private/20250616_103034.jpg",
+      "title": "Photo 34",
+      "category": "event",
+      "alt": "Photo privée 34"
+    },
+    {
+      "id": "private-34",
+      "src": "/images/private/20250617_122610.jpg",
+      "title": "Photo 35",
+      "category": "event",
+      "alt": "Photo privée 35"
+    },
+    {
+      "id": "private-35",
+      "src": "/images/private/20250617_152052.jpg",
+      "title": "Photo 36",
+      "category": "event",
+      "alt": "Photo privée 36"
+    },
+    {
+      "id": "private-36",
+      "src": "/images/private/20250621_150149.jpg",
+      "title": "Photo 37",
+      "category": "event",
+      "alt": "Photo privée 37"
+    },
+    {
+      "id": "private-37",
+      "src": "/images/private/20250621_150259.jpg",
+      "title": "Photo 38",
+      "category": "event",
+      "alt": "Photo privée 38"
+    },
+    {
+      "id": "private-38",
+      "src": "/images/private/20250621_160035.jpg",
+      "title": "Photo 39",
+      "category": "event",
+      "alt": "Photo privée 39"
+    },
+    {
+      "id": "private-39",
+      "src": "/images/private/20250710_121019.jpg",
+      "title": "Photo 40",
+      "category": "event",
+      "alt": "Photo privée 40"
+    },
+    {
+      "id": "private-40",
+      "src": "/images/private/20250716_155639.jpg",
+      "title": "Photo 41",
+      "category": "event",
+      "alt": "Photo privée 41"
+    },
+    {
+      "id": "private-41",
+      "src": "/images/private/20250724_115506.jpg",
+      "title": "Photo 42",
+      "category": "event",
+      "alt": "Photo privée 42"
+    },
+    {
+      "id": "private-42",
+      "src": "/images/private/20250801_113135.jpg",
+      "title": "Photo 43",
+      "category": "event",
+      "alt": "Photo privée 43"
+    },
+    {
+      "id": "private-43",
+      "src": "/images/private/20250920_111114.jpg",
+      "title": "Photo 44",
+      "category": "event",
+      "alt": "Photo privée 44"
+    },
+    {
+      "id": "private-44",
+      "src": "/images/private/20250920_120850.jpg",
+      "title": "Photo 45",
+      "category": "event",
+      "alt": "Photo privée 45"
+    },
+    {
+      "id": "private-45",
+      "src": "/images/private/20250920_123752.jpg",
+      "title": "Photo 46",
+      "category": "event",
+      "alt": "Photo privée 46"
+    },
+    {
+      "id": "private-46",
+      "src": "/images/private/20250920_125546.jpg",
+      "title": "Photo 47",
+      "category": "event",
+      "alt": "Photo privée 47"
+    },
+    {
+      "id": "private-47",
+      "src": "/images/private/20250920_152417.jpg",
+      "title": "Photo 48",
+      "category": "event",
+      "alt": "Photo privée 48"
+    },
+    {
+      "id": "private-48",
+      "src": "/images/private/20250920_154753.jpg",
+      "title": "Photo 49",
+      "category": "event",
+      "alt": "Photo privée 49"
+    },
+    {
+      "id": "private-49",
+      "src": "/images/private/20251008_144412.jpg",
+      "title": "Photo 50",
+      "category": "event",
+      "alt": "Photo privée 50"
+    },
+    {
+      "id": "private-50",
+      "src": "/images/private/20251008_144908.jpg",
+      "title": "Photo 51",
+      "category": "event",
+      "alt": "Photo privée 51"
+    },
+    {
+      "id": "private-51",
+      "src": "/images/private/250611 REPAS ESPAGNE.jpg",
+      "title": "Photo 52",
+      "category": "event",
+      "alt": "Photo privée 52"
+    },
+    {
+      "id": "private-52",
+      "src": "/images/private/IMG-20250611-WA0006.jpg",
+      "title": "Photo 53",
+      "category": "event",
+      "alt": "Photo privée 53"
+    }
+  ]
+}

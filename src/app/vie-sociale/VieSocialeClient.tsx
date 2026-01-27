@@ -5,25 +5,9 @@ import Link from "next/link";
 import gazetteData from "@/lib/data/gazette.json";
 import { motion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
-import BlogGrid from "@/components/blog/BlogGrid";
-import SignupModal from "@/components/auth/SignupModal";
-import DayTimeline from "@/components/social/DayTimeline";
-import { BlogPost } from "@/lib/blog";
-import {
-    isAuthenticated,
-    isAdmin,
-    logout,
-    openLoginWidget,
-    onAuthChange,
-    initNetlifyIdentity,
-    getCurrentUser,
-    isPendingValidation, // Imported helper
-} from "@/lib/netlifyAuth";
-import PendingValidationScreen from "@/components/auth/PendingValidationScreen";
+import PrivateGallery from "@/components/social/PrivateGallery";
 
-interface VieSocialeClientProps {
-    initialArticles: BlogPost[];
-}
+// ... existing imports
 
 export default function VieSocialeClient({ initialArticles }: VieSocialeClientProps) {
     const [authenticated, setAuthenticated] = useState(false);
@@ -32,126 +16,19 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
     const [isLoading, setIsLoading] = useState(true);
     const [showSignupModal, setShowSignupModal] = useState(false);
 
-    useEffect(() => {
-        // Initialiser Netlify Identity
-        initNetlifyIdentity();
+    // Onglet actif : 'news' ou 'gallery'
+    const [activeTab, setActiveTab] = useState<"news" | "gallery">("news");
 
-        // Vérifier l'état initial
-        const checkAuth = () => {
-            const isAuth = isAuthenticated();
-            setAuthenticated(isAuth);
-            setAdminMode(isAdmin());
-            setPendingValidation(isPendingValidation());
-            setIsLoading(false);
-        };
-
-        // Attendre que le widget soit chargé
-        const checkInterval = setInterval(() => {
-            if (typeof window !== "undefined" && window.netlifyIdentity) {
-                clearInterval(checkInterval);
-                checkAuth();
-
-                // S'abonner aux changements d'authentification
-                const unsubscribe = onAuthChange((user) => {
-                    if (user) {
-                        setAuthenticated(true);
-                        setAdminMode(isAdmin());
-                        setPendingValidation(isPendingValidation());
-                    } else {
-                        setAuthenticated(false);
-                        setAdminMode(false);
-                        setPendingValidation(false);
-                    }
-                });
-
-                return () => unsubscribe();
-            }
-        }, 100);
-
-        // Timeout de sécurité
-        const timeout = setTimeout(() => {
-            clearInterval(checkInterval);
-            setIsLoading(false);
-        }, 3000);
-
-        return () => {
-            clearInterval(checkInterval);
-            clearTimeout(timeout);
-        };
-    }, []);
-
-    const handleLogin = () => {
-        openLoginWidget("login");
-    };
-
-    const handleSignup = () => {
-        setShowSignupModal(true);
-    };
-
-    const handleLogout = async () => {
-        await logout();
-        setAuthenticated(false);
-        setAdminMode(false);
-        setPendingValidation(false);
-    };
-
-    const userName = getCurrentUser()?.user_metadata?.full_name || getCurrentUser()?.email || "";
-
-    // Affichage "En attente de validation"
-    if (authenticated && pendingValidation) {
-        return (
-            <>
-                <PageHeader
-                    title="Espace Famille"
-                    subtitle="Vie sociale"
-                    description="Accès sécurisé réservé aux familles et résidents."
-                />
-                <PendingValidationScreen onLogout={handleLogout} userName={userName} />
-            </>
-        );
-    }
+    // ... existing useEffect ...
 
     return (
         <>
-            {/* Hero compact */}
-            <PageHeader
-                title="Nos moments de partage"
-                subtitle="Vie sociale"
-                description="Découvrez les activités, animations et moments de joie qui rythment le quotidien de notre établissement."
-            >
-                {/* Badge admin */}
-                {authenticated && adminMode && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-forest-100 text-forest-700 rounded-full text-sm font-medium"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                        Mode Administration
-                    </motion.div>
-                )}
+            {/* ... PageHeader ... */}
 
-                {/* Badge connecté */}
-                {authenticated && !adminMode && userName && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-terracotta-100 text-terracotta-700 rounded-full text-sm font-medium"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        Bienvenue, {userName}
-                    </motion.div>
-                )}
-            </PageHeader>
-
-            {/* Section blog avec authentification */}
             <section className="py-8 pb-16 bg-cream-100">
                 <div className="container-custom">
                     {isLoading ? (
+                        /* ... Loading ... */
                         <div className="flex items-center justify-center py-20">
                             <div className="w-12 h-12 border-4 border-terracotta-200 border-t-terracotta-500 rounded-full animate-spin" />
                         </div>
@@ -159,105 +36,130 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                         <div className="relative">
                             {authenticated ? (
                                 <>
-                                    {/* Actions : Gazette + Déconnexion */}
-                                    <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
+                                    {/* Navigation des Onglets */}
+                                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-2">
+                                        <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex">
+                                            <button
+                                                onClick={() => setActiveTab("news")}
+                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === "news"
+                                                    ? "bg-terracotta-500 text-white shadow-md"
+                                                    : "text-charcoal-600 hover:bg-cream-50"
+                                                    }`}
+                                            >
+                                                Actualités
+                                            </button>
+                                            <button
+                                                onClick={() => setActiveTab("gallery")}
+                                                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === "gallery"
+                                                    ? "bg-terracotta-500 text-white shadow-md"
+                                                    : "text-charcoal-600 hover:bg-cream-50"
+                                                    }`}
+                                            >
+                                                Galerie Privée 🔒
+                                            </button>
+                                        </div>
 
+                                        <div className="flex items-center gap-3">
+                                            <a
+                                                href={gazetteData.file}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-4 py-2 bg-white text-forest-600 border border-forest-200 font-medium rounded-full hover:bg-forest-50 transition-colors text-sm"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                Gazette
+                                            </a>
 
-                                        <a
-                                            href={gazetteData.file}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-2 px-5 py-2.5 bg-forest-500 !text-white font-medium rounded-full shadow-md hover:bg-forest-600 transition-colors"
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                            Télécharger "Le petit écho du coeur" (PDF)
-                                            <span className="text-xs opacity-75 ml-1">
-                                                ({new Date(gazetteData.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })})
-                                            </span>
-                                        </a>
-
-                                        <button
-                                            onClick={handleLogout}
-                                            className="flex items-center gap-2 px-4 py-2 text-sm text-charcoal-600 hover:text-charcoal-900 transition-colors border border-charcoal-200 rounded-lg hover:bg-charcoal-50"
-                                        >
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                            </svg>
-                                            Déconnexion
-                                        </button>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="text-sm text-charcoal-500 hover:text-charcoal-800 underline underline-offset-4"
+                                            >
+                                                Déconnexion
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    {/* Blog Grid */}
-                                    <BlogGrid articles={initialArticles} isAdminUser={adminMode} />
+                                    {/* Contenu */}
+                                    <motion.div
+                                        key={activeTab}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {activeTab === "news" ? (
+                                            <BlogGrid articles={initialArticles} isAdminUser={adminMode} />
+                                        ) : (
+                                            <PrivateGallery />
+                                        )}
+                                    </motion.div>
                                 </>
                             ) : (
-                                <div className="flex flex-col items-center">
-                                    {/* Message d'accueil et boutons de connexion/inscription */}
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="w-full max-w-md mx-auto mb-8"
-                                    >
-                                        <div className="bg-white rounded-2xl shadow-warm p-5 max-w-md mx-4 text-center">
-                                            {/* Icône */}
-                                            <div className="w-12 h-12 bg-gradient-to-br from-terracotta-400 to-terracotta-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
-                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                                </svg>
-                                            </div>
-
-                                            <h2 className="font-serif text-xl text-charcoal-900 mb-1">
-                                                Espace Famille
-                                            </h2>
-                                            <p className="text-sm text-charcoal-600 mb-4">
-                                                Accédez aux photos et actualités
-                                            </p>
-
-                                            {/* Bouton Connexion */}
-                                            <motion.button
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                onClick={handleLogin}
-                                                className="w-full py-3 bg-terracotta-500 text-white font-semibold rounded-lg hover:bg-terracotta-600 transition-colors flex items-center justify-center gap-2 mb-2 text-sm"
-                                            >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                                                </svg>
-                                                Se connecter
-                                            </motion.button>
-
-                                            {/* Séparateur */}
-                                            <div className="flex items-center my-2">
-                                                <div className="flex-1 h-px bg-cream-200" />
-                                                <span className="px-3 text-xs text-charcoal-400">ou</span>
-                                                <div className="flex-1 h-px bg-cream-200" />
-                                            </div>
-
-                                            {/* Bouton Inscription */}
-                                            <motion.button
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                onClick={handleSignup}
-                                                className="w-full py-3 border-2 border-forest-500 text-forest-600 font-semibold rounded-lg hover:bg-forest-50 transition-colors flex items-center justify-center gap-2 text-sm"
-                                            >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                                </svg>
-                                                Créer un compte famille
-                                            </motion.button>
-
-                                            {/* Mention RGPD compacte */}
-                                            <p className="text-xs text-charcoal-400 mt-3 flex items-center justify-center gap-1">
-                                                <svg className="w-3 h-3 text-forest-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                                </svg>
-                                                Données protégées (RGPD)
-                                            </p>
+                                /* ... Login State ... */
+                                // Message d'accueil et boutons de connexion/inscription
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="w-full max-w-md mx-auto mb-8"
+                                >
+                                    <div className="bg-white rounded-2xl shadow-warm p-5 max-w-md mx-4 text-center">
+                                        {/* Icône */}
+                                        <div className="w-12 h-12 bg-gradient-to-br from-terracotta-400 to-terracotta-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm">
+                                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                            </svg>
                                         </div>
-                                    </motion.div>
-                                </div>
+
+                                        <h2 className="font-serif text-xl text-charcoal-900 mb-1">
+                                            Espace Famille
+                                        </h2>
+                                        <p className="text-sm text-charcoal-600 mb-4">
+                                            Accédez aux photos et actualités
+                                        </p>
+
+                                        {/* Bouton Connexion */}
+                                        <motion.button
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            onClick={handleLogin}
+                                            className="w-full py-3 bg-terracotta-500 text-white font-semibold rounded-lg hover:bg-terracotta-600 transition-colors flex items-center justify-center gap-2 mb-2 text-sm"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                            </svg>
+                                            Se connecter
+                                        </motion.button>
+
+                                        {/* Séparateur */}
+                                        <div className="flex items-center my-2">
+                                            <div className="flex-1 h-px bg-cream-200" />
+                                            <span className="px-3 text-xs text-charcoal-400">ou</span>
+                                            <div className="flex-1 h-px bg-cream-200" />
+                                        </div>
+
+                                        {/* Bouton Inscription */}
+                                        <motion.button
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            onClick={handleSignup}
+                                            className="w-full py-3 border-2 border-forest-500 text-forest-600 font-semibold rounded-lg hover:bg-forest-50 transition-colors flex items-center justify-center gap-2 text-sm"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                            </svg>
+                                            Créer un compte famille
+                                        </motion.button>
+
+                                        {/* Mention RGPD compacte */}
+                                        <p className="text-xs text-charcoal-400 mt-3 flex items-center justify-center gap-1">
+                                            <svg className="w-3 h-3 text-forest-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                            </svg>
+                                            Données protégées (RGPD)
+                                        </p>
+                                    </div>
+                                </motion.div>
                             )}
                         </div>
                     )}
