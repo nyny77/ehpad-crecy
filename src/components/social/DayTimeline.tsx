@@ -84,7 +84,7 @@ export default function DayTimeline() {
                 >
                     <span className="inline-block px-4 py-2 bg-terracotta-100 text-terracotta-600 rounded-full text-sm font-semibold mb-4">Au quotidien</span>
                     <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2">
-                        Une journée type à la résidence
+                        Une journée type à la maison
                     </h2>
                     <motion.div
                         initial={{ scaleX: 0 }}
