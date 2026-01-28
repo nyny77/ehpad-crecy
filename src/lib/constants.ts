@@ -138,7 +138,7 @@ export const SERVICES = [
         id: "technique",
         title: "Le technicien",
         subtitle: "Maintenance & Sécurité",
-        description: "Piloté par un responsable technique SSIAP, chargé des travaux et des suivis, le service assure la sécurité et la maintenance de l'établissement avec un agent polyvalent.",
+        description: "Le service technique assure la sécurité et la maintenance de l'établissement. Une équipe dédiée veille au bon fonctionnement des installations au quotidien.",
         image: "/images/services/technique.png",
     },
     {

@@ -143,30 +143,109 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                     </motion.div>
                                 </>
                             ) : (
-                                // Message d'accueil simple pour inviter à se connecter via le menu
+                                // Design Premium pour inviter à se connecter
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="w-full max-w-lg mx-auto mb-8 text-center"
+                                    transition={{ duration: 0.6, ease: "easeOut" }}
+                                    className="w-full max-w-xl mx-auto mb-8"
                                 >
-                                    <div className="bg-white/50 rounded-2xl border border-cream-200 p-8">
-                                        <div className="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center mx-auto mb-4 text-terracotta-500">
-                                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                            </svg>
+                                    {/* Card avec effet glassmorphism et bordure animée */}
+                                    <div className="relative group">
+                                        {/* Bordure animée gradient */}
+                                        <div className="absolute -inset-0.5 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 rounded-3xl opacity-60 group-hover:opacity-100 blur transition duration-500 group-hover:duration-200 animate-gradient-x"></div>
+
+                                        {/* Contenu principal */}
+                                        <div className="relative bg-gradient-to-br from-white via-cream-50 to-white rounded-3xl p-10 shadow-2xl">
+                                            {/* Éléments décoratifs flottants */}
+                                            <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-terracotta-200/30 to-transparent rounded-full blur-xl"></div>
+                                            <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-tr from-forest-200/30 to-transparent rounded-full blur-xl"></div>
+
+                                            {/* Icône animée avec effet de pulsation */}
+                                            <motion.div
+                                                className="relative w-24 h-24 mx-auto mb-6"
+                                                animate={{
+                                                    y: [0, -8, 0],
+                                                }}
+                                                transition={{
+                                                    duration: 3,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                            >
+                                                {/* Cercles de fond animés */}
+                                                <motion.div
+                                                    className="absolute inset-0 bg-gradient-to-br from-terracotta-200 to-forest-200 rounded-full"
+                                                    animate={{ scale: [1, 1.1, 1] }}
+                                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                                />
+                                                <motion.div
+                                                    className="absolute inset-2 bg-gradient-to-tr from-cream-100 to-white rounded-full shadow-inner"
+                                                />
+                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                    <motion.svg
+                                                        className="w-10 h-10 text-terracotta-500"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                        animate={{ rotate: [0, 5, -5, 0] }}
+                                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                    </motion.svg>
+                                                </div>
+                                            </motion.div>
+
+                                            {/* Titre avec effet de gradient */}
+                                            <h3 className="font-serif text-2xl md:text-3xl bg-gradient-to-r from-charcoal-800 via-terracotta-600 to-charcoal-800 bg-clip-text text-transparent mb-4 text-center font-bold">
+                                                Espace Famille Sécurisé
+                                            </h3>
+
+                                            {/* Description améliorée */}
+                                            <p className="text-charcoal-600 text-center mb-3 leading-relaxed">
+                                                Retrouvez les <span className="text-terracotta-600 font-semibold">actualités détaillées</span> et la <span className="text-forest-600 font-semibold">galerie photos privée</span> de votre proche.
+                                            </p>
+                                            <p className="text-charcoal-500 text-sm text-center mb-8">
+                                                Connectez-vous ou créez votre compte famille pour accéder à cet espace exclusif.
+                                            </p>
+
+                                            {/* Bouton premium avec effet de brillance */}
+                                            <motion.button
+                                                onClick={() => setShowAuthChoice(true)}
+                                                className="relative w-full overflow-hidden px-8 py-4 bg-gradient-to-r from-terracotta-500 via-terracotta-400 to-terracotta-500 text-white font-bold rounded-2xl shadow-lg cursor-pointer group/btn"
+                                                whileHover={{ scale: 1.02, boxShadow: "0 20px 40px -10px rgba(180, 83, 62, 0.4)" }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                {/* Effet de brillance qui passe */}
+                                                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></span>
+
+                                                <span className="relative flex items-center justify-center gap-3">
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                    Accéder à l&apos;Espace Famille
+                                                    <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                    </svg>
+                                                </span>
+                                            </motion.button>
+
+                                            {/* Badges de confiance */}
+                                            <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-cream-200">
+                                                <div className="flex items-center gap-2 text-xs text-charcoal-500">
+                                                    <svg className="w-4 h-4 text-forest-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span>Connexion sécurisée</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-xs text-charcoal-500">
+                                                    <svg className="w-4 h-4 text-terracotta-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span>Espace privé famille</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h3 className="font-serif text-xl text-charcoal-800 mb-2">Espace Famille Sécurisé</h3>
-                                        <p className="text-charcoal-600">
-                                            L'accès aux actualités détaillées et à la galerie photos est réservé aux familles.
-                                            <br />
-                                            Veuillez utiliser le bouton ci-dessous pour vous connecter ou créer un compte.
-                                        </p>
-                                        <button
-                                            onClick={() => setShowAuthChoice(true)}
-                                            className="px-6 py-3 bg-terracotta-500 text-white font-bold rounded-full hover:bg-terracotta-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 duration-200" // Added style
-                                        >
-                                            Espace Famille et Personnel
-                                        </button>
                                     </div>
                                 </motion.div>
                             )}

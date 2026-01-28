@@ -157,13 +157,13 @@ Elle vous accueille avec chaleur et disponibilité. De la constitution du dossie
         title: "Le technicien",
         subtitle: "Maintenance & Sécurité",
         shortDescription: "Une équipe dédiée à la sécurité et au bon fonctionnement de l'établissement.",
-        fullDescription: `Le service technique et sécurité de l'EHPAD de Crécy est piloté par un responsable technique SSIAP, également chargé des travaux et du suivi technique, qui encadre un agent technique polyvalent.
+        fullDescription: `Le service technique et sécurité de l'EHPAD de Crécy veille au bon fonctionnement de l'ensemble des installations. Une équipe dédiée assure la maintenance quotidienne et le suivi technique.
 
 Ensemble, ils veillent au bon fonctionnement de l'ensemble des installations et à la sécurité des résidents et du personnel. Leur expertise complémentaire permet de gérer efficacement la maintenance quotidienne ainsi que les projets de travaux plus importants.
 
 Leur champ d'action est vaste : sécurité incendie, maintenance préventive et curative, entretien des espaces verts, et petits travaux de réparation. Ils garantissent ainsi un environnement sûr, aux normes et confortable pour tous.`,
         highlights: [
-            "Responsable technique SSIAP",
+            "Maintenance préventive",
             "Suivi des travaux",
             "Maintenance quotidienne",
             "Sécurité des locaux",

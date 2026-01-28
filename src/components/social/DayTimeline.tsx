@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sun, Coffee, Utensils, Moon, Music, BookOpen } from "lucide-react";
+import Image from "next/image";
 
 const EVENTS = [
     {
@@ -10,6 +11,8 @@ const EVENTS = [
         description: "Un réveil personnalisé respectant le rythme de chacun, suivi d'un petit déjeuner gourmand servi en chambre.",
         icon: <Sun className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
+        badgeColor: "bg-terracotta-500",
+        image: "/images/timeline/morning.png",
         side: "left"
     },
     {
@@ -18,6 +21,8 @@ const EVENTS = [
         description: "Stimulation cognitive, gym douce, revue de presse... Des moments d'échange et de maintien de l'autonomie.",
         icon: <BookOpen className="w-6 h-6" />,
         color: "bg-forest-100 text-forest-600",
+        badgeColor: "bg-forest-500",
+        image: "/images/timeline/activities.png",
         side: "right"
     },
     {
@@ -26,6 +31,8 @@ const EVENTS = [
         description: "Une cuisine savoureuse et équilibrée, servie à l'assiette.",
         icon: <Utensils className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
+        badgeColor: "bg-terracotta-500",
+        image: "/images/timeline/lunch.png",
         side: "left"
     },
     {
@@ -34,6 +41,8 @@ const EVENTS = [
         description: "Lotos, chorale, jeux de société, sorties... L'après-midi est dédié au partage et à la détente.",
         icon: <Music className="w-6 h-6" />,
         color: "bg-forest-100 text-forest-600",
+        badgeColor: "bg-forest-500",
+        image: "/images/timeline/social.png",
         side: "right"
     },
     {
@@ -42,6 +51,8 @@ const EVENTS = [
         description: "Le moment plaisir de la journée avec pâtisseries et boissons chaudes.",
         icon: <Coffee className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
+        badgeColor: "bg-terracotta-500",
+        image: "/images/timeline/snack.png",
         side: "left"
     },
     {
@@ -50,6 +61,8 @@ const EVENTS = [
         description: "Un repas léger suivi d'une soirée apaisante pour préparer une bonne nuit de sommeil.",
         icon: <Moon className="w-6 h-6" />,
         color: "bg-charcoal-100 text-charcoal-600",
+        badgeColor: "bg-charcoal-700",
+        image: "/images/timeline/evening.png",
         side: "right"
     }
 ];
@@ -57,56 +70,99 @@ const EVENTS = [
 export default function DayTimeline() {
     return (
         <section className="section-padding bg-cream-50 relative overflow-hidden">
+            {/* Éléments décoratifs de fond */}
+            <div className="absolute top-20 left-10 w-32 h-32 bg-terracotta-200/20 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 right-10 w-40 h-40 bg-forest-200/20 rounded-full blur-3xl" />
+
             <div className="container-custom">
-                <div className="text-center mb-16">
-                    <span className="text-terracotta-500 font-medium">Au quotidien</span>
-                    <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
+                    <span className="inline-block px-4 py-2 bg-terracotta-100 text-terracotta-600 rounded-full text-sm font-semibold mb-4">Au quotidien</span>
+                    <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2">
                         Une journée type à la résidence
                     </h2>
-                </div>
+                    <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="w-24 h-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 mx-auto rounded-full mt-6"
+                    />
+                </motion.div>
 
-                <div className="relative max-w-4xl mx-auto">
+                <div className="relative max-w-6xl mx-auto">
                     {/* Ligne centrale */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-terracotta-200 via-forest-200 to-charcoal-200 -translate-x-1/2 hidden md:block" />
+                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-terracotta-300 via-forest-300 to-charcoal-300 -translate-x-1/2 hidden md:block rounded-full" />
 
-                    <div className="space-y-12 relative">
+                    <div className="space-y-16 relative">
                         {EVENTS.map((event, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 50 }}
+                                initial={{ opacity: 0, y: 60 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
                                 className={`flex flex-col md:flex-row gap-8 items-center ${event.side === "right" ? "md:flex-row-reverse" : ""
                                     }`}
                             >
-                                {/* Contenu */}
-                                <div className="flex-1 w-full md:w-1/2 text-center md:text-left">
-                                    <div className={`p-6 bg-white rounded-2xl shadow-card border border-cream-100 hover:shadow-warm transition-shadow duration-300 relative group`}>
-                                        {/* Petite flèche */}
-                                        <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rotate-45 border-t border-l border-cream-100 ${event.side === "left" ? "-right-2 border-l-0 border-t-[1px] border-r-[1px] border-b-0" : "-left-2 border-r-0 border-b-[1px]"
-                                            } `} style={{ borderColor: 'inherit' }} />
-                                        {/* Correction CSS flèche rapide : je vais faire simple sans flèche complexe pour éviter bugs visuels */}
+                                {/* Contenu avec image */}
+                                <div className="flex-1 w-full md:w-1/2">
+                                    <motion.div
+                                        className="relative bg-white rounded-3xl shadow-xl border border-cream-100 overflow-hidden group hover:shadow-2xl transition-all duration-500"
+                                        whileHover={{ y: -5, scale: 1.01 }}
+                                    >
+                                        {/* Image watercolor */}
+                                        <div className="relative h-48 md:h-56 overflow-hidden">
+                                            <Image
+                                                src={event.image}
+                                                alt={event.title}
+                                                fill
+                                                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                            />
+                                            {/* Overlay gradient */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
 
-                                        <div className="flex items-center gap-3 mb-3 justify-center md:justify-start">
-                                            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${event.color.replace('text-', 'bg-').replace('100', '500').replace('600', 'white text-white')}`}>
+                                            {/* Badge horaire flottant */}
+                                            <motion.div
+                                                className={`absolute top-4 left-4 px-4 py-2 ${event.badgeColor} text-white rounded-full text-sm font-bold shadow-lg`}
+                                                whileHover={{ scale: 1.05 }}
+                                            >
                                                 {event.time}
-                                            </span>
+                                            </motion.div>
                                         </div>
-                                        <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">
-                                            {event.title}
-                                        </h3>
-                                        <p className="text-charcoal-600 text-sm leading-relaxed">
-                                            {event.description}
-                                        </p>
-                                    </div>
+
+                                        {/* Contenu texte */}
+                                        <div className="p-6 pt-2">
+                                            <h3 className="font-serif text-xl md:text-2xl font-bold text-charcoal-900 mb-3">
+                                                {event.title}
+                                            </h3>
+                                            <p className="text-charcoal-600 leading-relaxed">
+                                                {event.description}
+                                            </p>
+                                        </div>
+                                    </motion.div>
                                 </div>
 
                                 {/* Point central avec icône */}
                                 <div className="relative z-10 flex-shrink-0">
-                                    <div className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg border-4 border-white ${event.color}`}>
+                                    <motion.div
+                                        className={`w-20 h-20 rounded-full flex items-center justify-center shadow-xl border-4 border-white ${event.color}`}
+                                        whileHover={{ scale: 1.15, rotate: 10 }}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                    >
                                         {event.icon}
-                                    </div>
+                                    </motion.div>
+                                    {/* Pulse effect */}
+                                    <motion.div
+                                        className={`absolute inset-0 rounded-full ${event.color.split(' ')[0]} opacity-40`}
+                                        animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0, 0.4] }}
+                                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                                    />
                                 </div>
 
                                 {/* Espace vide pour l'équilibre */}
