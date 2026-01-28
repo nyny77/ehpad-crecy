@@ -34,3 +34,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Dépannage / Troubleshooting
+
+### Erreur Build Netlify : TypeScript & Framer Motion
+
+Si le build échoue avec une erreur TypeScript concernant `RefAttributes<HTMLSpanElement>` ou des types incompatibles dans `PageHeader.tsx` (ou autres composants utilisant framer-motion), c'est souvent dû à une inférence de type stricte sur les variants.
+
+**Solution :**
+Il faut typer explicitement les objets variants avec `Variants` de `framer-motion`.
+
+Exemple :
+```typescript
+import { Variants } from "framer-motion";
+
+const variants: Variants = {
+  hidden: { ... },
+  visible: (i: number) => ({ ... })
+};
+```
+
+Cette modification a été appliquée le 28/01/2026 pour corriger l'erreur de build exit code 2.
