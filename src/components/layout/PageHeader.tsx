@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
 interface PageHeaderProps {
     title: React.ReactNode;
@@ -14,7 +14,7 @@ interface PageHeaderProps {
 }
 
 // Animation pour chaque lettre du titre
-const letterVariants = {
+const letterVariants: Variants = {
     hidden: { opacity: 0, y: 50, rotateX: -90 },
     visible: (i: number) => ({
         opacity: 1,
