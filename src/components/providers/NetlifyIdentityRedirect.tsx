@@ -4,8 +4,28 @@ import { useEffect } from "react";
 
 export default function NetlifyIdentityRedirect() {
     useEffect(() => {
-        // La redirection globale est désactivée pour laisser chaque page gérer son état.
-        // Les composants comme VieSocialeClient écoutent déjà les événements de connexion via onAuthChange.
+        // Ecouteur global pour fermer automatiquement le widget après connexion
+        const handleLogin = () => {
+            console.log("Login detected, closing widget...");
+            window.netlifyIdentity?.close();
+        };
+
+        // Polling pour attendre que netlifyIdentity soit chargé
+        const checkInterval = setInterval(() => {
+            if (window.netlifyIdentity) {
+                console.log("NetlifyIdentity found, attaching auto-close listener");
+                window.netlifyIdentity.on("login", handleLogin);
+                clearInterval(checkInterval);
+            }
+        }, 100);
+
+        // Cleanup
+        return () => {
+            clearInterval(checkInterval);
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.off("login", handleLogin);
+            }
+        };
     }, []);
 
     return null;
