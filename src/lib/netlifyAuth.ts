@@ -95,7 +95,10 @@ export function onAuthChange(callback: (user: NetlifyUser | null) => void): () =
         return () => { };
     }
 
-    const handleLogin = (user?: NetlifyUser) => callback(user || null);
+    const handleLogin = (user?: NetlifyUser) => {
+        callback(user || null);
+        window.netlifyIdentity?.close();
+    };
     const handleLogout = () => callback(null);
 
     window.netlifyIdentity.on("login", handleLogin);
