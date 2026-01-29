@@ -6,8 +6,10 @@ export default function NetlifyIdentityRedirect() {
     useEffect(() => {
         // Ecouteur global pour fermer automatiquement le widget après connexion
         const handleLogin = () => {
-            console.log("Login detected, closing widget...");
-            window.netlifyIdentity?.close();
+            console.log("Login detected, closing widget in 1s...");
+            setTimeout(() => {
+                window.netlifyIdentity?.close();
+            }, 1000);
         };
 
         // Polling pour attendre que netlifyIdentity soit chargé

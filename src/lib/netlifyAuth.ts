@@ -97,7 +97,10 @@ export function onAuthChange(callback: (user: NetlifyUser | null) => void): () =
 
     const handleLogin = (user?: NetlifyUser) => {
         callback(user || null);
-        window.netlifyIdentity?.close();
+        // Petit délai pour laisser le temps au widget de finir son animation/état avant de fermer
+        setTimeout(() => {
+            window.netlifyIdentity?.close();
+        }, 1000);
     };
     const handleLogout = () => callback(null);
 
