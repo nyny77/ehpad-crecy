@@ -1,30 +1,54 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { VALUES } from "@/lib/constants";
 
 const iconMap: { [key: string]: React.ReactNode } = {
     heart: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
+        <div className="relative w-full h-full">
+            <Image
+                src="/images/values/bienveillance.png"
+                alt="Bienveillance"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+        </div>
     ),
     star: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
+        <div className="relative w-full h-full">
+            <Image
+                src="/images/values/professionnalisme.png"
+                alt="Professionnalisme"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+        </div>
     ),
     eye: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
+        <div className="relative w-full h-full">
+            <Image
+                src="/images/values/transparence.png"
+                alt="Transparence"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+        </div>
     ),
     users: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
+        <div className="relative w-full h-full">
+            <Image
+                src="/images/values/vie-sociale.png"
+                alt="Vie Sociale"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+        </div>
     ),
 };
 
@@ -77,8 +101,8 @@ export default function IntroSection() {
                             transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                             className="group"
                         >
-                            <div className="card-warm p-8 h-full flex flex-col items-center text-center">
-                                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-terracotta-100 to-forest-100 text-terracotta-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <div className="card-warm p-8 h-full flex flex-col items-center text-center hover:bg-cream-50/50 transition-colors">
+                                <div className="relative w-48 h-48 mb-6 group-hover:scale-105 transition-transform duration-300">
                                     {iconMap[value.icon]}
                                 </div>
                                 <h3 className="font-serif text-xl font-semibold text-charcoal-900 mb-3">
