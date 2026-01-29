@@ -7,7 +7,7 @@ export default function NetlifyIdentityRedirect() {
         // Simple and robust login listener with polling
         const handleLogin = () => {
             console.log("Login detected in Redirect, reloading...");
-            window.location.href = "/";
+            window.location.reload();
         };
 
         // Poll for netlifyIdentity availability
