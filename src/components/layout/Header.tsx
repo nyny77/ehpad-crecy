@@ -29,7 +29,7 @@ export default function Header() {
                 }`}
         >
             <div className="container-custom">
-                <nav className="flex items-center justify-between gap-4 lg:gap-12">
+                <nav className="flex items-center justify-between lg:justify-center gap-4 lg:gap-16">
                     {/* Logo + Nom */}
                     <Link href="/" className="group flex items-center gap-3">
                         <motion.div
