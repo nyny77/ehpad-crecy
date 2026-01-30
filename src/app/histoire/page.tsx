@@ -36,11 +36,13 @@ export default function HistoirePage() {
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="bg-forest-100 p-8 rounded-2xl border-2 border-dashed border-forest-300 flex flex-col items-center justify-center min-h-[300px] text-center"
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2"
                         >
-                            <svg className="w-12 h-12 text-forest-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <p className="font-bold text-forest-700 mb-2">Suggestion Photo 1 : Les Brassets</p>
-                            <p className="text-sm text-forest-600 max-w-xs">Photo d'un canal bordé de maisons anciennes avec passerelles fleuries.</p>
+                            <img
+                                src="/images/history/canal.jpg"
+                                alt="Les canaux de Crécy-la-Chapelle"
+                                className="w-full h-full object-cover"
+                            />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
@@ -66,11 +68,13 @@ export default function HistoirePage() {
                             initial={{ opacity: 0, x: 30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="order-1 md:order-2 bg-wood-100 p-8 rounded-2xl border-2 border-dashed border-wood-300 flex flex-col items-center justify-center min-h-[300px] text-center"
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-2"
                         >
-                            <svg className="w-12 h-12 text-wood-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <p className="font-bold text-wood-700 mb-2">Suggestion Photo 2 : Vestiges</p>
-                            <p className="text-sm text-wood-600 max-w-xs">Ancienne tour de défense médiévale en pierre.</p>
+                            <img
+                                src="/images/history/tour.jpg"
+                                alt="Tour médiévale de Crécy"
+                                className="w-full h-full object-cover"
+                            />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
@@ -97,11 +101,13 @@ export default function HistoirePage() {
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="bg-golden-100 p-8 rounded-2xl border-2 border-dashed border-golden-300 flex flex-col items-center justify-center min-h-[300px] text-center"
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-1"
                         >
-                            <svg className="w-12 h-12 text-golden-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <p className="font-bold text-golden-700 mb-2">Suggestion Photo 3 : La Collégiale</p>
-                            <p className="text-sm text-golden-600 max-w-xs">Vue extérieure de la Collégiale Notre-Dame (style gothique) sous un ciel bleu.</p>
+                            <img
+                                src="/images/history/collegiale.png"
+                                alt="La Collégiale Notre-Dame"
+                                className="w-full h-full object-cover"
+                            />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
@@ -127,11 +133,13 @@ export default function HistoirePage() {
                             initial={{ opacity: 0, x: 30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="order-1 md:order-2 bg-terracotta-100 p-8 rounded-2xl border-2 border-dashed border-terracotta-300 flex flex-col items-center justify-center min-h-[300px] text-center"
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-1"
                         >
-                            <svg className="w-12 h-12 text-terracotta-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            <p className="font-bold text-terracotta-700 mb-2">Suggestion Photo 4 : Le Centre-Ville</p>
-                            <p className="text-sm text-terracotta-600 max-w-xs">Rue commerçante ou place du marché, ambiance conviviale.</p>
+                            <img
+                                src="/images/history/marche.jpg"
+                                alt="Le marché de Crécy"
+                                className="w-full h-full object-cover"
+                            />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
