@@ -64,7 +64,7 @@ export default function HistoirePage() {
                         </motion.div>
                     </div>
 
-                    {/* 2. Les Pierres */}
+                    {/* 2. Le Beffroi */}
                     <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
@@ -74,7 +74,7 @@ export default function HistoirePage() {
                         >
                             <Image
                                 src="/images/history/tour.jpg"
-                                alt="Tour médiévale de Crécy"
+                                alt="Le Beffroi de Crécy-la-Chapelle"
                                 fill
                                 className="object-cover"
                             />
@@ -85,15 +85,15 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="order-2 md:order-1"
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">2. Des Pierres qui Racontent une Histoire</h2>
+                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">2. Le Beffroi : Une Silhouette Unique</h2>
                             <p className="text-charcoal-600 mb-4">
-                                Crécy-la-Chapelle n'est pas une ville récente. C'est un bourg médiéval qui a beaucoup d'histoires à raconter. Vous le sentirez en voyant les vieilles pierres qui donnent tant de cachet au centre-ville.
+                                Monument emblématique de la "Venise Briarde", le Beffroi raconte l'histoire de la ville en superposant deux époques. Sa base massive en pierre est le vestige d'une tour de défense du XIIe siècle, ancienne porte fortifiée de la ville.
                             </p>
                             <p className="text-charcoal-600">
-                                Autrefois, la ville était entourée de remparts pour se protéger. Il en reste aujourd'hui de magnifiques vestiges, comme des tours de guet en pierre que l'on découvre au détour d'une rue. Ces murs épais sont les gardiens silencieux du passé de votre nouvelle ville.
+                                Elle est surmontée d'une tour plus fine en briques rouges, ajoutée en 1874 pour accueillir l'horloge et les cloches. Ce mariage architectural surprenant, entre base militaire médiévale et clocher civil du XIXe siècle, lui confère son allure si particulière.
                             </p>
                             <blockquote className="mt-6 border-l-4 border-wood-300 pl-4 italic text-wood-700">
-                                Les anciennes tours de guet veillent encore sur la ville, témoins de son passé médiéval.
+                                "Une base militaire médiévale surmontée d'un clocher civil : une silhouette unique en Seine-et-Marne."
                             </blockquote>
                         </motion.div>
                     </div>
