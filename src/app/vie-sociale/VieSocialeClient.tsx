@@ -136,7 +136,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
 
                                             <button
                                                 onClick={handleLogout}
-                                                className="text-sm text-charcoal-500 hover:text-charcoal-800 underline underline-offset-4"
+                                                className="text-sm text-charcoal-500 hover:text-charcoal-800 underline underline-offset-4 cursor-pointer"
                                             >
                                                 Déconnexion
                                             </button>
