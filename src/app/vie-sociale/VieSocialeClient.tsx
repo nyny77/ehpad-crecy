@@ -47,10 +47,41 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
     }, []);
 
     const handleLogout = () => {
-        logout();
-        setAuthenticated(false);
-        setAdminMode(false);
-        setActiveTab("news"); // Reset tab on logout
+        logout(() => {
+            setAuthenticated(false);
+            setAdminMode(false);
+            // window.location.reload(); // Pas nécessaire si on gère l'état
+        });
+    };
+
+    const handleNotify = async () => {
+        if (!confirm("Voulez-vous envoyer un email de notification aux inscrits pour signaler une nouveauté ?")) {
+            return;
+        }
+
+        try {
+            const token = window.netlifyIdentity?.currentUser()?.token?.access_token;
+            const res = await fetch("/.netlify/functions/send-notification", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    subject: "✨ Nouveauté sur l'Espace Vie Sociale",
+                    message: "Un nouvel article ou une nouvelle photo vient d'être publié(e) sur l'espace privé des familles. Connectez-vous vite pour le découvrir !",
+                }),
+            });
+
+            if (res.ok) {
+                alert("Notification envoyée avec succès ! 📧");
+            } else {
+                throw new Error("Erreur lors de l'envoi");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erreur technique lors de l'envoi de la notification.");
+        }
     };
 
     return (
@@ -120,18 +151,30 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
 
                                         <div className="flex items-center gap-3">
                                             {adminMode && (
-                                                <a
-                                                    href="/admin/#/collections/gazette"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
-                                                    title="Modifier le Petit echo du coeur"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                                    </svg>
-                                                    Up Echo du coeur
-                                                </a>
+                                                <>
+                                                    <a
+                                                        href="/admin/#/collections/gazette"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
+                                                        title="Modifier le Petit echo du coeur"
+                                                    >
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                                        </svg>
+                                                        Up Echo du coeur
+                                                    </a>
+                                                    <button
+                                                        onClick={handleNotify}
+                                                        className="flex items-center gap-2 px-3 py-2 bg-terracotta-500 !text-white font-medium rounded-full hover:bg-terracotta-600 transition-colors text-sm cursor-pointer"
+                                                        title="Envoyer un email aux familles"
+                                                    >
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                        </svg>
+                                                        Notifier
+                                                    </button>
+                                                </>
                                             )}
 
                                             <button
