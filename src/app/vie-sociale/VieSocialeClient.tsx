@@ -46,12 +46,10 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
         return () => unsubscribe();
     }, []);
 
-    const handleLogout = () => {
-        logout(() => {
-            setAuthenticated(false);
-            setAdminMode(false);
-            // window.location.reload(); // Pas nécessaire si on gère l'état
-        });
+    const handleLogout = async () => {
+        await logout();
+        setAuthenticated(false);
+        setAdminMode(false);
     };
 
     const handleNotify = async () => {
