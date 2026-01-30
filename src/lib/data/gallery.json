@@ -83,6 +83,13 @@
       "title": "Exterieur",
       "src": "/images/uploads/20260121_102117.jpg",
       "alt": "Exterieur"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Vue aérienne année 70",
+      "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
+      "alt": "Construction du collège, 1ere extension de l'ehpad."
     }
   ]
 }
