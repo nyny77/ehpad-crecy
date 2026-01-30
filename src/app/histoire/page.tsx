@@ -12,7 +12,6 @@ export default function HistoirePage() {
             <PageHeader
                 title="Histoire de Crécy-la-Chapelle"
                 subtitle="Découvrez la Venise Briarde, votre future ville"
-                image="/images/hero/histoire-hero.jpg"
             />
 
             <Section className="py-16 md:py-24">
