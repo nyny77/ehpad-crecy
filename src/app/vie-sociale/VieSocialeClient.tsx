@@ -218,15 +218,15 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
 
                                             {/* Titre avec effet de gradient */}
                                             <h3 className="font-serif text-2xl md:text-3xl bg-gradient-to-r from-charcoal-800 via-terracotta-600 to-charcoal-800 bg-clip-text text-transparent mb-4 text-center font-bold">
-                                                Espace Famille Sécurisé
+                                                Espace Famille & Agents
                                             </h3>
 
                                             {/* Description améliorée */}
                                             <p className="text-charcoal-600 text-center mb-3 leading-relaxed">
-                                                Retrouvez les <span className="text-terracotta-600 font-semibold">actualités détaillées</span> et la <span className="text-forest-600 font-semibold">galerie photos privée</span> de votre proche.
+                                                Retrouvez les <span className="text-terracotta-600 font-semibold">actualités détaillées</span> et la <span className="text-forest-600 font-semibold">galerie photos privée</span> de l'établissement.
                                             </p>
                                             <p className="text-charcoal-500 text-sm text-center mb-8">
-                                                Connectez-vous ou créez votre compte famille pour accéder à cet espace exclusif.
+                                                Connectez-vous ou créez votre compte pour accéder à cet espace exclusif.
                                             </p>
 
                                             {/* Bouton premium avec effet de brillance */}
@@ -243,7 +243,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                                                     </svg>
-                                                    Accéder à l&apos;Espace Famille
+                                                    Accéder à l&apos;Espace Privé
                                                     <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                                     </svg>
