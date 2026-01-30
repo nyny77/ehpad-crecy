@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import PageHeader from "@/components/layout/PageHeader";
 import Section from "@/components/layout/Section";
 import { motion } from "framer-motion";
@@ -11,7 +12,7 @@ export default function HistoirePage() {
             <PageHeader
                 title="Histoire de Crécy-la-Chapelle"
                 subtitle="Découvrez la Venise Briarde, votre future ville"
-                image="/images/hero/histoire-hero.jpg" // Placeholder ou image existante
+                image="/images/hero/histoire-hero.jpg"
             />
 
             <Section className="py-16 md:py-24">
@@ -38,10 +39,11 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2"
                         >
-                            <img
+                            <Image
                                 src="/images/history/canal.jpg"
                                 alt="Les canaux de Crécy-la-Chapelle"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </motion.div>
                         <motion.div
@@ -70,10 +72,11 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-2"
                         >
-                            <img
+                            <Image
                                 src="/images/history/tour.jpg"
                                 alt="Tour médiévale de Crécy"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </motion.div>
                         <motion.div
@@ -103,10 +106,11 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-1"
                         >
-                            <img
+                            <Image
                                 src="/images/history/collegiale.png"
                                 alt="La Collégiale Notre-Dame"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </motion.div>
                         <motion.div
@@ -135,10 +139,11 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-1"
                         >
-                            <img
+                            <Image
                                 src="/images/history/marche.jpg"
                                 alt="Le marché de Crécy"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </motion.div>
                         <motion.div
