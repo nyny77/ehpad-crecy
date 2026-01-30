@@ -104,21 +104,26 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                             >
                                                 Galerie Privée 🔒
                                             </motion.button>
-                                        </div>
-
-                                        <div className="flex items-center gap-3">
-                                            <a
+                                            <motion.a
                                                 href={gazetteData.file}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-2 px-4 py-2 bg-white text-forest-600 border border-forest-200 font-medium rounded-full hover:bg-forest-50 transition-colors text-sm"
+                                                animate={{ scale: [1, 1.05, 1] }}
+                                                transition={{
+                                                    duration: 2,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                                className="px-6 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 text-charcoal-600 hover:bg-cream-50 flex items-center gap-2"
                                             >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                 </svg>
                                                 Petit echo du coeur
-                                            </a>
+                                            </motion.a>
+                                        </div>
 
+                                        <div className="flex items-center gap-3">
                                             {adminMode && (
                                                 <a
                                                     href="/admin/#/collections/gazette"
@@ -130,6 +135,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                                     </svg>
+                                                    Modifier gazette
                                                 </a>
                                             )}
 
