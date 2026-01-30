@@ -2,8 +2,8 @@
 title: Eclairage
 date: 2026-01-30T11:25:00.000+01:00
 category: activite
-image: /images/uploads/20260130_110434.jpg
-excerpt: Led
+image: /images/uploads/d.png
+excerpt: Panneau LED dans les salles de bain.
 ---
 
 Bonne nouvelle 💡🚿
