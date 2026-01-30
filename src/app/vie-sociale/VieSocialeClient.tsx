@@ -73,7 +73,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                 <>
                                     {/* Navigation des Onglets */}
                                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-2">
-                                        <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex gap-1">
+                                        <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex gap-2">
                                             <motion.button
                                                 onClick={() => setActiveTab("news")}
                                                 animate={activeTab === "news" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
@@ -84,7 +84,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                 }}
                                                 className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 ${activeTab === "news"
                                                     ? "bg-terracotta-500 text-white shadow-md"
-                                                    : "text-charcoal-600 hover:bg-cream-50"
+                                                    : "text-charcoal-800 hover:bg-cream-50"
                                                     }`}
                                             >
                                                 Blog
@@ -99,7 +99,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                 }}
                                                 className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 ${activeTab === "gallery"
                                                     ? "bg-terracotta-500 text-white shadow-md"
-                                                    : "text-charcoal-600 hover:bg-cream-50"
+                                                    : "text-charcoal-800 hover:bg-cream-50"
                                                     }`}
                                             >
                                                 Galerie Privée 🔒
@@ -114,9 +114,9 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     repeat: Infinity,
                                                     ease: "easeInOut"
                                                 }}
-                                                className="px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 text-charcoal-600 hover:bg-cream-50 flex items-center gap-2"
+                                                className="px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 text-charcoal-800 hover:bg-cream-50 flex items-center gap-2"
                                             >
-                                                <svg className="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 h-4 text-charcoal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                 </svg>
                                                 Petit echo du coeur
