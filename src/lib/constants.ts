@@ -195,6 +195,7 @@ export const SERVICES = [
 // Navigation
 export const NAV_LINKS = [
     { href: "/", label: "Accueil" },
+    { href: "/histoire", label: "Notre Ville" },
     { href: "/equipe", label: "Notre Équipe" },
     { href: "/galerie", label: "Galerie Photos" },
     { href: "/vie-sociale", label: "Vie Sociale" },

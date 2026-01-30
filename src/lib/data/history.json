@@ -1,0 +1,25 @@
+{
+    "heroTitle": "Histoire de Crécy-la-Chapelle",
+    "introText": "Vous allez bientôt poser vos valises à Crécy-la-Chapelle pour entamer une nouvelle étape de votre vie...",
+    "section1": {
+        "title": "1. L'Eau : L'Âme de Crécy",
+        "content": "La première chose qui vous frappera à Crécy, c'est la présence apaisante de l'eau...",
+        "caption": "Les 'brassets', ces petits canaux qui donnent à Crécy son surnom de 'Venise Briarde'."
+    },
+    "section2": {
+        "title": "2. Des Pierres qui Racontent une Histoire",
+        "content": "Crécy-la-Chapelle n'est pas une ville récente...",
+        "caption": "Les anciennes tours de guet veillent encore sur la ville, témoins de son passé médiéval."
+    },
+    "section3": {
+        "title": "3. La Collégiale Notre-Dame",
+        "content": "Vous ne pourrez pas la manquer. Elle veille sur la ville depuis des siècles...",
+        "caption": "La magnifique Collégiale Notre-Dame, un chef-d'œuvre de l'art gothique."
+    },
+    "section4": {
+        "title": "4. Un Cœur de Ville Vivant et Paisible",
+        "content": "Crécy est une ville d'histoire, mais c'est aussi une ville bien vivante !",
+        "caption": "Le cœur de ville, avec ses commerces et son ambiance de village convivial."
+    },
+    "outro": "Chers futurs résidents, Crécy-la-Chapelle est une ville qui prend soin de ses habitants..."
+}

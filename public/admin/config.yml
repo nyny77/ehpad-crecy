@@ -63,3 +63,38 @@ collections:
       - { label: "Extrait", name: "excerpt", widget: "text" }
       - { label: "Contenu", name: "body", widget: "markdown" }
 
+
+  - name: "pages"
+    label: "Pages du Site"
+    files:
+      - name: "history"
+        label: "Histoire de Crécy"
+        file: "src/lib/data/history.json"
+        fields:
+          - { name: "heroTitle", label: "Titre Principal", widget: "string", default: "Histoire de Crécy-la-Chapelle" }
+          - { name: "introText", label: "Texte d'Introduction", widget: "text" }
+          - { name: "section1", label: "Section 1: L'Eau", widget: "object", fields: [
+              { name: "title", label: "Titre", widget: "string", default: "L'Eau : L'Âme de Crécy" },
+              { name: "content", label: "Contenu", widget: "markdown" },
+              { name: "image", label: "Photo 1 (Brassets)", widget: "image" },
+              { name: "caption", label: "Légende Photo 1", widget: "string" }
+            ]}
+          - { name: "section2", label: "Section 2: Les Pierres", widget: "object", fields: [
+              { name: "title", label: "Titre", widget: "string", default: "Des Pierres qui Racontent une Histoire" },
+              { name: "content", label: "Contenu", widget: "markdown" },
+              { name: "image", label: "Photo 2 (Remparts)", widget: "image" },
+              { name: "caption", label: "Légende Photo 2", widget: "string" }
+            ]}
+          - { name: "section3", label: "Section 3: La Collégiale", widget: "object", fields: [
+              { name: "title", label: "Titre", widget: "string", default: "La Collégiale Notre-Dame" },
+              { name: "content", label: "Contenu", widget: "markdown" },
+              { name: "image", label: "Photo 3 (Collégiale)", widget: "image" },
+              { name: "caption", label: "Légende Photo 3", widget: "string" }
+            ]}
+          - { name: "section4", label: "Section 4: Coeur de Ville", widget: "object", fields: [
+              { name: "title", label: "Titre", widget: "string", default: "Un Cœur de Ville Vivant et Paisible" },
+              { name: "content", label: "Contenu", widget: "markdown" },
+              { name: "image", label: "Photo 4 (Centre-ville)", widget: "image" },
+              { name: "caption", label: "Légende Photo 4", widget: "string" }
+            ]}
+          - { name: "outro", label: "Mot de la Fin", widget: "markdown" }
