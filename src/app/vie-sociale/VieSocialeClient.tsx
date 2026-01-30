@@ -87,7 +87,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     : "text-charcoal-600 hover:bg-cream-50"
                                                     }`}
                                             >
-                                                Actualités
+                                                Blog
                                             </motion.button>
                                             <motion.button
                                                 onClick={() => setActiveTab("gallery")}
