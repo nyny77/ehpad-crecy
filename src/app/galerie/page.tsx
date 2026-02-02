@@ -13,6 +13,7 @@ const CATEGORIES = [
     { id: "lounge", label: "Salons & Vie Sociale" },
     { id: "garden", label: "Extérieurs" },
     { id: "restaurant", label: "Restauration" },
+    { id: "history", label: "Histoire" },
 ];
 
 // Individual gallery image with 3D tilt
@@ -102,9 +103,9 @@ export default function GaleriePage() {
         <main className="pb-20 bg-cream-100 min-h-screen">
             {/* Hero */}
             <PageHeader
-                title="Découvrez nos espaces de vie"
-                subtitle="Visite Virtuelle"
-                description="Une architecture pensée pour le bien-être, alliant confort hôtelier, sécurité médicale et convivialité."
+                title="Galerie Photos"
+                subtitle="Découverte des lieux"
+                description="Explorez notre établissement à travers une sélection de photos : vues aériennes, jardins, façades et images historiques du début du XXe siècle."
             />
 
             {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}

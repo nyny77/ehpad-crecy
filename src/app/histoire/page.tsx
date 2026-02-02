@@ -97,13 +97,46 @@ export default function HistoirePage() {
                         </motion.div>
                     </div>
 
-                    {/* 3. La Collégiale */}
+                    {/* 3. L'Hospice et l'École */}
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-1"
+                        >
+                            <Image
+                                src="/images/history/hospice-ecole.jpg"
+                                alt="L'ancien Hospice et École de Crécy"
+                                fill
+                                className="object-cover sepia-[0.2]"
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">3. L'Hospice et l'École : Une Double Vocation</h2>
+                            <p className="text-charcoal-600 mb-4">
+                                L'histoire de notre établissement est riche et singulière. Construit initialement comme "Hospice" suite à l'annexion d'une portion de Montplaisir en 1868, le bâtiment a longtemps abrité une double vie.
+                            </p>
+                            <p className="text-charcoal-600">
+                                Comme en témoignent les cartes postales d'époque (notamment celle de 1902), il accueillait non seulement les aînés mais aussi une <strong>école primaire tenue par des bonnes sœurs</strong>. Des générations d'enfants de Crécy ont appris à lire et écrire ici, sous le même toit que leurs aînés. C'est ce mélange de vie, d'apprentissage et de soin qui constitue l'âme profonde de nos murs.
+                            </p>
+                            <blockquote className="mt-6 border-l-4 border-terracotta-300 pl-4 italic text-terracotta-700">
+                                "Hospice d'un côté, école des sœurs de l'autre : un lieu où toutes les générations se croisaient."
+                            </blockquote>
+                        </motion.div>
+                    </div>
+
+                    {/* 4. La Collégiale */}
+                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-1"
                         >
                             <Image
                                 src="/images/history/collegiale.png"
@@ -113,11 +146,12 @@ export default function HistoirePage() {
                             />
                         </motion.div>
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
+                            initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
+                            className="order-2 md:order-1"
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">3. La Collégiale Notre-Dame</h2>
+                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">4. La Collégiale Notre-Dame</h2>
                             <p className="text-charcoal-600 mb-4">
                                 Vous ne pourrez pas la manquer. Elle veille sur la ville depuis des siècles. La Collégiale Notre-Dame de l'Assomption est le joyau de Crécy.
                             </p>
@@ -130,13 +164,13 @@ export default function HistoirePage() {
                         </motion.div>
                     </div>
 
-                    {/* 4. Cœur de Ville */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+                    {/* 5. Cœur de Ville */}
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
+                            initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-1"
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2"
                         >
                             <Image
                                 src="/images/history/marche.jpg"
@@ -146,12 +180,11 @@ export default function HistoirePage() {
                             />
                         </motion.div>
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
+                            initial={{ opacity: 0, x: 30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="order-2 md:order-1"
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">4. Un Cœur de Ville Vivant et Paisible</h2>
+                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">5. Un Cœur de Ville Vivant et Paisible</h2>
                             <p className="text-charcoal-600 mb-4">
                                 Crécy est une ville d'histoire, mais c'est aussi une ville bien vivante ! Le centre-ville est à taille humaine, chaleureux et accueillant.
                             </p>

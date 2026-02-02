@@ -58,38 +58,73 @@
     },
     {
       "id": "img-{{now}}",
-      "category": "other",
+      "category": "history",
       "src": "/images/uploads/618934987_1275353754617630_3350859517941962359_n.jpg",
-      "title": "Retro",
+      "title": "Rue du Marché (1902)",
       "alt": "Retro"
     },
     {
       "id": "img-{{now}}",
-      "category": "other",
+      "category": "history",
       "src": "/images/uploads/619072146_1275353671284305_8556990753465559996_n.jpg",
-      "title": "Retro",
+      "title": "Ancien Hospice (1910)",
       "alt": "Retro"
     },
     {
       "id": "img-{{now}}",
-      "category": "other",
+      "category": "history",
       "src": "/images/uploads/619086734_1275353564617649_3308024949503674612_n.jpg",
-      "title": "Retro",
+      "title": "La Venise Briarde (1920)",
       "alt": "Retro"
     },
     {
       "id": "img-{{now}}",
-      "category": "other",
+      "category": "history",
       "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
-      "title": "Retro",
+      "title": "Vue ancienne",
       "alt": "Retro"
     },
     {
       "id": "img-{{now}}",
-      "category": "other",
-      "title": "Vue aérienne année 70",
+      "category": "history",
+      "title": "Vue aérienne (Années 70)",
       "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
       "alt": "Construction du collège, 1ere extension de l'ehpad."
+    },
+    {
+      "id": "hist-1",
+      "category": "history",
+      "title": "Le Grand Morin",
+      "src": "/images/history/canal.jpg",
+      "alt": "Le Grand Morin au début du siècle"
+    },
+    {
+      "id": "hist-2",
+      "category": "history",
+      "title": "La Collégiale",
+      "src": "/images/history/collegiale.png",
+      "alt": "La Collégiale Notre-Dame"
+    },
+    {
+      "id": "hist-3",
+      "category": "history",
+      "title": "La Tour de Crécy",
+      "src": "/images/history/tour.jpg",
+      "alt": "La Tour de Crécy"
+    },
+    {
+      "id": "hist-4",
+      "category": "history",
+      "title": "Le Marché d'antan",
+      "src": "/images/history/marche.jpg",
+      "alt": "Le marché"
+    },
+    {
+      "id": "hist-5",
+      "category": "history",
+      "title": "Façade Historique",
+      "src": "/images/facade-sketch.jpg",
+      "alt": "Croquis façade"
     },
     {
       "id": "img-{{now}}",

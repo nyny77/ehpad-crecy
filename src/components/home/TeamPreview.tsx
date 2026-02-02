@@ -1,209 +1,96 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
-import Link from "next/link";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { SERVICES } from "@/lib/constants";
-
-// Individual tiltable service card 
-function ServicePreviewCard({ service, index, isInView }: { service: typeof SERVICES[0], index: number, isInView: boolean }) {
-    const cardRef = useRef<HTMLDivElement>(null);
-
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-    };
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-            className="flex-shrink-0 w-72 md:w-80 snap-start"
-        >
-            <div
-                ref={cardRef}
-                style={{ perspective: "1000px" }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                className="h-full"
-            >
-                <motion.div
-                    style={{ rotateX, rotateY }}
-                    className="h-full"
-                >
-                    <Link href={`/equipe/${service.id}`} className="block h-full">
-                        <div className="group h-full card-warm overflow-hidden hover:shadow-2xl transition-all duration-300">
-                            {/* Image */}
-                            <div className="relative h-64 overflow-hidden">
-                                <Image
-                                    src={service.image}
-                                    alt={service.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
-
-                                {/* Badge */}
-                                <div className="absolute bottom-4 left-4 right-4">
-                                    <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-terracotta-600 shadow-sm">
-                                        {service.subtitle}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Contenu */}
-                            <div className="p-6">
-                                <h3 className="font-serif text-xl font-semibold text-charcoal-900 mb-2 group-hover:text-terracotta-600 transition-colors">
-                                    {service.title}
-                                </h3>
-                                <p className="text-charcoal-600 text-sm line-clamp-3">
-                                    {service.description}
-                                </p>
-
-                                <div className="mt-4 flex items-center gap-2 text-terracotta-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                                    En savoir plus
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                </motion.div>
-            </div>
-        </motion.div>
-    );
-}
+import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
 export default function TeamPreview() {
     const ref = useRef<HTMLElement>(null);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-    const scroll = (direction: "left" | "right") => {
-        if (scrollContainerRef.current) {
-            const { current } = scrollContainerRef;
-            const scrollAmount = direction === "left" ? -300 : 300;
-            current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-        }
-    };
-
     return (
-        <section ref={ref} className="section-padding bg-cream-100">
+        <section ref={ref} className="section-padding bg-cream-50 overflow-hidden">
             <div className="container-custom">
-                {/* Header */}
-                <div className="text-center mb-14">
-                    <motion.span
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.6 }}
-                        className="inline-block text-forest-500 font-medium mb-4"
-                    >
-                        Une équipe dévouée
-                    </motion.span>
+                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6"
+                    {/* Colonne Image - Composition */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.8 }}
+                        className="w-full lg:w-1/2 relative"
                     >
-                        Des professionnels au service du bien-être
-                    </motion.h2>
+                        {/* Image principale */}
+                        <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl rotate-[-2deg] border-4 border-white">
+                            <Image
+                                src="/images/history/canal.jpg"
+                                alt="Le Grand Morin à Crécy-la-Chapelle"
+                                width={600}
+                                height={400}
+                                className="w-full h-auto object-cover sepia-[0.2]"
+                            />
+                        </div>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg text-charcoal-600 max-w-2xl mx-auto"
+                        {/* Image secondaire (Collégiale) */}
+                        <div className="absolute -bottom-12 -right-12 z-20 w-3/5 rounded-2xl overflow-hidden shadow-xl rotate-[3deg] border-4 border-white">
+                            <Image
+                                src="/images/history/collegiale.png"
+                                alt="La Collégiale Notre-Dame"
+                                width={400}
+                                height={300}
+                                className="w-full h-auto object-cover"
+                            />
+                        </div>
+
+                        {/* Élément décoratif d'arrière-plan */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-terracotta-100/30 rounded-full blur-[60px] -z-10" />
+                    </motion.div>
+
+                    {/* Colonne Texte */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="w-full lg:w-1/2 pt-12 lg:pt-0 pl-0 lg:pl-10"
                     >
-                        Notre équipe pluridisciplinaire travaille main dans la main
-                        pour offrir un accompagnement de qualité à chaque résident.
-                    </motion.p>
+                        <span className="text-terracotta-500 font-bold tracking-widest uppercase text-sm mb-3 block">
+                            Patrimoine & Histoire
+                        </span>
+                        <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6 leading-tight">
+                            Histoire de <br />
+                            <span className="text-terracotta-600 italic">Crécy-la-Chapelle</span>
+                        </h2>
+
+                        <div className="space-y-6 text-charcoal-700 text-lg leading-relaxed font-light">
+                            <p>
+                                Celle que l’on appelle <span className="font-medium text-terracotta-600">« la Venise Briarde »</span> doit son surnom au fait que l’eau est un élément indissociable des lieux : Crécy-la-Chapelle est bordée par le Grand Morin qui lui donne toute son originalité.
+                            </p>
+
+                            <div className="bg-white/60 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">
+                                <div className="absolute -left-3 top-6 w-1 h-12 bg-terracotta-500 rounded-full"></div>
+                                <p className="italic text-charcoal-800 font-medium">
+                                    « En 1868, une portion de terrain sise à Montplaisir sera annexée à Crécy-en-Brie pour y construire l’Hospice. »
+                                </p>
+                            </div>
+
+                            <p>
+                                C&apos;est sur ces terres chargées d&apos;histoire que notre établissement continue aujourd&apos;hui d&apos;écrire une histoire de soin et d&apos;accompagnement, perpétuant une tradition d&apos;accueil au cœur de la Brie.
+                            </p>
+                        </div>
+
+                        <div className="mt-10">
+                            <Link href="/histoire">
+                                <button className="group inline-flex items-center gap-3 px-8 py-4 bg-terracotta-500 text-white rounded-full font-medium shadow-lg hover:bg-terracotta-600 transition-all hover:scale-105">
+                                    Découvrir toute l&apos;histoire
+                                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </button>
+                            </Link>
+                        </div>
+                    </motion.div>
                 </div>
-
-                {/* Carrousel Wrapper */}
-                <div className="relative group/carousel">
-                    {/* Bouton Gauche */}
-                    <button
-                        onClick={() => scroll("left")}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 p-3 rounded-full bg-white shadow-lg text-terracotta-600 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:scale-110 disabled:opacity-50"
-                        aria-label="Défiler à gauche"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-
-                    {/* Zone de scroll */}
-                    <div
-                        ref={scrollContainerRef}
-                        className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0"
-                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    >
-                        {SERVICES.map((service, index) => (
-                            <ServicePreviewCard key={service.id} service={service} index={index} isInView={isInView} />
-                        ))}
-                    </div>
-
-                    {/* Bouton Droite */}
-                    <button
-                        onClick={() => scroll("right")}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 p-3 rounded-full bg-white shadow-lg text-terracotta-600 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:scale-110"
-                        aria-label="Défiler à droite"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-
-                {/* Indicateur visuel de scroll (mobile) */}
-                <div className="flex justify-center mt-6 md:hidden text-charcoal-400 text-sm animate-pulse">
-                    <span className="flex items-center gap-2">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Glisser pour voir plus
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </span>
-                </div>
-
-                {/* Global CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.7 }}
-                    className="text-center mt-12"
-                >
-                    <Link href="/equipe">
-                        <button className="btn-secondary">
-                            Voir toute l&apos;équipe sur une page
-                        </button>
-                    </Link>
-                </motion.div>
             </div>
         </section>
     );
