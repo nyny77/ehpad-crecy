@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import gazetteData from "@/lib/data/gazette.json";
 import { motion } from "framer-motion";
+import WaveSeparator from "@/components/ui/WaveSeparator";
 import PageHeader from "@/components/layout/PageHeader";
 import PrivateGallery from "@/components/social/PrivateGallery";
 import BlogGrid from "@/components/blog/BlogGrid";
@@ -336,14 +337,23 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <DayTimeline />
 
             {/* Section activités (toujours visible) */}
-            <section className="section-padding bg-white">
-                <div className="container-custom">
+            {/* Section activités (toujours visible) - Avec fond coloré et vagues */}
+            <section className="section-padding relative py-24 md:py-32 bg-cream-100">
+                <WaveSeparator position="top" className="text-cream-100" />
+
+                {/* Background décoratif (Blobs) */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-terracotta-200/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-forest-200/30 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
+                </div>
+
+                <div className="container-custom relative z-10">
                     <div className="text-center mb-12">
-                        <span className="text-forest-500 font-medium">Animations</span>
-                        <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
+                        <span className="text-forest-600 font-bold tracking-wider uppercase text-sm">Animations</span>
+                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-3 mb-6">
                             Un programme varié
                         </h2>
-                        <p className="text-charcoal-600 max-w-2xl mx-auto">
+                        <p className="text-charcoal-600 max-w-2xl mx-auto text-lg leading-relaxed">
                             Notre animatrice propose chaque semaine un programme d&apos;activités
                             adapté aux envies et capacités de chacun.
                         </p>

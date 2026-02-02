@@ -4,30 +4,36 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
+import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function CTASection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <section ref={ref} className="section-padding relative overflow-hidden">
-            {/* Background décoratif */}
-            <div className="absolute inset-0 bg-gradient-to-br from-terracotta-500 via-terracotta-600 to-wood-600">
-                <div className="absolute inset-0 opacity-10">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <defs>
-                            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
-                            </pattern>
-                        </defs>
-                        <rect width="100" height="100" fill="url(#grid)" />
-                    </svg>
-                </div>
-            </div>
+        <section ref={ref} className="section-padding relative pt-24 md:pt-32">
+            {/* Wave top (transition from Team) */}
+            <WaveSeparator position="top" className="text-terracotta-500" />
 
-            {/* Formes décoratives */}
-            <div className="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-forest-500/20 rounded-full blur-3xl" />
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Background décoratif */}
+                <div className="absolute inset-0 bg-gradient-to-br from-terracotta-500 via-terracotta-600 to-wood-600">
+                    <div className="absolute inset-0 opacity-10">
+                        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <defs>
+                                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
+                                </pattern>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#grid)" />
+                        </svg>
+                    </div>
+                </div>
+
+                {/* Formes décoratives */}
+                <div className="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-forest-500/20 rounded-full blur-3xl" />
+            </div>
 
             <div className="container-custom relative z-10">
                 <div className="max-w-4xl mx-auto text-center">

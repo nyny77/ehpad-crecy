@@ -3,6 +3,7 @@
 import { useRef, MouseEvent } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from "framer-motion";
+import WaveSeparator from "@/components/ui/WaveSeparator";
 
 interface PageHeaderProps {
     title: React.ReactNode;
@@ -70,7 +71,7 @@ function FloatingParticles() {
             {particles.map((p, i) => (
                 <motion.div
                     key={i}
-                    className="absolute rounded-full bg-gradient-to-br from-terracotta-400/40 to-forest-400/40"
+                    className="absolute rounded-full bg-gradient-to-br from-terracotta-500/60 to-forest-500/60"
                     style={{
                         width: p.size,
                         height: p.size,
@@ -81,7 +82,7 @@ function FloatingParticles() {
                         y: [0, -20, 0],
                         x: [0, 10, 0],
                         scale: [1, 1.2, 1],
-                        opacity: [0.4, 0.8, 0.4],
+                        opacity: [0.6, 1, 0.6],
                     }}
                     transition={{
                         duration: p.duration,
@@ -182,9 +183,9 @@ export default function PageHeader({
                 <div className="relative inline-block group">
                     {/* Bordure gradient animée */}
                     <motion.div
-                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 rounded-3xl opacity-60 blur-sm animate-gradient-x"
+                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 rounded-3xl opacity-80 blur-md animate-gradient-x"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.6 }}
+                        animate={{ opacity: 0.8 }}
                         transition={{ delay: 0.5, duration: 1 }}
                     />
 
@@ -233,7 +234,7 @@ export default function PageHeader({
                             initial={{ scaleX: 0 }}
                             animate={{ scaleX: 1 }}
                             transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                            className="w-24 h-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 mx-auto rounded-full mb-6"
+                            className="w-24 h-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 mx-auto rounded-full mb-6"
                         />
 
                         {/* Description avec animation */}
@@ -265,7 +266,7 @@ export default function PageHeader({
 
             {/* Indicateur de scroll animé */}
             <motion.div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+                className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 0.6 }}
@@ -282,6 +283,10 @@ export default function PageHeader({
                     />
                 </motion.div>
             </motion.div>
+            {/* Separator Wave at the bottom - Global Style */}
+            <div className="absolute bottom-0 left-0 w-full z-20">
+                <WaveSeparator position="bottom" className="text-cream-50" />
+            </div>
         </section>
     );
 }

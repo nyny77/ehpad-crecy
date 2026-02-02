@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
+import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -90,7 +91,7 @@ export default function HeroSection() {
                             x: [0, 30, 0]
                         }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute -top-20 -left-20 w-72 h-72 bg-terracotta-400/30 rounded-full blur-[80px]"
+                        className="absolute -top-20 -left-20 w-72 h-72 bg-terracotta-500/50 rounded-full blur-[80px]"
                     />
                     <motion.div
                         animate={{
@@ -99,14 +100,14 @@ export default function HeroSection() {
                             x: [0, -40, 0]
                         }}
                         transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
-                        className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-300/20 rounded-full blur-[80px]"
+                        className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-400/40 rounded-full blur-[80px]"
                     />
 
                     {/* Bordure gradient animée */}
                     <motion.div
-                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 rounded-[2.5rem] opacity-60 blur-sm animate-gradient-x"
+                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 rounded-[2.5rem] opacity-80 blur-md animate-gradient-x"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.6 }}
+                        animate={{ opacity: 0.8 }}
                         transition={{ delay: 0.5, duration: 1 }}
                     />
 

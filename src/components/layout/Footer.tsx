@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { EHPAD_INFO, NAV_LINKS } from "@/lib/constants";
+import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-charcoal-900 text-cream-100">
+        <footer className="bg-charcoal-900 text-cream-100 relative pt-20">
+            <WaveSeparator position="top" className="text-charcoal-900" />
             {/* Section principale */}
             <div className="container-custom py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
