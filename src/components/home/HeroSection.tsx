@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export default function HeroSection() {
@@ -13,158 +13,207 @@ export default function HeroSection() {
         offset: ["start start", "end start"],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-    // Animation des mots du slogan
+    // --- 3D Tilt Logic ---
+    const x = useMotionValue(0);
+    const yMouse = useMotionValue(0);
+
+    // Smooth spring animation for the tilt
+    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 10 });
+    const mouseYSpring = useSpring(yMouse, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [7, -7]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-7, 7]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+
+        x.set(xPct);
+        yMouse.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        yMouse.set(0);
+    };
+
     const sloganWords = EHPAD_INFO.slogan.split(" ");
 
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-50"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50 perspective-1000"
+            style={{ perspective: "1000px" }}
         >
-            {/* Image de fond avec parallax */}
+            {/* Background Image with Parallax */}
             <motion.div style={{ y }} className="absolute inset-0 z-0">
                 <Image
                     src={EHPAD_INFO.heroImage}
                     alt="EHPAD de Crécy"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover object-center scale-105"
                     priority
                 />
-                {/* Overlays pour lisibilité - Plus chaud/gold */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-terracotta-500/20 via-transparent to-cream-50/30 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-terracotta-500/20 via-transparent to-blue-500/10 mix-blend-overlay" />
             </motion.div>
 
-            {/* Contenu */}
+            {/* Main Content Container with Tilt */}
             <motion.div
-                style={{ opacity }}
-                className="relative z-10 container-custom text-center px-4 pt-20"
+                style={{
+                    rotateX,
+                    rotateY,
+                    opacity
+                }}
+                className="relative z-10 container-custom px-4 pt-20"
             >
-                {/* Container Glassmorphism pour le titre et slogan */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="inline-block bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-12 mb-10 shadow-2xl max-w-5xl mx-auto"
-                >
-                    {/* Titre principal */}
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-charcoal-900 mb-6 leading-tight drop-shadow-sm"
-                    >
-                        {EHPAD_INFO.name}
-                    </motion.h1>
+                {/* Glass Card */}
+                <div className="relative max-w-5xl mx-auto">
 
-                    {/* Slogan avec animation mot par mot */}
-                    <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
-                        {sloganWords.map((word, index) => (
-                            <motion.span
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: 0.6 + index * 0.1,
-                                    ease: "easeOut",
-                                }}
-                                className="text-2xl md:text-3xl lg:text-4xl text-terracotta-800 font-serif italic drop-shadow-sm"
+                    {/* Animated Blobs behind the glass */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 90, 0],
+                            x: [0, 30, 0]
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute -top-20 -left-20 w-72 h-72 bg-terracotta-400/30 rounded-full blur-[80px]"
+                    />
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.3, 1],
+                            rotate: [0, -60, 0],
+                            x: [0, -40, 0]
+                        }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
+                        className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-300/20 rounded-full blur-[80px]"
+                    />
+
+                    {/* The Card Itself */}
+                    <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
+
+                        {/* Shimmer effect on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+                        <div className="text-center relative z-10">
+                            {/* Title */}
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                transition={{ duration: 1, ease: "easeOut" }}
+                                className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight drop-shadow-lg tracking-tight"
                             >
-                                {word}
-                            </motion.span>
-                        ))}
+                                {EHPAD_INFO.name}
+                            </motion.h1>
+
+                            {/* Divider */}
+                            <motion.div
+                                initial={{ scaleX: 0 }}
+                                animate={{ scaleX: 1 }}
+                                transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
+                                className="h-px w-24 md:w-40 bg-white/60 mx-auto mb-8"
+                            />
+
+                            {/* Animated Slogan */}
+                            <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 mb-12">
+                                {sloganWords.map((word, index) => (
+                                    <motion.span
+                                        key={index}
+                                        initial={{ opacity: 0, y: 20, rotateX: 90 }}
+                                        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: 0.8 + index * 0.1,
+                                            type: "spring",
+                                            damping: 12
+                                        }}
+                                        className="text-2xl md:text-3xl lg:text-4xl text-white/95 font-serif italic drop-shadow-md"
+                                    >
+                                        {word}
+                                    </motion.span>
+                                ))}
+                            </div>
+
+                            {/* Buttons */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.6, delay: 1.8 }}
+                                className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                            >
+                                <Link href="/contact" className="w-full sm:w-auto group">
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="w-full sm:w-auto relative overflow-hidden bg-terracotta-500 hover:bg-terracotta-600 text-white px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-lg shadow-terracotta-500/30"
+                                    >
+                                        <span className="relative z-10 flex items-center justify-center gap-2">
+                                            Venir nous rencontrer
+                                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </span>
+                                    </motion.button>
+                                </Link>
+
+                                <Link href="/hebergement" className="w-full sm:w-auto">
+                                    <motion.button
+                                        whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="w-full sm:w-auto px-8 py-4 rounded-xl font-medium text-lg bg-white/10 text-white border border-white/30 backdrop-blur-md transition-all hover:border-white/60"
+                                    >
+                                        Découvrir nos tarifs
+                                    </motion.button>
+                                </Link>
+                            </motion.div>
+                        </div>
                     </div>
-                </motion.div>
+                </div>
 
-
-
-                {/* CTAs */}
+                {/* Floating Info Badge */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.4 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-5"
-                >
-                    <Link href="/contact" className="w-full sm:w-auto">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="btn-primary w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-terracotta-900/20"
-                        >
-                            Venir nous rencontrer
-                            <svg
-                                className="ml-2 w-5 h-5 inline-block"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2.5}
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                />
-                            </svg>
-                        </motion.button>
-                    </Link>
-                    <Link href="/hebergement" className="w-full sm:w-auto">
-                        <motion.button
-                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,1)" }}
-                            whileTap={{ scale: 0.98 }}
-                            className="btn-secondary w-full sm:w-auto text-lg px-8 py-4 bg-white/90 backdrop-blur-sm border-white !text-terracotta-600 hover:!text-terracotta-700 shadow-lg"
-                        >
-                            Découvrir nos tarifs
-                        </motion.button>
-                    </Link>
-                </motion.div>
-
-                {/* Badge élégant */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 1.6 }}
-                    className="inline-flex items-center gap-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-full shadow-lg mt-14 border border-white/50"
+                    transition={{ duration: 1, delay: 2.2 }}
+                    className="absolute -bottom-24 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full shadow-xl border border-white/50"
                 >
                     <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-forest-500"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                     </span>
-                    <span className="text-sm md:text-base font-semibold text-charcoal-700 tracking-wide">
-                        Établissement public · {EHPAD_INFO.capacity.total} résidents
+                    <span className="text-sm font-semibold text-charcoal-800">
+                        Établissement habilité aide sociale · {EHPAD_INFO.capacity.total} résidents
                     </span>
                 </motion.div>
             </motion.div>
 
-            {/* Indicateur de scroll */}
+            {/* Scroll Indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 0.6 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+                transition={{ delay: 3, duration: 1 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
             >
-                <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="text-white/80 hover:text-white transition-colors cursor-pointer"
-                >
-                    <svg
-                        className="w-10 h-10 drop-shadow-md"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                        />
-                    </svg>
-                </motion.div>
+                <div className="w-[30px] h-[50px] rounded-3xl border-2 border-white/50 flex justify-center p-2">
+                    <motion.div
+                        animate={{ y: [0, 15, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-1 h-2 bg-white rounded-full mb-1"
+                    />
+                </div>
             </motion.div>
         </section>
     );
