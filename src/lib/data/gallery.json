@@ -17,6 +17,27 @@
     {
       "id": "img-{{now}}",
       "category": "other",
+      "title": "Exterieur",
+      "src": "/images/uploads/20260121_102117.jpg",
+      "alt": "Exterieur"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Exterieur",
+      "src": "/images/uploads/20260121_102032.jpg",
+      "alt": "Exterieur"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Exterieur",
+      "src": "/images/uploads/47.png",
+      "alt": "Exterieur"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
       "title": "Patio",
       "src": "/images/uploads/066.png",
       "alt": "Vue patio"
@@ -24,14 +45,14 @@
     {
       "id": "img-{{now}}",
       "category": "other",
-      "src": "/images/uploads/05.png",
+      "src": "/images/uploads/mrc1.jpg",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
     },
     {
       "id": "img-{{now}}",
       "category": "other",
-      "src": "/images/uploads/06.png",
+      "src": "/images/uploads/mr3.jpg",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
     },
@@ -66,23 +87,30 @@
     {
       "id": "img-{{now}}",
       "category": "other",
-      "title": "Exterieur",
-      "src": "/images/uploads/47.png",
-      "alt": "Exterieur"
+      "title": "Vue aérienne année 70",
+      "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
+      "alt": "Construction du collège, 1ere extension de l'ehpad."
     },
     {
       "id": "img-{{now}}",
       "category": "other",
-      "title": "Exterieur",
-      "src": "/images/uploads/20260121_102032.jpg",
-      "alt": "Exterieur"
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc2.jpg",
+      "alt": "Vue aérienne"
     },
     {
       "id": "img-{{now}}",
       "category": "other",
-      "title": "Exterieur",
-      "src": "/images/uploads/20260121_102117.jpg",
-      "alt": "Exterieur"
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc3.jpg",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc4.jpg",
+      "alt": "Vue aérienne"
     }
   ]
 }
