@@ -90,6 +90,27 @@
       "title": "Vue aérienne année 70",
       "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
       "alt": "Construction du collège, 1ere extension de l'ehpad."
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc2.jpg",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc3.jpg",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Vue aérienne",
+      "src": "/images/uploads/mrc4.jpg",
+      "alt": "Vue aérienne"
     }
   ]
 }
