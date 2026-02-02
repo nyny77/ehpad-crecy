@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, MouseEvent } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
@@ -48,6 +49,62 @@ const iconComponents: { [key: string]: React.ReactNode } = {
         </svg>
     ),
 };
+
+// Feature card with 3D tilt
+function FeatureCard({ feature, index }: { feature: typeof roomFeatures[0], index: number }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
+    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(springY, [-0.5, 0.5], [10, -10]);
+    const rotateY = useTransform(springX, [-0.5, 0.5], [-10, 10]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+        >
+            <div
+                ref={cardRef}
+                style={{ perspective: "1000px" }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+            >
+                <motion.div
+                    style={{ rotateX, rotateY }}
+                    className="flex items-center gap-3 p-3 bg-cream-50 rounded-xl hover:shadow-md transition-shadow"
+                >
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-terracotta-500 shadow-soft">
+                        {iconComponents[feature.icon]}
+                    </div>
+                    <span className="text-sm font-medium text-charcoal-700">
+                        {feature.label}
+                    </span>
+                </motion.div>
+            </div>
+        </motion.div>
+    );
+}
 
 export default function HebergementPage() {
     return (
@@ -134,24 +191,10 @@ export default function HebergementPage() {
                                 personnels et souvenirs, pour se sentir véritablement chez eux.
                             </p>
 
-                            {/* Features */}
+                            {/* Features avec 3D */}
                             <div className="grid grid-cols-2 gap-4">
                                 {roomFeatures.map((feature, index) => (
-                                    <motion.div
-                                        key={feature.label}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                                        className="flex items-center gap-3 p-3 bg-cream-50 rounded-xl"
-                                    >
-                                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-terracotta-500 shadow-soft">
-                                            {iconComponents[feature.icon]}
-                                        </div>
-                                        <span className="text-sm font-medium text-charcoal-700">
-                                            {feature.label}
-                                        </span>
-                                    </motion.div>
+                                    <FeatureCard key={feature.label} feature={feature} index={index} />
                                 ))}
                             </div>
                         </motion.div>

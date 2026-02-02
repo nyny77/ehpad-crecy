@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, MouseEvent } from "react";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { VALUES } from "@/lib/constants";
 
 const iconMap: { [key: string]: React.ReactNode } = {
@@ -52,22 +52,111 @@ const iconMap: { [key: string]: React.ReactNode } = {
     ),
 };
 
+// Individual tiltable value card component - simplified structure
+function ValueCard({ value, index }: { value: typeof VALUES[0], index: number }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    const rotateX = useTransform(springY, [-0.5, 0.5], [15, -15]);
+    const rotateY = useTransform(springX, [-0.5, 0.5], [-15, 15]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+        setIsHovered(false);
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                perspective: 1000,
+            }}
+            className="h-full cursor-pointer"
+        >
+            <motion.div
+                style={{
+                    rotateX,
+                    rotateY,
+                    transformStyle: "preserve-3d",
+                }}
+                className="h-full"
+            >
+                <div
+                    className={`card-warm p-8 h-full flex flex-col items-center text-center transition-all duration-300 ${isHovered ? "shadow-2xl bg-cream-50/80" : "shadow-lg"
+                        }`}
+                    style={{ transformStyle: "preserve-3d" }}
+                >
+                    <div
+                        className="relative w-48 h-48 mb-6 transition-transform duration-300"
+                        style={{
+                            transform: isHovered ? "translateZ(30px) scale(1.05)" : "translateZ(0)",
+                            transformStyle: "preserve-3d"
+                        }}
+                    >
+                        {iconMap[value.icon]}
+                    </div>
+                    <h3
+                        className="font-serif text-xl font-semibold text-charcoal-900 mb-3"
+                        style={{
+                            transform: isHovered ? "translateZ(20px)" : "translateZ(0)",
+                        }}
+                    >
+                        {value.title}
+                    </h3>
+                    <p
+                        className="text-charcoal-600"
+                        style={{
+                            transform: isHovered ? "translateZ(10px)" : "translateZ(0)",
+                        }}
+                    >
+                        {value.description}
+                    </p>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+}
+
 export default function IntroSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <section ref={ref} className="section-padding bg-white">
+        <section ref={ref} className="section-padding bg-cream-100">
             <div className="container-custom">
-                {/* Introduction */}
-                <div className="max-w-3xl mx-auto text-center mb-16">
+                {/* Header */}
+                <div className="text-center mb-16">
                     <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6 }}
                         className="inline-block text-terracotta-500 font-medium mb-4"
                     >
-                        Bienvenue chez nous
+                        Ce qui nous définit
                     </motion.span>
 
                     <motion.h2
@@ -76,70 +165,26 @@ export default function IntroSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6"
                     >
-                        Un lieu de vie, pas un hôpital
+                        Nos valeurs au quotidien
                     </motion.h2>
 
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg text-charcoal-600 leading-relaxed"
+                        className="text-lg text-charcoal-600 max-w-2xl mx-auto"
                     >
-                        L&apos;EHPAD de Crécy-la-Chapelle est bien plus qu&apos;un simple établissement : c&apos;est un véritable lieu de vie chaleureux, niché au cœur de la Seine-et-Marne.
-                        <br /><br />
-                        Dans une ambiance familiale et bienveillante, nous avons à cœur d&apos;offrir à nos 63 résidents un quotidien serein, rythmé par l&apos;écoute, le respect et la joie de vivre. Ici, chacun trouve sa place et se sent chez soi.
+                        Chaque jour, notre équipe s&apos;engage à offrir un accompagnement
+                        personnalisé, dans le respect et la dignité de chaque résident.
                     </motion.p>
                 </div>
 
-                {/* Valeurs */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Values Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {VALUES.map((value, index) => (
-                        <motion.div
-                            key={value.title}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                            className="group"
-                        >
-                            <div className="card-warm p-8 h-full flex flex-col items-center text-center hover:bg-cream-50/50 transition-colors">
-                                <div className="relative w-48 h-48 mb-6 group-hover:scale-105 transition-transform duration-300">
-                                    {iconMap[value.icon]}
-                                </div>
-                                <h3 className="font-serif text-xl font-semibold text-charcoal-900 mb-3">
-                                    {value.title}
-                                </h3>
-                                <p className="text-charcoal-600">
-                                    {value.description}
-                                </p>
-                            </div>
-                        </motion.div>
+                        <ValueCard key={value.title} value={value} index={index} />
                     ))}
                 </div>
-
-                {/* Citation */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.8, delay: 0.7 }}
-                    className="mt-16 relative"
-                >
-                    <div className="bg-gradient-to-r from-terracotta-50 via-cream-100 to-forest-50 rounded-3xl p-10 md:p-14 text-center">
-                        <svg
-                            className="w-12 h-12 text-terracotta-300 mx-auto mb-6"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                        </svg>
-                        <blockquote className="font-serif text-2xl md:text-3xl text-charcoal-800 italic mb-6 max-w-3xl mx-auto">
-                            Chaque résident est unique. Notre mission est de l&apos;accompagner
-                            avec dignité, respect et beaucoup d&apos;affection.
-                        </blockquote>
-                        <p className="text-charcoal-600 font-medium">
-                            — L&apos;équipe de l&apos;EHPAD de Crécy
-                        </p>
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

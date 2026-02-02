@@ -273,6 +273,15 @@ html.lenis body {
     animation: gradient-x 3s ease infinite;
     background-size: 200% 100%;
   }
+
+  /* 3D Utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
 
 /* ===== ANIMATIONS KEYFRAMES ===== */

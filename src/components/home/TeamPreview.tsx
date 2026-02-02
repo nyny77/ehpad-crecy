@@ -1,10 +1,99 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
+
+// Individual tiltable service card 
+function ServicePreviewCard({ service, index, isInView }: { service: typeof SERVICES[0], index: number, isInView: boolean }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
+    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
+    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+            className="flex-shrink-0 w-72 md:w-80 snap-start"
+        >
+            <div
+                ref={cardRef}
+                style={{ perspective: "1000px" }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="h-full"
+            >
+                <motion.div
+                    style={{ rotateX, rotateY }}
+                    className="h-full"
+                >
+                    <Link href={`/equipe/${service.id}`} className="block h-full">
+                        <div className="group h-full card-warm overflow-hidden hover:shadow-2xl transition-all duration-300">
+                            {/* Image */}
+                            <div className="relative h-64 overflow-hidden">
+                                <Image
+                                    src={service.image}
+                                    alt={service.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
+
+                                {/* Badge */}
+                                <div className="absolute bottom-4 left-4 right-4">
+                                    <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-terracotta-600 shadow-sm">
+                                        {service.subtitle}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Contenu */}
+                            <div className="p-6">
+                                <h3 className="font-serif text-xl font-semibold text-charcoal-900 mb-2 group-hover:text-terracotta-600 transition-colors">
+                                    {service.title}
+                                </h3>
+                                <p className="text-charcoal-600 text-sm line-clamp-3">
+                                    {service.description}
+                                </p>
+
+                                <div className="mt-4 flex items-center gap-2 text-terracotta-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    En savoir plus
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                </motion.div>
+            </div>
+        </motion.div>
+    );
+}
 
 export default function TeamPreview() {
     const ref = useRef<HTMLElement>(null);
@@ -73,52 +162,7 @@ export default function TeamPreview() {
                         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                     >
                         {SERVICES.map((service, index) => (
-                            <motion.div
-                                key={service.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                                className="flex-shrink-0 w-72 md:w-80 snap-start"
-                            >
-                                <Link href={`/equipe/${service.id}`} className="block h-full">
-                                    <div className="group h-full card-warm overflow-hidden hover:shadow-warm transition-all duration-300">
-                                        {/* Image */}
-                                        <div className="relative h-64 overflow-hidden">
-                                            <Image
-                                                src={service.image}
-                                                alt={service.title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent" />
-
-                                            {/* Badge */}
-                                            <div className="absolute bottom-4 left-4 right-4">
-                                                <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-terracotta-600 shadow-sm">
-                                                    {service.subtitle}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {/* Contenu */}
-                                        <div className="p-6">
-                                            <h3 className="font-serif text-xl font-semibold text-charcoal-900 mb-2 group-hover:text-terracotta-600 transition-colors">
-                                                {service.title}
-                                            </h3>
-                                            <p className="text-charcoal-600 text-sm line-clamp-3">
-                                                {service.description}
-                                            </p>
-
-                                            <div className="mt-4 flex items-center gap-2 text-terracotta-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                                                En savoir plus
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </motion.div>
+                            <ServicePreviewCard key={service.id} service={service} index={index} isInView={isInView} />
                         ))}
                     </div>
 

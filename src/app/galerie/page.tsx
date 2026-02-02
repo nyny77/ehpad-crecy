@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import Link from "next/link";
 import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 
 const CATEGORIES = [
@@ -14,6 +14,67 @@ const CATEGORIES = [
     { id: "garden", label: "Extérieurs" },
     { id: "restaurant", label: "Restauration" },
 ];
+
+// Individual gallery image with 3D tilt
+function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => void }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
+    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
+    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+        >
+            <div
+                ref={cardRef}
+                style={{ perspective: "1000px" }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                onClick={onClick}
+                className="cursor-pointer"
+            >
+                <motion.div
+                    style={{ rotateX, rotateY }}
+                    className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
+                >
+                    <img
+                        src={img.src}
+                        alt={img.alt}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-white font-serif font-bold text-xl mb-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{img.title}</h3>
+                        <span className="text-cream-100 text-sm capitalize font-medium tracking-wide transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">{img.category}</span>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.div>
+    );
+}
 
 export default function GaleriePage() {
     const images: GalleryImage[] = INITIAL_GALLERY;
@@ -87,25 +148,11 @@ export default function GaleriePage() {
                 >
                     <AnimatePresence>
                         {filteredImages.map((img) => (
-                            <motion.div
-                                layout
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
+                            <GalleryImageCard
                                 key={img.id}
-                                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer aspect-[4/3] border border-cream-100"
+                                img={img}
                                 onClick={() => setSelectedImage(img)}
-                            >
-                                <img
-                                    src={img.src}
-                                    alt={img.alt}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                                    <h3 className="text-white font-serif font-bold text-xl mb-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{img.title}</h3>
-                                    <span className="text-cream-100 text-sm capitalize font-medium tracking-wide transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">{img.category}</span>
-                                </div>
-                            </motion.div>
+                            />
                         ))}
                     </AnimatePresence>
                 </motion.div>

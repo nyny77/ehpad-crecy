@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, MouseEvent } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from "framer-motion";
 
 interface PageHeaderProps {
     title: React.ReactNode;
@@ -113,10 +113,43 @@ export default function PageHeader({
     const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
+    // --- 3D Tilt Logic (same as HeroSection) ---
+    const x = useMotionValue(0);
+    const yMouse = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 10 });
+    const mouseYSpring = useSpring(yMouse, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [7, -7]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-7, 7]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+
+        x.set(xPct);
+        yMouse.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        yMouse.set(0);
+    };
+
     return (
         <section
             ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-cream-50"
+            style={{ perspective: "1000px" }}
         >
             {/* Image de fond avec parallax amélioré */}
             <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
@@ -136,9 +169,13 @@ export default function PageHeader({
             {/* Particules décoratives */}
             <FloatingParticles />
 
-            {/* Contenu */}
+            {/* Contenu avec effet 3D tilt */}
             <motion.div
-                style={{ opacity }}
+                style={{
+                    rotateX,
+                    rotateY,
+                    opacity
+                }}
                 className="relative z-10 container-custom text-center px-4 pt-20"
             >
                 {/* Container avec bordure gradient animée */}

@@ -1,11 +1,82 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import Link from "next/link";
 import { CAREERS_OFFERS, SPONTANEOUS_APPLICATION } from "@/lib/careers";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
+
+// Job card with 3D tilt
+function JobCard({ offer }: { offer: typeof CAREERS_OFFERS[0] }) {
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
+    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
+
+    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
+    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+        mouseX.set(xPct);
+        mouseY.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
+    return (
+        <div
+            ref={cardRef}
+            style={{ perspective: "1000px" }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="h-full"
+        >
+            <motion.div
+                style={{ rotateX, rotateY }}
+                className="h-full"
+            >
+                <div className="bg-white rounded-3xl shadow-warm p-8 border border-cream-200 hover:shadow-xl transition-all duration-300 relative group h-full flex flex-col">
+                    <div className="flex justify-between items-start mb-6 pr-0">
+                        <h3 className="text-2xl font-serif font-bold text-charcoal-900 leading-snug">{offer.title}</h3>
+                        <span className="bg-terracotta-100 text-terracotta-700 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider text-center whitespace-nowrap ml-2 h-fit border border-terracotta-200">
+                            {offer.contract}
+                        </span>
+                    </div>
+                    <p className="text-charcoal-600 mb-8 flex-grow leading-relaxed">
+                        {offer.description}
+                    </p>
+                    <ul className="text-sm text-charcoal-600 mb-8 space-y-3">
+                        {offer.requirements.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-3">
+                                <div className="bg-cream-200 rounded-full p-1 mt-0.5 text-terracotta-600 shrink-0">
+                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                                </div>
+                                <span className="text-charcoal-700">{item.req}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <Link
+                        href="/contact?subject=recrutement"
+                        className="block w-full text-center bg-terracotta-500 text-white font-medium py-3.5 rounded-xl hover:bg-terracotta-600 transition-colors mt-auto shadow-md hover:shadow-lg"
+                    >
+                        Postuler à ce poste
+                    </Link>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
 
 export default function RecrutementPage() {
     const [adminMode, setAdminMode] = useState(false);
@@ -57,33 +128,7 @@ export default function RecrutementPage() {
                     ) : (
                         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                             {CAREERS_OFFERS.map((offer) => (
-                                <div key={offer.id} className="bg-white rounded-3xl shadow-warm p-8 border border-cream-200 hover:shadow-xl transition-all duration-300 relative group h-full flex flex-col hover:-translate-y-1">
-                                    <div className="flex justify-between items-start mb-6 pr-0">
-                                        <h3 className="text-2xl font-serif font-bold text-charcoal-900 leading-snug">{offer.title}</h3>
-                                        <span className="bg-terracotta-100 text-terracotta-700 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider text-center whitespace-nowrap ml-2 h-fit border border-terracotta-200">
-                                            {offer.contract}
-                                        </span>
-                                    </div>
-                                    <p className="text-charcoal-600 mb-8 flex-grow leading-relaxed">
-                                        {offer.description}
-                                    </p>
-                                    <ul className="text-sm text-charcoal-600 mb-8 space-y-3">
-                                        {offer.requirements.map((item, idx) => (
-                                            <li key={idx} className="flex items-start gap-3">
-                                                <div className="bg-cream-200 rounded-full p-1 mt-0.5 text-terracotta-600 shrink-0">
-                                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                                                </div>
-                                                <span className="text-charcoal-700">{item.req}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <Link
-                                        href="/contact?subject=recrutement"
-                                        className="block w-full text-center bg-terracotta-500 text-white font-medium py-3.5 rounded-xl hover:bg-terracotta-600 transition-colors mt-auto shadow-md hover:shadow-lg"
-                                    >
-                                        Postuler à ce poste
-                                    </Link>
-                                </div>
+                                <JobCard key={offer.id} offer={offer} />
                             ))}
                         </div>
                     )}

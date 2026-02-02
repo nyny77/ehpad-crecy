@@ -102,8 +102,20 @@ export default function HeroSection() {
                         className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-300/20 rounded-full blur-[80px]"
                     />
 
+                    {/* Bordure gradient animée */}
+                    <motion.div
+                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 rounded-[2.5rem] opacity-60 blur-sm animate-gradient-x"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.6 }}
+                        transition={{ delay: 0.5, duration: 1 }}
+                    />
+
                     {/* The Card Itself */}
-                    <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
+                    <div className="relative bg-white/50 backdrop-blur-xl border border-white/50 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
+
+                        {/* Effet de brillance interne */}
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
                         {/* Shimmer effect on hover */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
@@ -114,7 +126,7 @@ export default function HeroSection() {
                                 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                                 transition={{ duration: 1, ease: "easeOut" }}
-                                className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight drop-shadow-lg tracking-tight"
+                                className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-charcoal-900 mb-8 leading-tight drop-shadow-sm tracking-tight"
                             >
                                 {EHPAD_INFO.name}
                             </motion.h1>
@@ -124,7 +136,7 @@ export default function HeroSection() {
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: 1 }}
                                 transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-                                className="h-px w-24 md:w-40 bg-white/60 mx-auto mb-8"
+                                className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 mx-auto mb-8 rounded-full"
                             />
 
                             {/* Animated Slogan */}
@@ -140,7 +152,7 @@ export default function HeroSection() {
                                             type: "spring",
                                             damping: 12
                                         }}
-                                        className="text-2xl md:text-3xl lg:text-4xl text-white/95 font-serif italic drop-shadow-md"
+                                        className="text-2xl md:text-3xl lg:text-4xl text-charcoal-700 font-serif italic"
                                     >
                                         {word}
                                     </motion.span>
@@ -173,7 +185,7 @@ export default function HeroSection() {
                                     <motion.button
                                         whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="w-full sm:w-auto px-8 py-4 rounded-xl font-medium text-lg bg-white/10 text-white border border-white/30 backdrop-blur-md transition-all hover:border-white/60"
+                                        className="w-full sm:w-auto px-8 py-4 rounded-xl font-medium text-lg bg-white/10 text-charcoal-900 border border-charcoal-300 backdrop-blur-md transition-all hover:border-charcoal-500 hover:bg-white/30"
                                     >
                                         Découvrir nos tarifs
                                     </motion.button>
