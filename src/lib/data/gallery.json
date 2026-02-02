@@ -24,14 +24,14 @@
     {
       "id": "img-{{now}}",
       "category": "other",
-      "src": "/images/uploads/05.png",
+      "src": "/images/uploads/mrc1.jpg",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
     },
     {
       "id": "img-{{now}}",
       "category": "other",
-      "src": "/images/uploads/06.png",
+      "src": "/images/uploads/mr3.jpg",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
     },
