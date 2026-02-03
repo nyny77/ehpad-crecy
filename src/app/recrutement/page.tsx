@@ -96,9 +96,9 @@ export default function RecrutementPage() {
         <main className="pb-20 bg-cream-100 min-h-screen">
             {/* Hero Section */}
             <PageHeader
-                title="Rejoignez notre équipe"
-                subtitle="Ressources Humaines"
-                description="À l'EHPAD de Crécy, nous recherchons des professionnels passionnés et engagés."
+                title="Rejoignez une équipe qui a du cœur"
+                subtitle="Nous recrutons"
+                description="Établissement public de la Fonction Publique Hospitalière, nous cherchons des professionnels passionnés pour accompagner nos résidents au quotidien."
             />
 
             {/* Admin Button - EN DEHORS du PageHeader */}
@@ -116,8 +116,152 @@ export default function RecrutementPage() {
                 </section>
             )}
 
+            {/* Pourquoi nous rejoindre - Section Avantages */}
+            <section className="py-16 bg-white">
+                <div className="container-custom">
+                    <div className="text-center mb-12">
+                        <span className="text-forest-500 font-medium">Vos avantages</span>
+                        <h2 className="text-3xl md:text-4xl font-serif text-charcoal-900 mt-2 mb-4">
+                            Pourquoi nous rejoindre ?
+                        </h2>
+                        <p className="text-charcoal-600 max-w-2xl mx-auto">
+                            L'EHPAD de Crécy est un établissement <strong>public</strong> rattaché à la Fonction Publique Hospitalière,
+                            offrant un cadre de travail privilégié en milieu rural.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        {/* FPH */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0 }}
+                            className="bg-gradient-to-br from-forest-50 to-forest-100 rounded-2xl p-6 border border-forest-200"
+                        >
+                            <div className="w-14 h-14 bg-forest-500 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Fonction Publique Hospitalière</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                Sécurité de l'emploi, régime indemnitaire, avancement de carrière et retraite CNRACL.
+                            </p>
+                        </motion.div>
+
+                        {/* CGOS */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-gradient-to-br from-terracotta-50 to-terracotta-100 rounded-2xl p-6 border border-terracotta-200"
+                        >
+                            <div className="w-14 h-14 bg-terracotta-500 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Avantages CGOS</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                Chèques vacances, aides aux loisirs, prestations sociales et réductions partenaires.
+                            </p>
+                        </motion.div>
+
+                        {/* 12h */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-gradient-to-br from-wood-50 to-wood-100 rounded-2xl p-6 border border-wood-200"
+                        >
+                            <div className="w-14 h-14 bg-wood-500 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Postes en 12h</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                Organisation en journées de 12h pour les soins et la cuisine : plus de jours de repos !
+                            </p>
+                        </motion.div>
+
+                        {/* Gare */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-gradient-to-br from-cream-100 to-cream-200 rounded-2xl p-6 border border-cream-300"
+                        >
+                            <div className="w-14 h-14 bg-charcoal-700 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Gare à proximité</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                La gare Transilien de Crécy-la-Chapelle est à 10 min à pied. Ligne P direction Paris Est.
+                            </p>
+                        </motion.div>
+
+                        {/* Salle de pause */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4 }}
+                            className="bg-gradient-to-br from-forest-50 to-cream-100 rounded-2xl p-6 border border-forest-100"
+                        >
+                            <div className="w-14 h-14 bg-forest-600 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Salle de pause confortable</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                Espace détente équipé et agréable pour vos pauses, dans une ambiance familiale.
+                            </p>
+                        </motion.div>
+
+                        {/* Rails lève-malade */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 }}
+                            className="bg-gradient-to-br from-terracotta-50 to-cream-100 rounded-2xl p-6 border border-terracotta-100"
+                        >
+                            <div className="w-14 h-14 bg-terracotta-600 text-white rounded-xl flex items-center justify-center mb-4">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">Équipement ergonomique</h3>
+                            <p className="text-charcoal-600 text-sm">
+                                Lève-malades sur rails au plafond pour préserver votre santé et faciliter les transferts.
+                            </p>
+                        </motion.div>
+                    </div>
+
+                    {/* Badge cadre rural */}
+                    <div className="mt-12 text-center">
+                        <div className="inline-flex items-center gap-3 bg-forest-50 px-6 py-3 rounded-full border border-forest-200">
+                            <svg className="w-5 h-5 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                            <span className="text-forest-700 font-medium">
+                                Cadre rural en Seine-et-Marne · 45 min de Paris · 15 min de Disneyland Paris
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Postes ouverts */}
-            <section className="py-12">
+            <section className="py-12 bg-cream-100">
                 <div className="container-custom">
                     <h2 className="text-3xl font-serif text-charcoal-900 mb-12 text-center">Nos postes actuellement ouverts</h2>
 
