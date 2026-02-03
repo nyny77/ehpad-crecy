@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, MouseEvent } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -62,10 +63,13 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                     style={{ rotateX, rotateY }}
                     className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
                 >
-                    <img
+                    <Image
                         src={img.src}
                         alt={img.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <h3 className="text-white font-serif font-bold text-xl mb-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{img.title}</h3>
@@ -175,12 +179,16 @@ export default function GaleriePage() {
                         className="fixed inset-0 z-50 bg-charcoal-900/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
                         onClick={() => setSelectedImage(null)}
                     >
-                        <motion.img
-                            layoutId={selectedImage.id}
-                            src={selectedImage.src}
-                            alt={selectedImage.alt}
-                            className="max-h-[85vh] max-w-full rounded-lg shadow-2xl object-contain"
-                        />
+                        <div className="relative max-h-[85vh] max-w-[90vw] w-full h-full flex items-center justify-center">
+                            <Image
+                                src={selectedImage.src}
+                                alt={selectedImage.alt}
+                                fill
+                                sizes="90vw"
+                                className="object-contain rounded-lg shadow-2xl"
+                                priority
+                            />
+                        </div>
                         <div className="absolute bottom-8 left-0 right-0 text-center text-white pointer-events-none">
                             <p className="text-2xl font-serif font-bold mb-1">{selectedImage.title}</p>
                             <p className="opacity-80 text-sm uppercase tracking-widest text-cream-200">{selectedImage.category}</p>
