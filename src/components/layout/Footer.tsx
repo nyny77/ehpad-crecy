@@ -132,6 +132,9 @@ export default function Footer() {
                         <Link href="/mentions-legales" className="hover:text-terracotta-400 transition-colors">
                             Mentions légales
                         </Link>
+                        <Link href="/politique-confidentialite" className="hover:text-terracotta-400 transition-colors">
+                            Confidentialité
+                        </Link>
                         <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors">
                             Accessibilité
                         </Link>
