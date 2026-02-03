@@ -50,7 +50,7 @@ export default function EquipePage() {
                         </p>
 
                         <motion.a
-                            href="/contact"
+                            href="/recrutement"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
                             className="btn-primary inline-flex items-center gap-2"
