@@ -5,15 +5,22 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function AccessibilityToggle() {
     const [isAccessible, setIsAccessible] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [showHint, setShowHint] = useState(false);
 
-    // Load preference from localStorage on mount
+    // Load preferences from localStorage on mount
     useEffect(() => {
-        const saved = localStorage.getItem("accessibility-mode");
-        if (saved === "true") {
+        const savedAccessible = localStorage.getItem("accessibility-mode");
+        if (savedAccessible === "true") {
             setIsAccessible(true);
             document.documentElement.classList.add("accessible-mode");
+        }
+
+        const savedDark = localStorage.getItem("dark-mode");
+        if (savedDark === "true") {
+            setIsDarkMode(true);
+            document.documentElement.classList.add("dark-mode");
         }
 
         // Show hint after 3 seconds if not already seen
@@ -41,13 +48,23 @@ export default function AccessibilityToggle() {
         } else {
             document.documentElement.classList.remove("accessible-mode");
         }
-        setIsOpen(false);
-        dismissHint();
+    };
+
+    const toggleDarkMode = () => {
+        const newValue = !isDarkMode;
+        setIsDarkMode(newValue);
+        localStorage.setItem("dark-mode", String(newValue));
+
+        if (newValue) {
+            document.documentElement.classList.add("dark-mode");
+        } else {
+            document.documentElement.classList.remove("dark-mode");
+        }
     };
 
     return (
         <div className="fixed bottom-6 left-6 z-50">
-            {/* Hint bubble - appears once to draw attention */}
+            {/* Hint bubble */}
             <AnimatePresence>
                 {showHint && !isOpen && (
                     <motion.div
@@ -63,46 +80,52 @@ export default function AccessibilityToggle() {
                             ×
                         </button>
                         <p className="text-sm font-medium">
-                            👋 Besoin de texte plus grand ?
+                            👋 Besoin d'adapter l'affichage ?
                         </p>
                         <p className="text-xs text-charcoal-300 mt-1">
-                            Cliquez ici pour activer le mode accessibilité
+                            Mode sombre et grandes polices disponibles
                         </p>
-                        {/* Arrow pointing down */}
                         <div className="absolute -bottom-2 left-6 w-4 h-4 bg-charcoal-900 rotate-45"></div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* Main Toggle Button - More visible with label */}
+            {/* Main Toggle Button */}
             <motion.button
                 onClick={() => {
                     setIsOpen(!isOpen);
                     dismissHint();
                 }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-full shadow-lg transition-all ${isAccessible
-                        ? "bg-charcoal-900 text-white"
-                        : "bg-white text-charcoal-700 border-2 border-charcoal-200 hover:border-terracotta-400"
+                className={`flex items-center gap-3 px-4 py-3 rounded-full shadow-lg transition-all ${isDarkMode
+                        ? "bg-charcoal-800 text-white border-2 border-charcoal-600"
+                        : isAccessible
+                            ? "bg-charcoal-900 text-white"
+                            : "bg-white text-charcoal-700 border-2 border-charcoal-200 hover:border-terracotta-400"
                     }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label="Options d'accessibilité"
-                title="Options d'accessibilité"
+                aria-label="Options d'affichage"
+                title="Options d'affichage"
             >
-                {/* Pulsing ring animation when not active */}
-                {!isAccessible && !isOpen && (
+                {!isAccessible && !isDarkMode && !isOpen && (
                     <span className="absolute inset-0 rounded-full animate-ping bg-terracotta-400 opacity-20"></span>
                 )}
 
-                <div className={`relative w-10 h-10 rounded-full flex items-center justify-center ${isAccessible ? "bg-white/20" : "bg-terracotta-100"
+                <div className={`relative w-10 h-10 rounded-full flex items-center justify-center ${isDarkMode ? "bg-charcoal-600" : isAccessible ? "bg-white/20" : "bg-terracotta-100"
                     }`}>
-                    <svg className={`w-6 h-6 ${isAccessible ? "text-white" : "text-terracotta-600"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
+                    {isDarkMode ? (
+                        <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                        </svg>
+                    ) : (
+                        <svg className={`w-6 h-6 ${isAccessible ? "text-white" : "text-terracotta-600"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    )}
                 </div>
                 <span className="font-medium text-sm pr-1 hidden sm:inline">
-                    {isAccessible ? "Mode accessible" : "Accessibilité"}
+                    Affichage
                 </span>
             </motion.button>
 
@@ -113,48 +136,94 @@ export default function AccessibilityToggle() {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute bottom-20 left-0 bg-white rounded-2xl shadow-xl p-4 min-w-[300px] border border-charcoal-100"
+                        className={`absolute bottom-20 left-0 rounded-2xl shadow-xl p-4 min-w-[300px] border ${isDarkMode
+                                ? "bg-charcoal-800 border-charcoal-600"
+                                : "bg-white border-charcoal-100"
+                            }`}
                     >
-                        <h3 className="font-serif font-semibold text-charcoal-900 mb-3 text-lg flex items-center gap-2">
-                            <span className="text-2xl">♿</span>
-                            Options d'accessibilité
+                        <h3 className={`font-serif font-semibold mb-4 text-lg flex items-center gap-2 ${isDarkMode ? "text-white" : "text-charcoal-900"
+                            }`}>
+                            <span className="text-2xl">⚙️</span>
+                            Options d'affichage
                         </h3>
 
-                        <button
-                            onClick={toggleAccessibility}
-                            className={`w-full p-4 rounded-xl flex items-center gap-4 transition-all ${isAccessible
-                                    ? "bg-forest-500 text-white"
-                                    : "bg-cream-100 text-charcoal-700 hover:bg-cream-200"
-                                }`}
-                        >
-                            <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${isAccessible ? "bg-white/20" : "bg-white"
-                                }`}>
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                                </svg>
-                            </div>
-                            <div className="text-left flex-1">
-                                <p className="font-semibold">
-                                    {isAccessible ? "✓ Mode accessible activé" : "Activer le mode accessible"}
-                                </p>
-                                <p className={`text-sm ${isAccessible ? "text-forest-100" : "text-charcoal-500"}`}>
-                                    Grandes polices + contraste élevé
-                                </p>
-                            </div>
-                            {/* Toggle switch visual */}
-                            <div className={`w-12 h-7 rounded-full p-1 transition-colors ${isAccessible ? "bg-white/30" : "bg-charcoal-200"
-                                }`}>
-                                <motion.div
-                                    className={`w-5 h-5 rounded-full ${isAccessible ? "bg-white" : "bg-white"
-                                        }`}
-                                    animate={{ x: isAccessible ? 20 : 0 }}
-                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                />
-                            </div>
-                        </button>
+                        <div className="space-y-3">
+                            {/* Dark Mode Toggle */}
+                            <button
+                                onClick={toggleDarkMode}
+                                className={`w-full p-4 rounded-xl flex items-center gap-4 transition-all ${isDarkMode
+                                        ? "bg-charcoal-700 text-white"
+                                        : "bg-cream-100 text-charcoal-700 hover:bg-cream-200"
+                                    }`}
+                            >
+                                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-charcoal-600" : "bg-white"
+                                    }`}>
+                                    {isDarkMode ? (
+                                        <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                                        </svg>
+                                    ) : (
+                                        <svg className="w-6 h-6 text-charcoal-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
+                                </div>
+                                <div className="text-left flex-1">
+                                    <p className="font-semibold">
+                                        {isDarkMode ? "🌙 Mode sombre" : "☀️ Mode clair"}
+                                    </p>
+                                    <p className={`text-sm ${isDarkMode ? "text-charcoal-400" : "text-charcoal-500"}`}>
+                                        {isDarkMode ? "Cliquez pour revenir au jour" : "Activer le mode nuit"}
+                                    </p>
+                                </div>
+                                <div className={`w-12 h-7 rounded-full p-1 transition-colors ${isDarkMode ? "bg-terracotta-500" : "bg-charcoal-200"
+                                    }`}>
+                                    <motion.div
+                                        className="w-5 h-5 rounded-full bg-white"
+                                        animate={{ x: isDarkMode ? 20 : 0 }}
+                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                    />
+                                </div>
+                            </button>
 
-                        <p className="text-xs text-charcoal-400 mt-3 text-center">
-                            Votre préférence sera mémorisée
+                            {/* Accessibility Toggle */}
+                            <button
+                                onClick={toggleAccessibility}
+                                className={`w-full p-4 rounded-xl flex items-center gap-4 transition-all ${isAccessible
+                                        ? "bg-forest-500 text-white"
+                                        : isDarkMode
+                                            ? "bg-charcoal-700 text-white hover:bg-charcoal-600"
+                                            : "bg-cream-100 text-charcoal-700 hover:bg-cream-200"
+                                    }`}
+                            >
+                                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${isAccessible ? "bg-white/20" : isDarkMode ? "bg-charcoal-600" : "bg-white"
+                                    }`}>
+                                    <svg className={`w-6 h-6 ${isAccessible ? "text-white" : isDarkMode ? "text-charcoal-300" : "text-charcoal-600"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                                    </svg>
+                                </div>
+                                <div className="text-left flex-1">
+                                    <p className="font-semibold">
+                                        {isAccessible ? "✓ Grandes polices" : "♿ Mode accessible"}
+                                    </p>
+                                    <p className={`text-sm ${isAccessible ? "text-forest-100" : isDarkMode ? "text-charcoal-400" : "text-charcoal-500"
+                                        }`}>
+                                        Texte agrandi + contraste élevé
+                                    </p>
+                                </div>
+                                <div className={`w-12 h-7 rounded-full p-1 transition-colors ${isAccessible ? "bg-white/30" : isDarkMode ? "bg-charcoal-600" : "bg-charcoal-200"
+                                    }`}>
+                                    <motion.div
+                                        className="w-5 h-5 rounded-full bg-white"
+                                        animate={{ x: isAccessible ? 20 : 0 }}
+                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                    />
+                                </div>
+                            </button>
+                        </div>
+
+                        <p className={`text-xs mt-3 text-center ${isDarkMode ? "text-charcoal-500" : "text-charcoal-400"}`}>
+                            Préférences mémorisées automatiquement
                         </p>
                     </motion.div>
                 )}
