@@ -661,6 +661,11 @@ html.dark-mode .hero-info-badge span {
   color: #e8e4df !important;
 }
 
+/* Intro Section Wave in dark mode */
+html.dark-mode .intro-wave-top {
+  color: #252529 !important;
+}
+
 /* Hero badge info */
 html.dark-mode .bg-charcoal-900\/80 {
   background-color: rgba(26, 26, 31, 0.9) !important;

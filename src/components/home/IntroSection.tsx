@@ -160,7 +160,7 @@ export default function IntroSection() {
     return (
         <section ref={ref} className="section-padding bg-cream-100 relative mt-0 pt-24 md:pt-32">
             {/* Wave top (transition from Hero) */}
-            <WaveSeparator position="top" className="text-cream-100" />
+            <WaveSeparator position="top" className="intro-wave-top text-cream-100" />
             <div className="container-custom">
                 {/* Header */}
                 <div className="text-center mb-16">
