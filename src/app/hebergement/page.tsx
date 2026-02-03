@@ -230,38 +230,48 @@ export default function HebergementPage() {
                         className="bg-gradient-to-r from-forest-500 to-forest-600 rounded-3xl p-10 md:p-14 text-center text-white"
                     >
                         <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl mb-4">
-                            Des questions sur nos tarifs ?
+                            Prêt à nous rejoindre ?
                         </h2>
                         <p className="text-forest-100 text-lg mb-8 max-w-2xl mx-auto">
-                            Notre équipe administrative est à votre disposition pour vous
-                            accompagner dans vos démarches et répondre à toutes vos questions.
+                            Faites votre demande d&apos;admission en ligne via le portail ViaTrajectoire ou
+                            contactez-nous pour toute question.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Link href="/contact">
+                            <a
+                                href={EHPAD_INFO.viaTrajectoireUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="inline-flex items-center gap-2 px-8 py-4 bg-terracotta-500 text-white font-semibold rounded-full shadow-lg hover:bg-terracotta-600 transition-colors"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Faire une demande (ViaTrajectoire)
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </motion.button>
+                            </a>
+                            <Link href="/admissions">
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.98 }}
                                     className="inline-flex items-center gap-2 px-8 py-4 bg-white text-forest-600 font-semibold rounded-full shadow-lg"
                                 >
-                                    Nous contacter
+                                    En savoir plus sur l&apos;admission
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </motion.button>
                             </Link>
-                            <a href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}>
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-full border-2 border-white/50 hover:border-white hover:bg-white/10 transition-all"
-                                >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                    </svg>
-                                    {EHPAD_INFO.phone}
-                                </motion.button>
-                            </a>
                         </div>
+                        <p className="text-forest-200 text-sm mt-6">
+                            Ou appelez-nous directement au <a href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`} className="underline hover:text-white">{EHPAD_INFO.phone}</a>
+                        </p>
                     </motion.div>
                 </div>
             </section>

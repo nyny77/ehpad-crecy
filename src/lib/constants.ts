@@ -200,7 +200,7 @@ export const NAV_LINKS = [
     { href: "/galerie", label: "Galerie Photos" },
     { href: "/vie-sociale", label: "Vie Sociale" },
     { href: "/admissions", label: "Admissions" },
-    { href: "/hebergement", label: "Hébergement" },
+    { href: "/hebergement", label: "Tarifs" },
     { href: "/recrutement", label: "Recrutement" },
 ];
 

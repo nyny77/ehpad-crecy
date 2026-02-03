@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
+import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -66,6 +67,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <AccessibilityToggle />
         </ErrorBoundary>
       </body>
     </html>

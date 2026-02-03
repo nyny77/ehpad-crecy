@@ -99,10 +99,21 @@ a {
   color: var(--color-terracotta);
   text-decoration: none;
   transition: color var(--transition-normal);
+  cursor: pointer;
 }
 
 a:hover {
   color: var(--color-terracotta-light);
+}
+
+/* Global cursor pointer for all interactive/clickable elements */
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+.clickable {
+  cursor: pointer;
 }
 
 /* Bouton CTA Principal */
@@ -295,4 +306,150 @@ html.lenis body {
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* ===== MODE ACCESSIBILITÉ ===== */
+/* Grandes polices + Contraste élevé */
+html.accessible-mode {
+  font-size: 120% !important;
+}
+
+html.accessible-mode body {
+  line-height: 1.8 !important;
+  letter-spacing: 0.02em !important;
+  background-color: #fff !important;
+}
+
+/* Titres plus grands et plus contrastés */
+html.accessible-mode h1,
+html.accessible-mode h1 * {
+  font-size: clamp(3rem, 6vw, 5rem) !important;
+  color: #000 !important;
+}
+
+html.accessible-mode h2,
+html.accessible-mode h2 * {
+  font-size: clamp(2.5rem, 5vw, 4rem) !important;
+  color: #000 !important;
+}
+
+html.accessible-mode h3,
+html.accessible-mode h3 * {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  color: #000 !important;
+}
+
+html.accessible-mode h4,
+html.accessible-mode h5,
+html.accessible-mode h6,
+html.accessible-mode h4 *,
+html.accessible-mode h5 *,
+html.accessible-mode h6 * {
+  color: #000 !important;
+}
+
+/* Texte plus contrasté */
+html.accessible-mode p,
+html.accessible-mode li,
+html.accessible-mode span:not(.sr-only),
+html.accessible-mode div:not([class*="bg-"]):not([class*="fixed"]) {
+  color: #1a1a1a !important;
+}
+
+/* Liens plus visibles */
+html.accessible-mode a {
+  color: #0066cc !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+html.accessible-mode a:hover {
+  color: #004499 !important;
+}
+
+/* Boutons plus visibles */
+html.accessible-mode .btn-primary,
+html.accessible-mode .btn-secondary,
+html.accessible-mode button {
+  font-size: 1.2rem !important;
+  padding: 1.25rem 3rem !important;
+  font-weight: 700 !important;
+}
+
+html.accessible-mode .btn-primary {
+  background: #b84c3a !important;
+  box-shadow: 0 4px 0 #8a3829 !important;
+}
+
+html.accessible-mode .btn-secondary {
+  border-width: 3px !important;
+  border-color: #000 !important;
+  color: #000 !important;
+}
+
+/* Cartes avec bordures plus visibles */
+html.accessible-mode .card-warm,
+html.accessible-mode [class*="rounded-2xl"],
+html.accessible-mode [class*="rounded-3xl"] {
+  border: 2px solid #333 !important;
+}
+
+/* Focus visible amélioré */
+html.accessible-mode *:focus {
+  outline: 3px solid #0066cc !important;
+  outline-offset: 3px !important;
+}
+
+/* Navigation plus lisible */
+html.accessible-mode nav a,
+html.accessible-mode header a {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+/* Forms plus accessibles */
+html.accessible-mode input,
+html.accessible-mode textarea,
+html.accessible-mode select {
+  font-size: 1.1rem !important;
+  border: 2px solid #333 !important;
+  padding: 0.875rem 1rem !important;
+}
+
+html.accessible-mode input:focus,
+html.accessible-mode textarea:focus,
+html.accessible-mode select:focus {
+  border-color: #0066cc !important;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.3) !important;
+}
+
+/* Labels plus visibles */
+html.accessible-mode label {
+  font-weight: 600 !important;
+  color: #000 !important;
+}
+
+/* Footer lisible */
+html.accessible-mode footer {
+  background: #1a1a1a !important;
+}
+
+html.accessible-mode footer a {
+  color: #fff !important;
+  text-decoration: underline !important;
+}
+
+html.accessible-mode footer p,
+html.accessible-mode footer span,
+html.accessible-mode footer li {
+  color: #e0e0e0 !important;
+}
+
+/* Sections avec fond - améliorer contraste */
+html.accessible-mode section {
+  background-color: #fff !important;
+}
+
+html.accessible-mode section:nth-child(even) {
+  background-color: #f5f5f5 !important;
 }
