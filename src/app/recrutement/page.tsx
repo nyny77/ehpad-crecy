@@ -96,7 +96,7 @@ export default function RecrutementPage() {
         <main className="pb-20 bg-cream-100 min-h-screen">
             {/* Hero Section */}
             <PageHeader
-                title="Rejoignez une équipe qui a du cœur"
+                title="Une équipe qui a du cœur"
                 subtitle="Nous recrutons"
                 description="Établissement public de la Fonction Publique Hospitalière, nous cherchons des professionnels passionnés pour accompagner nos résidents au quotidien."
             />
