@@ -661,9 +661,19 @@ html.dark-mode .hero-info-badge span {
   color: #e8e4df !important;
 }
 
-/* Intro Section Wave in dark mode */
-html.dark-mode .intro-wave-top {
+/* Intro Section Wave in dark mode - REMOVED, replaced by global rules below */
+
+/* Global Wave Separator overrides for Dark Mode */
+/* Map waves matching standard section backgrounds */
+html.dark-mode .wave-separator.text-white,
+html.dark-mode .wave-separator.text-cream-50,
+html.dark-mode .wave-separator.text-cream-100 {
   color: #252529 !important;
+}
+
+/* Map waves matching footer background */
+html.dark-mode .wave-separator.text-charcoal-900 {
+  color: #151518 !important;
 }
 
 /* Hero badge info */
