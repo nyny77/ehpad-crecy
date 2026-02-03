@@ -12,7 +12,7 @@ export default function ContactPage() {
             <PageHeader
                 title="Nous sommes à votre écoute"
                 subtitle="Contactez-nous"
-                description="Une question, une demande d'information ou envie de visiter notre établissement ? N'hésitez pas à nous contacter."
+                description="L'EHPAD de Crécy-la-Chapelle vous accueille en Seine-et-Marne (77). Venez nous rencontrer ou posez vos questions."
             />
 
             {/* Section Contact */}
@@ -61,6 +61,8 @@ export default function ContactPage() {
                                             {EHPAD_INFO.address.street}
                                             <br />
                                             {EHPAD_INFO.address.postalCode} {EHPAD_INFO.address.city}
+                                            <br />
+                                            <span className="text-charcoal-500">Seine-et-Marne, Île-de-France</span>
                                         </p>
                                     </div>
                                 </div>

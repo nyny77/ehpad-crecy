@@ -201,15 +201,26 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 2.2 }}
-                    className="absolute -bottom-24 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full shadow-xl border border-white/50"
+                    className="absolute -bottom-24 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
                 >
-                    <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                    <span className="text-sm font-semibold text-charcoal-800">
-                        Établissement habilité aide sociale · {EHPAD_INFO.capacity.total} résidents
-                    </span>
+                    <div className="flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full shadow-xl border border-white/50">
+                        <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                        <span className="text-sm font-semibold text-charcoal-800">
+                            {EHPAD_INFO.capacity.total} résidents · Habilité aide sociale
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 bg-charcoal-900/90 backdrop-blur-md rounded-full">
+                        <svg className="w-4 h-4 text-terracotta-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span className="text-sm font-medium text-white">
+                            Crécy-la-Chapelle, Seine-et-Marne (77)
+                        </span>
+                    </div>
                 </motion.div>
             </motion.div>
 
