@@ -21,6 +21,24 @@
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
   --transition-slow: 500ms ease;
+
+  /* Access Card - Light Mode */
+  --access-card-bg: #ffffff;
+  --access-icon-bg: #fef7f5;
+  --access-title: #1a1a1f;
+  --access-text: #4a4a52;
+  --access-subtext: #6a6a72;
+  --access-badge: #5a5a62;
+}
+
+/* Access Card - Dark Mode */
+html.dark-mode {
+  --access-card-bg: #2c2c33;
+  --access-icon-bg: #40404a;
+  --access-title: #f5f0e8;
+  --access-text: #d0ccc5;
+  --access-subtext: #9696a6;
+  --access-badge: #a0a0aa;
 }
 
 /* ===== THEME TAILWIND V4 ===== */
@@ -697,12 +715,69 @@ html.dark-mode select:focus {
   /* terracotta-500 */
 }
 
-/* STRICT ID-BASED MODAL OVERRIDES */
+/* SIGNUP MODAL - LIGHT MODE (default) */
+#signup-modal-content {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+#signup-modal-content h2 {
+  color: #8B4513 !important;
+}
+
+#signup-modal-content p,
+#signup-modal-content label,
+#signup-modal-content span {
+  color: #4b5563 !important;
+}
+
+/* Force amber/warning text to be darker in light mode */
+#signup-modal-content .text-amber-700,
+#signup-modal-content span.text-amber-700 {
+  color: #b45309 !important;
+  /* visible amber/orange */
+}
+
+/* Checkbox label text */
+#signup-modal-content .text-charcoal-700 {
+  color: #374151 !important;
+}
+
+#signup-modal-content input,
+#signup-modal-content select {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+#signup-modal-content input:focus,
+#signup-modal-content select:focus {
+  border-color: #8B4513 !important;
+}
+
+/* Charter section in light mode */
+#signup-modal-content .bg-cream-50 {
+  background-color: #fef7f2 !important;
+  border-color: #e5ddd5 !important;
+  color: #4b5563 !important;
+}
+
+#signup-modal-content .bg-cream-50 h4 {
+  color: #1f2937 !important;
+}
+
+#signup-modal-content .bg-cream-50 ul li {
+  color: #4b5563 !important;
+}
+
+/* STRICT ID-BASED MODAL OVERRIDES - DARK MODE */
 html.dark-mode #signup-modal-content {
   background-color: #2c2c33 !important;
   /* charcoal-800 */
   border-color: #40404a !important;
   /* charcoal-700 */
+  color: #e8e4df !important;
 }
 
 html.dark-mode #signup-modal-content h2,
@@ -791,4 +866,45 @@ html.dark-mode [class*="from-terracotta-50"],
 html.dark-mode [class*="from-cream-100"],
 html.dark-mode [class*="from-wood-50"] {
   background: linear-gradient(to bottom right, #2c2c33, #252529) !important;
+}
+
+/* FORCED ACCESS CARD OVERRIDES */
+/* Light Mode - Force White */
+#access-card {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  /* Ensure no leaking gradients */
+  color: #40404A;
+  /* charcoal-700 */
+}
+
+/* Force readable text in light mode */
+#access-card p {
+  color: #595966 !important;
+  /* charcoal-600 - visible on white */
+}
+
+#access-card h3 {
+  color: #2c2c33 !important;
+  /* charcoal-800 - dark title */
+}
+
+/* Dark Mode - Force Charcoal */
+html.dark-mode #access-card {
+  background-color: #2c2c33 !important;
+  /* charcoal-800 */
+  border-color: #40404a !important;
+  color: #e8e4df !important;
+  /* cream-200 */
+}
+
+html.dark-mode #access-card h3 {
+  background: linear-gradient(to right, #fdf7f0, #e6907d, #fdf7f0) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+html.dark-mode #access-card p {
+  color: #e8e4df !important;
 }
