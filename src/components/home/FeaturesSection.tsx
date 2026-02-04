@@ -6,7 +6,7 @@ import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function FeaturesSection() {
     return (
-        <section className="relative py-24 bg-white dark:bg-charcoal-900 overflow-hidden">
+        <section className="relative py-24 bg-white dark:bg-charcoal-900 text-charcoal-900 dark:text-cream-100 overflow-hidden">
             <div className="container-custom relative z-10">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     {/* Texte Narratif */}
@@ -23,36 +23,37 @@ export default function FeaturesSection() {
                             Un lieu de vie <br /><span className="text-forest-600 dark:text-forest-400">chaleureux & adapté</span>
                         </h2>
 
-                        <div className="space-y-6 text-lg text-charcoal-600 dark:text-cream-200 leading-relaxed font-light">
-                            <p>
+                        {/* Texte principal - Utilisation de classes CSS personnalisées pour contourner les conflits Tailwind */}
+                        <div className="space-y-6 text-lg leading-relaxed section-features-text">
+                            <p className="font-medium">
                                 Situé dans un cadre verdoyant, L'Ehpad de Crécy accueille
-                                <strong className="font-semibold text-charcoal-800 dark:text-cream-100"> 63 résidents</strong>.
-                                Nous proposons <strong className="font-semibold text-charcoal-800 dark:text-cream-100">43 chambres simples</strong> (environ 16m²)
-                                et <strong className="font-semibold text-charcoal-800 dark:text-cream-100">10 chambres doubles</strong> (25m²).
-                                L'établissement propose également de l'<strong className="font-semibold text-charcoal-800 dark:text-cream-100">accueil séquentiel</strong>.
+                                <strong className="font-bold"> 63 résidents</strong>.
+                                Nous proposons <strong className="font-bold">43 chambres simples</strong> (environ 16m²)
+                                et <strong className="font-bold">10 chambres doubles</strong> (25m²).
+                                L'établissement propose également de l'<strong className="font-bold">accueil séquentiel</strong>.
                             </p>
-                            <p>
+                            <p className="font-medium">
                                 Votre santé est notre priorité : une équipe complète veille sur vous jour et nuit
                                 (infirmière de nuit, aides-soignants 24h/24, psychologue, kinésithérapeute).
                             </p>
-                            <p>
-                                Au quotidien, profitez d'une <strong className="font-semibold text-charcoal-800 dark:text-cream-100">cuisine savoureuse préparée sur place</strong>.
-                                Vous pourrez également vous détendre dans notre <strong className="font-semibold text-charcoal-800 dark:text-cream-100">jardin</strong> arboré, participer aux animations variées,
+                            <p className="font-medium">
+                                Au quotidien, profitez d'une <strong className="font-bold">cuisine savoureuse préparée sur place</strong>.
+                                Vous pourrez également vous détendre dans notre <strong className="font-bold">jardin</strong> arboré, participer aux animations variées,
                                 ou prendre soin de vous au salon de coiffure.
                             </p>
                         </div>
 
                         {/* Infos Pratiques Box */}
-                        <div className="mt-10 p-6 bg-cream-50 dark:bg-charcoal-800 rounded-2xl border border-terracotta-100 dark:border-charcoal-700 relative">
+                        <div className="mt-10 p-6 rounded-2xl relative border section-features-box">
                             <div className="absolute -top-3 left-6 px-3 py-1 bg-terracotta-500 text-white text-xs font-bold uppercase rounded-full tracking-wide shadow-sm">
                                 Infos Pratiques
                             </div>
                             <div className="space-y-2 text-sm md:text-base">
-                                <p className="text-charcoal-700 dark:text-cream-200">
-                                    <span className="font-bold text-terracotta-600 dark:text-terracotta-400">Tarif hébergement :</span> ~69€ / jour (chambre simple, indicatif)
+                                <p>
+                                    <span className="font-bold text-terracotta-600">Tarif hébergement :</span> ~69€ / jour (chambre simple, indicatif)
                                 </p>
-                                <p className="text-charcoal-700 dark:text-cream-200">
-                                    <span className="font-bold text-forest-600 dark:text-forest-400">Aides acceptées :</span> Habilité Aide Sociale (ASH), APA, APL/ALS.
+                                <p>
+                                    <span className="font-bold text-forest-600">Aides acceptées :</span> Habilité Aide Sociale (ASH), APA, APL/ALS.
                                 </p>
                             </div>
                         </div>

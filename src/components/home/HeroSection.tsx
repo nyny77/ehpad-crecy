@@ -67,8 +67,8 @@ export default function HeroSection() {
                     className="object-cover object-center scale-105"
                     priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/50" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-terracotta-500/20 via-transparent to-blue-500/10 mix-blend-overlay" />
+                {/* Overlay équilibré (30%) */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
             </motion.div>
 
             {/* Main Content Container with Tilt */}

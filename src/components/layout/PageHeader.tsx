@@ -161,10 +161,8 @@ export default function PageHeader({
                     className="object-cover object-center"
                     priority
                 />
-                {/* Overlays multiples pour effet de profondeur */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/50" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-terracotta-500/25 via-transparent to-cream-50/40 mix-blend-overlay" />
-                <div className="absolute inset-0 bg-gradient-to-bl from-forest-500/15 via-transparent to-transparent mix-blend-overlay" />
+                {/* Overlay équilibré (30%) */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
             </motion.div>
 
             {/* Particules décoratives */}

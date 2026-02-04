@@ -202,6 +202,7 @@ export const NAV_LINKS = [
     { href: "/admissions", label: "Admissions" },
     { href: "/hebergement", label: "Tarifs" },
     { href: "/recrutement", label: "Recrutement" },
+    { href: "/visite", label: "Visite Virtuelle" },
 ];
 
 // Valeurs de l'établissement

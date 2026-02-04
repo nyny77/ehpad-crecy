@@ -2,187 +2,153 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, ChevronRight } from "lucide-react";
+import { CHAT_RULES, FALLBACK_MESSAGE, ChatRule } from "@/lib/chatbot-data";
 import Link from "next/link";
-import { CHAT_KNOWLEDGE_BASE, DEFAULT_RESPONSE, GREETINGS, ChatRule } from "@/lib/chatbot-data";
 
-interface Message {
+type Message = {
     id: string;
     text: string;
-    sender: "bot" | "user";
-    links?: { text: string; url: string }[];
+    sender: "user" | "bot";
+    links?: { label: string; url: string }[];
     timestamp: Date;
-}
+};
 
 export default function ChatBot() {
     const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState<Message[]>([
+        {
+            id: "welcome",
+            text: "Bonjour ! 👋 Je suis l'assistant virtuel de l'EHPAD. Comment puis-je vous aider aujourd'hui ?",
+            sender: "bot",
+            timestamp: new Date()
+        }
+    ]);
     const [inputValue, setInputValue] = useState("");
-    const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const hasInitialized = useRef(false);
 
-    // Initial greeting
-    useEffect(() => {
-        if (!hasInitialized.current) {
-            const randomGreeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-            setMessages([{
-                id: "init",
-                text: randomGreeting,
-                sender: "bot",
-                timestamp: new Date()
-            }]);
-            hasInitialized.current = true;
-        }
-    }, []);
-
-    // Auto-scroll
+    // Auto-scroll to bottom
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages, isOpen]);
+    }, [messages, isOpen, isTyping]);
 
-    const handleSendMessage = async (e?: React.FormEvent) => {
-        e?.preventDefault();
+    const handleSendMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (!inputValue.trim()) return;
 
         const userText = inputValue.trim();
-        const newMessage: Message = {
+        const userMessage: Message = {
             id: Date.now().toString(),
             text: userText,
             sender: "user",
             timestamp: new Date()
         };
 
-        setMessages(prev => [...prev, newMessage]);
+        setMessages(prev => [...prev, userMessage]);
         setInputValue("");
         setIsTyping(true);
 
-        // Simulate network delay
+        // Analyze logic
         setTimeout(() => {
-            const lowerInput = userText.toLowerCase();
+            const lowerText = userText.toLowerCase();
             let matchedRule: ChatRule | undefined;
 
-            // Find matching rule
-            for (const rule of CHAT_KNOWLEDGE_BASE) {
-                if (rule.keywords.some(kw => lowerInput.includes(kw))) {
-                    matchedRule = rule;
-                    break;
-                }
-            }
+            // Simple keyword matching
+            matchedRule = CHAT_RULES.find(rule =>
+                rule.keywords.some(keyword => lowerText.includes(keyword))
+            );
 
             const botResponse: Message = {
                 id: (Date.now() + 1).toString(),
-                text: matchedRule ? matchedRule.response : DEFAULT_RESPONSE,
+                text: matchedRule ? matchedRule.response : FALLBACK_MESSAGE,
                 sender: "bot",
-                links: matchedRule?.links,
+                links: matchedRule?.relatedLinks,
                 timestamp: new Date()
             };
 
             setMessages(prev => [...prev, botResponse]);
             setIsTyping(false);
-        }, 600);
+        }, 1200); // Simulate "thinking" time
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-4 font-sans">
+        <div className="fixed bottom-6 right-6 z-40 font-sans">
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        id="chatbot-window"
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="w-[350px] max-w-[calc(100vw-48px)] h-[500px] max-h-[70vh] bg-white dark:bg-charcoal-800 rounded-2xl shadow-2xl border border-cream-200 dark:border-charcoal-600 flex flex-col overflow-hidden"
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        className="absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-white dark:bg-charcoal-800 rounded-2xl shadow-2xl border border-charcoal-100 dark:border-charcoal-700 overflow-hidden flex flex-col max-h-[500px]"
                     >
                         {/* Header */}
                         <div className="bg-terracotta-500 p-4 flex items-center justify-between text-white shrink-0">
                             <div className="flex items-center gap-3">
-                                <div className="bg-white/20 p-2 rounded-full">
-                                    <Bot className="w-5 h-5" />
+                                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                    🤖
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-sm">Assistant EHPAD</h3>
-                                    <span className="text-xs text-terracotta-100 flex items-center gap-1.5">
-                                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                                        En ligne
-                                    </span>
+                                    <p className="text-xs text-terracotta-100">En ligne</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                                className="p-1 hover:bg-white/20 rounded-full transition-colors"
                             >
-                                <X className="w-5 h-5" />
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
                             </button>
                         </div>
 
                         {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-cream-50 dark:bg-charcoal-900 scroll-smooth">
+                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-cream-50 dark:bg-charcoal-900 min-h-[300px]">
                             {messages.map((msg) => (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                <div
                                     key={msg.id}
                                     className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                                 >
-                                    <div className={`max-w-[85%] rounded-2xl p-3 text-sm shadow-sm ${msg.sender === "user"
-                                        ? "bg-terracotta-500 text-white rounded-br-none"
-                                        : "bg-white dark:bg-charcoal-700 text-charcoal-800 dark:text-cream-100 rounded-bl-none border border-cream-100 dark:border-charcoal-600"
-                                        }`}>
-                                        <p className="leading-relaxed">{msg.text}</p>
-
-                                        {/* Action Links */}
+                                    <div
+                                        className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm shadow-sm ${msg.sender === "user"
+                                                ? "bg-terracotta-500 text-white rounded-br-none"
+                                                : "bg-[#ffffff] dark:bg-charcoal-700 !text-black dark:!text-white rounded-bl-none border border-charcoal-100 dark:border-charcoal-600"
+                                            }`}
+                                    >
+                                        <p>{msg.text}</p>
                                         {msg.links && (
                                             <div className="mt-3 flex flex-wrap gap-2">
                                                 {msg.links.map((link, idx) => (
                                                     <Link
                                                         key={idx}
                                                         href={link.url}
-                                                        className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors ${msg.sender === "user"
-                                                            ? "bg-white/20 hover:bg-white/30 text-white"
-                                                            : "bg-terracotta-50 text-terracotta-600 hover:bg-terracotta-100 dark:bg-charcoal-600 dark:text-terracotta-300 dark:hover:bg-charcoal-500"
-                                                            }`}
+                                                        className="text-xs bg-terracotta-50 text-terracotta-600 dark:bg-charcoal-600 dark:text-terracotta-400 px-2 py-1 rounded-md hover:bg-terracotta-100 dark:hover:bg-charcoal-500 transition-colors font-medium border border-terracotta-200 dark:border-charcoal-500"
                                                     >
-                                                        {link.text}
-                                                        <ChevronRight className="w-3 h-3" />
+                                                        {link.label} →
                                                     </Link>
                                                 ))}
                                             </div>
                                         )}
-
-                                        <span className={`text-[10px] block mt-1 opacity-70 ${msg.sender === "user" ? "text-right" : "text-left"
-                                            }`}>
+                                        <p className={`text-[10px] mt-1 text-right ${msg.sender === "user" ? "text-terracotta-100" : "text-charcoal-400"}`}>
                                             {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </span>
+                                        </p>
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
 
+                            {/* Typing Indicator */}
                             {isTyping && (
                                 <div className="flex justify-start">
-                                    <div className="bg-white dark:bg-charcoal-700 p-3 rounded-2xl rounded-bl-none border border-cream-100 dark:border-charcoal-600">
+                                    <div className="bg-white dark:bg-charcoal-700 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm border border-charcoal-100 dark:border-charcoal-600">
                                         <div className="flex gap-1">
-                                            <motion.span
-                                                animate={{ y: [0, -5, 0] }}
-                                                transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                                                className="w-1.5 h-1.5 bg-gray-400 rounded-full"
-                                            />
-                                            <motion.span
-                                                animate={{ y: [0, -5, 0] }}
-                                                transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                                                className="w-1.5 h-1.5 bg-gray-400 rounded-full"
-                                            />
-                                            <motion.span
-                                                animate={{ y: [0, -5, 0] }}
-                                                transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                                                className="w-1.5 h-1.5 bg-gray-400 rounded-full"
-                                            />
+                                            <span className="w-2 h-2 bg-charcoal-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                                            <span className="w-2 h-2 bg-charcoal-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                                            <span className="w-2 h-2 bg-charcoal-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
                                         </div>
                                     </div>
                                 </div>
@@ -191,21 +157,23 @@ export default function ChatBot() {
                         </div>
 
                         {/* Input Area */}
-                        <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-charcoal-800 border-t border-cream-200 dark:border-charcoal-600 shrink-0">
+                        <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-charcoal-800 border-t border-charcoal-100 dark:border-charcoal-700">
                             <div className="flex gap-2">
                                 <input
                                     type="text"
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder="Posez votre question..."
-                                    className="flex-1 px-4 py-2.5 bg-cream-50 dark:bg-charcoal-900 border border-cream-200 dark:border-charcoal-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 text-charcoal-800 dark:text-white"
+                                    className="flex-1 px-4 py-2 rounded-full border border-charcoal-200 dark:border-charcoal-600 bg-cream-50 dark:bg-charcoal-900 text-charcoal-900 dark:text-cream-100 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400 text-sm"
                                 />
                                 <button
                                     type="submit"
-                                    disabled={!inputValue.trim()}
-                                    className="p-2.5 bg-terracotta-500 text-white rounded-xl hover:bg-terracotta-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={!inputValue.trim() || isTyping}
+                                    className="p-2 bg-terracotta-500 text-white rounded-full hover:bg-terracotta-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 >
-                                    <Send className="w-5 h-5" />
+                                    <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                    </svg>
                                 </button>
                             </div>
                         </form>
@@ -213,42 +181,28 @@ export default function ChatBot() {
                 )}
             </AnimatePresence>
 
-            {/* Toggle Button */}
+            {/* Toggle Button (FAB) */}
             <motion.button
                 onClick={() => setIsOpen(!isOpen)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className={`relative w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors ${isOpen
-                    ? "bg-charcoal-800 text-white"
-                    : "bg-terracotta-500 text-white hover:bg-terracotta-600"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors relative z-50 ${isOpen ? "bg-charcoal-800 text-white" : "bg-terracotta-500 text-white hover:bg-terracotta-600"
                     }`}
             >
-                {/* Notification Badge */}
-                {!isOpen && (
-                    <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-cream-50 rounded-full" />
+                {isOpen ? (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                ) : (
+                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
                 )}
 
-                <AnimatePresence mode="wait">
-                    {isOpen ? (
-                        <motion.div
-                            key="close"
-                            initial={{ rotate: -90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: 90, opacity: 0 }}
-                        >
-                            <X className="w-6 h-6" />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="open"
-                            initial={{ rotate: 90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: -90, opacity: 0 }}
-                        >
-                            <MessageCircle className="w-7 h-7" />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Notification Badge if closed and not interacted ? Optional */}
+                {!isOpen && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-forest-500 rounded-full border-2 border-white"></span>
+                )}
             </motion.button>
         </div>
     );

@@ -11,6 +11,7 @@
   "dependencies": {
     "@netlify/functions": "^5.1.2",
     "@studio-freight/lenis": "^1.0.42",
+    "@types/pannellum": "^2.5.0",
     "archiver": "^7.0.1",
     "framer-motion": "^12.26.1",
     "gray-matter": "^4.0.3",
@@ -19,6 +20,7 @@
     "netlify-identity-widget": "^1.9.2",
     "next": "16.1.1",
     "nodemailer": "^7.0.12",
+    "pannellum": "^2.5.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
