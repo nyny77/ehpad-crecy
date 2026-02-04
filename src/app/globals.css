@@ -619,6 +619,15 @@ html.dark-mode .section-features-text strong {
   /* Cream 100 */
 }
 
+.section-features-box {
+  background-color: #fdf7f0 !important;
+  /* Cream 100 */
+  border-color: #ffe6e0 !important;
+  /* Terracotta 100 */
+  color: #40404a !important;
+  /* Charcoal 700 */
+}
+
 /* === FIX CHATBOT VISIBILITY (REFACTOR) === */
 /* DEFAULT: Light Mode (forcé si pas de dark-mode) */
 .chatbot-container {
