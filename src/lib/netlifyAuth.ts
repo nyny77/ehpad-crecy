@@ -1,19 +1,6 @@
 // Utilitaires d'authentification Netlify Identity pour le blog Vie Sociale
 
-declare global {
-    interface Window {
-        netlifyIdentity?: {
-            on: (event: string, callback: (user?: NetlifyUser) => void) => void;
-            off: (event: string, callback?: (user?: NetlifyUser) => void) => void;
-            open: (tab?: "signup" | "login") => void;
-            close: () => void;
-            logout: () => Promise<void>;
-            currentUser: () => NetlifyUser | null;
-            init: () => void;
-            gotrue?: any; // Exposing gotrue instance for custom calls
-        };
-    }
-}
+// Les types Window sont étendus dans src/types/global.d.ts
 
 export interface NetlifyUser {
     id: string;

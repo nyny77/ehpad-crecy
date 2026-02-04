@@ -2,12 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-// On étend l'interface Window existante sans la redéclarer de zéro
-declare global {
-    interface Window {
-        pannellum: any;
-    }
-}
+// On étend l'interface Window dans src/types/global.d.ts
 
 interface PanoramaViewerProps {
     imagePath: string;
