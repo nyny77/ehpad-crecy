@@ -1009,8 +1009,10 @@ html.accessible-mode button {
 }
 
 /* ===== GALLERY IMAGE CARDS ===== */
-/* Force white text on gallery image overlays */
-.group h3,
-.group span {
+/* Force white text ONLY on gallery image overlays (aspect-[4/3] cards) */
+.aspect-\[4\/3\] h3,
+.aspect-\[4\/3\] span,
+.aspect-square h3,
+.aspect-square span {
   color: white !important;
 }
