@@ -1016,3 +1016,57 @@ html.accessible-mode button {
 .aspect-square span {
   color: white !important;
 }
+
+/* ===== CHATBOT OVERRIDES ===== */
+/* Force light mode styles by default (unless .dark-mode is present) */
+#chatbot-window {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+#chatbot-window div[class*="bg-cream-50"] {
+  background-color: #FFFCF9 !important;
+  /* cream-50 */
+}
+
+#chatbot-window input {
+  background-color: #FFFCF9 !important;
+  /* cream-50 */
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Bot bubbles in light mode */
+#chatbot-window div[class*="bg-white"] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #FDF7F0 !important;
+  /* cream-100 */
+}
+
+/* Ensure dark mode still works */
+html.dark-mode #chatbot-window {
+  background-color: #2c2c33 !important;
+  /* charcoal-800 */
+  border-color: #595966 !important;
+  /* charcoal-600 */
+}
+
+html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-900"] {
+  background-color: #1A1A1F !important;
+  /* charcoal-900 */
+}
+
+html.dark-mode #chatbot-window input {
+  background-color: #1A1A1F !important;
+  color: #ffffff !important;
+  border-color: #40404A !important;
+}
+
+html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
+  background-color: #40404A !important;
+  /* charcoal-700 */
+  color: #FDF7F0 !important;
+  /* cream-100 */
+  border-color: #595966 !important;
+}
