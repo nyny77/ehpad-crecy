@@ -2,10 +2,10 @@
   "photos": [
     {
       "id": "img-batd1",
-      "category": "garden",
+      "category": "other",
       "src": "/images/uploads/04.png",
       "title": "Bâtiment D",
-      "alt": "Vue du bâtiment D de l'EHPAD de Crécy avec sa façade moderne et ses espaces verts"
+      "alt": "Vue du bâtiment D de l'EHPAD de Crécy"
     },
     {
       "id": "img-batd2",
@@ -19,46 +19,46 @@
       "category": "garden",
       "src": "/images/uploads/20260121_102117.jpg",
       "title": "Extérieur",
-      "alt": "Jardin fleuri et allées accessibles de l'EHPAD de Crécy-la-Chapelle"
+      "alt": "Jardin et allées accessibles de l'EHPAD de Crécy-la-Chapelle"
     },
     {
       "id": "img-ext2",
       "category": "garden",
       "src": "/images/uploads/20260121_102032.jpg",
       "title": "Extérieur",
-      "alt": "Espaces verts et bancs ombragés pour les promenades des résidents"
+      "alt": "Entrée"
     },
     {
       "id": "img-ext3",
       "category": "garden",
       "src": "/images/uploads/47.png",
       "title": "Extérieur",
-      "alt": "Vue panoramique des jardins de l'établissement au printemps"
+      "alt": "Vue des jardins de l'établissement en hiver."
     },
     {
       "id": "img-patio",
       "category": "lounge",
       "src": "/images/uploads/066.png",
       "title": "Patio",
-      "alt": "Patio intérieur couvert avec tables et chaises pour les moments de convivialité"
+      "alt": "Patio pour les moments de convivialité"
     },
     {
       "id": "img-aerial1",
-      "category": "garden",
+      "category": "other",
       "src": "/images/uploads/mrc1.jpg",
       "title": "Vue aérienne",
-      "alt": "Vue aérienne de l'EHPAD de Crécy montrant l'ensemble des bâtiments et jardins"
+      "alt": "Vue aérienne de l'EHPAD de Crécy montrant l'ensemble des bâtiments."
     },
     {
       "id": "img-aerial2",
-      "category": "garden",
+      "category": "other",
       "src": "/images/uploads/mr3.jpg",
       "title": "Vue aérienne",
-      "alt": "Photographie aérienne révélant l'intégration harmonieuse de l'établissement dans le paysage de Crécy-la-Chapelle"
+      "alt": "Photographie aérienne révélant l'intégration de l'établissement dans le paysage de Crécy-la-Chapelle"
     },
     {
       "id": "img-hist1",
-      "category": "history",
+      "category": "other",
       "src": "/images/uploads/618934987_1275353754617630_3350859517941962359_n.jpg",
       "title": "L'hospice en 1902",
       "alt": "Photographie historique de l'ancien hospice de Crécy datant de 1902"
@@ -82,7 +82,7 @@
       "category": "history",
       "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
       "title": "Vue ancienne",
-      "alt": "Illustration d'époque de l'établissement de soins de Crécy"
+      "alt": "Photographie ancienne école et hospice."
     },
     {
       "id": "img-hist5",
@@ -93,59 +93,52 @@
     },
     {
       "id": "hist-1",
-      "category": "history",
+      "category": "other",
       "title": "Le Grand Morin",
       "src": "/images/history/canal.jpg",
-      "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle au début du XXe siècle"
+      "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
     },
     {
       "id": "hist-2",
-      "category": "history",
+      "category": "other",
       "title": "La Collégiale",
       "src": "/images/history/collegiale.png",
       "alt": "La Collégiale Notre-Dame de Crécy-la-Chapelle, monument historique du XIIe siècle"
     },
     {
       "id": "hist-3",
-      "category": "history",
+      "category": "other",
       "title": "La Tour de Crécy",
       "src": "/images/history/tour.jpg",
-      "alt": "La Tour médiévale de Crécy, vestige des fortifications de la ville"
+      "alt": "Le Beffroi"
     },
     {
       "id": "hist-4",
       "category": "history",
-      "title": "Le Marché d'antan",
+      "title": "Le Marché",
       "src": "/images/history/marche.jpg",
-      "alt": "Le marché traditionnel de Crécy-la-Chapelle avec ses étals et ses habitants d'autrefois"
-    },
-    {
-      "id": "hist-5",
-      "category": "history",
-      "title": "Façade Historique",
-      "src": "/images/facade-sketch.jpg",
-      "alt": "Croquis architectural de la façade historique de l'EHPAD de Crécy"
+      "alt": "Le marché traditionnel de Crécy-la-Chapelle avec ses étals et ses habitants."
     },
     {
       "id": "img-aerial3",
       "category": "garden",
       "src": "/images/uploads/mrc2.jpg",
       "title": "Vue aérienne",
-      "alt": "Vue aérienne du parc arboré et des différents pavillons de l'EHPAD"
+      "alt": "Vue aérienne"
     },
     {
       "id": "img-aerial4",
       "category": "garden",
       "src": "/images/uploads/mrc3.jpg",
       "title": "Vue aérienne",
-      "alt": "Photographie drone montrant la proximité de l'établissement avec le centre-ville de Crécy"
+      "alt": "Photographie "
     },
     {
       "id": "img-aerial5",
       "category": "garden",
       "src": "/images/uploads/mrc4.jpg",
       "title": "Vue aérienne",
-      "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement verdoyant en Seine-et-Marne"
+      "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement."
     }
   ]
 }
