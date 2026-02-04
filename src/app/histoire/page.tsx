@@ -12,6 +12,7 @@ export default function HistoirePage() {
             <PageHeader
                 title="Histoire de Crécy-la-Chapelle"
                 subtitle="Découvrez la Venise Briarde, votre future ville"
+                description="Plongez dans le passé fascinant de notre cité médiévale, entre canaux pittoresques, patrimoine architectural et traditions séculaires."
             />
 
             <Section className="py-16 md:py-24">

@@ -131,7 +131,7 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
                             {iconMap[value.icon]}
                         </div>
                         <h3
-                            className="font-serif text-2xl font-bold text-charcoal-900 mb-3 z-10"
+                            className="font-serif text-2xl font-bold text-charcoal-900 mb-3 z-20 relative"
                             style={{
                                 transform: isHovered ? "translateZ(25px)" : "translateZ(0)",
                             }}
@@ -139,7 +139,7 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
                             {value.title}
                         </h3>
                         <p
-                            className="text-charcoal-700 font-medium z-10"
+                            className="text-charcoal-800 font-medium z-20 relative px-2"
                             style={{
                                 transform: isHovered ? "translateZ(15px)" : "translateZ(0)",
                             }}

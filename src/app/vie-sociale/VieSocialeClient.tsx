@@ -88,7 +88,9 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <PageHeader
                 title="Vie Sociale"
                 subtitle="Le cœur battant de notre maison"
-                image="/images/hero-v2.jpg"
+                description="Animations, sorties, événements festifs... Découvrez tous les moments de partage qui rythment le quotidien de nos résidents."
+                image="/images/global-hero.jpg"
+                alt="Vie sociale à l'EHPAD"
             />
 
             <section className="py-8 pb-16 bg-cream-100">
