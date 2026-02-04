@@ -84,7 +84,7 @@ export default function ChatBot() {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-white dark:bg-charcoal-800 rounded-2xl shadow-2xl border border-charcoal-100 dark:border-charcoal-700 overflow-hidden flex flex-col max-h-[500px]"
+                        className="chatbot-container absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-white rounded-2xl shadow-2xl border overflow-hidden flex flex-col max-h-[500px]"
                     >
                         {/* Header */}
                         <div className="bg-terracotta-500 p-4 flex items-center justify-between text-white shrink-0">
@@ -108,7 +108,7 @@ export default function ChatBot() {
                         </div>
 
                         {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-cream-50 dark:bg-charcoal-900 min-h-[300px]">
+                        <div className="chatbot-messages-area flex-1 overflow-y-auto p-4 space-y-4 min-h-[300px] bg-gray-50">
                             {messages.map((msg) => (
                                 <div
                                     key={msg.id}
@@ -116,8 +116,8 @@ export default function ChatBot() {
                                 >
                                     <div
                                         className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm shadow-sm ${msg.sender === "user"
-                                                ? "bg-terracotta-500 text-white rounded-br-none"
-                                                : "bg-[#ffffff] dark:bg-charcoal-700 !text-black dark:!text-white rounded-bl-none border border-charcoal-100 dark:border-charcoal-600"
+                                            ? "bg-terracotta-500 text-white rounded-br-none"
+                                            : "chatbot-message-bot bg-white rounded-bl-none border"
                                             }`}
                                     >
                                         <p>{msg.text}</p>
@@ -127,14 +127,14 @@ export default function ChatBot() {
                                                     <Link
                                                         key={idx}
                                                         href={link.url}
-                                                        className="text-xs bg-terracotta-50 text-terracotta-600 dark:bg-charcoal-600 dark:text-terracotta-400 px-2 py-1 rounded-md hover:bg-terracotta-100 dark:hover:bg-charcoal-500 transition-colors font-medium border border-terracotta-200 dark:border-charcoal-500"
+                                                        className="chatbot-link text-xs px-2 py-1 rounded-md transition-colors font-medium border"
                                                     >
                                                         {link.label} →
                                                     </Link>
                                                 ))}
                                             </div>
                                         )}
-                                        <p className={`text-[10px] mt-1 text-right ${msg.sender === "user" ? "text-terracotta-100" : "text-charcoal-400"}`}>
+                                        <p className={`text-[10px] mt-1 text-right ${msg.sender === "user" ? "text-terracotta-100" : "chatbot-timestamp"}`}>
                                             {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </p>
                                     </div>

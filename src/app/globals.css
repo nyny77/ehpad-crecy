@@ -619,6 +619,88 @@ html.dark-mode .section-features-text strong {
   /* Cream 100 */
 }
 
+/* === FIX CHATBOT VISIBILITY (REFACTOR) === */
+/* DEFAULT: Light Mode (forcé si pas de dark-mode) */
+.chatbot-container {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.chatbot-messages-area {
+  background-color: #f9fafb !important;
+  /* Cream 50 equiv */
+}
+
+.chatbot-message-bot {
+  background-color: #ffffff !important;
+  color: #1a1a1f !important;
+  /* Charcoal 900 */
+  border-color: #e5e7eb !important;
+}
+
+.chatbot-input-area {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.chatbot-input-field {
+  background-color: #f9fafb !important;
+  color: #1a1a1f !important;
+  border-color: #e5e7eb !important;
+}
+
+.chatbot-timestamp {
+  color: #9ca3af !important;
+  /* Gray 400 */
+}
+
+.chatbot-link {
+  background-color: #fff5f5 !important;
+  color: #de6b58 !important;
+  border-color: #fed7d7 !important;
+}
+
+.chatbot-link:hover {
+  background-color: #fed7d7 !important;
+}
+
+/* OVERRIDE: Dark Mode (uniquement si html.dark-mode est présent) */
+html.dark-mode .chatbot-container {
+  background-color: #2c2c33 !important;
+  border-color: #4d4d55 !important;
+}
+
+html.dark-mode .chatbot-messages-area {
+  background-color: #1a1a1f !important;
+}
+
+html.dark-mode .chatbot-message-bot {
+  background-color: #2c2c33 !important;
+  color: #fdf7f0 !important;
+  border-color: #4d4d55 !important;
+}
+
+html.dark-mode .chatbot-input-area {
+  background-color: #2c2c33 !important;
+  border-color: #4d4d55 !important;
+}
+
+html.dark-mode .chatbot-input-field {
+  background-color: #1a1a1f !important;
+  color: #fdf7f0 !important;
+  border-color: #4d4d55 !important;
+}
+
+html.dark-mode .chatbot-link {
+  background-color: #4d4d55 !important;
+  color: #fca5a5 !important;
+  border-color: #5d5d66 !important;
+}
+
+html.dark-mode .chatbot-link:hover {
+  background-color: #5d5d66 !important;
+}
+
 html.dark-mode .section-features-box {
   background-color: #2c2c33 !important;
   /* Charcoal 800 */
