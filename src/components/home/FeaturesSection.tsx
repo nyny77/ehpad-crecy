@@ -45,12 +45,12 @@ export default function FeaturesSection() {
 
                         {/* Infos Pratiques Box */}
                         <div className="mt-10 p-6 rounded-2xl relative border section-features-box">
-                            <div className="absolute -top-3 left-6 px-3 py-1 bg-terracotta-500 text-white text-xs font-bold uppercase rounded-full tracking-wide shadow-sm">
+                            <div className="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white text-xs font-bold uppercase rounded-full tracking-wide shadow-sm">
                                 Infos Pratiques
                             </div>
                             <div className="space-y-2 text-sm md:text-base">
                                 <p>
-                                    <span className="font-bold text-terracotta-600">Tarif hébergement :</span> ~69€ / jour (chambre simple, indicatif)
+                                    <span className="font-bold text-terracotta-500">Tarif hébergement :</span> ~69€ / jour (chambre simple, indicatif)
                                 </p>
                                 <p>
                                     <span className="font-bold text-forest-600">Aides acceptées :</span> Habilité Aide Sociale (ASH), APA, APL/ALS.

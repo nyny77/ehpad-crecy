@@ -157,7 +157,7 @@ export default function PricingTable() {
                         {/* GIR 1-2 */}
                         <div className="bg-cream-50 rounded-2xl p-6 text-center border border-cream-200">
                             <div className="w-14 h-14 bg-terracotta-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-terracotta-600 font-bold">1-2</span>
+                                <span className="text-terracotta-500 font-bold">1-2</span>
                             </div>
                             <h4 className="font-semibold text-charcoal-900 mb-1">
                                 {pricing.dependency.gir1_2.label}

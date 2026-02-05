@@ -181,7 +181,7 @@ export default function PageHeader({
                                 transition={{ duration: 0.7, delay: 0.3 }}
                                 className="inline-block mb-5 relative"
                             >
-                                <span className="relative inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-600 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50">
+                                <span className="relative inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-500 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50">
                                     <motion.span
                                         className="w-2 h-2 rounded-full bg-terracotta-500"
                                         animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}

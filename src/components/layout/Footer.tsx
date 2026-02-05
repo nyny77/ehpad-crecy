@@ -6,8 +6,10 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-charcoal-900 text-cream-100 relative pt-20">
-            <WaveSeparator position="top" className="text-charcoal-900" />
+        <footer className="bg-charcoal-900 text-cream-100 relative pt-20" style={{ backgroundColor: '#111827', zIndex: 50 }}>
+            <div style={{ color: '#111827' }}>
+                <WaveSeparator position="top" className="text-current" showBorder={false} />
+            </div>
             {/* Section principale */}
             <div className="container-custom py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">

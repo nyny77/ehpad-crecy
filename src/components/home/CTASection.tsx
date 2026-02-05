@@ -13,21 +13,12 @@ export default function CTASection() {
     return (
         <section ref={ref} className="section-padding relative pt-24 md:pt-32">
             {/* Wave top (transition from Team) */}
-            <WaveSeparator position="top" className="text-terracotta-500" />
+            <WaveSeparator position="top" className="text-terracotta-500" showBorder={false} />
 
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {/* Background décoratif */}
-                <div className="absolute inset-0 bg-gradient-to-br from-terracotta-500 via-terracotta-600 to-wood-600">
-                    <div className="absolute inset-0 opacity-10">
-                        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <defs>
-                                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
-                                </pattern>
-                            </defs>
-                            <rect width="100" height="100" fill="url(#grid)" />
-                        </svg>
-                    </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-terracotta-500 to-terracotta-400">
+
                 </div>
 
                 {/* Formes décoratives */}
@@ -118,70 +109,7 @@ export default function CTASection() {
                         </a>
                     </motion.div>
 
-                    {/* Informations rapides */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={isInView ? { opacity: 1 } : {}}
-                        transition={{ duration: 0.6, delay: 0.5 }}
-                        className="mt-12 pt-10 border-t border-white/20"
-                    >
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-cream-100">
-                            <div className="flex items-center justify-center gap-3">
-                                <svg
-                                    className="w-6 h-6 text-cream-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    />
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <span>{EHPAD_INFO.address.city}</span>
-                            </div>
-                            <div className="flex items-center justify-center gap-3">
-                                <svg
-                                    className="w-6 h-6 text-cream-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                                <span>{EHPAD_INFO.visitingHours.weekdays}</span>
-                            </div>
-                            <div className="flex items-center justify-center gap-3">
-                                <svg
-                                    className="w-6 h-6 text-cream-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                    />
-                                </svg>
-                                <span>Établissement public</span>
-                            </div>
-                        </div>
-                    </motion.div>
+
                 </div>
             </div>
         </section>

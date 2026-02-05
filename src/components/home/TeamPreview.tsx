@@ -55,7 +55,7 @@ export default function TeamPreview() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="w-full lg:w-1/2 pt-12 lg:pt-0 pl-0 lg:pl-10"
                     >
-                        <span className="text-terracotta-500 font-bold tracking-widest uppercase text-sm mb-3 block">
+                        <span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent font-bold tracking-widest uppercase text-sm mb-3 block">
                             Patrimoine & Histoire
                         </span>
                         <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6 leading-tight">
@@ -65,7 +65,7 @@ export default function TeamPreview() {
 
                         <div className="space-y-6 text-charcoal-700 text-lg leading-relaxed font-light">
                             <p>
-                                Celle que l’on appelle <span className="font-medium text-terracotta-600">« la Venise Briarde »</span> doit son surnom au fait que l’eau est un élément indissociable des lieux : Crécy-la-Chapelle est bordée par le Grand Morin qui lui donne toute son originalité.
+                                Celle que l’on appelle <span className="font-medium text-terracotta-500">« la Venise Briarde »</span> doit son surnom au fait que l’eau est un élément indissociable des lieux : Crécy-la-Chapelle est bordée par le Grand Morin qui lui donne toute son originalité.
                             </p>
 
                             <div className="bg-white/60 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">

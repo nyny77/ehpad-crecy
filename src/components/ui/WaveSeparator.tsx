@@ -3,9 +3,10 @@
 interface WaveSeparatorProps {
     position?: "top" | "bottom";
     className?: string;
+    showBorder?: boolean;
 }
 
-export default function WaveSeparator({ position = "top", className = "text-white" }: WaveSeparatorProps) {
+export default function WaveSeparator({ position = "top", className = "text-white", showBorder = true }: WaveSeparatorProps) {
     if (position === "top") {
         // Wave pointing UP - sits above the section, intrudes into previous section
         return (
@@ -24,12 +25,14 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                         d="M0,100 L0,50 Q360,0 720,50 T1440,50 L1440,100 Z"
                     />
                     {/* Raspberry Red Border - Top Curve */}
-                    <path
-                        fill="none"
-                        stroke="#C80040"
-                        strokeWidth="4"
-                        d="M0,50 Q360,0 720,50 T1440,50"
-                    />
+                    {showBorder && (
+                        <path
+                            fill="none"
+                            stroke="#C80040"
+                            strokeWidth="4"
+                            d="M0,50 Q360,0 720,50 T1440,50"
+                        />
+                    )}
                 </svg>
             </div>
         );
@@ -49,12 +52,14 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                     d="M0,0 Q360,100 720,50 T1440,50 L1440,100 L0,100 Z"
                 />
                 {/* Raspberry Red Border - Top Curve of the bottom shape */}
-                <path
-                    fill="none"
-                    stroke="#C80040"
-                    strokeWidth="4"
-                    d="M0,0 Q360,100 720,50 T1440,50"
-                />
+                {showBorder && (
+                    <path
+                        fill="none"
+                        stroke="#C80040"
+                        strokeWidth="4"
+                        d="M0,0 Q360,100 720,50 T1440,50"
+                    />
+                )}
             </svg>
         </div>
     );
