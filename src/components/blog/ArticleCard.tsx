@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, MouseEvent } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useTransform, useTime } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
 
 interface ArticleCardProps {
@@ -16,29 +16,12 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
     const [isFavorite, setIsFavorite] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // 3D Tilt effect
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    // --- Automatic Floating Logic ---
+    const time = useTime();
 
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-    };
+    // Automatic gentle floating animation
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
 
     useEffect(() => {
         // Vérifier si l'article est dans les favoris
@@ -86,8 +69,6 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
             <div
                 ref={cardRef}
                 style={{ perspective: "1000px" }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
             >
                 <motion.article
                     style={{ rotateX, rotateY }}

@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, MouseEvent } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useInView, useTransform, useTime } from "framer-motion";
 import { VALUES } from "@/lib/constants";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
@@ -58,30 +58,17 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
     const cardRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
 
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    const time = useTime();
 
-    const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
-    const springX = useSpring(mouseX, springConfig);
-    const springY = useSpring(mouseY, springConfig);
-
-    const rotateX = useTransform(springY, [-0.5, 0.5], [15, -15]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-15, 15]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
+    // Automatic gentle floating animation with increased amplitude
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
 
     const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
         setIsHovered(false);
     };
+
+
 
     return (
         <motion.div
@@ -90,7 +77,6 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
             ref={cardRef}
-            onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={handleMouseLeave}
             style={{

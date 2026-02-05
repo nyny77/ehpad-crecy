@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef, MouseEvent } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useTransform, useTime } from "framer-motion";
 
 interface ServiceCardProps {
     id: string;
@@ -27,28 +27,17 @@ export default function ServiceCard({
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
 
-    // 3D Tilt effect
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    // --- Automatic Floating Logic ---
+    const time = useTime();
 
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
+    // Automatic gentle floating animation
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
 
-    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+    // Mouse handlers removed, only hover state remains
 
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
 
     const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
         setIsHovered(false);
     };
 
@@ -80,7 +69,6 @@ export default function ServiceCard({
                 <div
                     ref={ref}
                     style={{ perspective: "1000px" }}
-                    onMouseMove={handleMouseMove}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={handleMouseLeave}
                     className="h-full"

@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, Variants } from "framer-motion";
+import { motion, useScroll, useTransform, useTime, Variants } from "framer-motion";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
 interface PageHeaderProps {
@@ -114,41 +114,16 @@ export default function PageHeader({
     const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-    // --- 3D Tilt Logic (same as HeroSection) ---
-    const x = useMotionValue(0);
-    const yMouse = useMotionValue(0);
+    // --- Automatic Floating Logic ---
+    const time = useTime();
 
-    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 10 });
-    const mouseYSpring = useSpring(yMouse, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [7, -7]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-7, 7]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-
-        x.set(xPct);
-        yMouse.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        yMouse.set(0);
-    };
+    // Automatic gentle floating animation
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
 
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-cream-50"
             style={{ perspective: "1000px" }}
         >
