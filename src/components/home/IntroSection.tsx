@@ -178,7 +178,7 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
 
                 {/* Title - Theme aware */}
                 <motion.h3
-                    className={`w-full font-serif text-sm font-bold text-center mb-3 ${isDarkMode
+                    className={`font-serif text-sm font-bold text-center mb-3 tracking-tighter whitespace-nowrap ${isDarkMode
                         ? 'bg-gradient-to-r from-white via-cream-100 to-white bg-clip-text text-transparent'
                         : 'text-charcoal-900'
                         }`}
