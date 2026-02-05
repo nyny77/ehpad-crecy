@@ -68,7 +68,7 @@ function JobCard({ offer }: { offer: typeof CAREERS_OFFERS[0] }) {
                     </ul>
                     <Link
                         href="/contact?subject=recrutement"
-                        className="block w-full text-center bg-terracotta-500 text-white font-medium py-3.5 rounded-xl hover:bg-terracotta-600 transition-colors mt-auto shadow-md hover:shadow-lg"
+                        className="block w-full text-center bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white font-medium py-3.5 rounded-xl hover:brightness-110 transition-all mt-auto shadow-md hover:shadow-lg"
                     >
                         Postuler à ce poste
                     </Link>

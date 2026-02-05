@@ -23,6 +23,13 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                         fill="currentColor"
                         d="M0,100 L0,50 Q360,0 720,50 T1440,50 L1440,100 Z"
                     />
+                    {/* Raspberry Red Border - Top Curve */}
+                    <path
+                        fill="none"
+                        stroke="#C80040"
+                        strokeWidth="4"
+                        d="M0,50 Q360,0 720,50 T1440,50"
+                    />
                 </svg>
             </div>
         );
@@ -40,6 +47,13 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                 <path
                     fill="currentColor"
                     d="M0,0 Q360,100 720,50 T1440,50 L1440,100 L0,100 Z"
+                />
+                {/* Raspberry Red Border - Top Curve of the bottom shape */}
+                <path
+                    fill="none"
+                    stroke="#C80040"
+                    strokeWidth="4"
+                    d="M0,0 Q360,100 720,50 T1440,50"
                 />
             </svg>
         </div>

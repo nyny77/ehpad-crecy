@@ -150,7 +150,7 @@ export default function PageHeader({
                     rotateY,
                     opacity
                 }}
-                className="relative z-10 container-custom text-center px-4 pt-20"
+                className="relative z-10 container-custom text-center px-4 pt-48 mt-12"
             >
                 {/* Container avec bordure gradient animée */}
                 <div className="relative inline-block group">

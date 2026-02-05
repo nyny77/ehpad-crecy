@@ -51,7 +51,7 @@ export default function HistoirePage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">1. L'Eau : L'Âme de Crécy</h2>
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">1. L'Eau : L'Âme de Crécy</h2>
                             <p className="text-charcoal-600 mb-4">
                                 La première chose qui vous frappera à Crécy, c'est la présence apaisante de l'eau. La ville n'est pas seulement traversée par une rivière, le Grand Morin, elle est littéralement tissée par elle.
                             </p>
@@ -85,7 +85,7 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="order-2 md:order-1"
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">2. Le Beffroi : Une Silhouette Unique</h2>
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">2. Le Beffroi : Une Silhouette Unique</h2>
                             <p className="text-charcoal-600 mb-4">
                                 Monument emblématique de la "Venise Briarde", le Beffroi raconte l'histoire de la ville en superposant deux époques. Sa base massive en pierre est le vestige d'une tour de défense du XIIe siècle, ancienne porte fortifiée de la ville.
                             </p>
@@ -118,7 +118,7 @@ export default function HistoirePage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">3. L'Hospice et l'École : Une Double Vocation</h2>
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">3. L'Hospice et l'École : Une Double Vocation</h2>
                             <p className="text-charcoal-600 mb-4">
                                 L'histoire de notre établissement est riche et singulière. Construit initialement comme "Hospice" suite à l'annexion d'une portion de Montplaisir en 1868, le bâtiment a longtemps abrité une double vie.
                             </p>
@@ -152,7 +152,7 @@ export default function HistoirePage() {
                             viewport={{ once: true }}
                             className="order-2 md:order-1"
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">4. La Collégiale Notre-Dame</h2>
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">4. La Collégiale Notre-Dame</h2>
                             <p className="text-charcoal-600 mb-4">
                                 Vous ne pourrez pas la manquer. Elle veille sur la ville depuis des siècles. La Collégiale Notre-Dame de l'Assomption est le joyau de Crécy.
                             </p>
@@ -185,7 +185,7 @@ export default function HistoirePage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-3xl font-serif text-terracotta-600 mb-6">5. Un Cœur de Ville Vivant et Paisible</h2>
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">5. Un Cœur de Ville Vivant et Paisible</h2>
                             <p className="text-charcoal-600 mb-4">
                                 Crécy est une ville d'histoire, mais c'est aussi une ville bien vivante ! Le centre-ville est à taille humaine, chaleureux et accueillant.
                             </p>
@@ -200,7 +200,7 @@ export default function HistoirePage() {
 
                     {/* Mot de la Fin */}
                     <div className="bg-white p-8 md:p-12 rounded-3xl shadow-soft text-center max-w-3xl mx-auto border border-cream-200">
-                        <h3 className="text-2xl font-serif text-terracotta-600 mb-4">Le Mot de la Fin</h3>
+                        <h3 className="text-2xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-4">Le Mot de la Fin</h3>
                         <p className="text-charcoal-600 mb-6">
                             Chers futurs résidents,
                             <br /><br />

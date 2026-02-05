@@ -104,7 +104,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
                                     e.stopPropagation();
                                     onDelete();
                                 }}
-                                className="absolute top-4 right-4 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                className="absolute top-4 right-4 w-8 h-8 bg-terracotta-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-terracotta-600"
                                 title="Supprimer"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,8 +140,8 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
                                 whileTap={{ scale: 0.9 }}
                                 onClick={handleToggleFavorite}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all ${isFavorite
-                                    ? 'bg-red-50 text-red-500'
-                                    : 'bg-cream-100 text-charcoal-500 hover:bg-red-50 hover:text-red-500'
+                                    ? 'bg-terracotta-50 text-terracotta-500'
+                                    : 'bg-cream-100 text-charcoal-500 hover:bg-terracotta-50 hover:text-terracotta-500'
                                     }`}
                                 title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                             >

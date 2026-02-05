@@ -127,16 +127,14 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         </button>
 
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-serif text-[#8B4513] dark:text-terracotta-400 mb-2">Inscription</h2>
-                            <p className="text-gray-600 dark:text-cream-200 text-sm">
-                                Rejoignez l'espace Vie Sociale de l'EHPAD de Crécy.
-                                <br />
-                                <span className="font-medium text-amber-700 dark:text-amber-400">Votre compte devra être validé par l'équipe technique.</span>
+                            <h2 className="text-2xl font-serif text-terracotta-700 dark:text-terracotta-400 mb-2">Inscription</h2>
+                            <p className="text-charcoal-600 dark:text-gray-300">
+                                Créez votre compte pour suivre l'actualité de l'EHPAD.
                             </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm rounded-xl border border-red-100 dark:border-red-900/50">
+                            <div className="mb-6 p-4 bg-terracotta-50 dark:bg-terracotta-900/20 text-terracotta-600 dark:text-terracotta-400 text-sm rounded-xl border border-terracotta-100 dark:border-terracotta-900/50">
                                 {error}
                             </div>
                         )}
@@ -153,7 +151,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         required
                                         value={formData.firstName}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
                                     />
                                 </div>
                                 <div>
@@ -166,7 +164,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         required
                                         value={formData.lastName}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
                                     />
                                 </div>
                             </div>
@@ -180,7 +178,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     required
                                     value={formData.role}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
                                 >
                                     <option value="" className="dark:bg-charcoal-700">Sélectionnez votre fonction...</option>
                                     {SIGNUP_ROLES.map((role) => (
@@ -226,7 +224,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
                                 />
                             </div>
 
@@ -241,7 +239,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     minLength={6}
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
                                 />
                             </div>
 
@@ -294,7 +292,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             <button
                                 type="submit"
                                 disabled={isLoading || !termsAccepted}
-                                className="w-full py-3 px-4 bg-[#8B4513] dark:bg-terracotta-600 text-white rounded-xl font-medium hover:bg-[#6d360f] dark:hover:bg-terracotta-700 transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="w-full py-3 px-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 dark:bg-terracotta-600 text-white rounded-xl font-medium hover:brightness-110 dark:hover:bg-terracotta-700 transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {isLoading ? (
                                     <>

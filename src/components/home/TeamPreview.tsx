@@ -45,7 +45,7 @@ export default function TeamPreview() {
                         </div>
 
                         {/* Élément décoratif d'arrière-plan */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-terracotta-100/30 rounded-full blur-[60px] -z-10" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-terracotta-100/30 to-terracotta-50/30 rounded-full blur-[60px] -z-10" />
                     </motion.div>
 
                     {/* Colonne Texte */}
@@ -60,7 +60,7 @@ export default function TeamPreview() {
                         </span>
                         <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6 leading-tight">
                             Histoire de <br />
-                            <span className="text-terracotta-600 italic">Crécy-la-Chapelle</span>
+                            <span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent italic font-semibold">Crécy-la-Chapelle</span>
                         </h2>
 
                         <div className="space-y-6 text-charcoal-700 text-lg leading-relaxed font-light">
@@ -69,7 +69,7 @@ export default function TeamPreview() {
                             </p>
 
                             <div className="bg-white/60 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">
-                                <div className="absolute -left-3 top-6 w-1 h-12 bg-terracotta-500 rounded-full"></div>
+                                <div className="absolute -left-3 top-6 w-1 h-12 bg-gradient-to-r from-terracotta-500 to-terracotta-400 rounded-full"></div>
                                 <p className="italic text-charcoal-800 font-medium">
                                     « En 1868, une portion de terrain sise à Montplaisir sera annexée à Crécy-en-Brie pour y construire l’Hospice. »
                                 </p>
@@ -82,7 +82,7 @@ export default function TeamPreview() {
 
                         <div className="mt-10">
                             <Link href="/histoire">
-                                <button className="group inline-flex items-center gap-3 px-8 py-4 bg-terracotta-500 text-white rounded-full font-medium shadow-lg hover:bg-terracotta-600 transition-all hover:scale-105">
+                                <button className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-full font-medium shadow-lg hover:brightness-110 transition-all hover:scale-105">
                                     Découvrir toute l&apos;histoire
                                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

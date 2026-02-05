@@ -168,7 +168,7 @@ export default function ContactForm() {
                         animate={{
                             y: focusedField === "firstName" || formData.firstName ? -24 : 0,
                             scale: focusedField === "firstName" || formData.firstName ? 0.85 : 1,
-                            color: focusedField === "firstName" ? "#C17767" : "#6D6D6D",
+                            color: focusedField === "firstName" ? "#C80040" : "#6D6D6D",
                         }}
                         className="absolute left-4 top-4 text-charcoal-500 pointer-events-none origin-left transition-all"
                     >
@@ -192,7 +192,7 @@ export default function ContactForm() {
                         animate={{
                             y: focusedField === "lastName" || formData.lastName ? -24 : 0,
                             scale: focusedField === "lastName" || formData.lastName ? 0.85 : 1,
-                            color: focusedField === "lastName" ? "#C17767" : "#6D6D6D",
+                            color: focusedField === "lastName" ? "#C80040" : "#6D6D6D",
                         }}
                         className="absolute left-4 top-4 text-charcoal-500 pointer-events-none origin-left transition-all"
                     >
@@ -216,7 +216,7 @@ export default function ContactForm() {
                         animate={{
                             y: focusedField === "email" || formData.email ? -24 : 0,
                             scale: focusedField === "email" || formData.email ? 0.85 : 1,
-                            color: focusedField === "email" ? "#C17767" : "#6D6D6D",
+                            color: focusedField === "email" ? "#C80040" : "#6D6D6D",
                         }}
                         className="absolute left-4 top-4 text-charcoal-500 pointer-events-none origin-left transition-all"
                     >
@@ -240,7 +240,7 @@ export default function ContactForm() {
                         animate={{
                             y: focusedField === "phone" || formData.phone ? -24 : 0,
                             scale: focusedField === "phone" || formData.phone ? 0.85 : 1,
-                            color: focusedField === "phone" ? "#C17767" : "#6D6D6D",
+                            color: focusedField === "phone" ? "#C80040" : "#6D6D6D",
                         }}
                         className="absolute left-4 top-4 text-charcoal-500 pointer-events-none origin-left transition-all"
                     >
@@ -334,7 +334,7 @@ export default function ContactForm() {
                         animate={{
                             y: focusedField === "message" || formData.message ? -24 : 0,
                             scale: focusedField === "message" || formData.message ? 0.85 : 1,
-                            color: focusedField === "message" ? "#C17767" : "#6D6D6D",
+                            color: focusedField === "message" ? "#C80040" : "#6D6D6D",
                         }}
                         className="absolute left-4 top-4 text-charcoal-500 pointer-events-none origin-left transition-all"
                     >

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Heart, Sparkles, Eye, Users } from "lucide-react";
 import Image from "next/image";
 import { motion, useInView, useTransform, useTime } from "framer-motion";
 import { VALUES } from "@/lib/constants";
@@ -8,47 +9,23 @@ import WaveSeparator from "@/components/ui/WaveSeparator";
 
 const iconMap: { [key: string]: React.ReactNode } = {
     heart: (
-        <div className="relative w-full h-full">
-            <Image
-                src="/images/values/bienveillance.png"
-                alt="Bienveillance"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        <div className="w-full h-full flex items-center justify-center bg-terracotta-50 rounded-full">
+            <Heart className="w-12 h-12 text-terracotta-600" strokeWidth={1.5} />
         </div>
     ),
     star: (
-        <div className="relative w-full h-full">
-            <Image
-                src="/images/values/professionnalisme.png"
-                alt="Professionnalisme"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        <div className="w-full h-full flex items-center justify-center bg-golden-50 rounded-full">
+            <Sparkles className="w-12 h-12 text-golden-600" strokeWidth={1.5} />
         </div>
     ),
     eye: (
-        <div className="relative w-full h-full">
-            <Image
-                src="/images/values/transparence.png"
-                alt="Transparence"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        <div className="w-full h-full flex items-center justify-center bg-forest-50 rounded-full">
+            <Eye className="w-12 h-12 text-forest-600" strokeWidth={1.5} />
         </div>
     ),
     users: (
-        <div className="relative w-full h-full">
-            <Image
-                src="/images/values/vie-sociale.png"
-                alt="Vie Sociale"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        <div className="w-full h-full flex items-center justify-center bg-wood-50 rounded-full">
+            <Users className="w-12 h-12 text-wood-600" strokeWidth={1.5} />
         </div>
     ),
 };

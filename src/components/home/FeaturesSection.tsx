@@ -20,7 +20,7 @@ export default function FeaturesSection() {
                             Notre Établissement
                         </span>
                         <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 dark:text-cream-100 mt-3 mb-8">
-                            Un lieu de vie <br /><span className="text-forest-600 dark:text-forest-400">chaleureux & adapté</span>
+                            Un lieu de vie <br /><span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent font-semibold">chaleureux & sécurisant</span>
                         </h2>
 
                         {/* Texte principal - Utilisation de classes CSS personnalisées pour contourner les conflits Tailwind */}

@@ -87,13 +87,13 @@ export default function ChatBot() {
                         className="chatbot-container absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-white rounded-2xl shadow-2xl border overflow-hidden flex flex-col max-h-[500px]"
                     >
                         {/* Header */}
-                        <div className="bg-terracotta-500 p-4 flex items-center justify-between text-white shrink-0">
+                        <div className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 p-4 flex items-center justify-between text-white shrink-0">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                                     🤖
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-sm">Assistant EHPAD</h3>
+                                    <h3 className="font-bold text-sm text-white">Assistant EHPAD</h3>
                                     <p className="text-xs text-terracotta-100">En ligne</p>
                                 </div>
                             </div>
@@ -157,19 +157,19 @@ export default function ChatBot() {
                         </div>
 
                         {/* Input Area */}
-                        <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-charcoal-800 border-t border-charcoal-100 dark:border-charcoal-700">
+                        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-charcoal-100">
                             <div className="flex gap-2">
                                 <input
                                     type="text"
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder="Posez votre question..."
-                                    className="flex-1 px-4 py-2 rounded-full border border-charcoal-200 dark:border-charcoal-600 bg-cream-50 dark:bg-charcoal-900 text-charcoal-900 dark:text-cream-100 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400 text-sm"
+                                    className="flex-1 px-4 py-2 rounded-full border border-charcoal-200 bg-cream-50 text-charcoal-900 focus:outline-none focus:border-terracotta-400 focus:ring-1 focus:ring-terracotta-400 text-sm"
                                 />
                                 <button
                                     type="submit"
                                     disabled={!inputValue.trim() || isTyping}
-                                    className="p-2 bg-terracotta-500 text-white rounded-full hover:bg-terracotta-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    className="p-2 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-full hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                                 >
                                     <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
@@ -186,7 +186,7 @@ export default function ChatBot() {
                 onClick={() => setIsOpen(!isOpen)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors relative z-50 ${isOpen ? "bg-charcoal-800 text-white" : "bg-terracotta-500 text-white hover:bg-terracotta-600"
+                className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors relative z-50 ${isOpen ? "bg-charcoal-800 text-white" : "bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white hover:scale-105 hover:brightness-110"
                     }`}
             >
                 {isOpen ? (

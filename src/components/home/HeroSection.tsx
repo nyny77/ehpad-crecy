@@ -146,7 +146,7 @@ export default function HeroSection() {
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="w-full sm:w-auto relative overflow-hidden bg-terracotta-500 hover:bg-terracotta-600 text-white px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-lg shadow-terracotta-500/30"
+                                        className="w-full sm:w-auto relative overflow-hidden bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-lg hover:brightness-110 shadow-terracotta-500/30"
                                     >
                                         <span className="relative z-10 flex items-center justify-center gap-2">
                                             Venir nous rencontrer
@@ -161,7 +161,7 @@ export default function HeroSection() {
                                     <motion.button
                                         whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="hero-secondary-btn w-full sm:w-auto px-8 py-4 rounded-xl font-medium text-lg bg-white/10 text-charcoal-900 border border-charcoal-300 backdrop-blur-md transition-all hover:border-charcoal-500 hover:bg-white/30"
+                                        className="btn-secondary w-full sm:w-auto text-lg"
                                     >
                                         Découvrir nos tarifs
                                     </motion.button>
