@@ -6,8 +6,8 @@
   /* Couleurs principales - Updated to match new palette */
   --color-cream: #FDF7F0;
   --color-cream-dark: #EEDCC0;
-  --color-terracotta: #DE6B58;
-  --color-terracotta-light: #F48B78;
+  --color-terracotta: #C80040;
+  --color-terracotta-light: #F54D75;
   --color-forest: #63967C;
   --color-forest-light: #82B098;
   --color-wood: #8B7355;
@@ -55,9 +55,9 @@ html.dark-mode {
   --color-cream-200: #F7EBD9;
   --color-cream-300: #EEDCC0;
 
-  --color-terracotta-400: #F48B78;
-  --color-terracotta-500: #DE6B58;
-  --color-terracotta-600: #C15242;
+  --color-terracotta-400: #F54D75;
+  --color-terracotta-500: #C80040;
+  --color-terracotta-600: #A60035;
 
   --color-forest-400: #82B098;
   --color-forest-500: #63967C;
@@ -557,12 +557,12 @@ html.dark-mode [class*="rounded-xl"][class*="bg-white"] {
 
 /* Boutons primaires - garder visibles */
 html.dark-mode .btn-primary {
-  background-color: #de6b58 !important;
+  background-color: #C80040 !important;
   color: white !important;
 }
 
 html.dark-mode .btn-primary:hover {
-  background-color: #c15242 !important;
+  background-color: #A60035 !important;
 }
 
 /* Boutons secondaires */
@@ -589,8 +589,8 @@ html.dark-mode textarea::placeholder {
 html.dark-mode input:focus,
 html.dark-mode textarea:focus,
 html.dark-mode select:focus {
-  border-color: #de6b58 !important;
-  outline-color: #de6b58 !important;
+  border-color: #C80040 !important;
+  outline-color: #C80040 !important;
 }
 
 /* Header */

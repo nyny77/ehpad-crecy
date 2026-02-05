@@ -20,16 +20,16 @@ const config: Config = {
           500: "#DCC9AA", // Conservé pour compatibilité, mais moins utilisé
         },
         terracotta: {
-          50: "#FFF5F2",
-          100: "#FFE6E0",
-          200: "#FDD0C2",
-          300: "#FBAFA0",
-          400: "#F48B78", // Plus vif
-          500: "#DE6B58", // Plus chaleureux
-          600: "#C15242",
-          700: "#9E3C2F",
-          800: "#7D2E25",
-          900: "#5C221C",
+          50: "#FFF0F4",
+          100: "#FFE0E8",
+          200: "#FFB8C8",
+          300: "#FF85A3",
+          400: "#F54D75",
+          500: "#C80040", // Nouvelle couleur de base
+          600: "#A60035",
+          700: "#85002A",
+          800: "#660020",
+          900: "#420015",
         },
         forest: {
           50: "#F2F9F5",
@@ -86,12 +86,12 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-warm": "linear-gradient(135deg, #FAF6F0 0%, #F5EDE0 100%)",
-        "gradient-terracotta": "linear-gradient(135deg, #C17767 0%, #E08F7A 100%)",
+        "gradient-terracotta": "linear-gradient(135deg, #C80040 0%, #F54D75 100%)",
         "gradient-forest": "linear-gradient(135deg, #4A6D5B 0%, #6A9A7F 100%)",
       },
       boxShadow: {
         soft: "0 4px 20px -2px rgba(139, 115, 85, 0.12)",
-        warm: "0 8px 30px -4px rgba(193, 119, 103, 0.2)",
+        warm: "0 8px 30px -4px rgba(200, 0, 64, 0.2)",
         card: "0 2px 10px -2px rgba(0, 0, 0, 0.08), 0 4px 20px -4px rgba(139, 115, 85, 0.1)",
       },
       animation: {
