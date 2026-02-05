@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useTime } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
@@ -17,44 +17,19 @@ export default function HeroSection() {
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-    // --- 3D Tilt Logic ---
-    const x = useMotionValue(0);
-    const yMouse = useMotionValue(0);
+    // --- Automatic Floating Logic ---
+    const time = useTime();
 
-    // Smooth spring animation for the tilt
-    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 10 });
-    const mouseYSpring = useSpring(yMouse, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [7, -7]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-7, 7]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-
-        x.set(xPct);
-        yMouse.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        yMouse.set(0);
-    };
+    // Create a gentle floating motion using sine/cosine waves
+    // Increased amplitude and speed for better visibility as requested
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees (was 2)
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees (was 2)
 
     const sloganWords = EHPAD_INFO.slogan.split(" ");
 
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50 perspective-1000"
             style={{ perspective: "1000px" }}
         >
