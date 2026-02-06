@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV_LINKS, EHPAD_INFO } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,13 +19,11 @@ export default function Header() {
         };
         window.addEventListener("scroll", handleScroll);
 
-        // Détection du mode sombre
         const checkDarkMode = () => {
             setIsDarkMode(document.documentElement.classList.contains('dark-mode'));
         };
         checkDarkMode();
 
-        // Observer les changements de classe sur <html>
         const observer = new MutationObserver(checkDarkMode);
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
@@ -33,64 +33,28 @@ export default function Header() {
         };
     }, []);
 
+    const isActiveLink = (href: string) => {
+        if (href === "/") return pathname === "/";
+        return pathname.startsWith(href);
+    };
+
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 py-4 ${isScrolled ? "py-2" : "py-4"}`}
-        >
-            {/* Unified Background Layer */}
-            <div
-                className={`absolute inset-0 z-[-1] transition-all duration-500 backdrop-blur-md shadow-sm ${isScrolled ? "bg-cream-100/95 shadow-lg" : "bg-cream-100/80"
-                    }`}
-                style={{
-                    // This creates the "single block" effect by extending the background area
-                    // The wave below is just a visual extension of this block
-                }}
-            >
-                {/* Visual Wave Extension - Only visible when not scrolled or explicitly requested */}
-                <div
-                    className={`absolute bottom-0 left-0 w-full translate-y-[99%] overflow-hidden transition-opacity duration-500 ${isScrolled ? "opacity-0" : "opacity-100"}`}
-                    style={{ height: '5rem' }} // Fixed height container for the wave
-                >
-                    {/* 
-                       We use the exact same background color for the wave fill.
-                       Because the parent has opacity, we need to be careful. 
-                       Actually, to get a true "single block" with transparency, the best way 
-                       is to NOT have the wave separate.
-                       BUT, since we are using Tailwind classes like bg-cream-100/80, 
-                       we can simulate continuity by using the same color.
-                       
-                       However, to avoid the overlap line, we will use the "Negative Margin" 
-                       trick with a slightly overlapping SVG but filled with the SAME CURRENT COLOR 
-                       (calculated or hardcoded). 
-                       
-                       Wait, if parent is bg-cream-100/80, it has alpha. 
-                       If child is fill-current (which is cream-100/80), 
-                       Overlap = Darker.
-                       
-                       FIX: We use an opaque fill here, but that won't match the parent's alpha.
-                       
-                       BETTER FIX implemented below: 
-                       The parent (Unified Layer above) should be TRANSPARENT background.
-                       It should contain TWO children: Rect and Wave.
-                       Both children are OPAQUE.
-                       The PARENT has opacity 0.8.
-                    */}
-                </div>
-            </div>
+        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? "py-2" : "py-3"}`}>
+            {/* Background with enhanced glassmorphism */}
+            <div className={`absolute inset-0 z-[-1] transition-all duration-500 ${isScrolled ? "shadow-xl" : ""}`}>
+                <div className="w-full h-full relative">
+                    {/* Main Header Background - SOLID CREAM */}
+                    <div
+                        className={`absolute inset-0 transition-all duration-500 backdrop-blur-md ${isScrolled
+                                ? "bg-[#FDF7F0]"
+                                : "bg-[#FDF7F0]"
+                            }`}
+                    />
 
-            {/* REAL IMPLEMENTATION RE-WRITE BELOW TO MATCH THE LOGIC DESCRIBED */}
-
-            <div className={`absolute inset-0 z-[-1] transition-all duration-500 ${isScrolled ? "shadow-lg" : ""}`}>
-                {/* Opacity Wrapper */}
-                <div className={`w-full h-full relative transition-all duration-500 opacity-100`}>
-
-                    {/* Main Header Rect - OPAQUE */}
-                    <div className={`absolute inset-0 bg-cream-100`} />
-
-                    {/* Wave - OPAQUE */}
-                    <div className={`absolute bottom-0 left-0 w-full translate-y-[98%] transition-opacity duration-500 opacity-100`}>
+                    {/* Wave decoration */}
+                    <div className={`absolute bottom-0 left-0 w-full translate-y-[98%] transition-all duration-500 ${isScrolled ? "opacity-0 scale-y-0" : "opacity-100 scale-y-100"}`}>
                         <svg
-                            className="w-full h-12 sm:h-16 md:h-20"
+                            className="w-full h-10 sm:h-14 md:h-16"
                             viewBox="0 0 1440 100"
                             preserveAspectRatio="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +62,7 @@ export default function Header() {
                             <defs>
                                 <linearGradient id="headerWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stopColor="#C80040" />
+                                    <stop offset="50%" stopColor="#E91E63" />
                                     <stop offset="100%" stopColor="#F54D75" />
                                 </linearGradient>
                             </defs>
@@ -106,30 +71,27 @@ export default function Header() {
                                 className="transition-colors duration-500"
                                 d="M0,0 L0,50 Q360,100 720,50 T1440,50 L1440,0 L0,0 Z"
                             />
-                            {/* Raspberry Red Border - Bottom Only */}
                             <path
                                 fill="none"
                                 stroke="url(#headerWaveGradient)"
-                                strokeWidth="10"
+                                strokeWidth="8"
                                 d="M0,50 Q360,100 720,50 T1440,50"
                             />
                         </svg>
                     </div>
                 </div>
-
-                {/* Separate Blur Layer (optional, hard to mask perfectly, applying to rect only for now or global if possible) 
-                    If we want blur on the wave, it's complex. Let's stick to the color block first.
-                */}
-                <div className="absolute inset-0 backdrop-blur-sm -z-20 pointer-events-none" />
             </div>
+
             <div className="container-custom">
-                <nav className="flex items-center justify-between lg:justify-center gap-4 lg:gap-16">
-                    {/* Logo + Nom */}
+                <nav className="flex items-center justify-between lg:justify-center gap-4 lg:gap-8">
+                    {/* Logo with enhanced shadow */}
                     <Link href="/" className="group flex items-center gap-3">
                         <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            className="relative flex-shrink-0 overflow-hidden rounded-full shadow-md transition-all duration-500"
-                            style={{ width: isScrolled ? 55 : 70, height: isScrolled ? 55 : 70 }}
+                            whileHover={{ scale: 1.08, rotate: 2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={`relative flex-shrink-0 overflow-hidden rounded-full transition-all duration-500 shadow-lg ring-2 ring-white/50 dark:ring-charcoal-700/50 ${isScrolled ? "shadow-md" : "shadow-xl"
+                                }`}
+                            style={{ width: isScrolled ? 50 : 60, height: isScrolled ? 50 : 60 }}
                         >
                             <Image
                                 src="/images/logo.png"
@@ -137,99 +99,170 @@ export default function Header() {
                                 fill
                                 className="object-cover object-center transition-all duration-300"
                                 priority
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                sizes="60px"
                             />
                         </motion.div>
                     </Link>
 
-                    {/* Navigation Desktop */}
-                    <div className="hidden lg:flex items-center gap-6">
-                        {NAV_LINKS.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="relative text-charcoal-700 dark:text-cream-100 hover:text-terracotta-500 dark:hover:text-terracotta-400 font-medium transition-colors duration-300 group text-sm whitespace-nowrap"
-                            >
-                                {link.label}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-terracotta-500 dark:bg-terracotta-400 transition-all duration-300 group-hover:w-full rounded-full" />
-                            </Link>
-                        ))}
+                    {/* Desktop Navigation - Modern pill style */}
+                    <div className="hidden lg:flex items-center gap-1">
+                        {NAV_LINKS.map((link) => {
+                            const isActive = isActiveLink(link.href);
+                            return (
+                                <Link key={link.href} href={link.href} className="relative group">
+                                    <motion.div
+                                        className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive
+                                            ? "text-terracotta-600"
+                                            : "text-charcoal-700 hover:text-charcoal-900"
+                                            }`}
+                                        whileHover={{ y: -2 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        {/* Hover/Active background - pill style */}
+                                        <span
+                                            className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
+                                                ? "bg-terracotta-100/80"
+                                                : "bg-transparent group-hover:bg-cream-200/80"
+                                                }`}
+                                        />
 
-                        <Link href="/contact">
+                                        {/* Link text */}
+                                        <span className="relative z-10 whitespace-nowrap">
+                                            {link.label}
+                                        </span>
+
+                                        {/* Active indicator dot */}
+                                        {isActive && (
+                                            <motion.span
+                                                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                            />
+                                        )}
+                                    </motion.div>
+                                </Link>
+                            );
+                        })}
+
+                        {/* CTA Button - Enhanced with gradient and animation */}
+                        <Link href="/contact" className="ml-3">
                             <motion.button
-                                whileHover={{ scale: 1.05, boxShadow: '0 4px 20px rgba(193, 119, 103, 0.3)' }}
-                                whileTap={{ scale: 0.98 }}
-                                className="btn-primary text-sm px-5 py-2.5 whitespace-nowrap"
+                                whileHover={{
+                                    scale: 1.05,
+                                    boxShadow: '0 8px 30px rgba(200, 0, 64, 0.35)'
+                                }}
+                                whileTap={{ scale: 0.95 }}
+                                className="relative overflow-hidden px-6 py-2.5 rounded-full text-sm font-semibold text-white shadow-lg transition-all duration-300"
+                                style={{
+                                    background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)',
+                                }}
                             >
-                                Nous rencontrer
+                                {/* Animated shine effect */}
+                                <motion.span
+                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
+                                    initial={{ x: "-100%" }}
+                                    animate={{ x: "200%" }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        repeatDelay: 3,
+                                        ease: "easeInOut"
+                                    }}
+                                />
+                                <span className="relative z-10">Nous rencontrer</span>
                             </motion.button>
                         </Link>
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white/50 rounded-full"
+                    {/* Mobile Menu Button - Enhanced */}
+                    <motion.button
+                        className={`lg:hidden relative w-12 h-12 flex flex-col items-center justify-center gap-1.5 rounded-full transition-all duration-300 ${isMobileMenuOpen
+                            ? "bg-terracotta-500 shadow-lg"
+                            : "bg-white/80 dark:bg-charcoal-800/80 shadow-md hover:shadow-lg"
+                            }`}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         aria-label="Menu"
                     >
                         <motion.span
                             animate={{
                                 rotate: isMobileMenuOpen ? 45 : 0,
-                                y: isMobileMenuOpen ? 8 : 0,
+                                y: isMobileMenuOpen ? 7 : 0,
+                                backgroundColor: isMobileMenuOpen ? "#ffffff" : "#1a1a1a",
                             }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
+                            className="w-5 h-0.5 rounded-full origin-center"
                         />
                         <motion.span
-                            animate={{ opacity: isMobileMenuOpen ? 0 : 1 }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full"
+                            animate={{
+                                opacity: isMobileMenuOpen ? 0 : 1,
+                                scaleX: isMobileMenuOpen ? 0 : 1,
+                            }}
+                            className="w-5 h-0.5 bg-charcoal-900 dark:bg-cream-100 rounded-full"
                         />
                         <motion.span
                             animate={{
                                 rotate: isMobileMenuOpen ? -45 : 0,
-                                y: isMobileMenuOpen ? -8 : 0,
+                                y: isMobileMenuOpen ? -7 : 0,
+                                backgroundColor: isMobileMenuOpen ? "#ffffff" : "#1a1a1a",
                             }}
-                            className="w-5 h-0.5 bg-charcoal-900 rounded-full origin-center"
+                            className="w-5 h-0.5 rounded-full origin-center"
                         />
-                    </button>
+                    </motion.button>
                 </nav>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu - Enhanced */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="lg:hidden bg-white/95 backdrop-blur-md border-t border-cream-200 mt-2 overflow-hidden"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="lg:hidden absolute top-full left-0 right-0 bg-white/98 dark:bg-charcoal-900/98 backdrop-blur-xl shadow-2xl border-t border-cream-200/50 dark:border-charcoal-700/50"
                     >
-                        <div className="container-custom py-6 flex flex-col gap-3">
-                            {NAV_LINKS.map((link, index) => (
-                                <motion.div
-                                    key={link.href}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.08 }}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="block py-3 px-4 text-lg font-medium text-charcoal-700 hover:text-terracotta-500 hover:bg-cream-100 rounded-xl transition-all"
+                        <div className="container-custom py-6 flex flex-col gap-2">
+                            {NAV_LINKS.map((link, index) => {
+                                const isActive = isActiveLink(link.href);
+                                return (
+                                    <motion.div
+                                        key={link.href}
+                                        initial={{ opacity: 0, x: -30 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.05, duration: 0.3 }}
                                     >
-                                        {link.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
+                                        <Link
+                                            href={link.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`flex items-center gap-3 py-3.5 px-5 text-lg font-medium rounded-xl transition-all duration-300 ${isActive
+                                                ? "bg-terracotta-100 dark:bg-terracotta-900/30 text-terracotta-600 dark:text-terracotta-400"
+                                                : "text-charcoal-700 dark:text-cream-100 hover:bg-cream-100 dark:hover:bg-charcoal-800"
+                                                }`}
+                                        >
+                                            {isActive && (
+                                                <span className="w-2 h-2 bg-terracotta-500 rounded-full" />
+                                            )}
+                                            {link.label}
+                                        </Link>
+                                    </motion.div>
+                                );
+                            })}
 
                             <motion.div
-                                initial={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0, x: -30 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: (NAV_LINKS.length + 1) * 0.08 }}
-                                className="pt-2"
+                                transition={{ delay: (NAV_LINKS.length) * 0.05 + 0.1, duration: 0.3 }}
+                                className="pt-4 mt-2 border-t border-cream-200/50 dark:border-charcoal-700/50"
                             >
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <button className="btn-primary w-full text-lg py-4">
+                                    <button
+                                        className="w-full py-4 rounded-xl text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+                                        style={{
+                                            background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)',
+                                        }}
+                                    >
                                         Nous rencontrer
                                     </button>
                                 </Link>

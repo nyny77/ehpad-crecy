@@ -265,9 +265,10 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     ease: "easeInOut"
                                                 }}
                                                 className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "news"
-                                                    ? "bg-terracotta-500 text-white shadow-md relative z-10"
+                                                    ? "text-white shadow-md relative z-10"
                                                     : "!text-charcoal-800 hover:bg-cream-50"
                                                     }`}
+                                                style={activeTab === "news" ? { background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' } : {}}
                                             >
                                                 Blog
                                             </motion.button>
@@ -280,15 +281,32 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     ease: "easeInOut"
                                                 }}
                                                 className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "gallery"
-                                                    ? "bg-terracotta-500 text-white shadow-md relative z-10"
+                                                    ? "text-white shadow-md relative z-10"
                                                     : "!text-charcoal-800 hover:bg-cream-50"
                                                     }`}
+                                                style={activeTab === "gallery" ? { background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' } : {}}
                                             >
                                                 Galerie Privée 🔒
                                             </motion.button>
                                         </div>
 
                                         <div className="flex items-center gap-3">
+                                            {/* Bouton Gazette visible pour TOUS les utilisateurs authentifiés */}
+                                            {gazetteData?.file && (
+                                                <a
+                                                    href={gazetteData.file}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-2 px-4 py-2.5 !text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl text-sm"
+                                                    style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
+                                                    title="Lire le Petit Echo du Coeur"
+                                                >
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                    </svg>
+                                                    Le Petit Echo du Coeur 📰
+                                                </a>
+                                            )}
                                             {adminMode && (
                                                 <>
                                                     <a
@@ -305,7 +323,8 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                                     </a>
                                                     <button
                                                         onClick={handleNotify}
-                                                        className="flex items-center gap-2 px-3 py-2 bg-terracotta-500 !text-white font-medium rounded-full hover:bg-terracotta-600 transition-colors text-sm cursor-pointer"
+                                                        className="flex items-center gap-2 px-3 py-2 !text-white font-medium rounded-full transition-colors text-sm cursor-pointer"
+                                                        style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
                                                         title="Envoyer un email aux familles"
                                                     >
                                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -385,7 +404,8 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                         {/* Bouton */}
                                         <motion.button
                                             onClick={() => setShowAuthChoice(true)}
-                                            className="w-full px-8 py-4 bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold rounded-2xl shadow-lg cursor-pointer transition-colors"
+                                            className="w-full px-8 py-4 text-white font-bold rounded-2xl shadow-lg cursor-pointer transition-colors"
+                                            style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
