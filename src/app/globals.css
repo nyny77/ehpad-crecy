@@ -75,6 +75,20 @@ html.dark-mode {
 /* ===== STYLES DE BASE ===== */
 html {
   scroll-behavior: smooth;
+  /* Default base size is typically 16px */
+}
+
+/* Laptop Optimization: "Zoom out" the UI slightly */
+@media (max-width: 1536px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1280px) {
+  html {
+    font-size: 14px;
+  }
 }
 
 body {
@@ -140,8 +154,15 @@ input[type="reset"],
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  justify-content: center;
   padding: 1rem 2.5rem;
   /* Slightly wider */
+
+  /* Laptop adjustment */
+  @media (max-width: 1536px) {
+    padding: 0.875rem 2rem;
+  }
+
   background: linear-gradient(135deg, var(--color-terracotta) 0%, var(--color-terracotta-light) 100%);
   color: white;
   font-weight: 600;
@@ -236,6 +257,13 @@ input[type="reset"],
 @media (min-width: 768px) {
   .section-padding {
     padding: 7rem 0;
+  }
+}
+
+/* Reduce vertical spacing specifically for laptops */
+@media (min-width: 768px) and (max-width: 1536px) {
+  .section-padding {
+    padding: 5rem 0;
   }
 }
 
