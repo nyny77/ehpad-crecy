@@ -148,30 +148,23 @@ export default function PageHeader({
                 style={{
                     rotateX,
                     rotateY,
-                    opacity
                 }}
                 className="relative z-10 container-custom text-center px-4 pt-32 lg:pt-28 2xl:pt-48 mt-8 lg:mt-0"
             >
                 {/* Container avec bordure gradient animée */}
                 <div className="relative inline-block group">
-                    {/* Bordure gradient animée */}
-                    <motion.div
-                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 rounded-3xl opacity-80 blur-md animate-gradient-x"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.8 }}
-                        transition={{ delay: 0.5, duration: 1 }}
-                    />
+
 
                     {/* Container Glassmorphism premium */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 30 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.215, 0.61, 0.355, 1] }}
-                        className="relative bg-white/50 backdrop-blur-xl border border-white/50 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
+                        className="relative bg-white/15 backdrop-blur-sm border border-white/20 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
                     >
                         {/* Effet de brillance interne */}
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
                         {/* Badge/Subtitle avec effet shine */}
                         {subtitle && (

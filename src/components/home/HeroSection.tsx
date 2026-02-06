@@ -51,7 +51,6 @@ export default function HeroSection() {
                 style={{
                     rotateX,
                     rotateY,
-                    opacity
                 }}
                 className="relative z-10 container-custom px-4 pt-20"
             >
@@ -78,20 +77,14 @@ export default function HeroSection() {
                         className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-400/40 rounded-full blur-[80px]"
                     />
 
-                    {/* Bordure gradient animée */}
-                    <motion.div
-                        className="absolute -inset-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 rounded-[2.5rem] opacity-80 blur-md animate-gradient-x"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.8 }}
-                        transition={{ delay: 0.5, duration: 1 }}
-                    />
+
 
                     {/* The Card Itself */}
-                    <div className="hero-glass-card relative bg-white/50 backdrop-blur-xl border border-white/50 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
+                    <div className="hero-glass-card relative bg-white/15 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
 
                         {/* Effet de brillance interne */}
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
                         {/* Shimmer effect on hover */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
