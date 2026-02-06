@@ -1,7 +1,7 @@
 "use client";
 
 import ServiceCard from "./ServiceCard";
-import { SERVICES } from "@/lib/constants";
+import { SERVICES_EXTENDED as SERVICES } from "@/lib/services-data";
 
 export default function BentoGrid() {
     // Configuration "Tetris" optimisée pour 16 tuiles
@@ -37,7 +37,7 @@ export default function BentoGrid() {
                     id={service.id}
                     title={service.title}
                     subtitle={service.subtitle}
-                    description={service.description}
+                    description={service.shortDescription}
                     image={service.image}
                     index={index}
                     size={getSize(index)}

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
+import TiltCard from "@/components/ui/TiltCard";
 
 const CATEGORIES = [
     { id: "all", label: "Tout voir" },
@@ -17,33 +18,8 @@ const CATEGORIES = [
     { id: "history", label: "Histoire" },
 ];
 
-// Individual gallery image with 3D tilt
+// Individual gallery image with 3D tilt using shared component
 function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => void }) {
-    const cardRef = useRef<HTMLDivElement>(null);
-
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-    };
-
     return (
         <motion.div
             layout
@@ -51,16 +27,9 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
         >
-            <div
-                ref={cardRef}
-                style={{ perspective: "1000px" }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                onClick={onClick}
-                className="cursor-pointer"
-            >
-                <motion.div
-                    style={{ rotateX, rotateY }}
+            <TiltCard className="cursor-pointer" interactive={true}>
+                <div
+                    onClick={onClick}
                     className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
                 >
                     <Image
@@ -75,8 +44,8 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                         <h3 className="text-white font-serif font-bold text-xl mb-1 drop-shadow-lg">{img.title}</h3>
                         <span className="text-white/90 text-sm capitalize font-medium tracking-wide drop-shadow-md">{img.category}</span>
                     </div>
-                </motion.div>
-            </div>
+                </div>
+            </TiltCard>
         </motion.div>
     );
 }

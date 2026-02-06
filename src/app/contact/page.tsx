@@ -128,7 +128,7 @@ export default function ContactPage() {
                             <div className="mt-8">
                                 <div className="relative h-48 bg-cream-200 rounded-2xl overflow-hidden">
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.2!2d2.9!3d48.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDA4JzEyLjAiTiAywrA1NCcxOC4wIkU!5e0!3m2!1sfr!2sfr!4v1234567890"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.5!2d2.9137!3d48.8575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61287a1c1be67%3A0x9c95b4a3b0e6a7d!2s18%20Rue%20de%20la%20Chapelle%2C%2077580%20Cr%C3%A9cy-la-Chapelle!5e0!3m2!1sfr!2sfr!4v1707239400000"
                                         width="100%"
                                         height="100%"
                                         style={{ border: 0 }}

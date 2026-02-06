@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
@@ -46,8 +47,6 @@ export const metadata: Metadata = {
   },
 };
 
-
-import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 
 export default function RootLayout({
   children,
