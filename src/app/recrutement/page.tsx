@@ -362,7 +362,7 @@ export default function RecrutementPage() {
             )}
 
             {/* Pourquoi nous rejoindre - Section Avantages */}
-            <section className="py-24 bg-cream-50">
+            <section className="py-24 bg-cream-100">
                 <div className="container-custom">
                     <div className="text-center mb-16">
                         <span className="text-forest-500 font-bold uppercase tracking-wider text-sm">Vos avantages</span>
@@ -421,7 +421,7 @@ export default function RecrutementPage() {
             </section>
 
             {/* Candidature spontanée */}
-            <section className="py-20 bg-cream-200/50">
+            <section className="py-20 bg-cream-100">
                 <div className="container-custom text-center max-w-2xl mx-auto">
                     <h2 className="text-3xl font-serif text-charcoal-900 mb-6">{SPONTANEOUS_APPLICATION.title}</h2>
                     <p className="text-charcoal-700 mb-10 whitespace-pre-line text-lg leading-relaxed">

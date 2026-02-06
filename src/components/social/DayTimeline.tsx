@@ -83,7 +83,7 @@ export default function DayTimeline() {
     });
 
     return (
-        <section className="section-padding bg-cream-50 relative overflow-hidden" ref={containerRef}>
+        <section className="section-padding bg-cream-100 relative overflow-hidden" ref={containerRef}>
             {/* Éléments décoratifs de fond animés (Breathing Effect) */}
             <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}

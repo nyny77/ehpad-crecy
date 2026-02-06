@@ -6,7 +6,7 @@ import PanoramaViewer from "@/components/virtual-tour/PanoramaViewer";
 
 export default function VisitePage() {
     return (
-        <main className="min-h-screen bg-cream-50">
+        <main className="min-h-screen bg-cream-100">
             <PageHeader
                 title="Visite Virtuelle"
                 subtitle="Découvrez notre établissement comme si vous y étiez"

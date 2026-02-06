@@ -180,7 +180,7 @@ export default function ContactPage() {
             </section>
 
             {/* FAQ rapide */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-cream-100">
                 <div className="container-custom">
                     <div className="text-center mb-12">
                         <span className="text-forest-500 font-medium">FAQ</span>

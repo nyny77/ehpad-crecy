@@ -245,7 +245,7 @@ export default function PageHeader({
 
             {/* Vague de séparation */}
             <div className="absolute bottom-0 left-0 w-full z-20">
-                <WaveSeparator position="bottom" className="text-cream-50" />
+                <WaveSeparator position="bottom" className="text-cream-100" />
             </div>
         </section>
     );

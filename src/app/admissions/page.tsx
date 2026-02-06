@@ -20,7 +20,7 @@ export default function AdmissionsPage() {
             />
 
             {/* Timeline Section */}
-            <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+            <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
                 <div className="container-custom relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mb-4">
@@ -91,7 +91,7 @@ export default function AdmissionsPage() {
             </section>
 
             {/* Downloads Section */}
-            <section className="py-16 bg-cream-50">
+            <section className="py-16 bg-cream-100">
                 <div className="container-custom">
                     <div className="bg-terracotta-500 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
@@ -132,7 +132,7 @@ export default function AdmissionsPage() {
             </section>
 
             {/* Financial Aid Section */}
-            <section className="py-16 md:py-24 bg-white">
+            <section className="py-16 md:py-24 bg-cream-100">
                 <div className="container-custom">
                     <div className="text-center mb-16">
                         <span className="text-forest-500 font-medium">Budget & Financement</span>

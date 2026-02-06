@@ -26,7 +26,7 @@ export default function EquipePage() {
             </section>
 
             {/* Section recrutement */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-cream-100">
                 <div className="container-custom">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}

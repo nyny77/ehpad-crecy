@@ -84,7 +84,7 @@ export default function HebergementPage() {
             />
 
             {/* Section Chambres */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-cream-100">
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Images */}
@@ -188,7 +188,7 @@ export default function HebergementPage() {
             </section>
 
             {/* CTA */}
-            <section className="section-padding bg-white">
+            <section className="section-padding bg-cream-100">
                 <div className="container-custom">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}

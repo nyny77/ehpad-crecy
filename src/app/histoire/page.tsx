@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export default function HistoirePage() {
     return (
-        <main className="min-h-screen bg-cream-50">
+        <main className="min-h-screen bg-cream-100">
             <PageHeader
                 title="Histoire de Crécy-la-Chapelle"
                 subtitle="Découvrez la Venise Briarde, votre future ville"
