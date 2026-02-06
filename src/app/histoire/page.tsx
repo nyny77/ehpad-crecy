@@ -18,18 +18,44 @@ export default function HistoirePage() {
             <Section className="py-16 md:py-24">
                 <div className="max-w-4xl mx-auto space-y-16">
                     {/* Introduction */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="prose prose-lg prose-stone mx-auto text-center"
-                    >
-                        <p className="lead text-xl md:text-2xl text-charcoal-700 italic">
-                            "Vous allez bientôt poser vos valises à Crécy-la-Chapelle pour entamer une nouvelle étape de votre vie..."
-                        </p>
-                        <p className="text-charcoal-600">
-                            Nous avons préparé ce petit reportage pour vous emmener faire un premier tour de ce lieu charmant qui vous attend. Oubliez le tumulte des grandes villes, ici, vous arrivez dans un havre de paix, chargé d'histoire et bercé par l'eau. Laissez-vous guider dans les rues de celle que l'on surnomme "La Venise de la Brie".
-                        </p>
-                    </motion.div>
+                    {/* Introduction - Style Editorial "Lettre Ouverte" */}
+                    <div className="relative py-10">
+                        {/* Fond lumineux subtil */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-radial from-terracotta-100/50 via-cream-100/30 to-transparent blur-3xl -z-10" />
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center relative z-10"
+                        >
+                            {/* Grande guillemet décorative */}
+                            <div className="text-8xl leading-none text-terracotta-200 font-serif absolute -top-12 left-0 right-0 mx-auto select-none pointer-events-none opacity-50">
+                                &ldquo;
+                            </div>
+
+                            <h2 className="relative font-serif text-3xl md:text-5xl text-charcoal-800 leading-tight mb-8 drop-shadow-sm px-4">
+                                <span className="block text-terracotta-600 italic mb-2">Vous allez bientôt poser vos valises...</span>
+                                <span className="text-charcoal-900">pour entamer une nouvelle étape de votre vie.</span>
+                            </h2>
+
+                            {/* Séparateur élégant */}
+                            <div className="flex items-center justify-center gap-4 mb-8 opacity-60">
+                                <div className="h-px w-12 bg-terracotta-400" />
+                                <div className="w-2 h-2 rounded-full bg-terracotta-500" />
+                                <div className="h-px w-12 bg-terracotta-400" />
+                            </div>
+
+                            <div className="prose prose-lg prose-stone mx-auto">
+                                <p className="text-xl text-charcoal-600 leading-relaxed font-medium">
+                                    Nous avons préparé ce petit reportage pour vous emmener faire un premier tour de ce lieu charmant qui vous attend.
+                                </p>
+                                <p className="text-charcoal-500 italic mt-4">
+                                    Oubliez le tumulte des grandes villes... Ici, vous arrivez dans un <strong>havre de paix</strong>, chargé d'histoire et bercé par l'eau.
+                                </p>
+                            </div>
+                        </motion.div>
+                    </div>
 
                     {/* 1. L'Eau */}
                     <div className="grid md:grid-cols-2 gap-12 items-center">

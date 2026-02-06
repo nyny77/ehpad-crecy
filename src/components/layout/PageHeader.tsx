@@ -111,15 +111,15 @@ export default function PageHeader({
     });
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-    // --- Automatic Floating Logic ---
-    const time = useTime();
+    // Fade out effect on scroll (quick fade at start)
+    const contentOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+    const contentY = useTransform(scrollYProgress, [0, 0.25], [0, -30]);
 
-    // Automatic gentle floating animation
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
+    const time = useTime();
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5);
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5);
 
     return (
         <section
@@ -127,7 +127,7 @@ export default function PageHeader({
             className="page-header-section relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50"
             style={{ perspective: "1000px" }}
         >
-            {/* Image de fond avec parallax amélioré */}
+            {/* Image de fond avec parallax */}
             <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
                 <Image
                     src={image}
@@ -136,45 +136,38 @@ export default function PageHeader({
                     className="object-cover object-center"
                     priority
                 />
-                {/* Overlay équilibré (30%) */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
             </motion.div>
 
             {/* Particules décoratives */}
             <FloatingParticles />
 
-            {/* Contenu avec effet 3D tilt */}
+            {/* Contenu avec effet 3D tilt + fade on scroll */}
             <motion.div
-                style={{
-                    rotateX,
-                    rotateY,
-                }}
+                style={{ rotateX, rotateY, opacity: contentOpacity, y: contentY }}
                 className="relative z-10 container-custom text-center px-4 pt-32 lg:pt-28 2xl:pt-48 mt-8 lg:mt-0"
             >
-                {/* Container avec bordure gradient animée */}
                 <div className="relative inline-block group">
-
-
-                    {/* Container Glassmorphism premium */}
+                    {/* Container Glassmorphism lumineux */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 30 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.215, 0.61, 0.355, 1] }}
-                        className="relative bg-white/15 backdrop-blur-sm border border-white/20 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
+                        className="relative bg-white/40 backdrop-blur-md border border-white/50 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
                     >
-                        {/* Effet de brillance interne */}
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-terracotta-200/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+                        {/* Lueurs chaudes internes */}
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-terracotta-200/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-forest-200/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
-                        {/* Badge/Subtitle avec effet shine */}
+                        {/* Badge/Subtitle */}
                         {subtitle && (
                             <motion.div
                                 initial={{ opacity: 0, y: 15, scale: 0.9 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 transition={{ duration: 0.7, delay: 0.3 }}
-                                className="inline-block mb-5 relative"
+                                className="inline-block mb-5"
                             >
-                                <span className="relative inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-500 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50">
+                                <span className="inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-600 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50">
                                     <motion.span
                                         className="w-2 h-2 rounded-full bg-terracotta-500"
                                         animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
@@ -190,12 +183,12 @@ export default function PageHeader({
                             </motion.div>
                         )}
 
-                        {/* Titre principal animé lettre par lettre */}
-                        <h1 className="font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold text-charcoal-900 mx-auto leading-tight mb-6 drop-shadow-sm">
+                        {/* Titre principal */}
+                        <h1 className="font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold text-charcoal-900 mx-auto leading-tight mb-6" style={{ textShadow: '0 2px 10px rgba(255,255,255,0.8)' }}>
                             <AnimatedTitle>{title}</AnimatedTitle>
                         </h1>
 
-                        {/* Ligne décorative animée */}
+                        {/* Ligne décorative */}
                         <motion.div
                             initial={{ scaleX: 0 }}
                             animate={{ scaleX: 1 }}
@@ -203,7 +196,7 @@ export default function PageHeader({
                             className="w-24 h-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 mx-auto rounded-full mb-6"
                         />
 
-                        {/* Description avec animation */}
+                        {/* Description */}
                         {description && (
                             <motion.div
                                 initial={{ opacity: 0, y: 15 }}
@@ -217,7 +210,7 @@ export default function PageHeader({
                     </motion.div>
                 </div>
 
-                {/* Children / Extra content */}
+                {/* Children */}
                 {children && (
                     <motion.div
                         initial={{ opacity: 0, y: 25 }}
@@ -230,7 +223,7 @@ export default function PageHeader({
                 )}
             </motion.div>
 
-            {/* Indicateur de scroll animé */}
+            {/* Indicateur de scroll */}
             <motion.div
                 className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30"
                 initial={{ opacity: 0, y: -10 }}
@@ -238,18 +231,19 @@ export default function PageHeader({
                 transition={{ delay: 1.5, duration: 0.6 }}
             >
                 <motion.div
-                    className="w-8 h-12 rounded-full border-2 border-white/60 flex items-start justify-center p-2"
+                    className="w-8 h-12 rounded-full border-2 border-terracotta-300/50 flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm"
                     animate={{ y: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
                     <motion.div
-                        className="w-1.5 h-3 bg-white/80 rounded-full"
+                        className="w-1.5 h-3 bg-terracotta-500 rounded-full"
                         animate={{ y: [0, 8, 0], opacity: [1, 0.5, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                     />
                 </motion.div>
             </motion.div>
-            {/* Separator Wave at the bottom - Global Style */}
+
+            {/* Vague de séparation */}
             <div className="absolute bottom-0 left-0 w-full z-20">
                 <WaveSeparator position="bottom" className="text-cream-50" />
             </div>

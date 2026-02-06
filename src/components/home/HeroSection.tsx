@@ -15,15 +15,17 @@ export default function HeroSection() {
     });
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+    // Fade out effect on scroll (quick fade at start)
+    const contentOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+    const contentY = useTransform(scrollYProgress, [0, 0.25], [0, -30]);
 
     // --- Automatic Floating Logic ---
     const time = useTime();
 
     // Create a gentle floating motion using sine/cosine waves
-    // Increased amplitude and speed for better visibility as requested
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees (was 2)
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees (was 2)
+    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5);
+    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5);
 
     const sloganWords = EHPAD_INFO.slogan.split(" ");
 
@@ -46,11 +48,13 @@ export default function HeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
             </motion.div>
 
-            {/* Main Content Container with Tilt */}
+            {/* Main Content Container with Tilt + Fade on scroll */}
             <motion.div
                 style={{
                     rotateX,
                     rotateY,
+                    opacity: contentOpacity,
+                    y: contentY,
                 }}
                 className="relative z-10 container-custom px-4 pt-20"
             >
