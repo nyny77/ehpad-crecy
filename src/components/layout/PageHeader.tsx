@@ -124,7 +124,7 @@ export default function PageHeader({
     return (
         <section
             ref={containerRef}
-            className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-cream-50"
+            className="page-header-section relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50"
             style={{ perspective: "1000px" }}
         >
             {/* Image de fond avec parallax amélioré */}
@@ -150,7 +150,7 @@ export default function PageHeader({
                     rotateY,
                     opacity
                 }}
-                className="relative z-10 container-custom text-center px-4 pt-48 mt-12"
+                className="relative z-10 container-custom text-center px-4 pt-32 lg:pt-28 2xl:pt-48 mt-8 lg:mt-0"
             >
                 {/* Container avec bordure gradient animée */}
                 <div className="relative inline-block group">
@@ -167,7 +167,7 @@ export default function PageHeader({
                         initial={{ opacity: 0, scale: 0.9, y: 30 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.215, 0.61, 0.355, 1] }}
-                        className="relative bg-white/50 backdrop-blur-xl border border-white/50 rounded-3xl p-8 md:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
+                        className="relative bg-white/50 backdrop-blur-xl border border-white/50 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
                     >
                         {/* Effet de brillance interne */}
                         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -198,7 +198,7 @@ export default function PageHeader({
                         )}
 
                         {/* Titre principal animé lettre par lettre */}
-                        <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-charcoal-900 mx-auto leading-tight mb-6 drop-shadow-sm">
+                        <h1 className="font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold text-charcoal-900 mx-auto leading-tight mb-6 drop-shadow-sm">
                             <AnimatedTitle>{title}</AnimatedTitle>
                         </h1>
 

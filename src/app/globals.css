@@ -267,6 +267,8 @@ input[type="reset"],
   }
 }
 
+/* Page Header Optimization handled directly in PageHeader.tsx via Tailwind classes */
+
 /* Glassmorphism Refined */
 .glass {
   background: rgba(253, 247, 240, 0.85);
