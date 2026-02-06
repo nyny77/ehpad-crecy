@@ -20,6 +20,12 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                     preserveAspectRatio="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
+                    <defs>
+                        <linearGradient id="waveSeparatorGradientTop" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#C80040" />
+                            <stop offset="100%" stopColor="#F54D75" />
+                        </linearGradient>
+                    </defs>
                     <path
                         fill="currentColor"
                         d="M0,100 L0,50 Q360,0 720,50 T1440,50 L1440,100 Z"
@@ -28,8 +34,8 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                     {showBorder && (
                         <path
                             fill="none"
-                            stroke="#C80040"
-                            strokeWidth="4"
+                            stroke="url(#waveSeparatorGradientTop)"
+                            strokeWidth="10"
                             d="M0,50 Q360,0 720,50 T1440,50"
                         />
                     )}
@@ -47,6 +53,12 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
+                <defs>
+                    <linearGradient id="waveSeparatorGradientBottom" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#C80040" />
+                        <stop offset="100%" stopColor="#F54D75" />
+                    </linearGradient>
+                </defs>
                 <path
                     fill="currentColor"
                     d="M0,0 Q360,100 720,50 T1440,50 L1440,100 L0,100 Z"
@@ -55,8 +67,8 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                 {showBorder && (
                     <path
                         fill="none"
-                        stroke="#C80040"
-                        strokeWidth="4"
+                        stroke="url(#waveSeparatorGradientBottom)"
+                        strokeWidth="10"
                         d="M0,0 Q360,100 720,50 T1440,50"
                     />
                 )}

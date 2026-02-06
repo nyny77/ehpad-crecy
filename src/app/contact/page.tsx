@@ -113,12 +113,12 @@ export default function ContactPage() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-charcoal-900 mb-1">Horaires de visite</h3>
+                                        <h3 className="font-semibold text-charcoal-900 mb-1">Accueil Administratif</h3>
                                         <p className="text-charcoal-600">
-                                            Tous les jours : {EHPAD_INFO.visitingHours.weekdays}
+                                            {EHPAD_INFO.officeHours.main}
                                         </p>
-                                        <p className="text-sm text-charcoal-500 mt-1">
-                                            {EHPAD_INFO.visitingHours.note}
+                                        <p className="text-terracotta-500 font-medium mt-1">
+                                            {EHPAD_INFO.officeHours.thursday}
                                         </p>
                                     </div>
                                 </div>

@@ -39,7 +39,7 @@ export default function Header() {
         >
             {/* Unified Background Layer */}
             <div
-                className={`absolute inset-0 z-[-1] transition-all duration-500 backdrop-blur-md shadow-sm ${isScrolled ? "bg-white/95 shadow-lg" : "bg-cream-100/80"
+                className={`absolute inset-0 z-[-1] transition-all duration-500 backdrop-blur-md shadow-sm ${isScrolled ? "bg-cream-100/95 shadow-lg" : "bg-cream-100/80"
                     }`}
                 style={{
                     // This creates the "single block" effect by extending the background area
@@ -85,7 +85,7 @@ export default function Header() {
                 <div className={`w-full h-full relative transition-all duration-500 opacity-100`}>
 
                     {/* Main Header Rect - OPAQUE */}
-                    <div className={`absolute inset-0 ${isScrolled ? "bg-white" : "bg-cream-100"}`} />
+                    <div className={`absolute inset-0 bg-cream-100`} />
 
                     {/* Wave - OPAQUE */}
                     <div className={`absolute bottom-0 left-0 w-full translate-y-[98%] transition-opacity duration-500 opacity-100`}>
@@ -95,16 +95,22 @@ export default function Header() {
                             preserveAspectRatio="none"
                             xmlns="http://www.w3.org/2000/svg"
                         >
+                            <defs>
+                                <linearGradient id="headerWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#C80040" />
+                                    <stop offset="100%" stopColor="#F54D75" />
+                                </linearGradient>
+                            </defs>
                             <path
-                                style={{ fill: isDarkMode ? "#252529" : (isScrolled ? "#FFFFFF" : "#FDF7F0") }}
+                                style={{ fill: isDarkMode ? "#252529" : "#FDF7F0" }}
                                 className="transition-colors duration-500"
                                 d="M0,0 L0,50 Q360,100 720,50 T1440,50 L1440,0 L0,0 Z"
                             />
                             {/* Raspberry Red Border - Bottom Only */}
                             <path
                                 fill="none"
-                                stroke="#C80040"
-                                strokeWidth="4"
+                                stroke="url(#headerWaveGradient)"
+                                strokeWidth="10"
                                 d="M0,50 Q360,100 720,50 T1440,50"
                             />
                         </svg>

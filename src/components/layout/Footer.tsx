@@ -114,7 +114,10 @@ export default function Footer() {
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
-                                <span>{EHPAD_INFO.visitingHours.weekdays}</span>
+                                <div className="flex flex-col">
+                                    <span>{EHPAD_INFO.officeHours.main}</span>
+                                    <span className="text-terracotta-400 font-medium">{EHPAD_INFO.officeHours.thursday}</span>
+                                </div>
                             </li>
                         </ul>
                     </div>

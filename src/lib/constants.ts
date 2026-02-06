@@ -60,11 +60,10 @@ export const EHPAD_INFO = {
         lastUpdate: "2025",
     },
 
-    // Horaires
-    visitingHours: {
-        weekdays: "10h00 - 19h00",
-        weekends: "10h00 - 19h00",
-        note: "Accueil administratif : du lundi au vendredi, 9h00 - 17h00",
+    // Horaires administratifs
+    officeHours: {
+        main: "Lun, Mar, Mer, Ven : 9h00 - 12h30 / 13h30 - 17h00",
+        thursday: "Jeudi : Fermé",
     },
 
     // Statut

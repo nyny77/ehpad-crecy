@@ -18,6 +18,156 @@ interface VieSocialeClientProps {
     initialArticles: BlogPost[];
 }
 
+// Styles copied and adapted from IntroSection.tsx
+const activityStyles = {
+    heart: { // Musique & Chant
+        gradient: "from-rose-500 via-terracotta-500 to-rose-600",
+        bg: "bg-rose-500",
+        glow: "shadow-rose-500/50",
+        ring: "ring-rose-400/30"
+    },
+    star: { // Rencontres
+        gradient: "from-amber-400 via-yellow-500 to-orange-500",
+        bg: "bg-amber-500",
+        glow: "shadow-amber-500/50",
+        ring: "ring-amber-400/30"
+    },
+    eye: { // Jeux & Loisirs
+        gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+        bg: "bg-emerald-500",
+        glow: "shadow-emerald-500/50",
+        ring: "ring-emerald-400/30"
+    },
+    users: { // Arts créatifs
+        gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
+        bg: "bg-violet-500",
+        glow: "shadow-violet-500/50",
+        ring: "ring-violet-400/30"
+    },
+};
+
+function ActivityCard({ activity, index }: { activity: any, index: number }) {
+    // Map activity title to style
+    let styleKey = "heart";
+    if (activity.title.includes("Arts")) styleKey = "users";
+    else if (activity.title.includes("Rencontres")) styleKey = "star";
+    else if (activity.title.includes("Jeux")) styleKey = "eye";
+
+    const style = activityStyles[styleKey as keyof typeof activityStyles];
+
+    // Check dark mode for text colors (simplified check here as we are in client component)
+    // In a real optimized app we might pass this down or use context, but let's stick to standard classes
+    // and let Tailwind generic dark mode handle most, but detailed gradients need specific classes.
+    // For consistency with IntroSection, we'll assume light/dark toggling works via class.
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+                duration: 0.7,
+                delay: index * 0.15,
+                type: "spring",
+                stiffness: 100
+            }}
+            whileHover={{
+                scale: 1.05,
+                y: -10,
+                transition: { duration: 0.3 }
+            }}
+            className="relative group cursor-pointer h-full"
+        >
+            {/* Animated gradient background that expands on hover */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} rounded-[2rem] opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:scale-110`} />
+
+            {/* Main card */}
+            <div className="relative h-full rounded-[2rem] px-6 py-8 flex flex-col items-center transition-all duration-500 bg-white border-2 border-cream-200 shadow-xl group-hover:border-transparent group-hover:shadow-2xl">
+
+                {/* Animated background particles */}
+                <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
+                    <motion.div
+                        className={`absolute w-2 h-2 ${style.bg} rounded-full opacity-40`}
+                        animate={{
+                            x: [0, 100, 200, 100, 0],
+                            y: [0, -50, 0, 50, 0],
+                        }}
+                        transition={{
+                            duration: 8,
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: index * 0.5
+                        }}
+                        style={{ top: "20%", left: "10%" }}
+                    />
+                    <motion.div
+                        className={`absolute w-3 h-3 ${style.bg} rounded-full opacity-25`}
+                        animate={{
+                            x: [0, -80, 0, 80, 0],
+                            y: [0, 60, 0, -60, 0],
+                        }}
+                        transition={{
+                            duration: 10,
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: index * 0.3
+                        }}
+                        style={{ top: "60%", right: "20%" }}
+                    />
+                </div>
+
+                {/* Icon container with pulse animation */}
+                <div className="relative flex justify-center mb-6">
+                    {/* Outer pulsing ring */}
+                    <motion.div
+                        className={`absolute inset-0 w-20 h-20 mx-auto rounded-full ${style.ring} ring-8 opacity-50`}
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 0.2, 0.5],
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.25
+                        }}
+                    />
+
+                    {/* Icon background with gradient */}
+                    <motion.div
+                        className={`relative w-20 h-20 bg-gradient-to-br ${style.gradient} rounded-full flex items-center justify-center shadow-lg ${style.glow} group-hover:shadow-xl transition-shadow duration-500 text-white`}
+                        whileHover={{
+                            scale: 1.15,
+                            rotate: 360,
+                            transition: { duration: 0.6 }
+                        }}
+                    >
+                        {activity.icon}
+                    </motion.div>
+                </div>
+
+                {/* Title */}
+                <h3 className="font-serif text-xl font-bold text-center mb-3 text-charcoal-900 group-hover:text-terracotta-600 transition-colors">
+                    {activity.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-center text-sm leading-relaxed text-charcoal-600 font-medium">
+                    {activity.description}
+                </p>
+
+                {/* Bottom accent line */}
+                <motion.div
+                    className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-1 bg-gradient-to-r ${style.gradient} rounded-full mb-1`}
+                    initial={{ width: "30%" }}
+                    whileHover={{ width: "60%" }}
+                    transition={{ duration: 0.3 }}
+                />
+            </div>
+        </motion.div>
+    );
+}
+
 export default function VieSocialeClient({ initialArticles }: VieSocialeClientProps) {
     const [authenticated, setAuthenticated] = useState(false);
     const [adminMode, setAdminMode] = useState(false);
@@ -309,18 +459,39 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                 }}
             />
 
-            {/* Timeline Journée Type */}
-            <DayTimeline />
-
-            {/* Section activités (toujours visible) */}
             {/* Section activités (toujours visible) - Avec fond coloré et vagues */}
-            <section className="section-padding relative py-24 md:py-32 bg-cream-100">
+            <section className="section-padding relative py-24 md:py-32 bg-cream-100 overflow-hidden">
                 <WaveSeparator position="top" className="text-cream-100" />
 
-                {/* Background décoratif (Blobs) */}
+                {/* Background décoratif (Blobs animated) */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-terracotta-200/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
-                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-forest-200/30 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
+                    <motion.div
+                        animate={{
+                            y: [0, -30, 0],
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, 0]
+                        }}
+                        transition={{
+                            duration: 15,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute top-0 right-0 w-[500px] h-[500px] bg-terracotta-200/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"
+                    />
+                    <motion.div
+                        animate={{
+                            y: [0, 40, 0],
+                            scale: [1, 1.2, 1],
+                            rotate: [0, -5, 0]
+                        }}
+                        transition={{
+                            duration: 18,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: 2
+                        }}
+                        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-forest-200/30 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"
+                    />
                 </div>
 
                 <div className="container-custom relative z-10">
@@ -375,26 +546,14 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                 description: "Jeux de société, loto, quiz",
                             },
                         ].map((activity, index) => (
-                            <motion.div
-                                key={activity.title}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="card-warm p-6 text-center"
-                            >
-                                <div className="w-16 h-16 bg-gradient-to-br from-terracotta-100 to-forest-100 rounded-2xl flex items-center justify-center text-terracotta-500 mx-auto mb-4">
-                                    {activity.icon}
-                                </div>
-                                <h3 className="font-serif text-lg font-semibold text-charcoal-900 mb-2">
-                                    {activity.title}
-                                </h3>
-                                <p className="text-sm text-charcoal-600">{activity.description}</p>
-                            </motion.div>
+                            <ActivityCard key={activity.title} activity={activity} index={index} />
                         ))}
                     </div>
                 </div>
             </section>
+
+            {/* Timeline Journée Type */}
+            <DayTimeline />
 
             {/* Modal d'inscription personnalisée - DEPLACÉ DANS LE HEADER */}
         </>
