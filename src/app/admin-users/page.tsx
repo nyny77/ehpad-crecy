@@ -39,17 +39,51 @@ export default function AdminUsersPage() {
         setLoading(true);
         try {
             const token = window.netlifyIdentity?.currentUser()?.token?.access_token;
-            if (!token) throw new Error("Not authenticated");
+            // En local, on peut ne pas avoir de token valide pour les fonctions, mais on veut voir l'UI
+            // if (!token) throw new Error("Not authenticated"); 
 
             const res = await fetch("/.netlify/functions/admin-list-users", {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token || ''}`,
                 },
             });
 
             if (!res.ok) {
-                if (res.status === 403) throw new Error("Accès refusé (Admin uniquement)");
-                throw new Error("Erreur lors du chargement des utilisateurs");
+                // FALLBACK POUR LE DEVELOPPEMENT LOCAL (car les fonctions Netlify ne marchent pas avec 'npm run dev')
+                if (process.env.NODE_ENV === "development") {
+                    console.warn("DEV MODE: Utilisation de données fictives car les fonctions Netlify ne sont pas accessibles localement.");
+                    setUsers([
+                        {
+                            id: "1",
+                            email: "jean.dupont@example.com",
+                            user_metadata: { full_name: "Jean Dupont" },
+                            app_metadata: { roles: [] }, // Pending
+                            created_at: new Date().toISOString(),
+                        },
+                        {
+                            id: "2",
+                            email: "marie.martin@example.com",
+                            user_metadata: { full_name: "Marie Martin" },
+                            app_metadata: { roles: ["famille"] }, // Approved
+                            created_at: new Date(Date.now() - 86400000).toISOString(),
+                        }
+                    ]);
+                    return;
+                }
+
+                // Tenter de lire le message d'erreur du body
+                let errorMessage = `Erreur ${res.status}: ${res.statusText}`;
+                try {
+                    const errorText = await res.text();
+                    if (errorText) errorMessage += ` - ${errorText}`;
+                } catch (e) {
+                    // Ignore body parsing error
+                }
+
+                if (res.status === 403) throw new Error("Accès refusé (Vous n'avez pas le rôle 'admin'). " + errorMessage);
+                if (res.status === 404) throw new Error("Fonction introuvable (404). Avez-vous bien déployé le dossier 'netlify/functions' ?");
+
+                throw new Error(`Erreur serveur: ${errorMessage}`);
             }
 
             const data = await res.json();
@@ -57,11 +91,33 @@ export default function AdminUsersPage() {
             if (Array.isArray(data)) {
                 setUsers(data);
             } else {
-                setUsers([]); // Fallback or handle error
+                setUsers([]);
             }
 
         } catch (err: any) {
-            setError(err.message);
+            // FALLBACK AUSSI ICI AU CAS OU LE FETCH ECHOUE COMPLETEMENT (404 Not Found)
+            if (process.env.NODE_ENV === "development") {
+                console.warn("DEV MODE (Error Catch): Utilisation de données fictives.");
+                setUsers([
+                    {
+                        id: "1",
+                        email: "jean.dupont@example.com",
+                        user_metadata: { full_name: "Jean Dupont (Test)" },
+                        app_metadata: { roles: [] },
+                        created_at: new Date().toISOString(),
+                    },
+                    {
+                        id: "2",
+                        email: "marie.martin@example.com",
+                        user_metadata: { full_name: "Marie Martin (Test)" },
+                        app_metadata: { roles: ["famille"] },
+                        created_at: new Date(Date.now() - 86400000).toISOString(),
+                    }
+                ]);
+                setError(null); // Clear error
+            } else {
+                setError(err.message);
+            }
         } finally {
             setLoading(false);
         }
@@ -73,16 +129,25 @@ export default function AdminUsersPage() {
         setActionLoading(userId);
         try {
             const token = window.netlifyIdentity?.currentUser()?.token?.access_token;
-            if (!token) throw new Error("Not authenticated");
+            // if (!token) throw new Error("Not authenticated");
 
             const res = await fetch("/.netlify/functions/admin-approve-user", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token || ''}`,
                 },
                 body: JSON.stringify({ userId }),
             });
+
+            // MOCK POUR DEV LOCAL
+            if (!res.ok && process.env.NODE_ENV === "development") {
+                console.warn("DEV MODE: Simulation de validation réussie.");
+                alert("DEV MODE: Utilisateur validé (Simulation). En production, un email serait envoyé.");
+                // Update local state to simulate change
+                setUsers(users.map(u => u.id === userId ? { ...u, app_metadata: { roles: ["famille"] } } : u));
+                return;
+            }
 
             const data = await res.json();
 
@@ -94,7 +159,13 @@ export default function AdminUsersPage() {
             fetchUsers(); // Refresh list
 
         } catch (err: any) {
-            alert("Erreur: " + err.message);
+            // MOCK POUR DEV LOCAL (Catch block)
+            if (process.env.NODE_ENV === "development") {
+                alert("DEV MODE: Utilisateur validé (Simulation catch).");
+                setUsers(users.map(u => u.id === userId ? { ...u, app_metadata: { roles: ["famille"] } } : u));
+            } else {
+                alert("Erreur: " + err.message);
+            }
         } finally {
             setActionLoading(null);
         }
