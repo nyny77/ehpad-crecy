@@ -95,7 +95,7 @@ export const handler: Handler = async (event, context) => {
                         <h2 style="color: #C80040; margin-top: 0; text-align: center;">🎉 Compte validé !</h2>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">Bonjour,</p>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
-                            Nous avons le plaisir de vous informer que votre compte a été <strong>validé par l'administration</strong>.
+                            Nous avons le plaisir de vous informer que votre compte a été <strong>validé par l'équipe technique</strong>.
                         </p>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
                             Vous avez désormais un accès complet à l'espace <strong>"Vie Sociale"</strong>. Retrouvez dès maintenant les photos et actualités de l'EHPAD de Crécy.

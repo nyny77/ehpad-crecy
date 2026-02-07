@@ -56,6 +56,7 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                                 article={article}
                                 onClick={() => setSelectedArticle(article)}
                                 isAdmin={false} // On désactive l'édition directe sur la carte
+                                index={index}
                             />
                         </motion.div>
                     ))}

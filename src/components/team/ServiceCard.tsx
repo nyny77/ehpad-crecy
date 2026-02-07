@@ -56,6 +56,9 @@ export default function ServiceCard({
     };
 
     const isBigTitle = size === "large" || size === "horizontal";
+    // Randomize slightly based on index to avoid robotic uniformity
+    const floatDuration = 4 + (index % 2); // Faster 
+    const blurDuration = 3 + (index % 2);
 
     return (
         <Link href={`/equipe/${id}`} className={getSizeClasses()}>
@@ -64,8 +67,24 @@ export default function ServiceCard({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: index * 0.05 }}
-                className="h-full"
+                className="h-full relative group"
             >
+                {/* Breathing Glow Background - Automatic */}
+                <motion.div
+                    className="absolute inset-4 bg-terracotta-500/25 rounded-3xl -z-10"
+                    animate={{
+                        opacity: [0.2, 0.8, 0.2], // More visible
+                        scale: [0.95, 1.08, 0.95],
+                        filter: ["blur(10px)", "blur(20px)", "blur(10px)"]
+                    }}
+                    transition={{
+                        duration: blurDuration,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        delay: index * 0.2
+                    }}
+                />
+
                 <div
                     ref={ref}
                     style={{ perspective: "1000px" }}
@@ -74,11 +93,19 @@ export default function ServiceCard({
                     className="h-full"
                 >
                     <motion.div
-                        style={{ rotateX, rotateY }}
                         className="h-full"
+                        animate={{
+                            y: [0, -15, 0], // Stronger float
+                        }}
+                        transition={{
+                            duration: floatDuration,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.1
+                        }}
                     >
                         <div
-                            className={`relative overflow-hidden rounded-3xl bg-white shadow-card transition-shadow duration-500 h-full min-h-[300px] ${isHovered ? "shadow-2xl" : ""}`}
+                            className={`relative overflow-hidden rounded-3xl bg-white shadow-card transition-all duration-500 h-full min-h-[300px] ${isHovered ? "shadow-2xl scale-[1.02]" : ""}`}
                         >
                             {/* Image */}
                             <div className="absolute inset-0">
@@ -86,8 +113,17 @@ export default function ServiceCard({
                                     src={image}
                                     alt={title}
                                     fill
-                                    className={`object-cover transition-transform duration-700 ${isHovered ? "scale-110" : "scale-100"}`}
+                                    className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"}`}
+                                // Automatic slow zoom effect via CSS transition above, or we can use animate
                                 />
+
+                                {/* Animate image slow zoom automatically */}
+                                <motion.div
+                                    className="absolute inset-0"
+                                    animate={{ scale: [1, 1.1, 1] }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                />
+
                                 {/* Overlay gradient */}
                                 <div
                                     className={`absolute inset-0 bg-gradient-to-t transition-opacity duration-500 ${isHovered
@@ -118,7 +154,7 @@ export default function ServiceCard({
                                 {/* Description */}
                                 <motion.p
                                     animate={{
-                                        opacity: isHovered ? 1 : 0.9, // Toujours visible mais plus brillant au hover
+                                        opacity: isHovered ? 1 : 0.9,
                                         y: isHovered ? 0 : 5,
                                     }}
                                     transition={{ duration: 0.3 }}
@@ -155,14 +191,20 @@ export default function ServiceCard({
                                 </motion.div>
                             </div>
 
-                            {/* Effet de brillance au hover */}
+                            {/* Effet de brillance auto qui passe de temps en temps */}
                             <motion.div
-                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                className="absolute inset-0 pointer-events-none"
                                 style={{
-                                    background:
-                                        "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 55%, transparent 60%)",
-                                    transform: isHovered ? "translateX(100%)" : "translateX(-100%)",
-                                    transition: "transform 0.8s ease-out",
+                                    background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.2) 55%, transparent 60%)",
+                                }}
+                                initial={{ x: "-100%" }}
+                                animate={{ x: "200%" }}
+                                transition={{
+                                    repeat: Infinity,
+                                    repeatDelay: 3 + (index % 5), // Random delay between shines
+                                    duration: 1.5,
+                                    ease: "easeInOut",
+                                    delay: index * 0.5
                                 }}
                             />
                         </div>
