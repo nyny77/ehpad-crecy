@@ -19,7 +19,7 @@ export const handler: Handler = async (event, context) => {
     // to interact with the Identity API.
 
     try {
-        const response = await fetch(`${identity.url}/users`, {
+        const response = await fetch(`${identity.url}/admin/users`, {
             headers: {
                 Authorization: `Bearer ${identity.token}`,
             },

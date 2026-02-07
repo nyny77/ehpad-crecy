@@ -25,7 +25,7 @@ export const handler: Handler = async (event, context) => {
     let userEmail = "";
     try {
         // First get the user to know their email (for the notification)
-        const getUserResponse = await fetch(`${identity.url}/users/${userId}`, {
+        const getUserResponse = await fetch(`${identity.url}/admin/users/${userId}`, {
             headers: { Authorization: `Bearer ${identity.token}` },
         });
 
@@ -37,7 +37,7 @@ export const handler: Handler = async (event, context) => {
         userEmail = userData.email;
 
         // Update the user
-        const updateResponse = await fetch(`${identity.url}/users/${userId}`, {
+        const updateResponse = await fetch(`${identity.url}/admin/users/${userId}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${identity.token}`,
