@@ -13,6 +13,7 @@ import { BlogPost } from "@/lib/blog";
 import { isAuthenticated, isAdmin, logout, onAuthChange, openLoginWidget, isPendingValidation } from "@/lib/netlifyAuth";
 import AuthSelectionModal from "@/components/auth/AuthSelectionModal";
 import SignupModal from "@/components/auth/SignupModal";
+import RegistrationSuccessModal from "@/components/auth/RegistrationSuccessModal";
 
 interface VieSocialeClientProps {
     initialArticles: BlogPost[];
@@ -180,6 +181,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
     const [activeTab, setActiveTab] = useState<"news" | "gallery">("news");
     const [showAuthChoice, setShowAuthChoice] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     useEffect(() => {
         // Initial check
@@ -515,7 +517,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                 onClose={() => setShowSignup(false)}
                 onSignupSuccess={() => {
                     setShowSignup(false);
-                    alert("Inscription réussie ! Votre compte est en attente de validation.");
+                    setShowSuccessModal(true);
                 }}
             />
 
@@ -616,6 +618,11 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <DayTimeline />
 
             {/* Modal d'inscription personnalisée - DEPLACÉ DANS LE HEADER */}
+
+            <RegistrationSuccessModal
+                isOpen={showSuccessModal}
+                onClose={() => setShowSuccessModal(false)}
+            />
         </>
     );
 }

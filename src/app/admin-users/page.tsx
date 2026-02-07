@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { isAdmin, openLoginWidget } from "@/lib/netlifyAuth";
 import PageHeader from "@/components/layout/PageHeader";
 import { motion } from "framer-motion";
+import ConfirmationModal from "@/components/ui/ConfirmationModal";
 
 interface NetlifyUser {
     id: string;
@@ -128,8 +129,16 @@ export default function AdminUsersPage() {
         }
     };
 
-    const handleApprove = async (userId: string) => {
-        if (!confirm("Voulez-vous valider cet utilisateur et lui envoyer un email ?")) return;
+    const [userToApprove, setUserToApprove] = useState<string | null>(null);
+
+    const askForApproval = (userId: string) => {
+        setUserToApprove(userId);
+    };
+
+    const confirmApprove = async () => {
+        if (!userToApprove) return;
+        const userId = userToApprove;
+        setUserToApprove(null); // Close modal
 
         setActionLoading(userId);
         try {
@@ -148,7 +157,7 @@ export default function AdminUsersPage() {
             // MOCK POUR DEV LOCAL
             if (!res.ok && process.env.NODE_ENV === "development") {
                 console.warn("DEV MODE: Simulation de validation réussie.");
-                alert("DEV MODE: Utilisateur validé (Simulation). En production, un email serait envoyé.");
+                // alert("DEV MODE: Utilisateur validé (Simulation). En production, un email serait envoyé.");
                 // Update local state to simulate change
                 setUsers(users.map(u => u.id === userId ? { ...u, app_metadata: { roles: ["famille"] } } : u));
                 return;
@@ -160,13 +169,13 @@ export default function AdminUsersPage() {
                 throw new Error(data.error || "Erreur lors de la validation");
             }
 
-            alert(data.message || "Utilisateur validé avec succès !");
+            // alert(data.message || "Utilisateur validé avec succès !");
             fetchUsers(); // Refresh list
 
         } catch (err: any) {
             // MOCK POUR DEV LOCAL (Catch block)
             if (process.env.NODE_ENV === "development") {
-                alert("DEV MODE: Utilisateur validé (Simulation catch).");
+                // alert("DEV MODE: Utilisateur validé (Simulation catch).");
                 setUsers(users.map(u => u.id === userId ? { ...u, app_metadata: { roles: ["famille"] } } : u));
             } else {
                 alert("Erreur: " + err.message);
@@ -260,7 +269,7 @@ export default function AdminUsersPage() {
                                                         </p>
                                                     </div>
                                                     <button
-                                                        onClick={() => handleApprove(user.id)}
+                                                        onClick={() => askForApproval(user.id)}
                                                         disabled={!!actionLoading}
                                                         className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold rounded-lg transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                                     >
@@ -311,6 +320,15 @@ export default function AdminUsersPage() {
                     )}
                 </div>
             </section>
+
+            <ConfirmationModal
+                isOpen={!!userToApprove}
+                title="Accueillir ce nouveau membre ? 🥳"
+                message="En validant, cette personne rejoindra la grande famille de l'EHPAD Crécy ! Elle recevra un email de bienvenue pour accéder aux photos et blog."
+                confirmText="Oui, bienvenue ! ✨"
+                onConfirm={confirmApprove}
+                onCancel={() => setUserToApprove(null)}
+            />
         </>
     );
 }
