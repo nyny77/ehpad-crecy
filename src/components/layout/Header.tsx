@@ -119,18 +119,21 @@ export default function Header() {
                                 <Link key={link.href} href={link.href} className="relative group">
                                     <motion.div
                                         className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive
-                                            ? "text-terracotta-600"
-                                            : "text-charcoal-700 hover:text-charcoal-900"
+                                            ? "text-white"
+                                            : "text-charcoal-700 hover:text-white"
                                             }`}
                                         whileHover={{ y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
-                                        {/* Hover/Active background - pill style */}
+                                        {/* Hover/Active background - pill style with gradient */}
                                         <span
                                             className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
-                                                ? "bg-terracotta-100/80"
-                                                : "bg-transparent group-hover:bg-cream-200/80"
+                                                ? ""
+                                                : "opacity-0 group-hover:opacity-100"
                                                 }`}
+                                            style={{
+                                                background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)'
+                                            }}
                                         />
 
                                         {/* Link text */}
@@ -141,7 +144,7 @@ export default function Header() {
                                         {/* Active indicator dot */}
                                         {isActive && (
                                             <motion.span
-                                                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
+                                                className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
                                                 transition={{ type: "spring", stiffness: 500, damping: 30 }}

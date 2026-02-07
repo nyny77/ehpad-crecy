@@ -59,7 +59,7 @@ export default function HeroSection() {
                 className="relative z-10 container-custom px-4 pt-20"
             >
                 {/* Glass Card */}
-                <div className="relative max-w-5xl mx-auto">
+                <div className="relative max-w-4xl mx-auto">
 
                     {/* Pulsing Background Glow - Automatic Animation */}
                     <motion.div
@@ -107,7 +107,7 @@ export default function HeroSection() {
                         }}
                     >
                         {/* The Card Itself */}
-                        <div className="hero-glass-card relative bg-white/15 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-16 shadow-2xl overflow-hidden group">
+                        <div className="hero-glass-card relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden group">
 
                             {/* Effet de brillance interne */}
                             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -132,7 +132,7 @@ export default function HeroSection() {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 1, ease: "easeOut" }}
-                                    className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight tracking-tight"
+                                    className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight"
                                     style={{
                                         background: "linear-gradient(90deg, #40404A 0%, #40404A 45%, #C80040 50%, #40404A 55%, #40404A 100%)",
                                         backgroundSize: "200% 100%",
@@ -168,11 +168,11 @@ export default function HeroSection() {
                                         scaleX: { duration: 1.5, delay: 0.5, ease: "circOut" },
                                         boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                                     }}
-                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto mb-8 rounded-full"
+                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto mb-6 rounded-full"
                                 />
 
                                 {/* Animated Slogan */}
-                                <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 mb-12">
+                                <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 mb-8">
                                     {sloganWords.map((word, index) => (
                                         <motion.span
                                             key={index}
@@ -184,7 +184,7 @@ export default function HeroSection() {
                                                 type: "spring",
                                                 damping: 12
                                             }}
-                                            className="text-2xl md:text-3xl lg:text-4xl text-charcoal-700 font-serif italic"
+                                            className="text-xl md:text-2xl lg:text-3xl text-charcoal-700 font-serif italic"
                                         >
                                             {word}
                                         </motion.span>

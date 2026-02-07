@@ -93,12 +93,12 @@ export default function AdmissionsPage() {
             {/* Downloads Section */}
             <section className="py-16 bg-cream-100">
                 <div className="container-custom">
-                    <div className="bg-terracotta-500 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+                    <div className="bg-gradient-to-r from-terracotta-600 to-terracotta-400 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
 
                         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                             <div>
-                                <h2 className="font-serif text-3xl md:text-4xl mb-4 text-white">
+                                <h2 className="font-serif text-3xl md:text-4xl mb-4 !text-white">
                                     Faire une demande
                                 </h2>
                                 <p className="text-white/90 text-lg mb-8">
@@ -117,9 +117,9 @@ export default function AdmissionsPage() {
                             </div>
 
                             <div className="flex flex-col gap-4">
-                                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20 mb-4">
-                                    <p className="text-sm text-white/80 uppercase tracking-widest mb-2 font-medium">Information</p>
-                                    <p className="mb-0 text-white/90">
+                                <div className="bg-white rounded-2xl p-6 shadow-sm mb-4">
+                                    <p className="text-sm text-terracotta-600 uppercase tracking-widest mb-2 font-bold">Information</p>
+                                    <p className="mb-0 text-terracotta-600 font-medium">
                                         L'inscription se fait désormais prioritairement en ligne pour simplifier vos démarches.
                                     </p>
                                 </div>
@@ -132,14 +132,19 @@ export default function AdmissionsPage() {
             </section>
 
             {/* Financial Aid Section */}
-            <section className="py-16 md:py-24 bg-cream-100">
+            <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
+                {/* Decorative background element */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cream-100 via-terracotta-100 to-cream-100"></div>
+
                 <div className="container-custom">
                     <div className="text-center mb-16">
-                        <span className="text-forest-500 font-medium">Budget & Financement</span>
-                        <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2">
+                        <span className="inline-block py-1 px-3 rounded-full bg-forest-50 text-forest-600 text-sm font-bold tracking-wider mb-4 border border-forest-100">
+                            BUDGET & FINANCEMENT
+                        </span>
+                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2 mb-6">
                             Les aides financières
                         </h2>
-                        <p className="text-charcoal-600 max-w-2xl mx-auto mt-4">
+                        <p className="text-charcoal-600 text-lg max-w-2xl mx-auto leading-relaxed">
                             L'EHPAD de Crécy-la-Chapelle est habilité à l'aide sociale.
                             Plusieurs dispositifs peuvent vous aider à financer votre séjour.
                         </p>
@@ -147,13 +152,13 @@ export default function AdmissionsPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* APA */}
-                        <div className="bg-cream-50 rounded-2xl p-8 border border-cream-100 hover:border-forest-200 transition-colors duration-300">
-                            <div className="w-14 h-14 bg-forest-100 rounded-xl flex items-center justify-center text-forest-600 mb-6">
-                                <Euro className="w-7 h-7" />
+                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-forest-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                            <div className="w-16 h-16 bg-forest-50 rounded-2xl flex items-center justify-center text-forest-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                <Euro className="w-8 h-8" />
                             </div>
-                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3">APA</h3>
-                            <div className="text-sm font-semibold text-forest-600 mb-4 uppercase tracking-wider">Allocation Personnalisée d'Autonomie</div>
-                            <p className="text-charcoal-600 mb-6 leading-relaxed">
+                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">APA</h3>
+                            <div className="text-xs font-bold text-forest-600 mb-4 uppercase tracking-widest">Allocation Personnalisée d'Autonomie</div>
+                            <p className="text-charcoal-600 mb-8 leading-relaxed">
                                 Destinée aux personnes de plus de 60 ans en perte d'autonomie.
                                 Son montant dépend du niveau de dépendance (GIR) et des revenus.
                             </p>
@@ -161,42 +166,42 @@ export default function AdmissionsPage() {
                                 href="https://www.pour-les-personnes-agees.gouv.fr/preserver-son-autonomie-s-informer-et-anticiper/perte-d-autonomie-evaluation-et-droits/l-allocation-personnalisee-d-autonomie-apa"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-forest-600 font-medium hover:underline flex items-center gap-1 group"
+                                className="inline-flex items-center gap-2 text-forest-700 font-bold hover:gap-3 transition-all"
                             >
                                 En savoir plus
-                                <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <MoveRight className="w-4 h-4" />
                             </a>
                         </div>
 
                         {/* APL */}
-                        <div className="bg-cream-50 rounded-2xl p-8 border border-cream-100 hover:border-terracotta-200 transition-colors duration-300">
-                            <div className="w-14 h-14 bg-terracotta-100 rounded-xl flex items-center justify-center text-terracotta-600 mb-6">
-                                <Euro className="w-7 h-7" />
+                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-terracotta-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                            <div className="w-16 h-16 bg-terracotta-50 rounded-2xl flex items-center justify-center text-terracotta-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                <Euro className="w-8 h-8" />
                             </div>
-                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3">APL</h3>
-                            <div className="text-sm font-semibold text-terracotta-600 mb-4 uppercase tracking-wider">Aide Personnalisée au Logement</div>
-                            <p className="text-charcoal-600 mb-6 leading-relaxed">
+                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">APL</h3>
+                            <div className="text-xs font-bold text-terracotta-600 mb-4 uppercase tracking-widest">Aide Personnalisée au Logement</div>
+                            <p className="text-charcoal-600 mb-8 leading-relaxed">
                                 Attribuée par la CAF en fonction des ressources pour aider à payer
                                 la redevance hébergement. Notre établissement est conventionné.
                             </p>
                             <a
                                 href="https://www.caf.fr"
                                 target="_blank"
-                                className="text-terracotta-600 font-medium hover:underline flex items-center gap-1 group"
+                                className="inline-flex items-center gap-2 text-terracotta-700 font-bold hover:gap-3 transition-all"
                             >
                                 Simuler vos droits (CAF)
-                                <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <MoveRight className="w-4 h-4" />
                             </a>
                         </div>
 
                         {/* ASH */}
-                        <div className="bg-cream-50 rounded-2xl p-8 border border-cream-100 hover:border-charcoal-200 transition-colors duration-300">
-                            <div className="w-14 h-14 bg-charcoal-100 rounded-xl flex items-center justify-center text-charcoal-600 mb-6">
-                                <Euro className="w-7 h-7" />
+                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-charcoal-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                            <div className="w-16 h-16 bg-charcoal-50 rounded-2xl flex items-center justify-center text-charcoal-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                <Euro className="w-8 h-8" />
                             </div>
-                            <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3">ASH</h3>
-                            <div className="text-sm font-semibold text-charcoal-600 mb-4 uppercase tracking-wider">Aide Sociale à l'Hébergement</div>
-                            <p className="text-charcoal-600 mb-6 leading-relaxed">
+                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">ASH</h3>
+                            <div className="text-xs font-bold text-charcoal-600 mb-4 uppercase tracking-widest">Aide Sociale à l'Hébergement</div>
+                            <p className="text-charcoal-600 mb-8 leading-relaxed">
                                 Si les revenus sont insuffisants, le département peut prendre en charge
                                 une partie des frais d'hébergement (récupérable sur succession).
                             </p>
@@ -204,10 +209,10 @@ export default function AdmissionsPage() {
                                 href="https://www.service-public.fr/particuliers/vosdroits/F2444"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-charcoal-700 font-medium hover:underline flex items-center gap-1 group"
+                                className="inline-flex items-center gap-2 text-charcoal-800 font-bold hover:gap-3 transition-all"
                             >
                                 En savoir plus (Service Public)
-                                <MoveRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <MoveRight className="w-4 h-4" />
                             </a>
                         </div>
                     </div>

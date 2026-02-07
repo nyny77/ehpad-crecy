@@ -180,7 +180,7 @@ export default function PageHeader({
                                 delay: 0.5
                             }
                         }}
-                        className="relative bg-white/15 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden group"
+                        className="relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden group"
                     >
                         {/* Lueurs chaudes internes */}
                         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-terracotta-200/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
