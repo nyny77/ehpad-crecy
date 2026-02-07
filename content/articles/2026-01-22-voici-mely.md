@@ -1,6 +1,6 @@
 ---
 title: Voici Mely !
-date: 2026-01-22T13:08:00.000+01:00
+date: 2026-02-07T14:28:00.000+01:00
 category: activite
 image: /images/uploads/mely.png
 excerpt: Mely,  une borne musicale interactive unique en son genre.
