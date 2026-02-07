@@ -82,30 +82,33 @@ export const handler: Handler = async (event, context) => {
         const loginUrl = process.env.URL || "https://ehpad-crecy.netlify.app";
 
         await transporter.sendMail({
-            from: `"EHPAD Crécy" <${process.env.EMAIL_USER}>`,
+            from: `"EHPAD de Crécy" <${process.env.EMAIL_USER}>`,
             to: userEmail,
             subject: "🎉 Votre compte EHPAD a été validé !",
             text: `Bonjour,\n\nBonne nouvelle ! Votre compte a été validé par l'administration.\n\nVous pouvez désormais accéder à l'espace "Vie Sociale" et consulter les actualités et la galerie photos.\n\nConnectez-vous ici : ${loginUrl}/vie-sociale\n\nÀ très bientôt,\nL'équipe de l'EHPAD`,
             html: `
                 <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9fafb; border-radius: 10px;">
                     <div style="background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                        <h2 style="color: #c05621; margin-top: 0;">🎉 Compte validé !</h2>
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="${loginUrl}/images/logo.png" alt="EHPAD de Crécy" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
+                        </div>
+                        <h2 style="color: #C80040; margin-top: 0; text-align: center;">🎉 Compte validé !</h2>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">Bonjour,</p>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
                             Nous avons le plaisir de vous informer que votre compte a été <strong>validé par l'administration</strong>.
                         </p>
                         <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
-                            Vous avez désormais un accès complet à l'espace <strong>"Vie Sociale"</strong>. Retrouvez dès maintenant les photos et actualités de la résidence.
+                            Vous avez désormais un accès complet à l'espace <strong>"Vie Sociale"</strong>. Retrouvez dès maintenant les photos et actualités de l'EHPAD de Crécy.
                         </p>
                         <div style="text-align: center; margin: 30px 0;">
                             <a href="${loginUrl}/vie-sociale" 
-                               style="background-color: #c05621; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                               style="background-color: #C80040; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
                                Accéder à l'Espace Famille
                             </a>
                         </div>
                         <p style="color: #718096; font-size: 14px; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
                             Si le bouton ne fonctionne pas, copiez ce lien : <br>
-                            <a href="${loginUrl}/vie-sociale" style="color: #c05621;">${loginUrl}/vie-sociale</a>
+                            <a href="${loginUrl}/vie-sociale" style="color: #C80040;">${loginUrl}/vie-sociale</a>
                         </p>
                     </div>
                     <p style="text-align: center; color: #a0aec0; font-size: 12px; margin-top: 20px;">
