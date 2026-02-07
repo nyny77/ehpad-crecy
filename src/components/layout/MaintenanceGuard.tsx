@@ -6,12 +6,14 @@ import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthentic
 import { EHPAD_INFO } from "@/lib/constants";
 
 import SignupModal from "@/components/auth/SignupModal";
+import RegistrationSuccessModal from "@/components/auth/RegistrationSuccessModal";
 
 export default function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<NetlifyUser | null>(null);
     const [isAuthorizedUser, setIsAuthorizedUser] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     useEffect(() => {
         console.log("MaintenanceGuard: Mounted");
@@ -137,9 +139,15 @@ export default function MaintenanceGuard({ children }: { children: React.ReactNo
                 isOpen={isSignupOpen}
                 onClose={() => setIsSignupOpen(false)}
                 onSignupSuccess={() => {
-                    // Optionnel : afficher un message ou laisser la modale gérer son état "success"
                     setIsSignupOpen(false);
+                    // Trigger success modal
+                    setShowSuccessModal(true);
                 }}
+            />
+
+            <RegistrationSuccessModal
+                isOpen={showSuccessModal}
+                onClose={() => setShowSuccessModal(false)}
             />
         </main>
     );
