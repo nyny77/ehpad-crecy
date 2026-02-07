@@ -244,12 +244,22 @@ export default function PageHeader({
                             }
                         `}</style>
 
-                        {/* Ligne décorative */}
+                        {/* Ligne décorative avec effet de glow */}
                         <motion.div
                             initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
-                            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 mx-auto rounded-full mb-6"
+                            animate={{
+                                scaleX: 1,
+                                boxShadow: [
+                                    "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)",
+                                    "0 0 20px rgba(200, 0, 64, 0.6), 0 0 40px rgba(200, 0, 64, 0.4)",
+                                    "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)"
+                                ]
+                            }}
+                            transition={{
+                                scaleX: { duration: 1, delay: 0.8, ease: "easeOut" },
+                                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                            }}
+                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto rounded-full mb-6"
                         />
 
                         {/* Description */}

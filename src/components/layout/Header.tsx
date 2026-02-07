@@ -46,8 +46,8 @@ export default function Header() {
                     {/* Main Header Background - SOLID CREAM */}
                     <div
                         className={`absolute inset-0 transition-all duration-500 backdrop-blur-md ${isScrolled
-                                ? "bg-[#FDF7F0]"
-                                : "bg-[#FDF7F0]"
+                            ? "bg-[#FDF7F0]"
+                            : "bg-[#FDF7F0]"
                             }`}
                     />
 
@@ -71,11 +71,18 @@ export default function Header() {
                                 className="transition-colors duration-500"
                                 d="M0,0 L0,50 Q360,100 720,50 T1440,50 L1440,0 L0,0 Z"
                             />
-                            <path
+                            <motion.path
+                                key={pathname}
                                 fill="none"
                                 stroke="url(#headerWaveGradient)"
-                                strokeWidth="8"
+                                strokeWidth="15"
                                 d="M0,50 Q360,100 720,50 T1440,50"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={{
+                                    duration: 2.5,
+                                    ease: "easeInOut"
+                                }}
                             />
                         </svg>
                     </div>

@@ -127,7 +127,7 @@ export default function HeroSection() {
                             />
 
                             <div className="text-center relative z-10">
-                                {/* Title with Sweeping Highlight Effect */}
+                                {/* Title with Sweeping Highlight + Glow Effect */}
                                 <motion.h1
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -153,12 +153,22 @@ export default function HeroSection() {
                                     }
                                 `}</style>
 
-                                {/* Divider */}
+                                {/* Divider with Glow Effect */}
                                 <motion.div
                                     initial={{ scaleX: 0 }}
-                                    animate={{ scaleX: 1 }}
-                                    transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 mx-auto mb-8 rounded-full"
+                                    animate={{
+                                        scaleX: 1,
+                                        boxShadow: [
+                                            "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)",
+                                            "0 0 20px rgba(200, 0, 64, 0.6), 0 0 40px rgba(200, 0, 64, 0.4)",
+                                            "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)"
+                                        ]
+                                    }}
+                                    transition={{
+                                        scaleX: { duration: 1.5, delay: 0.5, ease: "circOut" },
+                                        boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                                    }}
+                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto mb-8 rounded-full"
                                 />
 
                                 {/* Animated Slogan */}
@@ -244,11 +254,12 @@ export default function HeroSection() {
                         </span>
                     </div>
                 </motion.div>
-            </motion.div>
+            </motion.div >
 
             {/* Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
+            < motion.div
+                initial={{ opacity: 0 }
+                }
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3, duration: 1 }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
@@ -260,7 +271,7 @@ export default function HeroSection() {
                         className="w-1 h-2 bg-white rounded-full mb-1"
                     />
                 </div>
-            </motion.div>
-        </section>
+            </motion.div >
+        </section >
     );
 }

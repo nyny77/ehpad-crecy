@@ -1,5 +1,8 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
 interface WaveSeparatorProps {
     position?: "top" | "bottom";
     className?: string;
@@ -7,6 +10,8 @@ interface WaveSeparatorProps {
 }
 
 export default function WaveSeparator({ position = "top", className = "text-white", showBorder = true }: WaveSeparatorProps) {
+    const pathname = usePathname();
+
     if (position === "top") {
         // Wave pointing UP - sits above the section, intrudes into previous section
         return (
@@ -30,13 +35,20 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                         fill="currentColor"
                         d="M0,100 L0,50 Q360,0 720,50 T1440,50 L1440,100 Z"
                     />
-                    {/* Raspberry Red Border - Top Curve */}
+                    {/* Raspberry Red Border - Drawing Animation with Framer Motion */}
                     {showBorder && (
-                        <path
+                        <motion.path
+                            key={pathname}
                             fill="none"
                             stroke="url(#waveSeparatorGradientTop)"
-                            strokeWidth="10"
+                            strokeWidth="15"
                             d="M0,50 Q360,0 720,50 T1440,50"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{
+                                duration: 2.5,
+                                ease: "easeInOut",
+                            }}
                         />
                     )}
                 </svg>
@@ -63,13 +75,20 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                     fill="currentColor"
                     d="M0,0 Q360,100 720,50 T1440,50 L1440,100 L0,100 Z"
                 />
-                {/* Raspberry Red Border - Top Curve of the bottom shape */}
+                {/* Raspberry Red Border - Drawing Animation with Framer Motion */}
                 {showBorder && (
-                    <path
+                    <motion.path
+                        key={pathname}
                         fill="none"
                         stroke="url(#waveSeparatorGradientBottom)"
-                        strokeWidth="10"
+                        strokeWidth="15"
                         d="M0,0 Q360,100 720,50 T1440,50"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{
+                            duration: 2.5,
+                            ease: "easeInOut"
+                        }}
                     />
                 )}
             </svg>
