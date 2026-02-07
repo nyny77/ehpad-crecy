@@ -87,10 +87,15 @@ export default function AdminUsersPage() {
             }
 
             const data = await res.json();
-            // Ensure data is array
-            if (Array.isArray(data)) {
+
+            // L'API Netlify Identity / GoTrue retourne souvent un objet { users: [...] } et non un tableau direct
+            if (data && Array.isArray(data.users)) {
+                setUsers(data.users);
+            } else if (Array.isArray(data)) {
                 setUsers(data);
             } else {
+                console.warn("Format de réponse inattendu:", data);
+                // On pourrait afficher une erreur, mais pour l'instant on met vide pour ne pas crasher
                 setUsers([]);
             }
 
