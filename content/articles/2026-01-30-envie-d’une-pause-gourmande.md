@@ -1,6 +1,6 @@
 ---
 title: Envie d’une pause gourmande ?
-date: 2026-01-30T11:19:00.000+01:00
+date: 2026-02-07T14:28:00.000+01:00
 category: activite
 image: /images/uploads/20260130_110159.jpg
 excerpt: Envie d’une pause gourmande ?
