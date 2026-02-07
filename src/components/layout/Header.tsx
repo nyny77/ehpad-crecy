@@ -39,7 +39,7 @@ export default function Header() {
     };
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? "py-2" : "py-3"}`}>
+        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled ? "py-1" : "py-2"}`}>
             {/* Background with enhanced glassmorphism */}
             <div className={`absolute inset-0 z-[-1] transition-all duration-500 ${isScrolled ? "shadow-xl" : ""}`}>
                 <div className="w-full h-full relative">
@@ -98,7 +98,7 @@ export default function Header() {
                             whileTap={{ scale: 0.95 }}
                             className={`relative flex-shrink-0 overflow-hidden rounded-full transition-all duration-500 shadow-lg ring-2 ring-white/50 dark:ring-charcoal-700/50 ${isScrolled ? "shadow-md" : "shadow-xl"
                                 }`}
-                            style={{ width: isScrolled ? 50 : 60, height: isScrolled ? 50 : 60 }}
+                            style={{ width: isScrolled ? 50 : 65, height: isScrolled ? 50 : 65 }}
                         >
                             <Image
                                 src="/images/logo.png"
@@ -106,7 +106,7 @@ export default function Header() {
                                 fill
                                 className="object-cover object-center transition-all duration-300"
                                 priority
-                                sizes="60px"
+                                sizes="80px"
                             />
                         </motion.div>
                     </Link>
@@ -177,7 +177,7 @@ export default function Header() {
                                         ease: "easeInOut"
                                     }}
                                 />
-                                <span className="relative z-10">Nous rencontrer</span>
+                                <span className="relative z-10 whitespace-nowrap">Nous rencontrer</span>
                             </motion.button>
                         </Link>
                     </div>

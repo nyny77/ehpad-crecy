@@ -661,8 +661,8 @@ html.dark-mode .section-features-text strong {
 }
 
 .section-features-box {
-  background-color: #fdf7f0 !important;
-  /* Cream 100 */
+  background-color: transparent !important;
+  /* Transparent */
   border-color: #ffe6e0 !important;
   /* Terracotta 100 */
   color: #40404a !important;

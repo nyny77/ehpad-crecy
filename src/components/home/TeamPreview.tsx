@@ -11,7 +11,7 @@ export default function TeamPreview() {
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <section ref={ref} className="section-padding bg-cream-50 overflow-hidden">
+        <section ref={ref} className="section-padding bg-cream-100 overflow-hidden">
             <div className="container-custom">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
@@ -60,7 +60,7 @@ export default function TeamPreview() {
                         </span>
                         <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal-900 mb-6 leading-tight">
                             Histoire de <br />
-                            <span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent italic font-semibold">Crécy-la-Chapelle</span>
+                            <span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent italic font-semibold pr-2">Crécy-la-Chapelle</span>
                         </h2>
 
                         <div className="space-y-6 text-charcoal-700 text-lg leading-relaxed font-light">

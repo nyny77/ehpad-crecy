@@ -224,6 +224,40 @@ export default function HistoirePage() {
                         </motion.div>
                     </div>
 
+                    {/* 6. La Vallée des Peintres */}
+                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-2"
+                        >
+                            <Image
+                                src="/images/history/peintre.jpg"
+                                alt="La Vallée des Peintres"
+                                fill
+                                className="object-cover"
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="order-2 md:order-1"
+                        >
+                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">6. La Vallée des Peintres</h2>
+                            <p className="text-charcoal-600 mb-4">
+                                Pour finir notre découverte, sachez que vous habitez dans un lieu d'art et de lumière. Surnommée la "Vallée des Peintres", Crécy a inspiré des générations d'artistes.
+                            </p>
+                            <p className="text-charcoal-600">
+                                Des maîtres comme Corot, Alexandre Altmann ou Dunoyer de Segonzac y ont posé leur chevalet, charmés par les reflets changeants du Grand Morin et la douceur des paysages. Aujourd'hui encore, cette âme artistique perdure, et il n'est pas rare de croiser des peintres au bord de l'eau, capturant la poésie de notre "Venise Briarde".
+                            </p>
+                            <blockquote className="mt-6 border-l-4 border-forest-300 pl-4 italic text-forest-700">
+                                Une terre d'inspiration pour Corot et les impressionnistes, où l'art et la nature ne font qu'un.
+                            </blockquote>
+                        </motion.div>
+                    </div>
+
                     {/* Mot de la Fin */}
                     <div className="bg-white p-8 md:p-12 rounded-3xl shadow-soft text-center max-w-3xl mx-auto border border-cream-200">
                         <h3 className="text-2xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-4">Le Mot de la Fin</h3>

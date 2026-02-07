@@ -14,7 +14,7 @@ export default function HeroSection() {
         offset: ["start start", "end start"],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     // Fade out effect on scroll (quick fade at start)
     const contentOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
@@ -32,7 +32,7 @@ export default function HeroSection() {
     return (
         <section
             ref={containerRef}
-            className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50 perspective-1000"
+            className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-100 perspective-1000"
             style={{ perspective: "1000px" }}
         >
             {/* Background Image with Parallax */}
@@ -41,7 +41,7 @@ export default function HeroSection() {
                     src={EHPAD_INFO.heroImage}
                     alt="EHPAD de Crécy"
                     fill
-                    className="object-cover object-center scale-105"
+                    className="object-cover object-center"
                     priority
                 />
                 {/* Overlay équilibré (30%) */}
