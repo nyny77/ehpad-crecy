@@ -106,6 +106,13 @@
       "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
     },
     {
+      "id": "img-aerial3",
+      "category": "garden",
+      "src": "/images/uploads/mrc2.jpg",
+      "title": "Vue aérienne",
+      "alt": "Vue aérienne"
+    },
+    {
       "id": "img-aerial4",
       "category": "garden",
       "src": "/images/uploads/mrc3.jpg",
@@ -139,13 +146,6 @@
       "title": "Le Marché",
       "src": "/images/history/marche.jpg",
       "alt": "Le marché traditionnel de Crécy-la-Chapelle avec ses étals et ses habitants."
-    },
-    {
-      "id": "img-aerial3",
-      "category": "garden",
-      "src": "/images/uploads/mrc2.jpg",
-      "title": "Vue aérienne",
-      "alt": "Vue aérienne"
     }
   ]
 }
