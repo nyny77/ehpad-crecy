@@ -31,7 +31,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 
     const mailOptions = {
         from: `"EHPAD Bot" <${process.env.EMAIL_USER}>`,
-        to: process.env.ADMIN_EMAIL, // L'adresse de l'admin
+        to: "technique@ehpad-crecy.fr", // Uniquement au support technique pour les créations de compte
         subject: `[EHPAD] Nouvelle inscription : ${user.user_metadata?.full_name || user.email}`,
         text: `
       Nouvelle inscription sur le site de l'EHPAD !
