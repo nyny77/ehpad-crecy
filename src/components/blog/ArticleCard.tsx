@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useTransform, useTime } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
 
 interface ArticleCardProps {
@@ -15,14 +15,9 @@ interface ArticleCardProps {
 export default function ArticleCard({ article, onClick, isAdmin, onDelete, index = 0 }: ArticleCardProps) {
     const categoryInfo = getCategoryInfo(article.category);
     const [isFavorite, setIsFavorite] = useState(false);
-    const cardRef = useRef<HTMLDivElement>(null);
 
-    // --- Automatic Floating Logic ---
-    const time = useTime();
 
-    // Automatic gentle floating animation
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
+
 
     useEffect(() => {
         // Vérifier si l'article est dans les favoris
@@ -60,9 +55,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
         });
     };
 
-    // Automatic gentle floating animation settings based on index
-    const floatDuration = 4 + (index % 3);
-    const pulseDuration = 3 + (index % 2);
+
 
     return (
         <motion.div
@@ -72,34 +65,9 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
             transition={{ duration: 0.6, delay: index * 0.1 }}
             className="relative group h-full"
         >
-            {/* Breathing Glow Background - Automatic */}
-            <motion.div
-                className="absolute inset-4 bg-terracotta-500/15 rounded-3xl -z-10"
-                animate={{
-                    opacity: [0.2, 0.6, 0.2],
-                    scale: [0.95, 1.05, 0.95],
-                    filter: ["blur(15px)", "blur(25px)", "blur(15px)"]
-                }}
-                transition={{
-                    duration: pulseDuration,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    delay: index * 0.3
-                }}
-            />
+
 
             <motion.div
-                ref={cardRef}
-                style={{ perspective: "1000px" }}
-                animate={{
-                    y: [0, -15, 0], // Gentle float increased
-                }}
-                transition={{
-                    duration: floatDuration,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: index * 0.2
-                }}
                 className="h-full"
             >
                 <motion.article
