@@ -56,7 +56,7 @@ export default function ConversationalForm() {
         try {
             // Construction du FormData pour Netlify
             const body = new FormData();
-            body.append("form-name", "contact");
+            body.append("form-name", "contact-form");
             Object.keys(formData).forEach(key => {
                 const value = (formData as any)[key];
                 if (value !== null) {
@@ -141,13 +141,26 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact"
+                name="contact-form"
                 method="POST"
                 data-netlify="true"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="form-name" value="contact-form" />
+
+                {/* Hidden fields for Netlify detection */}
+                <div style={{ display: 'none' }}>
+                    <input name="subject" />
+                    <textarea name="message" />
+                    <input name="firstName" />
+                    <input name="lastName" />
+                    <input name="email" />
+                    <input name="phone" />
+                    <input name="wantsVisit" type="checkbox" />
+                    <input name="cv" type="file" />
+                    <input name="coverLetter" type="file" />
+                </div>
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
