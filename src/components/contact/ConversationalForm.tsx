@@ -56,7 +56,7 @@ export default function ConversationalForm() {
         try {
             // Construction explicite du FormData pour éviter les oublis
             const body = new FormData();
-            body.append("form-name", "contact-secure");
+            body.append("form-name", "contact-live");
 
             // Ajout explicite de chaque champ
             body.append("subject", formData.subject);
@@ -150,33 +150,17 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-secure"
+                name="contact-live"
                 method="POST"
                 data-netlify="true"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                <input type="hidden" name="form-name" value="contact-secure" />
+                <input type="hidden" name="form-name" value="contact-live" />
                 {/* Honeypot field for spam protection */}
                 <p className="hidden">
                     <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
                 </p>
-
-                {/* Important : Ces champs cachés assurent que Netlify détecte la structure du formulaire
-                    même si les champs réels sont montés/démontés par React. 
-                    Ils doivent correspondre EXACTEMENT aux noms des champs. */}
-                <div style={{ display: 'none' }}>
-                    <input name="subject" value={formData.subject} readOnly />
-                    <textarea name="message" value={formData.message} readOnly />
-                    <input name="firstName" value={formData.firstName} readOnly />
-                    <input name="lastName" value={formData.lastName} readOnly />
-                    <input name="email" value={formData.email} readOnly />
-                    <input name="phone" value={formData.phone} readOnly />
-                    <input name="wantsVisit" type="checkbox" checked={formData.wantsVisit} readOnly />
-                    {/* Pour les fichiers, on ne peut pas mettre de valeur par défaut, mais la présence de l'input suffit */}
-                    <input type="file" name="cv" />
-                    <input type="file" name="coverLetter" />
-                </div>
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
