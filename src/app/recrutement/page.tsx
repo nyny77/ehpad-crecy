@@ -181,7 +181,7 @@ const ADVANTAGES = [
     },
     {
         title: "Postes en 12h",
-        description: "Organisation en journées de 12h pour les soins et la cuisine : plus de jours de repos !",
+        description: "Organisation en journées de 12h pour les postes AS et IDE : plus de jours de repos !",
         style: "amber",
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -397,8 +397,15 @@ export default function RecrutementPage() {
                             <svg className="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg>
-                            <span className="text-forest-700 font-semibold text-lg">
+                            <span className="text-forest-700 font-semibold text-lg flex items-center gap-2">
                                 Cadre rural en Seine-et-Marne · 45 min de Paris · 15 min de Disneyland Paris
+                                <div className="relative w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform text-black">
+                                    <svg className="w-full h-full fill-current" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="14" r="5.5" />
+                                        <circle cx="5" cy="7" r="4" />
+                                        <circle cx="19" cy="7" r="4" />
+                                    </svg>
+                                </div>
                             </span>
                         </div>
                     </motion.div>

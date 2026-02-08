@@ -52,7 +52,7 @@ Au-delà des soins techniques, nos infirmières apportent une présence rassuran
         dailyRoutine: [
             { time: "06:45", activity: "Transmissions et préparation des traitements" },
             { time: "08:00", activity: "Tour des soins, pansements, injections" },
-            { time: "11:00", activity: "Visite avec le médecin coordonnateur" },
+            { time: "11:00", activity: "Visite avec les médecins" },
             { time: "12:00", activity: "Distribution des médicaments" },
             { time: "14:00", activity: "RDV familles et transmissions" },
             { time: "16:00", activity: "Gestion des urgences et surveillance" },
@@ -124,14 +124,14 @@ Les régimes particuliers sont scrupuleusement suivis (textures modifiées, sans
         title: "La coiffeuse",
         subtitle: "Bien-être & Moments de détente",
         shortDescription: "Des moments privilégiés pour prendre soin de soi.",
-        fullDescription: `Le salon de coiffure est un espace dédié au bien-être. La coiffeuse vous accueille dans une ambiance chaleureuse et apaisante, où chaque résident peut prendre soin de lui et se faire chouchouter.
+        fullDescription: `Le salon de coiffure, ouvert une fois par semaine, est un espace dédié au bien-être. La coiffeuse vous accueille dans une ambiance chaleureuse et apaisante, où chaque résident peut prendre soin de lui et se faire chouchouter.
 
 Ces moments sont précieux : ils permettent de préserver sa coquetterie, de maintenir une image positive de soi et de retrouver des habitudes réconfortantes du passé. C'est aussi l'occasion d'échanges privilégiés, de confiances partagées avec la coiffeuse.
 
 Au-delà de l'aspect esthétique, elle participe au maintien des liens sociaux. Elle offre un lieu de vie où l'on prend le temps, où l'on écoute, où l'on partage un moment de complicité.`,
         highlights: [
+            "Présence hebdomadaire",
             "Coupe et coiffage",
-            "Soins et mise en beauté",
             "Moment de détente privilégié",
             "Échanges et écoute",
         ],
@@ -167,10 +167,9 @@ Il travaille en étroite collaboration avec l'équipe soignante et médicale. Ce
         image: "/images/services/kine.png",
         detailImage: "/images/services/kine.png",
         dailyRoutine: [
-            { time: "08:30", activity: "Bilans et transmissions" },
-            { time: "09:00", activity: "Séances individuelles en salle" },
+            { time: "09:00", activity: "Prise en charge individuelle en chambre" },
             { time: "11:00", activity: "Aide à la marche dans les étages" },
-            { time: "14:00", activity: "Atelier équilibre en groupe" },
+            { time: "14:00", activity: "Rééducation et maintien de l'autonomie" },
             { time: "15:30", activity: "Séances individuelles en chambre" },
         ],
         skills: ["Anatomie", "Pédagogie", "Douceur", "Rééducation", "Psychologie"],
@@ -208,14 +207,14 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
     },
     {
         id: "admin",
-        title: "L'agente administrative",
+        title: "L'agent administratif",
         subtitle: "Accueil, Administration & Facturation",
         shortDescription: "Un accueil chaleureux et une gestion rigoureuse des dossiers et facturations.",
-        fullDescription: `L'agente administrative de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
+        fullDescription: `L'agent administratif de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
 
-Bien plus qu'une simple gestionnaire, elle joue un rôle central. Elle assure l'interface administrative tout en veillant à la qualité de l'accueil.
+Bien plus qu'un simple gestionnaire, il joue un rôle central. Il assure l'interface administrative tout en veillant à la qualité de l'accueil.
 
-Elle vous accueille avec chaleur et disponibilité. De la constitution du dossier à la gestion des facturations (résidents et prestataires), elle vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
+Il vous accueille avec chaleur et disponibilité. De la constitution du dossier à la gestion des facturations (résidents et prestataires), il vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
         highlights: [
             "Accueil personnalisé",
             "Facturation résidents & prestataires",
@@ -401,7 +400,7 @@ L'IDEC est également l'interlocutrice privilégiée des familles pour toutes le
         dailyRoutine: [
             { time: "08:00", activity: "Transmissions avec l'équipe de nuit" },
             { time: "09:00", activity: "Supervision des soins et planification" },
-            { time: "11:00", activity: "Visite avec le médecin coordonnateur" },
+            { time: "11:00", activity: "Visite avec les médecins" },
             { time: "14:00", activity: "Gestion des admissions et sorties" },
             { time: "16:00", activity: "Rencontres familles et projets de soins" },
         ],

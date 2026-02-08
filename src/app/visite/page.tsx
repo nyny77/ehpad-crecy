@@ -36,6 +36,7 @@ export default function VisitePage() {
                             <PanoramaViewer
                                 imagePath="/images/jardin-360.jpg"
                                 title="Le petit jardin en hiver"
+                                initialYaw={0}
                             />
                         </div>
                     </div>
