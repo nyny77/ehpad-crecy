@@ -54,15 +54,24 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // Construction du FormData pour Netlify
+            // Construction explicite du FormData pour éviter les oublis
             const body = new FormData();
             body.append("form-name", "contact-secure");
-            Object.keys(formData).forEach(key => {
-                const value = (formData as any)[key];
-                if (value !== null) {
-                    body.append(key, value);
-                }
-            });
+
+            // Ajout explicite de chaque champ
+            body.append("subject", formData.subject);
+            body.append("message", formData.message);
+            body.append("firstName", formData.firstName);
+            body.append("lastName", formData.lastName);
+            body.append("email", formData.email);
+            body.append("phone", formData.phone);
+            body.append("wantsVisit", formData.wantsVisit ? "true" : "false");
+
+            // Ajout conditionnel des fichiers
+            if (formData.cv) body.append("cv", formData.cv);
+            if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
+
+            console.log("Envoi du formulaire:", Object.fromEntries(body.entries()));
 
             await fetch("/", {
                 method: "POST",
@@ -152,6 +161,22 @@ export default function ConversationalForm() {
                 <p className="hidden">
                     <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
                 </p>
+
+                {/* Important : Ces champs cachés assurent que Netlify détecte la structure du formulaire
+                    même si les champs réels sont montés/démontés par React. 
+                    Ils doivent correspondre EXACTEMENT aux noms des champs. */}
+                <div style={{ display: 'none' }}>
+                    <input name="subject" value={formData.subject} readOnly />
+                    <textarea name="message" value={formData.message} readOnly />
+                    <input name="firstName" value={formData.firstName} readOnly />
+                    <input name="lastName" value={formData.lastName} readOnly />
+                    <input name="email" value={formData.email} readOnly />
+                    <input name="phone" value={formData.phone} readOnly />
+                    <input name="wantsVisit" type="checkbox" checked={formData.wantsVisit} readOnly />
+                    {/* Pour les fichiers, on ne peut pas mettre de valeur par défaut, mais la présence de l'input suffit */}
+                    <input type="file" name="cv" />
+                    <input type="file" name="coverLetter" />
+                </div>
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
