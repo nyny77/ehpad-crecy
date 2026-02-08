@@ -39,7 +39,7 @@ export default function MentionsLegalesPage() {
                                 2. Directeur de la publication
                             </h2>
                             <p>
-                                Le directeur de la publication est la Directrice de l&apos;établissement.
+                                Le directeur de la publication est le Webmaster.
                             </p>
                         </section>
 
