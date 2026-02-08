@@ -362,8 +362,12 @@ export default function RecrutementPage() {
             )}
 
             {/* Pourquoi nous rejoindre - Section Avantages */}
-            <section className="py-24 bg-cream-100">
-                <div className="container-custom">
+            <section className="py-24 bg-cream-100 texture-paper relative overflow-hidden">
+                {/* Formes organiques d'arrière-plan */}
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-forest-100/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-terracotta-100/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+
+                <div className="container-custom relative z-10">
                     <div className="text-center mb-16">
                         <span className="text-forest-500 font-bold uppercase tracking-wider text-sm">Vos avantages</span>
                         <h2 className="text-3xl md:text-5xl font-serif text-charcoal-900 mt-2 mb-6">

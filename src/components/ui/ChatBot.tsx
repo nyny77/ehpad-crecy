@@ -84,7 +84,7 @@ export default function ChatBot() {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="chatbot-container absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-white rounded-2xl shadow-2xl border overflow-hidden flex flex-col max-h-[500px]"
+                        className="chatbot-container absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-cream-50 rounded-2xl shadow-2xl border overflow-hidden flex flex-col max-h-[500px]"
                     >
                         {/* Header */}
                         <div className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 p-4 flex items-center justify-between text-white shrink-0">

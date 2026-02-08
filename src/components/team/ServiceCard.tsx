@@ -105,7 +105,7 @@ export default function ServiceCard({
                         }}
                     >
                         <div
-                            className={`relative overflow-hidden rounded-3xl bg-white shadow-card transition-all duration-500 h-full min-h-[300px] ${isHovered ? "shadow-2xl scale-[1.02]" : ""}`}
+                            className={`relative overflow-hidden rounded-3xl bg-cream-50 shadow-card transition-all duration-500 h-full min-h-[300px] ${isHovered ? "shadow-2xl scale-[1.02]" : ""}`}
                         >
                             {/* Image */}
                             <div className="absolute inset-0">

@@ -189,7 +189,7 @@ export default function Header() {
                     <motion.button
                         className={`lg:hidden relative w-12 h-12 flex flex-col items-center justify-center gap-1.5 rounded-full transition-all duration-300 ${isMobileMenuOpen
                             ? "bg-terracotta-500 shadow-lg"
-                            : "bg-white/80 dark:bg-charcoal-800/80 shadow-md hover:shadow-lg"
+                            : "bg-cream-50/80 dark:bg-charcoal-800/80 shadow-md hover:shadow-lg"
                             }`}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         whileHover={{ scale: 1.05 }}
@@ -231,7 +231,7 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="lg:hidden absolute top-full left-0 right-0 bg-white/98 dark:bg-charcoal-900/98 backdrop-blur-xl shadow-2xl border-t border-cream-200/50 dark:border-charcoal-700/50"
+                        className="lg:hidden absolute top-full left-0 right-0 bg-cream-50/98 dark:bg-charcoal-900/98 backdrop-blur-xl shadow-2xl border-t border-cream-200/50 dark:border-charcoal-700/50"
                     >
                         <div className="container-custom py-6 flex flex-col gap-2">
                             {NAV_LINKS.map((link, index) => {

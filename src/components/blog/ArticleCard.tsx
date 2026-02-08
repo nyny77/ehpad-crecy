@@ -103,7 +103,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                 className="h-full"
             >
                 <motion.article
-                    className="group relative bg-white rounded-2xl shadow-soft overflow-hidden h-full flex flex-col transition-shadow duration-300 hover:shadow-2xl"
+                    className="group relative bg-cream-50 rounded-2xl shadow-soft overflow-hidden h-full flex flex-col transition-shadow duration-300 hover:shadow-2xl"
                 >
                     {/* Image ou placeholder */}
                     <div className="relative h-48 bg-gradient-to-br from-terracotta-100 to-forest-100 overflow-hidden shrink-0">

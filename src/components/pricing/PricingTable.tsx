@@ -14,7 +14,7 @@ export default function PricingTable() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-white rounded-[2rem] overflow-hidden shadow-lg border border-cream-100 relative group"
+                className="bg-cream-50 rounded-[2rem] overflow-hidden shadow-lg border border-cream-100 relative group"
             >
                 {/* Decorative top border */}
                 <div className="h-2 w-full bg-gradient-to-r from-terracotta-300 to-terracotta-500" />
@@ -151,7 +151,7 @@ export default function PricingTable() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.1 }}
-                        className="bg-white rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
                     >
                         <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
 
@@ -198,7 +198,7 @@ export default function PricingTable() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-white rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
                     >
                         <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
 
@@ -245,7 +245,7 @@ export default function PricingTable() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        className="bg-white rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
                     >
                         <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
 

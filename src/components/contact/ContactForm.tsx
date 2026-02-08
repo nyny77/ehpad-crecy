@@ -156,7 +156,7 @@ export default function ContactForm() {
             action="/contact?success=true"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
-            className="bg-white rounded-3xl p-8 md:p-10 shadow-card"
+            className="bg-cream-50 rounded-3xl p-8 md:p-10 shadow-card"
         >
             {/* <input type="hidden" name="form-name" value="contact" />  - Gardé par React state ou champ caché explicite ci-dessous */}
             <input type="hidden" name="form-name" value="contact" />

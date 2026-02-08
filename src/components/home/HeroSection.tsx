@@ -107,7 +107,7 @@ export default function HeroSection() {
                         }}
                     >
                         {/* The Card Itself */}
-                        <div className="hero-glass-card relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden group">
+                        <div className="hero-glass-card relative bg-cream-50/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden group">
 
                             {/* Effet de brillance interne */}
                             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -235,7 +235,7 @@ export default function HeroSection() {
                     transition={{ duration: 1, delay: 2.2 }}
                     className="absolute -bottom-24 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
                 >
-                    <div className="hero-info-badge flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full shadow-xl border border-white/50">
+                    <div className="hero-info-badge flex items-center gap-3 px-6 py-3 bg-cream-50/80 backdrop-blur-md rounded-full shadow-xl border border-white/50">
                         <span className="relative flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>

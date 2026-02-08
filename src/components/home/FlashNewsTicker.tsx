@@ -22,7 +22,7 @@ export default function FlashNewsTicker() {
                 >
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex items-center gap-4">
-                            <span className="font-bold bg-white text-terracotta-500 text-xs px-2 py-0.5 rounded uppercase tracking-wider">
+                            <span className="font-bold bg-cream-50 text-terracotta-500 text-xs px-2 py-0.5 rounded uppercase tracking-wider">
                                 Flash Info
                             </span>
                             {flashData.link ? (

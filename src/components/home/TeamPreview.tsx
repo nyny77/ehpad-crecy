@@ -68,7 +68,7 @@ export default function TeamPreview() {
                                 Celle que l’on appelle <span className="font-medium text-terracotta-500">« la Venise Briarde »</span> doit son surnom au fait que l’eau est un élément indissociable des lieux : Crécy-la-Chapelle est bordée par le Grand Morin qui lui donne toute son originalité.
                             </p>
 
-                            <div className="bg-white/60 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">
+                            <div className="bg-cream-50/80 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">
                                 <div className="absolute -left-3 top-6 w-1 h-12 bg-gradient-to-r from-terracotta-500 to-terracotta-400 rounded-full"></div>
                                 <p className="italic text-charcoal-800 font-medium">
                                     « En 1868, une portion de terrain sise à Montplaisir sera annexée à Crécy-en-Brie pour y construire l’Hospice. »
