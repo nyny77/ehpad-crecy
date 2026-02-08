@@ -149,20 +149,6 @@ export default function ConversationalForm() {
             >
                 <input type="hidden" name="form-name" value="contact" />
 
-                {/* Champs cachés pour la détection Netlify (nécessaire car le formulaire est dynamique) */}
-                <div hidden>
-                    <input name="subject" />
-                    <textarea name="message" />
-                    <input name="firstName" />
-                    <input name="lastName" />
-                    <input name="email" />
-                    <input name="phone" />
-                    <input name="wantsVisit" type="checkbox" />
-                    {/* Les fichiers doivent être déclarés pour que Netlify les accepte */}
-                    <input name="cv" type="file" />
-                    <input name="coverLetter" type="file" />
-                </div>
-
                 <AnimatePresence mode="wait">
                     {step === 1 && (
                         <motion.div
