@@ -56,7 +56,7 @@ export default function ConversationalForm() {
         try {
             // Construction du FormData pour Netlify
             const body = new FormData();
-            body.append("form-name", "contact-form");
+            body.append("form-name", "contact-secure");
             Object.keys(formData).forEach(key => {
                 const value = (formData as any)[key];
                 if (value !== null) {
@@ -141,26 +141,17 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-form"
+                name="contact-secure"
                 method="POST"
                 data-netlify="true"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                <input type="hidden" name="form-name" value="contact-form" />
-
-                {/* Hidden fields for Netlify detection */}
-                <div style={{ display: 'none' }}>
-                    <input name="subject" />
-                    <textarea name="message" />
-                    <input name="firstName" />
-                    <input name="lastName" />
-                    <input name="email" />
-                    <input name="phone" />
-                    <input name="wantsVisit" type="checkbox" />
-                    <input name="cv" type="file" />
-                    <input name="coverLetter" type="file" />
-                </div>
+                <input type="hidden" name="form-name" value="contact-secure" />
+                {/* Honeypot field for spam protection */}
+                <p className="hidden">
+                    <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
+                </p>
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
