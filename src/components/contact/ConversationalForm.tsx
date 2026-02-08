@@ -149,6 +149,20 @@ export default function ConversationalForm() {
             >
                 <input type="hidden" name="form-name" value="contact" />
 
+                {/* Champs cachés pour la détection Netlify (nécessaire car le formulaire est dynamique) */}
+                <div hidden>
+                    <input name="subject" />
+                    <textarea name="message" />
+                    <input name="firstName" />
+                    <input name="lastName" />
+                    <input name="email" />
+                    <input name="phone" />
+                    <input name="wantsVisit" type="checkbox" />
+                    {/* Les fichiers doivent être déclarés pour que Netlify les accepte */}
+                    <input name="cv" type="file" />
+                    <input name="coverLetter" type="file" />
+                </div>
+
                 <AnimatePresence mode="wait">
                     {step === 1 && (
                         <motion.div
@@ -175,8 +189,8 @@ export default function ConversationalForm() {
                                             setTimeout(() => nextStep(), 200);
                                         }}
                                         className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 ${formData.subject === option.id
-                                                ? "border-terracotta-500 bg-terracotta-50 text-terracotta-700"
-                                                : "border-cream-200 hover:border-terracotta-200 hover:bg-cream-50"
+                                            ? "border-terracotta-500 bg-terracotta-50 text-terracotta-700"
+                                            : "border-cream-200 hover:border-terracotta-200 hover:bg-cream-50"
                                             }`}
                                     >
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.subject === option.id ? "bg-terracotta-100" : "bg-cream-100"
