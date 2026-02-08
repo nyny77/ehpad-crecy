@@ -43,6 +43,13 @@
       "alt": "Patio pour les moments de convivialité"
     },
     {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Route de la chapelle debut 20 eme",
+      "src": "/images/uploads/01.jpg",
+      "alt": "Route de la chapelle debut 20 eme"
+    },
+    {
       "id": "img-aerial1",
       "category": "other",
       "src": "/images/uploads/mrc1.jpg",
@@ -139,13 +146,6 @@
       "src": "/images/uploads/mrc4.jpg",
       "title": "Vue aérienne",
       "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement."
-    },
-    {
-      "id": "img-{{now}}",
-      "category": "other",
-      "title": "Route de la chapelle debut 20 eme",
-      "src": "/images/uploads/01.jpg",
-      "alt": "Route de la chapelle debut 20 eme"
     }
   ]
 }
