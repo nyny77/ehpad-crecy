@@ -99,13 +99,6 @@
       "alt": "Vue aérienne des années 1970 montrant la construction du collège voisin et la première extension de l'EHPAD"
     },
     {
-      "id": "hist-1",
-      "category": "other",
-      "title": "Le Grand Morin",
-      "src": "/images/history/canal.jpg",
-      "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
-    },
-    {
       "id": "img-aerial3",
       "category": "garden",
       "src": "/images/uploads/mrc2.jpg",
@@ -146,6 +139,13 @@
       "title": "Le Marché",
       "src": "/images/history/marche.jpg",
       "alt": "Le marché traditionnel de Crécy-la-Chapelle avec ses étals et ses habitants."
+    },
+    {
+      "id": "hist-1",
+      "category": "other",
+      "title": "Le Grand Morin",
+      "src": "/images/history/canal.jpg",
+      "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
     }
   ]
 }
