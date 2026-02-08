@@ -106,6 +106,20 @@
       "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
     },
     {
+      "id": "img-aerial4",
+      "category": "garden",
+      "src": "/images/uploads/mrc3.jpg",
+      "title": "Vue aérienne",
+      "alt": "Photographie "
+    },
+    {
+      "id": "img-aerial5",
+      "category": "garden",
+      "src": "/images/uploads/mrc4.jpg",
+      "title": "Vue aérienne",
+      "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement."
+    },
+    {
       "id": "hist-2",
       "category": "other",
       "title": "La Collégiale",
@@ -132,20 +146,6 @@
       "src": "/images/uploads/mrc2.jpg",
       "title": "Vue aérienne",
       "alt": "Vue aérienne"
-    },
-    {
-      "id": "img-aerial4",
-      "category": "garden",
-      "src": "/images/uploads/mrc3.jpg",
-      "title": "Vue aérienne",
-      "alt": "Photographie "
-    },
-    {
-      "id": "img-aerial5",
-      "category": "garden",
-      "src": "/images/uploads/mrc4.jpg",
-      "title": "Vue aérienne",
-      "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement."
     }
   ]
 }
