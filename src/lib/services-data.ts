@@ -87,8 +87,7 @@ Elle organise également des événements festifs tout au long de l'année : fê
             { time: "16:30", activity: "Goûter et fin des activités" },
         ],
         skills: ["Créativité", "Dynamisme", "Écoute", "Adaptabilité", "Organisation"],
-        quote: "L'animation, c'est mettre de la vie dans les jours, quand on ne peut plus ajouter de jours à la vie.",
-        training: "BPJEPS Animation Sociale / DEJEPS"
+        quote: "L'animation, c'est mettre de la vie dans les jours, quand on ne peut plus ajouter de jours à la vie."
     },
     {
         id: "cuisine",
@@ -116,8 +115,7 @@ Les régimes particuliers sont scrupuleusement suivis (textures modifiées, sans
             { time: "14:30", activity: "Nettoyage et préparation du dîner" },
         ],
         skills: ["Cuisine traditionnelle", "Hygiène HACCP", "Créativité", "Textures modifiées", "Rigueur"],
-        quote: "La cuisine est un acte d'amour, surtout quand elle ravive les souvenirs gustatifs de nos aînés.",
-        training: "CAP/BEP Cuisine / Formation Hôtelière"
+        quote: "La cuisine est un acte d'amour, surtout quand elle ravive les souvenirs gustatifs de nos aînés."
     },
     {
         id: "bienetre",
@@ -145,8 +143,7 @@ Au-delà de l'aspect esthétique, elle participe au maintien des liens sociaux. 
             { time: "16:00", activity: "Derniers soins et discussions" },
         ],
         skills: ["Coiffure", "Douceur", "Écoute active", "Patience", "Esthétique"],
-        quote: "Se sentir beau, c'est se sentir vivant. La coiffure est un soin de l'estime de soi.",
-        training: "CAP/BP Coiffure"
+        quote: "Se sentir beau, c'est se sentir vivant. La coiffure est un soin de l'estime de soi."
     },
     {
         id: "kine",
@@ -173,8 +170,7 @@ Il travaille en étroite collaboration avec l'équipe soignante et médicale. Ce
             { time: "15:30", activity: "Séances individuelles en chambre" },
         ],
         skills: ["Anatomie", "Pédagogie", "Douceur", "Rééducation", "Psychologie"],
-        quote: "Le mouvement, c'est la vie. Mon but est d'aider chacun à conserver son autonomie le plus longtemps possible.",
-        training: "Diplôme d'État de Masseur-Kinésithérapeute"
+        quote: "Le mouvement, c'est la vie. Mon but est d'aider chacun à conserver son autonomie le plus longtemps possible."
     },
     {
         id: "lingerie",
@@ -202,8 +198,7 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
             { time: "15:30", activity: "Petite couture et réparations" },
         ],
         skills: ["Rigueur", "Soin du linge", "Organisation", "Couture", "Discrétion"],
-        quote: "Prendre soin des vêtements, c'est prendre soin de l'identité et de la dignité de chacun.",
-        training: "CAP Métiers de l'entretien des textiles"
+        quote: "Prendre soin des vêtements, c'est prendre soin de l'identité et de la dignité de chacun."
     },
     {
         id: "admin",
@@ -231,8 +226,7 @@ Il vous accueille avec chaleur et disponibilité. De la constitution du dossier 
             { time: "16:00", activity: "Renseignements aux familles" },
         ],
         skills: ["Organisation", "Accueil", "Bureautique", "Discrétion", "Empathie"],
-        quote: "Le sourire à l'accueil est la première étape du prendre soin.",
-        training: "Bac Pro Gestion-Administration / BTS"
+        quote: "Le sourire à l'accueil est la première étape du prendre soin."
     },
     {
         id: "technique",
@@ -260,8 +254,7 @@ Leur champ d'action est vaste : sécurité incendie, maintenance préventive et 
             { time: "16:00", activity: "Maintenance préventive matériel" },
         ],
         skills: ["Polyvalence", "Électricité/Plomberie", "Sécurité Incendie", "Réactivité", "Bricolage"],
-        quote: "Notre mission : que tout fonctionne parfaitement pour le confort et la sécurité de tous.",
-        training: "CAP/Bac Pro Maintenance / SSIAP / Habilitation Électrique"
+        quote: "Notre mission : que tout fonctionne parfaitement pour le confort et la sécurité de tous."
     },
     {
         id: "hotelier",
@@ -289,8 +282,7 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
             { time: "15:00", activity: "Nettoyage approfondi périodique" },
         ],
         skills: ["Hygiène", "Rigueur", "Discrétion", "Respect de l'intimité", "Ponctualité"],
-        quote: "Un environnement propre et sain est la base du bien-être des résidents.",
-        training: "CAP Agent de Propreté et d'Hygiène"
+        quote: "Un environnement propre et sain est la base du bien-être des résidents."
     },
     {
         id: "rh",
@@ -318,8 +310,7 @@ Au-delà de la gestion administrative, elle porte une attention particulière à
             { time: "16:00", activity: "Écoute et dialogue social" },
         ],
         skills: ["Droit du travail", "Écoute", "Gestion administrative", "Médiation", "Organisation"],
-        quote: "Prendre soin de ceux qui soignent, c'est garantir la qualité de l'accompagnement de nos aînés.",
-        training: "Master Ressources Humaines"
+        quote: "Prendre soin de ceux qui soignent, c'est garantir la qualité de l'accompagnement de nos aînés."
     },
     {
         id: "direction",
@@ -347,8 +338,7 @@ Accessible et à l'écoute, elle accorde une importance particulière à la comm
             { time: "16:00", activity: "Réunions projets et partenaires" },
         ],
         skills: ["Management", "Gestion financière", "Vision stratégique", "Communication", "Leadership"],
-        quote: "Diriger un EHPAD, c'est orchestrer une partition humaine où chaque note compte pour l'harmonie générale.",
-        training: "CAFDES / Master Management ESMS"
+        quote: "Diriger un EHPAD, c'est orchestrer une partition humaine où chaque note compte pour l'harmonie générale."
     },
     {
         id: "psychologue",
@@ -376,8 +366,7 @@ Auprès des familles, il propose un soutien dans les moments de questionnement, 
             { time: "16:30", activity: "Élaboration des Projets Personnalisés" },
         ],
         skills: ["Psychologie clinique", "Écoute active", "Analyse", "Empathie", "Travail d'équipe"],
-        quote: "Mettre des mots sur les maux pour apaiser l'esprit et redonner du sens au quotidien.",
-        training: "Master Psychologie Clinique / Gérontologie"
+        quote: "Mettre des mots sur les maux pour apaiser l'esprit et redonner du sens au quotidien."
     },
     {
         id: "idec",
@@ -405,8 +394,7 @@ L'IDEC est également l'interlocutrice privilégiée des familles pour toutes le
             { time: "16:00", activity: "Rencontres familles et projets de soins" },
         ],
         skills: ["Management d'équipe", "Organisation", "Expertise soins", "Pédagogie", "Rigueur"],
-        quote: "Coordonner les soins, c'est garantir que chaque résident reçoive l'attention juste et nécessaire au bon moment.",
-        training: "Diplôme d'État Infirmier + DU Cadre de Santé / Management"
+        quote: "Coordonner les soins, c'est garantir que chaque résident reçoive l'attention juste et nécessaire au bon moment."
     },
     {
         id: "medecins",
@@ -434,8 +422,7 @@ Cette organisation permet de maintenir une relation de confiance établie de lon
             { time: "Familles", activity: "Information aux proches si nécessaire" },
         ],
         skills: ["Médecine générale", "Gériatrie", "Écoute", "Disponibilité", "Coordination"],
-        quote: "La médecine en EHPAD, c'est avant tout une médecine de proximité et de continuité.",
-        training: "Doctorat en Médecine"
+        quote: "La médecine en EHPAD, c'est avant tout une médecine de proximité et de continuité."
     },
     {
         id: "benevoles",
@@ -463,7 +450,6 @@ Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent 
             { time: "Fin", activity: "Retour d'expérience avec l'équipe" },
         ],
         skills: ["Générosité", "Écoute", "Patience", "Bonne humeur", "Disponibilité"],
-        quote: "Donner de son temps, c'est recevoir en retour des sourires inestimables.",
-        training: "Aucun diplôme requis, juste du cœur"
+        quote: "Donner de son temps, c'est recevoir en retour des sourires inestimables."
     }
 ];
