@@ -39,15 +39,15 @@ export default function EquipePage() {
                         transition={{ duration: 0.6 }}
                         className="max-w-4xl mx-auto text-center"
                     >
-                        <span className="inline-block text-terracotta-100 font-medium mb-4">
+                        <span className="inline-block !text-white font-medium mb-4">
                             Rejoignez-nous
                         </span>
 
-                        <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">
+                        <h2 className="font-serif text-3xl md:text-4xl !text-white mb-6">
                             Vous souhaitez rejoindre notre équipe ?
                         </h2>
 
-                        <p className="text-lg text-white/90 mb-8">
+                        <p className="text-lg !text-white mb-8">
                             L&apos;EHPAD de Crécy est toujours à la recherche de professionnels
                             motivés et bienveillants. Si vous partagez nos valeurs,
                             n&apos;hésitez pas à nous contacter.
