@@ -32,7 +32,7 @@ export default function CTASection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6 }}
-                        className="inline-block text-cream-200 font-medium mb-4"
+                        className="inline-block !text-white font-medium mb-4"
                     >
                         Prêt à nous rencontrer ?
                     </motion.span>
@@ -41,7 +41,7 @@ export default function CTASection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-6"
+                        className="font-serif text-3xl md:text-4xl lg:text-5xl !text-white mb-6"
                     >
                         Venez découvrir notre établissement
                     </motion.h2>
@@ -50,7 +50,7 @@ export default function CTASection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-cream-100 mb-10 max-w-2xl mx-auto"
+                        className="text-lg md:text-xl !text-white mb-10 max-w-2xl mx-auto"
                     >
                         Nous serons ravis de vous accueillir pour une visite personnalisée
                         et répondre à toutes vos questions.
