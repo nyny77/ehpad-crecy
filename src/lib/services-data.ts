@@ -18,6 +18,18 @@ Nos aides-soignants sont présents 24h/24, de jour comme de nuit, pour accompagn
         ],
         image: "/images/services/soignants.png",
         detailImage: "/images/services/soignants.png",
+        dailyRoutine: [
+            { time: "07:00", activity: "Transmissions et début des toilettes" },
+            { time: "08:30", activity: "Aide au petit-déjeuner en chambre ou salle" },
+            { time: "10:00", activity: "Soins de confort et nursing" },
+            { time: "12:00", activity: "Aide au repas du midi" },
+            { time: "14:00", activity: "Transmissions équipe d'après-midi" },
+            { time: "15:00", activity: "Animations et goûter" },
+            { time: "18:30", activity: "Aide au repas du soir et couchers" },
+        ],
+        skills: ["Empathie", "Patience", "Gestes de soins", "Travail d'équipe", "Observation"],
+        quote: "Chaque sourire d'un résident est une victoire, chaque geste de confort est notre mission.",
+        training: "Diplôme d'État d'Aide-Soignant (DEAS)"
     },
     {
         id: "infirmiere",
@@ -37,6 +49,17 @@ Au-delà des soins techniques, nos infirmières apportent une présence rassuran
         ],
         image: "/images/services/infirmiere.png",
         detailImage: "/images/services/infirmiere.png",
+        dailyRoutine: [
+            { time: "06:45", activity: "Transmissions et préparation des traitements" },
+            { time: "08:00", activity: "Tour des soins, pansements, injections" },
+            { time: "11:00", activity: "Visite avec les médecins" },
+            { time: "12:00", activity: "Distribution des médicaments" },
+            { time: "14:00", activity: "RDV familles et transmissions" },
+            { time: "16:00", activity: "Gestion des urgences et surveillance" },
+        ],
+        skills: ["Technicité", "Rigueur", "Relationnel", "Gestion de l'urgence", "Coordination"],
+        quote: "Soigner, c'est aussi écouter, rassurer et prendre soin de l'autre dans sa globalité.",
+        training: "Diplôme d'État d'Infirmier (IDE)"
     },
     {
         id: "animation",
@@ -56,6 +79,16 @@ Elle organise également des événements festifs tout au long de l'année : fê
         ],
         image: "/images/services/animation.png",
         detailImage: "/images/services/animation.png",
+        dailyRoutine: [
+            { time: "09:30", activity: "Revue de presse et discussion" },
+            { time: "10:30", activity: "Atelier mémoire ou gymnastique douce" },
+            { time: "12:00", activity: "Déjeuner convivial" },
+            { time: "14:30", activity: "Grande animation (Loto, Chant, Cinéma...)" },
+            { time: "16:30", activity: "Goûter et fin des activités" },
+        ],
+        skills: ["Créativité", "Dynamisme", "Écoute", "Adaptabilité", "Organisation"],
+        quote: "L'animation, c'est mettre de la vie dans les jours, quand on ne peut plus ajouter de jours à la vie.",
+        training: "BPJEPS Animation Sociale / DEJEPS"
     },
     {
         id: "cuisine",
@@ -75,25 +108,45 @@ Les régimes particuliers sont scrupuleusement suivis (textures modifiées, sans
         ],
         image: "/images/services/cuisine.png",
         detailImage: "/images/services/cuisine.png",
+        dailyRoutine: [
+            { time: "07:00", activity: "Réception des denrées fraîches" },
+            { time: "08:30", activity: "Préparation des entrées et desserts" },
+            { time: "10:00", activity: "Lancement des cuissons chaudes" },
+            { time: "11:30", activity: "Dressage et envoi en salle" },
+            { time: "14:30", activity: "Nettoyage et préparation du dîner" },
+        ],
+        skills: ["Cuisine traditionnelle", "Hygiène HACCP", "Créativité", "Textures modifiées", "Rigueur"],
+        quote: "La cuisine est un acte d'amour, surtout quand elle ravive les souvenirs gustatifs de nos aînés.",
+        training: "CAP/BEP Cuisine / Formation Hôtelière"
     },
     {
         id: "bienetre",
         title: "La coiffeuse",
         subtitle: "Bien-être & Moments de détente",
         shortDescription: "Des moments privilégiés pour prendre soin de soi.",
-        fullDescription: `Le salon de coiffure est un espace dédié au bien-être. La coiffeuse vous accueille dans une ambiance chaleureuse et apaisante, où chaque résident peut prendre soin de lui et se faire chouchouter.
+        fullDescription: `Le salon de coiffure, ouvert une fois par semaine, est un espace dédié au bien-être. La coiffeuse vous accueille dans une ambiance chaleureuse et apaisante, où chaque résident peut prendre soin de lui et se faire chouchouter.
 
 Ces moments sont précieux : ils permettent de préserver sa coquetterie, de maintenir une image positive de soi et de retrouver des habitudes réconfortantes du passé. C'est aussi l'occasion d'échanges privilégiés, de confiances partagées avec la coiffeuse.
 
 Au-delà de l'aspect esthétique, elle participe au maintien des liens sociaux. Elle offre un lieu de vie où l'on prend le temps, où l'on écoute, où l'on partage un moment de complicité.`,
         highlights: [
+            "Présence hebdomadaire",
             "Coupe et coiffage",
-            "Soins et mise en beauté",
             "Moment de détente privilégié",
             "Échanges et écoute",
         ],
         image: "/images/services/bienetre.png",
         detailImage: "/images/services/bienetre.png",
+        dailyRoutine: [
+            { time: "09:00", activity: "Ouverture du salon et accueil" },
+            { time: "09:15", activity: "Coupes et mises en plis" },
+            { time: "11:30", activity: "Rangement du salon" },
+            { time: "14:00", activity: "Visites en chambre pour les moins mobiles" },
+            { time: "16:00", activity: "Derniers soins et discussions" },
+        ],
+        skills: ["Coiffure", "Douceur", "Écoute active", "Patience", "Esthétique"],
+        quote: "Se sentir beau, c'est se sentir vivant. La coiffure est un soin de l'estime de soi.",
+        training: "CAP/BP Coiffure"
     },
     {
         id: "kine",
@@ -113,6 +166,15 @@ Il travaille en étroite collaboration avec l'équipe soignante et médicale. Ce
         ],
         image: "/images/services/kine.png",
         detailImage: "/images/services/kine.png",
+        dailyRoutine: [
+            { time: "09:00", activity: "Prise en charge individuelle en chambre" },
+            { time: "11:00", activity: "Aide à la marche dans les étages" },
+            { time: "14:00", activity: "Rééducation et maintien de l'autonomie" },
+            { time: "15:30", activity: "Séances individuelles en chambre" },
+        ],
+        skills: ["Anatomie", "Pédagogie", "Douceur", "Rééducation", "Psychologie"],
+        quote: "Le mouvement, c'est la vie. Mon but est d'aider chacun à conserver son autonomie le plus longtemps possible.",
+        training: "Diplôme d'État de Masseur-Kinésithérapeute"
     },
     {
         id: "lingerie",
@@ -132,17 +194,27 @@ Au-delà de l'aspect pratique, la lingerie est aussi un lieu d'échanges. Les mo
         ],
         image: "/images/services/lingerie.png",
         detailImage: "/images/services/lingerie.png",
+        dailyRoutine: [
+            { time: "08:00", activity: "Réception du linge sale et tri" },
+            { time: "09:30", activity: "Lancement des machines" },
+            { time: "11:00", activity: "Repassage et pliage soigné" },
+            { time: "14:00", activity: "Distribution du linge propre en chambre" },
+            { time: "15:30", activity: "Petite couture et réparations" },
+        ],
+        skills: ["Rigueur", "Soin du linge", "Organisation", "Couture", "Discrétion"],
+        quote: "Prendre soin des vêtements, c'est prendre soin de l'identité et de la dignité de chacun.",
+        training: "CAP Métiers de l'entretien des textiles"
     },
     {
         id: "admin",
-        title: "L'agente administrative",
+        title: "L'agent administratif",
         subtitle: "Accueil, Administration & Facturation",
         shortDescription: "Un accueil chaleureux et une gestion rigoureuse des dossiers et facturations.",
-        fullDescription: `L'agente administrative de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
+        fullDescription: `L'agent administratif de l'EHPAD de Crécy, en lien avec la direction multisite et le service RH, est un pilier de notre organisation.
 
-Bien plus qu'une simple gestionnaire, elle joue un rôle central. Elle assure l'interface administrative tout en veillant à la qualité de l'accueil.
+Bien plus qu'un simple gestionnaire, il joue un rôle central. Il assure l'interface administrative tout en veillant à la qualité de l'accueil.
 
-Elle vous accueille avec chaleur et disponibilité. De la constitution du dossier à la gestion des facturations (résidents et prestataires), elle vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
+Il vous accueille avec chaleur et disponibilité. De la constitution du dossier à la gestion des facturations (résidents et prestataires), il vous accompagne à chaque étape, assurant un lien fluide entre les familles, les résidents et l'établissement.`,
         highlights: [
             "Accueil personnalisé",
             "Facturation résidents & prestataires",
@@ -151,6 +223,16 @@ Elle vous accueille avec chaleur et disponibilité. De la constitution du dossie
         ],
         image: "/images/services/admin.png",
         detailImage: "/images/services/admin.png",
+        dailyRoutine: [
+            { time: "09:00", activity: "Accueil physique et téléphonique" },
+            { time: "10:00", activity: "Gestion des dossiers d'admission" },
+            { time: "11:30", activity: "Courrier et messagerie" },
+            { time: "14:00", activity: "Facturation et comptabilité" },
+            { time: "16:00", activity: "Renseignements aux familles" },
+        ],
+        skills: ["Organisation", "Accueil", "Bureautique", "Discrétion", "Empathie"],
+        quote: "Le sourire à l'accueil est la première étape du prendre soin.",
+        training: "Bac Pro Gestion-Administration / BTS"
     },
     {
         id: "technique",
@@ -170,6 +252,16 @@ Leur champ d'action est vaste : sécurité incendie, maintenance préventive et 
         ],
         image: "/images/services/technique.png",
         detailImage: "/images/services/technique.png",
+        dailyRoutine: [
+            { time: "08:00", activity: "Tour de contrôle sécurité et chaufferie" },
+            { time: "09:00", activity: "Réparations courantes dans les chambres" },
+            { time: "11:00", activity: "Entretien des espaces verts" },
+            { time: "14:00", activity: "Suivi des entreprises extérieures" },
+            { time: "16:00", activity: "Maintenance préventive matériel" },
+        ],
+        skills: ["Polyvalence", "Électricité/Plomberie", "Sécurité Incendie", "Réactivité", "Bricolage"],
+        quote: "Notre mission : que tout fonctionne parfaitement pour le confort et la sécurité de tous.",
+        training: "CAP/Bac Pro Maintenance / SSIAP / Habilitation Électrique"
     },
     {
         id: "hotelier",
@@ -189,6 +281,16 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
         ],
         image: "/images/services/hotelier.png",
         detailImage: "/images/services/hotelier.png",
+        dailyRoutine: [
+            { time: "08:00", activity: "Bio-nettoyage des chambres" },
+            { time: "10:30", activity: "Entretien des parties communes" },
+            { time: "12:00", activity: "Service du déjeuner en salle" },
+            { time: "14:00", activity: "Remise en ordre de la salle à manger" },
+            { time: "15:00", activity: "Nettoyage approfondi périodique" },
+        ],
+        skills: ["Hygiène", "Rigueur", "Discrétion", "Respect de l'intimité", "Ponctualité"],
+        quote: "Un environnement propre et sain est la base du bien-être des résidents.",
+        training: "CAP Agent de Propreté et d'Hygiène"
     },
     {
         id: "rh",
@@ -208,6 +310,16 @@ Au-delà de la gestion administrative, elle porte une attention particulière à
         ],
         image: "/images/services/rh.png",
         detailImage: "/images/services/rh.png",
+        dailyRoutine: [
+            { time: "09:00", activity: "Gestion des plannings et remplacements" },
+            { time: "10:30", activity: "Entretiens de recrutement" },
+            { time: "12:00", activity: "Paie et administration du personnel" },
+            { time: "14:00", activity: "Plan de formation et carrières" },
+            { time: "16:00", activity: "Écoute et dialogue social" },
+        ],
+        skills: ["Droit du travail", "Écoute", "Gestion administrative", "Médiation", "Organisation"],
+        quote: "Prendre soin de ceux qui soignent, c'est garantir la qualité de l'accompagnement de nos aînés.",
+        training: "Master Ressources Humaines"
     },
     {
         id: "direction",
@@ -227,6 +339,16 @@ Accessible et à l'écoute, elle accorde une importance particulière à la comm
         ],
         image: "/images/services/direction.png",
         detailImage: "/images/services/direction.png",
+        dailyRoutine: [
+            { time: "08:30", activity: "Point avec les équipes encadrantes" },
+            { time: "10:00", activity: "Visite de l'établissement" },
+            { time: "11:00", activity: "Gestion budgétaire et administrative" },
+            { time: "14:00", activity: "Rencontres familles et résidents" },
+            { time: "16:00", activity: "Réunions projets et partenaires" },
+        ],
+        skills: ["Management", "Gestion financière", "Vision stratégique", "Communication", "Leadership"],
+        quote: "Diriger un EHPAD, c'est orchestrer une partition humaine où chaque note compte pour l'harmonie générale.",
+        training: "CAFDES / Master Management ESMS"
     },
     {
         id: "psychologue",
@@ -246,6 +368,16 @@ Auprès des familles, il propose un soutien dans les moments de questionnement, 
         ],
         image: "/images/services/psychologue.png",
         detailImage: "/images/services/psychologue.png",
+        dailyRoutine: [
+            { time: "09:00", activity: "Entretiens individuels résidents" },
+            { time: "11:00", activity: "Atelier mémoire ou groupe de parole" },
+            { time: "13:30", activity: "Réunion d'équipe pluridisciplinaire" },
+            { time: "15:00", activity: "Soutien aux familles" },
+            { time: "16:30", activity: "Élaboration des Projets Personnalisés" },
+        ],
+        skills: ["Psychologie clinique", "Écoute active", "Analyse", "Empathie", "Travail d'équipe"],
+        quote: "Mettre des mots sur les maux pour apaiser l'esprit et redonner du sens au quotidien.",
+        training: "Master Psychologie Clinique / Gérontologie"
     },
     {
         id: "idec",
@@ -265,6 +397,16 @@ L'IDEC est également l'interlocutrice privilégiée des familles pour toutes le
         ],
         image: "/images/services/idec.png",
         detailImage: "/images/services/idec.png",
+        dailyRoutine: [
+            { time: "08:00", activity: "Transmissions avec l'équipe de nuit" },
+            { time: "09:00", activity: "Supervision des soins et planification" },
+            { time: "11:00", activity: "Visite avec les médecins" },
+            { time: "14:00", activity: "Gestion des admissions et sorties" },
+            { time: "16:00", activity: "Rencontres familles et projets de soins" },
+        ],
+        skills: ["Management d'équipe", "Organisation", "Expertise soins", "Pédagogie", "Rigueur"],
+        quote: "Coordonner les soins, c'est garantir que chaque résident reçoive l'attention juste et nécessaire au bon moment.",
+        training: "Diplôme d'État Infirmier + DU Cadre de Santé / Management"
     },
     {
         id: "medecins",
@@ -284,6 +426,16 @@ Cette organisation permet de maintenir une relation de confiance établie de lon
         ],
         image: "/images/services/medecins.png",
         detailImage: "/images/services/medecins.png",
+        dailyRoutine: [
+            { time: "Variable", activity: "Visites hebdomadaires planifiées" },
+            { time: "Sur demande", activity: "Consultations d'urgence" },
+            { time: "Coordination", activity: "Échanges avec l'IDEC et les infirmiers" },
+            { time: "Dossier", activity: "Mise à jour du dossier médical informatisé" },
+            { time: "Familles", activity: "Information aux proches si nécessaire" },
+        ],
+        skills: ["Médecine générale", "Gériatrie", "Écoute", "Disponibilité", "Coordination"],
+        quote: "La médecine en EHPAD, c'est avant tout une médecine de proximité et de continuité.",
+        training: "Doctorat en Médecine"
     },
     {
         id: "benevoles",
@@ -303,5 +455,15 @@ Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent 
         ],
         image: "/images/services/benevoles.png",
         detailImage: "/images/services/benevoles.png",
-    },
+        dailyRoutine: [
+            { time: "Après-midi", activity: "Arrivée et accueil par l'animatrice" },
+            { time: "Activité", activity: "Animation d'atelier ou visites individuelles" },
+            { time: "Goûter", activity: "Aide au service et partage convivial" },
+            { time: "Échange", activity: "Discussion informelle avec les résidents" },
+            { time: "Fin", activity: "Retour d'expérience avec l'équipe" },
+        ],
+        skills: ["Générosité", "Écoute", "Patience", "Bonne humeur", "Disponibilité"],
+        quote: "Donner de son temps, c'est recevoir en retour des sourires inestimables.",
+        training: "Aucun diplôme requis, juste du cœur"
+    }
 ];

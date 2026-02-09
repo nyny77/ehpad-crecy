@@ -33,11 +33,10 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                         href="/admin/#/collections/blog/new"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-3 bg-terracotta-500 !text-white font-medium rounded-full shadow-warm hover:bg-terracotta-600 transition-colors"
+                        className="flex items-center gap-2 px-6 py-3 !text-white rounded-full shadow-lg hover:shadow-xl transition-all font-bold"
+                        style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
+                        <span className="text-xl">+</span>
                         Nouvel article
                     </Link>
                 )}
@@ -57,6 +56,7 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                                 article={article}
                                 onClick={() => setSelectedArticle(article)}
                                 isAdmin={false} // On désactive l'édition directe sur la carte
+                                index={index}
                             />
                         </motion.div>
                     ))}

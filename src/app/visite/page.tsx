@@ -6,7 +6,7 @@ import PanoramaViewer from "@/components/virtual-tour/PanoramaViewer";
 
 export default function VisitePage() {
     return (
-        <main className="min-h-screen bg-cream-50">
+        <main className="min-h-screen bg-cream-100">
             <PageHeader
                 title="Visite Virtuelle"
                 subtitle="Découvrez notre établissement comme si vous y étiez"
@@ -14,7 +14,7 @@ export default function VisitePage() {
                 image="/images/global-hero.jpg"
             />
 
-            <Section className="py-12">
+            <Section className="pt-12 pb-32">
                 <div className="container-custom space-y-12">
 
                     {/* Section Grand Salon */}
@@ -36,6 +36,7 @@ export default function VisitePage() {
                             <PanoramaViewer
                                 imagePath="/images/jardin-360.jpg"
                                 title="Le petit jardin en hiver"
+                                initialYaw={0}
                             />
                         </div>
                     </div>

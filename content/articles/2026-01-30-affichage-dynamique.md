@@ -1,6 +1,6 @@
 ---
 title: Affichage dynamique
-date: 2026-01-30T11:20:00.000+01:00
+date: 2026-02-07T14:29:00.000+01:00
 category: activite
 image: /images/uploads/20260130_110334.jpg
 excerpt: Pour ne rien rater des actus !

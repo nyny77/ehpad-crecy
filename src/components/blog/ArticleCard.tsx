@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useTransform, useTime } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
 
 interface ArticleCardProps {
@@ -9,19 +9,15 @@ interface ArticleCardProps {
     onClick?: () => void;
     isAdmin?: boolean;
     onDelete?: () => void;
+    index?: number;
 }
 
-export default function ArticleCard({ article, onClick, isAdmin, onDelete }: ArticleCardProps) {
+export default function ArticleCard({ article, onClick, isAdmin, onDelete, index = 0 }: ArticleCardProps) {
     const categoryInfo = getCategoryInfo(article.category);
     const [isFavorite, setIsFavorite] = useState(false);
-    const cardRef = useRef<HTMLDivElement>(null);
 
-    // --- Automatic Floating Logic ---
-    const time = useTime();
 
-    // Automatic gentle floating animation
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
+
 
     useEffect(() => {
         // Vérifier si l'article est dans les favoris
@@ -59,23 +55,26 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
         });
     };
 
+
+
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="relative group h-full"
         >
-            <div
-                ref={cardRef}
-                style={{ perspective: "1000px" }}
+
+
+            <motion.div
+                className="h-full"
             >
                 <motion.article
-                    style={{ rotateX, rotateY }}
-                    className="group relative bg-white rounded-2xl shadow-soft overflow-hidden hover:shadow-warm transition-shadow duration-300"
+                    className="group relative bg-cream-50 rounded-2xl shadow-soft overflow-hidden h-full flex flex-col transition-shadow duration-300 hover:shadow-2xl"
                 >
                     {/* Image ou placeholder */}
-                    <div className="relative h-48 bg-gradient-to-br from-terracotta-100 to-forest-100 overflow-hidden">
+                    <div className="relative h-48 bg-gradient-to-br from-terracotta-100 to-forest-100 overflow-hidden shrink-0">
                         {article.image ? (
                             <img
                                 src={article.image}
@@ -114,8 +113,26 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
                         )}
                     </div>
 
+                    {/* Effet de brillance auto qui passe de temps en temps */}
+                    <motion.div
+                        className="absolute inset-0 pointer-events-none z-20"
+                        style={{
+                            background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 45%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.3) 55%, transparent 60%)",
+                        }}
+                        initial={{ x: "-100%" }}
+                        animate={{ x: "200%" }}
+                        transition={{
+                            repeat: Infinity,
+                            repeatDelay: 5 + (index % 4),
+                            duration: 1.5,
+                            ease: "easeInOut",
+                            delay: index * 0.5
+                        }}
+                    />
+
+
                     {/* Contenu */}
-                    <div className="p-5">
+                    <div className="p-5 flex flex-col flex-grow">
                         {/* Date */}
                         <div className="flex items-center justify-between mb-2">
                             <p className="text-sm text-charcoal-500">
@@ -171,7 +188,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete }: Art
                         </div>
                     </div>
                 </motion.article>
-            </div>
-        </motion.div>
+            </motion.div>
+        </motion.div >
     );
 }

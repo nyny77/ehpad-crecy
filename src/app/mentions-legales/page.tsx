@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function MentionsLegalesPage() {
     return (
-        <main className="min-h-screen bg-cream-50 pt-32 pb-20">
+        <main className="min-h-screen bg-cream-100 pt-32 pb-20">
             <div className="container-custom">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900 mb-8">
@@ -17,7 +17,7 @@ export default function MentionsLegalesPage() {
 
                     <div className="prose prose-lg max-w-none text-charcoal-700 space-y-8">
                         {/* Éditeur */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 1. Éditeur du site
                             </h2>
@@ -34,17 +34,17 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Directeur de publication */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 2. Directeur de la publication
                             </h2>
                             <p>
-                                Le directeur de la publication est la Directrice de l&apos;établissement.
+                                Le directeur de la publication est le Webmaster.
                             </p>
                         </section>
 
                         {/* Hébergement */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 3. Hébergement
                             </h2>
@@ -61,7 +61,7 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Propriété intellectuelle */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 4. Propriété intellectuelle
                             </h2>
@@ -78,7 +78,7 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Responsabilité */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 5. Limitation de responsabilité
                             </h2>
@@ -96,7 +96,7 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Liens hypertextes */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 6. Liens hypertextes
                             </h2>
@@ -109,7 +109,7 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Droit applicable */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 7. Droit applicable
                             </h2>
@@ -120,7 +120,7 @@ export default function MentionsLegalesPage() {
                         </section>
 
                         {/* Crédits */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 8. Crédits
                             </h2>

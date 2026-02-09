@@ -10,13 +10,16 @@ import PrivateGallery from "@/components/social/PrivateGallery";
 import BlogGrid from "@/components/blog/BlogGrid";
 import DayTimeline from "@/components/social/DayTimeline";
 import { BlogPost } from "@/lib/blog";
-import { isAuthenticated, isAdmin, logout, onAuthChange, openLoginWidget } from "@/lib/netlifyAuth";
+import { isAuthenticated, isAdmin, logout, onAuthChange, openLoginWidget, isPendingValidation } from "@/lib/netlifyAuth";
 import AuthSelectionModal from "@/components/auth/AuthSelectionModal";
 import SignupModal from "@/components/auth/SignupModal";
+import RegistrationSuccessModal from "@/components/auth/RegistrationSuccessModal";
 
 interface VieSocialeClientProps {
     initialArticles: BlogPost[];
 }
+
+// ...ActivityCard code...
 
 // Styles copied and adapted from IntroSection.tsx
 const activityStyles = {
@@ -171,12 +174,14 @@ function ActivityCard({ activity, index }: { activity: any, index: number }) {
 export default function VieSocialeClient({ initialArticles }: VieSocialeClientProps) {
     const [authenticated, setAuthenticated] = useState(false);
     const [adminMode, setAdminMode] = useState(false);
+    const [isPending, setIsPending] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     // Onglet actif : 'news' ou 'gallery'
     const [activeTab, setActiveTab] = useState<"news" | "gallery">("news");
     const [showAuthChoice, setShowAuthChoice] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     useEffect(() => {
         // Initial check
@@ -184,6 +189,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             const isAuth = isAuthenticated();
             setAuthenticated(isAuth);
             setAdminMode(isAdmin());
+            setIsPending(isPendingValidation());
             setIsLoading(false);
         };
 
@@ -252,93 +258,173 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                     ) : (
                         <div className="relative">
                             {authenticated ? (
-                                <>
-                                    {/* Navigation des Onglets */}
-                                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-2">
-                                        <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex gap-4">
-                                            <motion.button
-                                                onClick={() => setActiveTab("news")}
-                                                animate={activeTab === "news" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-                                                transition={{
-                                                    duration: 1.5,
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut"
-                                                }}
-                                                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "news"
-                                                    ? "bg-terracotta-500 text-white shadow-md relative z-10"
-                                                    : "!text-charcoal-800 hover:bg-cream-50"
-                                                    }`}
-                                            >
-                                                Blog
-                                            </motion.button>
-                                            <motion.button
-                                                onClick={() => setActiveTab("gallery")}
-                                                animate={activeTab === "gallery" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-                                                transition={{
-                                                    duration: 1.5,
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut"
-                                                }}
-                                                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "gallery"
-                                                    ? "bg-terracotta-500 text-white shadow-md relative z-10"
-                                                    : "!text-charcoal-800 hover:bg-cream-50"
-                                                    }`}
-                                            >
-                                                Galerie Privée 🔒
-                                            </motion.button>
+                                isPending ? (
+                                    // Ecran d'attente de validation
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="w-full max-w-2xl mx-auto text-center bg-white rounded-3xl p-10 shadow-xl border border-cream-200"
+                                    >
+                                        <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center">
+                                            <svg className="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
                                         </div>
-
-                                        <div className="flex items-center gap-3">
-                                            {adminMode && (
-                                                <>
-                                                    <a
-                                                        href="/admin/#/collections/gazette"
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
-                                                        title="Modifier le Petit echo du coeur"
-                                                    >
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                                        </svg>
-                                                        Up Echo du coeur
-                                                    </a>
-                                                    <button
-                                                        onClick={handleNotify}
-                                                        className="flex items-center gap-2 px-3 py-2 bg-terracotta-500 !text-white font-medium rounded-full hover:bg-terracotta-600 transition-colors text-sm cursor-pointer"
-                                                        title="Envoyer un email aux familles"
-                                                    >
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                                        </svg>
-                                                        Notifier
-                                                    </button>
-                                                </>
-                                            )}
-
+                                        <h3 className="font-serif text-2xl md:text-3xl mb-4 font-bold text-charcoal-900">
+                                            Compte en attente de validation
+                                        </h3>
+                                        <p className="text-charcoal-600 text-lg mb-8 leading-relaxed">
+                                            Votre inscription a bien été enregistrée. Pour des raisons de sécurité et de confidentialité,
+                                            l'accès à l'espace "Vie Sociale" nécessite une <strong>validation manuelle par l'administration</strong>.
+                                        </p>
+                                        <div className="bg-blue-50 text-blue-800 p-4 rounded-xl text-sm mb-8 inline-block">
+                                            <p className="flex items-center gap-2">
+                                                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Vous recevrez un email dès que votre compte sera activé.
+                                            </p>
+                                        </div>
+                                        <div>
                                             <button
                                                 onClick={handleLogout}
-                                                className="text-sm text-charcoal-500 hover:text-charcoal-800 underline underline-offset-4 cursor-pointer"
+                                                className="text-charcoal-500 hover:text-terracotta-600 font-medium underline underline-offset-4 transition-colors"
                                             >
-                                                Déconnexion
+                                                Se déconnecter et revenir à l'accueil
                                             </button>
                                         </div>
-                                    </div>
-
-                                    {/* Contenu */}
-                                    <motion.div
-                                        key={activeTab}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        {activeTab === "news" ? (
-                                            <BlogGrid articles={initialArticles} isAdminUser={adminMode} />
-                                        ) : (
-                                            <PrivateGallery />
-                                        )}
                                     </motion.div>
-                                </>
+                                ) : (
+                                    <>
+                                        {/* Navigation des Onglets */}
+                                        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-2">
+                                            <div className="bg-white p-1.5 rounded-full shadow-sm border border-cream-200 inline-flex gap-4">
+                                                <motion.button
+                                                    onClick={() => setActiveTab("news")}
+                                                    animate={activeTab === "news" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
+                                                    transition={{
+                                                        duration: 1.5,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut"
+                                                    }}
+                                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "news"
+                                                        ? "text-white shadow-md relative z-10"
+                                                        : "!text-charcoal-800 hover:bg-cream-50"
+                                                        }`}
+                                                    style={activeTab === "news" ? { background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' } : {}}
+                                                >
+                                                    Blog
+                                                </motion.button>
+                                                <motion.button
+                                                    onClick={() => setActiveTab("gallery")}
+                                                    animate={activeTab === "gallery" ? { scale: [1, 1.15, 1] } : { scale: 1 }}
+                                                    transition={{
+                                                        duration: 1.5,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut"
+                                                    }}
+                                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-colors duration-300 cursor-pointer ${activeTab === "gallery"
+                                                        ? "text-white shadow-md relative z-10"
+                                                        : "!text-charcoal-800 hover:bg-cream-50"
+                                                        }`}
+                                                    style={activeTab === "gallery" ? { background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' } : {}}
+                                                >
+                                                    Galerie Privée 🔒
+                                                </motion.button>
+                                            </div>
+
+                                            <div className="flex items-center gap-3">
+                                                {/* Bouton Gazette visible pour TOUS les utilisateurs authentifiés */}
+                                                {gazetteData?.file && (
+                                                    <a
+                                                        href={gazetteData.file}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-2 px-4 py-2.5 !text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl text-sm"
+                                                        style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
+                                                        title="Lire le Petit Echo du Coeur"
+                                                    >
+                                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                        </svg>
+                                                        Le Petit Echo du Coeur 📰
+                                                    </a>
+                                                )}
+                                                {adminMode && (
+                                                    <>
+                                                        <Link
+                                                            href="/admin-users"
+                                                            className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
+                                                            title="Gérer les utilisateurs"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                            </svg>
+                                                            Utilisateurs
+                                                        </Link>
+                                                        <a
+                                                            href="/admin/#/collections/gazette"
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
+                                                            title="Modifier le Petit echo du coeur"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                                            </svg>
+                                                            Up Echo du coeur
+                                                        </a>
+                                                        <a
+                                                            href="/admin/"
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center gap-2 px-3 py-2 bg-violet-600 !text-white font-medium rounded-full hover:bg-violet-700 transition-colors text-sm"
+                                                            title="Gérer le contenu du site (CMS)"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                            CMS
+                                                        </a>
+                                                        <button
+                                                            onClick={handleNotify}
+                                                            className="flex items-center gap-2 px-3 py-2 !text-white font-medium rounded-full transition-colors text-sm cursor-pointer"
+                                                            style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
+                                                            title="Envoyer un email aux familles"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                            </svg>
+                                                            Notifier
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="text-sm text-charcoal-500 hover:text-charcoal-800 underline underline-offset-4 cursor-pointer"
+                                                >
+                                                    Déconnexion
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Contenu */}
+                                        <motion.div
+                                            key={activeTab}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            {activeTab === "news" ? (
+                                                <BlogGrid articles={initialArticles} isAdminUser={adminMode} />
+                                            ) : (
+                                                <PrivateGallery />
+                                            )}
+                                        </motion.div>
+                                    </>
+                                )
                             ) : (
                                 // Design Premium pour inviter à se connecter
                                 <motion.div
@@ -385,7 +471,8 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                                         {/* Bouton */}
                                         <motion.button
                                             onClick={() => setShowAuthChoice(true)}
-                                            className="w-full px-8 py-4 bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold rounded-2xl shadow-lg cursor-pointer transition-colors"
+                                            className="w-full px-8 py-4 text-white font-bold rounded-2xl shadow-lg cursor-pointer transition-colors"
+                                            style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
@@ -443,7 +530,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
                 onClose={() => setShowSignup(false)}
                 onSignupSuccess={() => {
                     setShowSignup(false);
-                    alert("Inscription réussie ! Votre compte est en attente de validation.");
+                    setShowSuccessModal(true);
                 }}
             />
 
@@ -544,6 +631,11 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <DayTimeline />
 
             {/* Modal d'inscription personnalisée - DEPLACÉ DANS LE HEADER */}
+
+            <RegistrationSuccessModal
+                isOpen={showSuccessModal}
+                onClose={() => setShowSuccessModal(false)}
+            />
         </>
     );
 }

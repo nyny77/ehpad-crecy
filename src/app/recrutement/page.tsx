@@ -181,7 +181,7 @@ const ADVANTAGES = [
     },
     {
         title: "Postes en 12h",
-        description: "Organisation en journées de 12h pour les soins et la cuisine : plus de jours de repos !",
+        description: "Organisation en journées de 12h pour les postes AS et IDE : plus de jours de repos !",
         style: "amber",
         icon: (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -362,8 +362,12 @@ export default function RecrutementPage() {
             )}
 
             {/* Pourquoi nous rejoindre - Section Avantages */}
-            <section className="py-24 bg-cream-50">
-                <div className="container-custom">
+            <section className="py-24 bg-cream-100 texture-paper relative overflow-hidden">
+                {/* Formes organiques d'arrière-plan */}
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-forest-100/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-terracotta-100/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+
+                <div className="container-custom relative z-10">
                     <div className="text-center mb-16">
                         <span className="text-forest-500 font-bold uppercase tracking-wider text-sm">Vos avantages</span>
                         <h2 className="text-3xl md:text-5xl font-serif text-charcoal-900 mt-2 mb-6">
@@ -393,8 +397,15 @@ export default function RecrutementPage() {
                             <svg className="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg>
-                            <span className="text-forest-700 font-semibold text-lg">
+                            <span className="text-forest-700 font-semibold text-lg flex items-center gap-2">
                                 Cadre rural en Seine-et-Marne · 45 min de Paris · 15 min de Disneyland Paris
+                                <div className="relative w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform text-black">
+                                    <svg className="w-full h-full fill-current" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="14" r="5.5" />
+                                        <circle cx="5" cy="7" r="4" />
+                                        <circle cx="19" cy="7" r="4" />
+                                    </svg>
+                                </div>
                             </span>
                         </div>
                     </motion.div>
@@ -421,7 +432,7 @@ export default function RecrutementPage() {
             </section>
 
             {/* Candidature spontanée */}
-            <section className="py-20 bg-cream-200/50">
+            <section className="py-20 bg-cream-100">
                 <div className="container-custom text-center max-w-2xl mx-auto">
                     <h2 className="text-3xl font-serif text-charcoal-900 mb-6">{SPONTANEOUS_APPLICATION.title}</h2>
                     <p className="text-charcoal-700 mb-10 whitespace-pre-line text-lg leading-relaxed">

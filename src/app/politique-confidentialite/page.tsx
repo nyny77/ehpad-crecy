@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PolitiqueConfidentialitePage() {
     return (
-        <main className="min-h-screen bg-cream-50 pt-32 pb-20">
+        <main className="min-h-screen bg-cream-100 pt-32 pb-20">
             <div className="container-custom">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900 mb-8">
@@ -23,7 +23,7 @@ export default function PolitiqueConfidentialitePage() {
 
                     <div className="prose prose-lg max-w-none text-charcoal-700 space-y-8">
                         {/* Responsable du traitement */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 1. Responsable du traitement
                             </h2>
@@ -39,7 +39,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Données collectées */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 2. Données personnelles collectées
                             </h2>
@@ -55,7 +55,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Finalités */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 3. Finalités du traitement
                             </h2>
@@ -72,7 +72,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Base légale */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 4. Base légale du traitement
                             </h2>
@@ -87,7 +87,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Destinataires */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 5. Destinataires des données
                             </h2>
@@ -104,7 +104,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Durée de conservation */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 6. Durée de conservation
                             </h2>
@@ -117,7 +117,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Vos droits */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 7. Vos droits
                             </h2>
@@ -139,7 +139,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Cookies */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 8. Cookies
                             </h2>
@@ -156,7 +156,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Sécurité */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 9. Sécurité des données
                             </h2>
@@ -169,7 +169,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Réclamation */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 10. Réclamation
                             </h2>
@@ -187,7 +187,7 @@ export default function PolitiqueConfidentialitePage() {
                         </section>
 
                         {/* Mise à jour */}
-                        <section className="bg-white rounded-2xl p-8 shadow-soft">
+                        <section className="bg-cream-50 rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
                                 11. Mise à jour de la politique
                             </h2>

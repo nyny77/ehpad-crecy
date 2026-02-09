@@ -14,6 +14,10 @@ interface ServiceData {
     highlights: string[];
     image: string;
     detailImage: string;
+    dailyRoutine?: { time: string; activity: string }[];
+    skills?: string[];
+    quote?: string;
+    training?: string;
 }
 
 interface ServiceDetailClientProps {
@@ -26,18 +30,22 @@ export default function ServiceDetailClient({ service, prevService, nextService 
 
     return (
         <>
-            {/* Hero du service */}
-            <section className="pt-32 pb-20 bg-gradient-to-b from-cream-200 to-cream-100 overflow-hidden">
-                <div className="container-custom">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Hero du service - Design Organique Refondu */}
+            <section className="relative pt-32 pb-24 overflow-hidden bg-cream-100 texture-paper">
+                {/* Formes organiques d'arrière-plan */}
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-terracotta-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-forest-100/30 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+
+                <div className="container-custom relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         {/* Contenu */}
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
                         >
                             {/* Breadcrumb */}
-                            <nav className="flex items-center gap-2 text-sm text-charcoal-500 mb-6">
+                            <nav className="flex items-center gap-2 text-sm text-charcoal-500 mb-8 font-medium">
                                 <Link href="/" className="hover:text-terracotta-500 transition-colors">
                                     Accueil
                                 </Link>
@@ -46,34 +54,40 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                     Notre Équipe
                                 </Link>
                                 <span>/</span>
-                                <span className="text-terracotta-500">{service.title}</span>
+                                <span className="text-terracotta-500 bg-terracotta-50 px-2 py-1 rounded-md">{service.title}</span>
                             </nav>
 
-                            <span className="inline-block text-terracotta-500 font-medium mb-4">
+                            <motion.span
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="inline-block text-terracotta-600 font-bold tracking-wider uppercase text-sm mb-3"
+                            >
                                 {service.subtitle}
-                            </span>
+                            </motion.span>
 
-                            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-charcoal-900 mb-6">
+                            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal-900 mb-8 leading-[1.1]">
                                 {service.title}
+                                <span className="block h-2 w-24 bg-terracotta-400 mt-4 rounded-full"></span>
                             </h1>
 
-                            <p className="text-lg text-charcoal-600 leading-relaxed mb-8">
+                            <p className="text-xl text-charcoal-700 leading-relaxed mb-10 font-light">
                                 {service.shortDescription}
                             </p>
 
-                            {/* Points clés */}
-                            <div className="grid grid-cols-2 gap-4 mb-8">
+                            {/* Points clés - Transformation en Cartes */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                                 {service.highlights.map((highlight, index) => (
                                     <motion.div
                                         key={index}
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.3 + index * 0.1 }}
-                                        className="flex items-center gap-3"
+                                        transition={{ delay: 0.4 + index * 0.1 }}
+                                        className="flex items-start gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm border border-cream-200 hover:border-terracotta-200 hover:bg-white transition-all shadow-sm hover:shadow-md group"
                                     >
-                                        <div className="w-8 h-8 bg-terracotta-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <div className="w-10 h-10 bg-cream-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-terracotta-50 transition-colors">
                                             <svg
-                                                className="w-4 h-4 text-terracotta-500"
+                                                className="w-5 h-5 text-terracotta-500"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 viewBox="0 0 24 24"
@@ -86,7 +100,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                                 />
                                             </svg>
                                         </div>
-                                        <span className="text-charcoal-700 font-medium">{highlight}</span>
+                                        <span className="text-charcoal-800 font-medium leading-tight pt-2">{highlight}</span>
                                     </motion.div>
                                 ))}
                             </div>
@@ -102,55 +116,167 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                             </Link>
                         </motion.div>
 
-                        {/* Image */}
+                        {/* Image - Style "Photo Album" */}
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="relative"
+                            initial={{ opacity: 0, scale: 0.95, rotate: 2 }}
+                            animate={{ opacity: 1, scale: 1, rotate: 2 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            className="relative lg:h-[600px] flex items-center justify-center"
                         >
-                            <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                                <Image
-                                    src={service.detailImage}
-                                    alt={service.title}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                />
+                            {/* Blob d'arrière-plan animé */}
+                            <motion.div
+                                animate={{ scale: [1, 1.05, 1], rotate: [0, 5, 0] }}
+                                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute inset-4 bg-terracotta-100 rounded-[3rem] -z-10 rotate-[-4deg]"
+                            />
+
+                            <div className="relative w-full max-w-md aspect-[4/5] p-3 bg-white rounded-2xl shadow-xl rotate-[2deg]">
+                                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent z-20"></div>
+                                <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
+                                    <Image
+                                        src={service.detailImage}
+                                        alt={service.title}
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
+                                    {/* Grain sur l'image */}
+                                    <div className="absolute inset-0 bg-terracotta-500/10 mix-blend-overlay pointer-events-none"></div>
+                                </div>
                             </div>
-                            {/* Décoration */}
-                            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-terracotta-200 rounded-full -z-10" />
-                            <div className="absolute -top-6 -left-6 w-24 h-24 bg-forest-200 rounded-full -z-10" />
+
+                            {/* Éléments décoratifs flottants */}
+                            <motion.div
+                                animate={{ y: [0, -15, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -bottom-8 -left-8 w-24 h-24 bg-forest-100 rounded-full blur-xl -z-10"
+                            />
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Description complète */}
-            <section className="section-padding bg-white">
+            {/* Citation & Description & Enrichissement */}
+            <section className="relative py-20 bg-cream-50 texture-paper">
                 <div className="container-custom">
-                    <div className="max-w-3xl mx-auto">
+
+                    {/* Citation */}
+                    {service.quote && (
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="prose prose-lg max-w-none"
+                            className="max-w-4xl mx-auto text-center mb-16 relative"
                         >
-                            {service.fullDescription.split("\n\n").map((paragraph, index) => (
-                                <p
-                                    key={index}
-                                    className="text-charcoal-600 leading-relaxed mb-6 text-lg"
-                                >
-                                    {paragraph}
-                                </p>
-                            ))}
+                            <span className="absolute top-0 left-0 text-6xl text-terracotta-200 font-serif leading-none -translate-x-1/2 -translate-y-1/2">“</span>
+                            <blockquote className="font-serif text-3xl md:text-4xl text-terracotta-800 italic leading-snug relative z-10 px-8">
+                                {service.quote}
+                            </blockquote>
+                            <span className="absolute bottom-0 right-0 text-6xl text-terracotta-200 font-serif leading-none translate-x-1/2 translate-y-1/2">”</span>
                         </motion.div>
+                    )}
+
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                        {/* Colonne Principale : Description + Timeline */}
+                        <div className="lg:col-span-7 space-y-16">
+
+                            {/* Description */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="prose prose-lg max-w-none prose-headings:font-serif prose-p:text-charcoal-600 prose-strong:text-terracotta-600"
+                            >
+                                {service.fullDescription.split("\n\n").map((paragraph, index) => (
+                                    <p
+                                        key={index}
+                                        className={`leading-relaxed mb-6 text-lg ${index === 0 ? "first-letter:text-5xl first-letter:font-serif first-letter:text-terracotta-500 first-letter:mr-3 first-letter:float-left first-letter:leading-[1]" : ""}`}
+                                    >
+                                        {paragraph}
+                                    </p>
+                                ))}
+                            </motion.div>
+
+                            {/* Journée Type - Timeline */}
+                            {service.dailyRoutine && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white rounded-2xl p-8 border border-cream-200 shadow-sm relative overflow-hidden"
+                                >
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-forest-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+
+                                    <h3 className="font-serif text-2xl text-charcoal-900 mb-8 flex items-center gap-3">
+                                        <span className="w-8 h-8 rounded-full bg-forest-100 flex items-center justify-center text-forest-600">
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        </span>
+                                        Une journée type
+                                    </h3>
+
+                                    <div className="relative border-l-2 border-cream-200 ml-3 space-y-8 pl-8 py-2">
+                                        {service.dailyRoutine.map((item, idx) => (
+                                            <div key={idx} className="relative">
+                                                <span className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-white bg-terracotta-400 box-content shadow-sm"></span>
+                                                <span className="block text-terracotta-600 font-bold text-sm uppercase tracking-wider mb-1">{item.time}</span>
+                                                <p className="text-charcoal-700 font-medium text-lg">{item.activity}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </div>
+
+                        {/* Colonne Latérale : Compétences & Formation */}
+                        <div className="lg:col-span-5 space-y-8">
+                            {/* Carte Compétences */}
+                            {service.skills && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.2 }}
+                                    className="bg-white rounded-2xl p-8 border border-cream-200 shadow-sm"
+                                >
+                                    <h3 className="font-serif text-xl text-charcoal-900 mb-6 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-terracotta-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        Savoir-faire & Qualités
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {service.skills.map((skill, idx) => (
+                                            <span key={idx} className="px-4 py-2 bg-cream-50 text-charcoal-700 rounded-full text-sm font-medium border border-cream-200">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* Carte Formation */}
+                            {service.training && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.3 }}
+                                    className="bg-terracotta-50/50 rounded-2xl p-8 border border-terracotta-100"
+                                >
+                                    <h3 className="font-serif text-xl text-charcoal-900 mb-4 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-terracotta-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                        Formation requise
+                                    </h3>
+                                    <p className="text-charcoal-700 font-medium">
+                                        {service.training}
+                                    </p>
+                                </motion.div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* CTA de contact */}
-            <section className="py-16 bg-gradient-to-r from-terracotta-500 to-terracotta-600">
+            <section className="py-16 bg-gradient-to-br from-terracotta-500 to-terracotta-400">
                 <div className="container-custom">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -209,7 +335,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
             </section>
 
             {/* Navigation entre services */}
-            <section className="py-12 bg-cream-100">
+            <section className="pt-12 pb-32 bg-cream-100">
                 <div className="container-custom">
                     <div className="flex items-center justify-between">
                         {prevService ? (

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
+import TiltCard from "@/components/ui/TiltCard";
 
 const CATEGORIES = [
     { id: "all", label: "Tout voir" },
@@ -17,33 +18,8 @@ const CATEGORIES = [
     { id: "history", label: "Histoire" },
 ];
 
-// Individual gallery image with 3D tilt
+// Individual gallery image with 3D tilt using shared component
 function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => void }) {
-    const cardRef = useRef<HTMLDivElement>(null);
-
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 10 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 10 });
-
-    const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-        const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-        mouseX.set(xPct);
-        mouseY.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
-    };
-
     return (
         <motion.div
             layout
@@ -51,16 +27,9 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
         >
-            <div
-                ref={cardRef}
-                style={{ perspective: "1000px" }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                onClick={onClick}
-                className="cursor-pointer"
-            >
-                <motion.div
-                    style={{ rotateX, rotateY }}
+            <TiltCard className="cursor-pointer" interactive={true}>
+                <div
+                    onClick={onClick}
                     className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
                 >
                     <Image
@@ -75,8 +44,8 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                         <h3 className="text-white font-serif font-bold text-xl mb-1 drop-shadow-lg">{img.title}</h3>
                         <span className="text-white/90 text-sm capitalize font-medium tracking-wide drop-shadow-md">{img.category}</span>
                     </div>
-                </motion.div>
-            </div>
+                </div>
+            </TiltCard>
         </motion.div>
     );
 }
@@ -136,9 +105,13 @@ export default function GaleriePage() {
                             href="/admin"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-charcoal-800 text-white px-6 py-3 rounded-full hover:bg-charcoal-700 shadow-lg font-bold transition-transform hover:scale-105"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full shadow-lg font-medium text-sm transition-transform hover:scale-105"
+                            style={{ backgroundColor: '#7c3aed', color: 'white' }}
                         >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
                             Gérer la galerie (CMS)
                         </Link>
                     </div>

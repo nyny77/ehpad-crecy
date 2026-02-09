@@ -54,15 +54,24 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // Construction du FormData pour Netlify
+            // Construction explicite du FormData pour éviter les oublis
             const body = new FormData();
-            body.append("form-name", "contact");
-            Object.keys(formData).forEach(key => {
-                const value = (formData as any)[key];
-                if (value !== null) {
-                    body.append(key, value);
-                }
-            });
+            body.append("form-name", "contact-live");
+
+            // Ajout explicite de chaque champ
+            body.append("subject", formData.subject);
+            body.append("message", formData.message);
+            body.append("firstName", formData.firstName);
+            body.append("lastName", formData.lastName);
+            body.append("email", formData.email);
+            body.append("phone", formData.phone);
+            body.append("wantsVisit", formData.wantsVisit ? "true" : "false");
+
+            // Ajout conditionnel des fichiers
+            if (formData.cv) body.append("cv", formData.cv);
+            if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
+
+            console.log("Envoi du formulaire:", Object.fromEntries(body.entries()));
 
             await fetch("/", {
                 method: "POST",
@@ -141,13 +150,17 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact"
+                name="contact-live"
                 method="POST"
                 data-netlify="true"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="form-name" value="contact-live" />
+                {/* Honeypot field for spam protection */}
+                <p className="hidden">
+                    <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
+                </p>
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
@@ -175,8 +188,8 @@ export default function ConversationalForm() {
                                             setTimeout(() => nextStep(), 200);
                                         }}
                                         className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 ${formData.subject === option.id
-                                                ? "border-terracotta-500 bg-terracotta-50 text-terracotta-700"
-                                                : "border-cream-200 hover:border-terracotta-200 hover:bg-cream-50"
+                                            ? "border-terracotta-500 bg-terracotta-50 text-terracotta-700"
+                                            : "border-cream-200 hover:border-terracotta-200 hover:bg-cream-50"
                                             }`}
                                     >
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${formData.subject === option.id ? "bg-terracotta-100" : "bg-cream-100"

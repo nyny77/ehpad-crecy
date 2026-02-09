@@ -6,7 +6,7 @@ import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function FeaturesSection() {
     return (
-        <section className="relative py-24 bg-white dark:bg-charcoal-900 text-charcoal-900 dark:text-cream-100 overflow-hidden">
+        <section className="relative py-24 bg-cream-100 text-charcoal-900 overflow-hidden">
             <div className="container-custom relative z-10">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     {/* Texte Narratif */}
@@ -19,7 +19,7 @@ export default function FeaturesSection() {
                         <span className="text-terracotta-500 font-bold uppercase tracking-wider text-sm">
                             Notre Établissement
                         </span>
-                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 dark:text-cream-100 mt-3 mb-8">
+                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-3 mb-8">
                             Un lieu de vie <br /><span className="bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent font-semibold">chaleureux & sécurisant</span>
                         </h2>
 
@@ -44,7 +44,9 @@ export default function FeaturesSection() {
                         </div>
 
                         {/* Infos Pratiques Box */}
-                        <div className="mt-10 p-6 rounded-2xl relative border section-features-box">
+                        <div className="mt-10 p-6 rounded-2xl relative bg-cream-50 border border-terracotta-100 shadow-sm">
+                            <div className="absolute -left-1.5 top-6 bottom-6 w-1 bg-gradient-to-b from-terracotta-500 to-terracotta-400 rounded-full"></div>
+
                             <div className="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white text-xs font-bold uppercase rounded-full tracking-wide shadow-sm">
                                 Infos Pratiques
                             </div>

@@ -128,7 +128,7 @@ export default function PageHeader({
             style={{ perspective: "1000px" }}
         >
             {/* Image de fond avec parallax */}
-            <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
+            <motion.div style={{ y }} className="absolute inset-0 z-0">
                 <Image
                     src={image}
                     alt={alt}
@@ -148,16 +148,56 @@ export default function PageHeader({
                 className="relative z-10 container-custom text-center px-4 pt-32 lg:pt-28 2xl:pt-48 mt-8 lg:mt-0"
             >
                 <div className="relative inline-block group">
-                    {/* Container Glassmorphism lumineux */}
+                    {/* Pulsing Background Glow */}
+                    <motion.div
+                        className="absolute inset-0 bg-terracotta-500/30 blur-3xl rounded-full"
+                        animate={{
+                            scale: [0.8, 1.1, 0.8],
+                            opacity: [0.4, 0.7, 0.4],
+                        }}
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+
+                    {/* Container Glassmorphism lumineux avec flottement continu */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.215, 0.61, 0.355, 1] }}
-                        className="relative bg-white/40 backdrop-blur-md border border-white/50 rounded-3xl p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden"
+                        animate={{
+                            opacity: 1,
+                            scale: 1,
+                            y: [0, -20, 0] // Floating effect increased
+                        }}
+                        transition={{
+                            opacity: { duration: 1, ease: [0.215, 0.61, 0.355, 1] },
+                            scale: { duration: 1, ease: [0.215, 0.61, 0.355, 1] },
+                            y: {
+                                duration: 4, // Faster float
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 0.5
+                            }
+                        }}
+                        className="relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden group"
                     >
                         {/* Lueurs chaudes internes */}
                         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-terracotta-200/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-forest-200/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+
+                        {/* Shine Effect Periodique */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12"
+                            initial={{ x: "-100%" }}
+                            animate={{ x: "200%" }}
+                            transition={{
+                                repeat: Infinity,
+                                repeatDelay: 5,
+                                duration: 2,
+                                ease: "easeInOut"
+                            }}
+                        />
 
                         {/* Badge/Subtitle */}
                         {subtitle && (
@@ -165,35 +205,61 @@ export default function PageHeader({
                                 initial={{ opacity: 0, y: 15, scale: 0.9 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 transition={{ duration: 0.7, delay: 0.3 }}
-                                className="inline-block mb-5"
+                                className="inline-block mb-5 relative z-10"
                             >
-                                <span className="inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-600 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50">
+                                <span className="inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-600 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50 shadow-sm">
                                     <motion.span
                                         className="w-2 h-2 rounded-full bg-terracotta-500"
-                                        animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
+                                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                                         transition={{ duration: 2, repeat: Infinity }}
                                     />
                                     {subtitle}
                                     <motion.span
                                         className="w-2 h-2 rounded-full bg-forest-500"
-                                        animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
+                                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                                         transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                                     />
                                 </span>
                             </motion.div>
                         )}
 
-                        {/* Titre principal */}
-                        <h1 className="font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold text-charcoal-900 mx-auto leading-tight mb-6" style={{ textShadow: '0 2px 10px rgba(255,255,255,0.8)' }}>
+                        {/* Titre principal avec effet de vague */}
+                        <h1
+                            className="relative z-10 font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold mx-auto leading-tight mb-6"
+                            style={{
+                                background: "linear-gradient(90deg, #40404A 0%, #40404A 45%, #C80040 50%, #40404A 55%, #40404A 100%)",
+                                backgroundSize: "200% 100%",
+                                backgroundClip: "text",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                animation: "sweep-highlight 6s ease-in-out infinite"
+                            }}
+                        >
                             <AnimatedTitle>{title}</AnimatedTitle>
                         </h1>
+                        <style jsx>{`
+                            @keyframes sweep-highlight {
+                                0% { background-position: 100% 50%; }
+                                100% { background-position: -100% 50%; }
+                            }
+                        `}</style>
 
-                        {/* Ligne décorative */}
+                        {/* Ligne décorative avec effet de glow */}
                         <motion.div
                             initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
-                            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                            className="w-24 h-1 bg-gradient-to-r from-terracotta-500 via-forest-500 to-terracotta-500 mx-auto rounded-full mb-6"
+                            animate={{
+                                scaleX: 1,
+                                boxShadow: [
+                                    "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)",
+                                    "0 0 20px rgba(64, 64, 74, 0.6), 0 0 40px rgba(64, 64, 74, 0.4)",
+                                    "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)"
+                                ]
+                            }}
+                            transition={{
+                                scaleX: { duration: 1, delay: 0.8, ease: "easeOut" },
+                                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                            }}
+                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-charcoal-900 via-charcoal-600 to-charcoal-900 mx-auto rounded-full mb-6"
                         />
 
                         {/* Description */}
@@ -202,7 +268,7 @@ export default function PageHeader({
                                 initial={{ opacity: 0, y: 15 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.6 }}
-                                className="text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto font-serif italic leading-relaxed"
+                                className="relative z-10 text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto font-serif italic leading-relaxed"
                             >
                                 {typeof description === 'string' ? <p>{description}</p> : description}
                             </motion.div>
@@ -231,12 +297,12 @@ export default function PageHeader({
                 transition={{ delay: 1.5, duration: 0.6 }}
             >
                 <motion.div
-                    className="w-8 h-12 rounded-full border-2 border-terracotta-300/50 flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm"
+                    className="w-8 h-12 rounded-full border-2 border-charcoal-500/50 flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm"
                     animate={{ y: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
                     <motion.div
-                        className="w-1.5 h-3 bg-terracotta-500 rounded-full"
+                        className="w-1.5 h-3 bg-charcoal-700 rounded-full"
                         animate={{ y: [0, 8, 0], opacity: [1, 0.5, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                     />
@@ -245,7 +311,7 @@ export default function PageHeader({
 
             {/* Vague de séparation */}
             <div className="absolute bottom-0 left-0 w-full z-20">
-                <WaveSeparator position="bottom" className="text-cream-50" />
+                <WaveSeparator position="bottom" className="text-cream-100" />
             </div>
         </section>
     );

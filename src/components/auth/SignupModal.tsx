@@ -117,24 +117,24 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-charcoal-800 rounded-2xl shadow-xl z-50 p-8 border dark:border-charcoal-700"
+                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-xl z-50 p-8 border border-gray-200"
                     >
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-charcoal-700 dark:hover:text-white rounded-full transition-colors"
+                            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
 
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-serif text-terracotta-700 dark:text-terracotta-400 mb-2">Inscription</h2>
-                            <p className="text-charcoal-600 dark:text-gray-300">
+                            <h2 className="text-2xl font-serif text-terracotta-600 mb-2">Inscription</h2>
+                            <p className="text-gray-600">
                                 Créez votre compte pour suivre l'actualité de l'EHPAD.
                             </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 bg-terracotta-50 dark:bg-terracotta-900/20 text-terracotta-600 dark:text-terracotta-400 text-sm rounded-xl border border-terracotta-100 dark:border-terracotta-900/50">
+                            <div className="mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100">
                                 {error}
                             </div>
                         )}
@@ -142,7 +142,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
                                         Prénom
                                     </label>
                                     <input
@@ -151,11 +151,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         required
                                         value={formData.firstName}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
+                                        className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 transition-colors"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
                                         Nom
                                     </label>
                                     <input
@@ -164,13 +164,13 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         required
                                         value={formData.lastName}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
+                                        className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 transition-colors"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Fonction / Lien
                                 </label>
                                 <select
@@ -178,11 +178,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     required
                                     value={formData.role}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 transition-colors"
                                 >
-                                    <option value="" className="dark:bg-charcoal-700">Sélectionnez votre fonction...</option>
+                                    <option value="" className="text-gray-500">Sélectionnez votre fonction...</option>
                                     {SIGNUP_ROLES.map((role) => (
-                                        <option key={role.value} value={role.value} className="dark:bg-charcoal-700">
+                                        <option key={role.value} value={role.value} className="text-gray-900">
                                             {role.label}
                                         </option>
                                     ))}
@@ -198,7 +198,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         exit={{ opacity: 0, height: 0 }}
                                         className="overflow-hidden"
                                     >
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">
                                             Lien de parenté (ex: Fils de Mme Martin)
                                         </label>
                                         <input
@@ -208,14 +208,14 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                             value={formData.relationship}
                                             onChange={handleChange}
                                             placeholder="Fille de Mr Dupont, ..."
-                                            className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-amber-50/50 dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/20 focus:border-[#8B4513] dark:focus:border-terracotta-500 transition-all"
+                                            className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-amber-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-colors"
                                         />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Email
                                 </label>
                                 <input
@@ -224,12 +224,12 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 transition-colors"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-cream-300 mb-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Mot de passe
                                 </label>
                                 <input
@@ -239,16 +239,17 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     minLength={6}
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-700 text-charcoal-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 dark:focus:border-terracotta-500 transition-all"
+                                    className="w-full px-4 py-2 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500 transition-colors"
                                 />
                             </div>
 
+                            {/* Charte - Light mode only */}
                             <div
                                 ref={scrollRef}
                                 onScroll={handleScroll}
-                                className="bg-cream-50 dark:bg-charcoal-900 p-4 rounded-xl border border-cream-200 dark:border-charcoal-700 text-xs text-charcoal-600 dark:text-cream-300 max-h-40 overflow-y-auto mb-4 custom-scrollbar"
+                                className="bg-cream-50 p-4 rounded-xl border border-cream-200 text-xs text-gray-700 max-h-40 overflow-y-auto mb-4 custom-scrollbar"
                             >
-                                <h4 className="font-bold text-charcoal-800 dark:text-white mb-2">Charte de confidentialité & Droit à l'image</h4>
+                                <h4 className="font-bold text-gray-900 mb-2">Charte de confidentialité & Droit à l'image</h4>
                                 <p className="mb-2">
                                     Cet espace privé contient des photos de la vie sociale de l'EHPAD. En demandant un accès, vous vous engagez formellement à :
                                 </p>
@@ -263,26 +264,27 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                 <p className="mb-4">
                                     Conformément à la loi, vous pouvez à tout moment demander le retrait d'une photo vous concernant en contactant le support technique.
                                 </p>
-                                <div className="text-center pt-4 pb-2 text-forest-600 dark:text-forest-400 font-medium text-[10px] uppercase tracking-wider opacity-60">
+                                <div className="text-center pt-4 pb-2 text-forest-600 font-medium text-[10px] uppercase tracking-wider opacity-60">
                                     — Fin du document —
                                 </div>
                             </div>
 
+                            {/* Checkbox area - Light mode only */}
                             <div
-                                className={`flex items-start gap-4 mb-6 group p-2 rounded-lg transition-colors ${hasReadTerms ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-charcoal-700' : 'cursor-not-allowed opacity-50'}`}
+                                className={`flex items-start gap-4 mb-6 group p-3 rounded-xl transition-colors ${hasReadTerms ? 'cursor-pointer hover:bg-cream-100 bg-cream-50' : 'cursor-not-allowed opacity-50 bg-gray-50'}`}
                                 onClick={() => {
                                     if (hasReadTerms) setTermsAccepted(!termsAccepted);
                                 }}
                             >
-                                <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200 shadow-sm ${termsAccepted ? 'bg-forest-600 border-forest-600 text-white scale-110' : 'border-gray-400 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 group-hover:border-forest-500'}`}>
+                                <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200 shadow-sm ${termsAccepted ? 'bg-forest-600 border-forest-600 text-white scale-110' : 'border-gray-300 bg-white group-hover:border-forest-500'}`}>
                                     {termsAccepted && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-sm text-charcoal-700 dark:text-cream-200 select-none">
-                                        Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-semibold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
+                                    <span className="text-sm text-gray-800 select-none">
+                                        Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-bold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
                                     </span>
                                     {!hasReadTerms && (
-                                        <span className="text-xs text-orange-600 dark:text-orange-400 mt-1 font-medium">
+                                        <span className="text-xs text-orange-600 mt-1 font-medium">
                                             ⚠️ Veuillez lire la charte jusqu'en bas pour activer la case.
                                         </span>
                                     )}
@@ -292,7 +294,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             <button
                                 type="submit"
                                 disabled={isLoading || !termsAccepted}
-                                className="w-full py-3 px-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 dark:bg-terracotta-600 text-white rounded-xl font-medium hover:brightness-110 dark:hover:bg-terracotta-700 transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="w-full py-3 px-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-xl font-medium hover:brightness-110 transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg"
                             >
                                 {isLoading ? (
                                     <>

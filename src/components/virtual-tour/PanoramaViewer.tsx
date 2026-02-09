@@ -16,7 +16,8 @@ export default function PanoramaViewer({
     previewPath,
     title = "Visite Virtuelle",
     autoLoad = true,
-}: PanoramaViewerProps) {
+    initialYaw = 180,
+}: PanoramaViewerProps & { initialYaw?: number }) {
     const viewerRef = useRef<HTMLDivElement>(null);
     const viewerInstance = useRef<any>(null);
 
@@ -48,7 +49,7 @@ export default function PanoramaViewer({
                     author: "EHPAD de Crécy",
                     hfov: 110,
                     pitch: 10,
-                    yaw: 180,
+                    yaw: initialYaw,
                     showZoomCtrl: false,
                     mouseZoom: false,
                     keyboardZoom: false,
