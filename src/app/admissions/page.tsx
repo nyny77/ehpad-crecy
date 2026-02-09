@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { MoveRight, FileText, Eye, Users, DoorOpen, Download, Euro } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
+import AdmissionStepsSection from "@/components/admissions/AdmissionStepsSection";
+import FinancialAidSection from "@/components/admissions/FinancialAidSection";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -19,76 +20,8 @@ export default function AdmissionsPage() {
                 description="Nous vous accompagnons à chaque étape. Faites votre demande en ligne simplement via ViaTrajectoire."
             />
 
-            {/* Timeline Section */}
-            <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
-                <div className="container-custom relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mb-4">
-                            Votre parcours d'admission
-                        </h2>
-                        <p className="text-charcoal-600">4 étapes simples vers votre nouvelle vie</p>
-                    </div>
-
-                    <div className="relative">
-                        {/* Line connecting steps (Desktop) */}
-                        <div className="hidden md:block absolute top-12 left-0 right-0 h-0.5 bg-cream-200 w-3/4 mx-auto -z-10" />
-
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
-                            {/* Step 1 */}
-                            <div className="relative flex flex-col items-center text-center group">
-                                <div className="w-24 h-24 bg-white border-4 border-cream-200 rounded-full flex items-center justify-center mb-6 group-hover:border-terracotta-500 transition-colors duration-300 shadow-warm">
-                                    <div className="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center text-terracotta-500 group-hover:bg-terracotta-50 group-hover:text-terracotta-600 transition-colors">
-                                        <FileText className="w-8 h-8" />
-                                    </div>
-                                </div>
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">1. La Demande</h3>
-                                <p className="text-sm text-charcoal-600 px-4">
-                                    Faites votre demande directement en ligne sur <strong>ViaTrajectoire</strong> (méthode rapide et recommandée).
-                                </p>
-                            </div>
-
-                            {/* Step 2 */}
-                            <div className="relative flex flex-col items-center text-center group">
-                                <div className="w-24 h-24 bg-white border-4 border-cream-200 rounded-full flex items-center justify-center mb-6 group-hover:border-forest-500 transition-colors duration-300 shadow-warm">
-                                    <div className="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center text-forest-500 group-hover:bg-forest-50 group-hover:text-forest-600 transition-colors">
-                                        <Eye className="w-8 h-8" />
-                                    </div>
-                                </div>
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">2. La Visite</h3>
-                                <p className="text-sm text-charcoal-600 px-4">
-                                    Rencontre avec la direction et visite des lieux pour découvrir l'ambiance.
-                                </p>
-                            </div>
-
-                            {/* Step 3 */}
-                            <div className="relative flex flex-col items-center text-center group">
-                                <div className="w-24 h-24 bg-white border-4 border-cream-200 rounded-full flex items-center justify-center mb-6 group-hover:border-terracotta-500 transition-colors duration-300 shadow-warm">
-                                    <div className="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center text-terracotta-500 group-hover:bg-terracotta-50 group-hover:text-terracotta-600 transition-colors">
-                                        <Users className="w-8 h-8" />
-                                    </div>
-                                </div>
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">3. La Commission</h3>
-                                <p className="text-sm text-charcoal-600 px-4">
-                                    Validation de votre dossier par le médecin coordonnateur et la direction.
-                                </p>
-                            </div>
-
-                            {/* Step 4 */}
-                            <div className="relative flex flex-col items-center text-center group">
-                                <div className="w-24 h-24 bg-white border-4 border-cream-200 rounded-full flex items-center justify-center mb-6 group-hover:border-forest-500 transition-colors duration-300 shadow-warm">
-                                    <div className="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center text-forest-500 group-hover:bg-forest-50 group-hover:text-forest-600 transition-colors">
-                                        <DoorOpen className="w-8 h-8" />
-                                    </div>
-                                </div>
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">4. L'Entrée</h3>
-                                <p className="text-sm text-charcoal-600 px-4">
-                                    Accueil personnalisé et installation dans votre nouvelle chambre.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* Animated Steps Section */}
+            <AdmissionStepsSection />
 
             {/* Downloads Section */}
             <section className="py-16 bg-cream-100">
@@ -131,93 +64,8 @@ export default function AdmissionsPage() {
                 </div>
             </section>
 
-            {/* Financial Aid Section */}
-            <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
-                {/* Decorative background element */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cream-100 via-terracotta-100 to-cream-100"></div>
-
-                <div className="container-custom">
-                    <div className="text-center mb-16">
-                        <span className="inline-block py-1 px-3 rounded-full bg-forest-50 text-forest-600 text-sm font-bold tracking-wider mb-4 border border-forest-100">
-                            BUDGET & FINANCEMENT
-                        </span>
-                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2 mb-6">
-                            Les aides financières
-                        </h2>
-                        <p className="text-charcoal-600 text-lg max-w-2xl mx-auto leading-relaxed">
-                            L'EHPAD de Crécy-la-Chapelle est habilité à l'aide sociale.
-                            Plusieurs dispositifs peuvent vous aider à financer votre séjour.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* APA */}
-                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-forest-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-                            <div className="w-16 h-16 bg-forest-50 rounded-2xl flex items-center justify-center text-forest-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                <Euro className="w-8 h-8" />
-                            </div>
-                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">APA</h3>
-                            <div className="text-xs font-bold text-forest-600 mb-4 uppercase tracking-widest">Allocation Personnalisée d'Autonomie</div>
-                            <p className="text-charcoal-600 mb-8 leading-relaxed">
-                                Destinée aux personnes de plus de 60 ans en perte d'autonomie.
-                                Son montant dépend du niveau de dépendance (GIR) et des revenus.
-                            </p>
-                            <a
-                                href="https://www.pour-les-personnes-agees.gouv.fr/preserver-son-autonomie-s-informer-et-anticiper/perte-d-autonomie-evaluation-et-droits/l-allocation-personnalisee-d-autonomie-apa"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-forest-700 font-bold hover:gap-3 transition-all"
-                            >
-                                En savoir plus
-                                <MoveRight className="w-4 h-4" />
-                            </a>
-                        </div>
-
-                        {/* APL */}
-                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-terracotta-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-                            <div className="w-16 h-16 bg-terracotta-50 rounded-2xl flex items-center justify-center text-terracotta-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                <Euro className="w-8 h-8" />
-                            </div>
-                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">APL</h3>
-                            <div className="text-xs font-bold text-terracotta-600 mb-4 uppercase tracking-widest">Aide Personnalisée au Logement</div>
-                            <p className="text-charcoal-600 mb-8 leading-relaxed">
-                                Attribuée par la CAF en fonction des ressources pour aider à payer
-                                la redevance hébergement. Notre établissement est conventionné.
-                            </p>
-                            <a
-                                href="https://www.caf.fr"
-                                target="_blank"
-                                className="inline-flex items-center gap-2 text-terracotta-700 font-bold hover:gap-3 transition-all"
-                            >
-                                Simuler vos droits (CAF)
-                                <MoveRight className="w-4 h-4" />
-                            </a>
-                        </div>
-
-                        {/* ASH */}
-                        <div className="bg-white rounded-2xl p-8 border border-cream-200 border-t-4 border-t-charcoal-500 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-                            <div className="w-16 h-16 bg-charcoal-50 rounded-2xl flex items-center justify-center text-charcoal-600 mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                <Euro className="w-8 h-8" />
-                            </div>
-                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">ASH</h3>
-                            <div className="text-xs font-bold text-charcoal-600 mb-4 uppercase tracking-widest">Aide Sociale à l'Hébergement</div>
-                            <p className="text-charcoal-600 mb-8 leading-relaxed">
-                                Si les revenus sont insuffisants, le département peut prendre en charge
-                                une partie des frais d'hébergement (récupérable sur succession).
-                            </p>
-                            <a
-                                href="https://www.service-public.fr/particuliers/vosdroits/F2444"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-charcoal-800 font-bold hover:gap-3 transition-all"
-                            >
-                                En savoir plus (Service Public)
-                                <MoveRight className="w-4 h-4" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* Animated Financial Aid Section */}
+            <FinancialAidSection />
         </main >
     );
 }

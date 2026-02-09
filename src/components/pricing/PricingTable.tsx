@@ -1,357 +1,411 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Home, Users } from "lucide-react";
 import { EHPAD_INFO } from "@/lib/constants";
+
+// Style configurations for room types
+const roomStyles = [
+    {
+        gradient: "from-terracotta-400 to-terracotta-600",
+        bg: "bg-terracotta-500",
+        glow: "shadow-terracotta-500/50",
+        textColor: "text-terracotta-600",
+        labelColor: "text-terracotta-400/30",
+        icon: Home,
+    },
+    {
+        gradient: "from-forest-400 to-forest-600",
+        bg: "bg-forest-500",
+        glow: "shadow-forest-500/50",
+        textColor: "text-forest-600",
+        labelColor: "text-forest-400/30",
+        icon: Users,
+    },
+];
+
+function RoomCard({
+    room,
+    index,
+    style
+}: {
+    room: { label: string; standard: number; socialAid: number; size: string; subtitle: string };
+    index: number;
+    style: typeof roomStyles[0];
+}) {
+    const Icon = style.icon;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+                duration: 0.7,
+                delay: index * 0.15,
+                type: "spring",
+                stiffness: 100,
+            }}
+            whileHover={{
+                scale: 1.03,
+                y: -8,
+                transition: { duration: 0.3 },
+            }}
+            className="relative group cursor-pointer"
+        >
+            {/* Animated gradient background on hover */}
+            <div
+                className={`absolute inset-0 bg-gradient-to-br ${style.gradient} rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:scale-110`}
+            />
+
+            {/* Main card */}
+            <div className="relative h-full bg-gradient-to-br from-white via-cream-50 to-cream-100 rounded-3xl p-8 border-2 border-cream-200 shadow-xl group-hover:border-terracotta-200 group-hover:shadow-2xl transition-all duration-500 overflow-hidden">
+
+                <div className="relative z-10">
+                    {/* Icon with rotating particles */}
+                    <div className="relative flex mb-6 w-16 h-16">
+                        {/* Rotating particles */}
+                        <motion.div
+                            className="absolute inset-0 w-16 h-16"
+                            animate={{ rotate: 360 }}
+                            transition={{
+                                duration: 4,
+                                repeat: Infinity,
+                                ease: "linear",
+                            }}
+                        >
+                            <motion.div
+                                className={`absolute w-2 h-2 ${style.bg} rounded-full`}
+                                style={{ top: "-4px", left: "50%", marginLeft: "-4px" }}
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                            />
+                            <motion.div
+                                className={`absolute w-1.5 h-1.5 ${style.bg} rounded-full opacity-60`}
+                                style={{ bottom: "-4px", left: "50%", marginLeft: "-3px" }}
+                                animate={{ scale: [1, 1.3, 1], opacity: [0.6, 0.9, 0.6] }}
+                                transition={{ duration: 1.2, repeat: Infinity, delay: 0.3 }}
+                            />
+                        </motion.div>
+
+                        {/* Icon background */}
+                        <motion.div
+                            className={`relative w-16 h-16 bg-gradient-to-br ${style.gradient} rounded-2xl flex items-center justify-center shadow-2xl ${style.glow} group-hover:shadow-3xl transition-shadow duration-500`}
+                            whileHover={{
+                                scale: 1.1,
+                                rotate: 10,
+                                transition: { duration: 0.3 },
+                            }}
+                        >
+                            <Icon className="w-8 h-8 text-white" strokeWidth={2} />
+                        </motion.div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-1">
+                        {room.label}
+                    </h3>
+
+                    {/* Subtitle */}
+                    <p className="text-sm text-charcoal-500 mb-6">
+                        {room.subtitle} ({room.size})
+                    </p>
+
+                    {/* Prices */}
+                    <div className="space-y-4">
+                        <div className="flex items-end justify-between p-4 bg-cream-50/50 rounded-2xl">
+                            <span className="text-sm font-medium text-charcoal-600">Tarif standard</span>
+                            <div className="text-right">
+                                <span className="font-serif text-3xl font-bold text-charcoal-800">
+                                    {room.standard.toFixed(2)}€
+                                </span>
+                                <span className="text-charcoal-400 text-xs uppercase tracking-wide font-semibold ml-1">/jour</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-end justify-between p-4 bg-forest-50/30 rounded-2xl border border-forest-100/50">
+                            <span className="text-sm font-medium text-forest-700">Aide Sociale (ASH)</span>
+                            <div className="text-right">
+                                <span className="font-serif text-2xl font-bold text-forest-600">
+                                    {room.socialAid.toFixed(2)}€
+                                </span>
+                                <span className="text-forest-400 text-xs uppercase tracking-wide font-semibold ml-1">/jour</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom accent line */}
+                <motion.div
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${style.gradient} rounded-b-3xl`}
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.4 }}
+                    style={{ originX: 0 }}
+                />
+            </div>
+        </motion.div>
+    );
+}
 
 export default function PricingTable() {
     const { pricing } = EHPAD_INFO;
 
+    const rooms = [
+        {
+            label: pricing.accommodation.singleRoom.label,
+            standard: pricing.accommodation.singleRoom.standard,
+            socialAid: pricing.accommodation.singleRoom.socialAid,
+            size: "~20m²",
+            subtitle: "Espace privatif",
+        },
+        {
+            label: pricing.accommodation.doubleRoom.label,
+            standard: pricing.accommodation.doubleRoom.standard,
+            socialAid: pricing.accommodation.doubleRoom.socialAid,
+            size: "~30m²",
+            subtitle: "Pour couples",
+        },
+    ];
+
     return (
-        <div className="space-y-8">
-            {/* Tarifs Hébergement */}
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="bg-cream-50 rounded-[2rem] overflow-hidden shadow-lg border border-cream-100 relative group"
-            >
-                {/* Decorative top border */}
-                <div className="h-2 w-full bg-gradient-to-r from-terracotta-300 to-terracotta-500" />
+        <div className="space-y-16">
+            {/* Section Header */}
+            <div className="text-center">
+                <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="inline-block py-1 px-3 rounded-full bg-terracotta-50 text-terracotta-600 text-sm font-bold tracking-wider mb-4 border border-terracotta-100"
+                >
+                    HÉBERGEMENT
+                </motion.span>
 
-                <div className="px-8 pt-8 pb-4">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                        <div>
-                            <span className="inline-block px-3 py-1 mb-3 text-xs font-bold tracking-widest text-terracotta-600 uppercase bg-terracotta-50 rounded-full">
-                                Hébergement
-                            </span>
-                            <h3 className="font-serif text-3xl md:text-4xl text-charcoal-800 font-bold">
-                                Tarifs Journaliers
-                            </h3>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-charcoal-400 text-sm font-medium">
-                                Mise à jour {pricing.lastUpdate}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2 mb-4"
+                >
+                    Tarifs Journaliers
+                </motion.h2>
 
-                <div className="p-0">
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="border-b border-cream-100">
-                                    <th className="text-left py-6 px-8 font-serif italic text-charcoal-500 font-normal text-lg">
-                                        Type de chambre
-                                    </th>
-                                    <th className="text-center py-6 px-8 font-serif italic text-charcoal-500 font-normal text-lg">
-                                        Tarif standard
-                                    </th>
-                                    <th className="text-center py-6 px-8 font-serif italic text-charcoal-500 font-normal text-lg">
-                                        Aide Sociale (ASH)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-cream-50">
-                                <tr className="hover:bg-cream-50/50 transition-colors group/row">
-                                    <td className="py-8 px-8">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-16 h-16 bg-cream-50 rounded-2xl flex items-center justify-center text-terracotta-400 border border-cream-100 group-hover/row:scale-105 transition-transform shadow-sm">
-                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p className="font-serif text-xl font-bold text-charcoal-800 mb-1">
-                                                    {pricing.accommodation.singleRoom.label}
-                                                </p>
-                                                <p className="text-sm text-charcoal-500 font-medium">
-                                                    Espace privatif (~20m²)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="py-8 px-8 text-center">
-                                        <span className="font-serif text-4xl font-bold text-charcoal-800 block">
-                                            {pricing.accommodation.singleRoom.standard.toFixed(2)}€
-                                        </span>
-                                        <span className="text-charcoal-400 text-xs uppercase tracking-wide font-semibold">/jour</span>
-                                    </td>
-                                    <td className="py-8 px-8 text-center bg-cream-50/30">
-                                        <span className="font-serif text-3xl font-bold text-forest-600/80 block">
-                                            {pricing.accommodation.singleRoom.socialAid.toFixed(2)}€
-                                        </span>
-                                        <span className="text-forest-400 text-xs uppercase tracking-wide font-semibold">/jour</span>
-                                    </td>
-                                </tr>
-                                <tr className="hover:bg-cream-50/50 transition-colors group/row">
-                                    <td className="py-8 px-8">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-16 h-16 bg-cream-50 rounded-2xl flex items-center justify-center text-wood-400 border border-cream-100 group-hover/row:scale-105 transition-transform shadow-sm">
-                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p className="font-serif text-xl font-bold text-charcoal-800 mb-1">
-                                                    {pricing.accommodation.doubleRoom.label}
-                                                </p>
-                                                <p className="text-sm text-charcoal-500 font-medium">
-                                                    Pour couples (~30m²)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="py-8 px-8 text-center">
-                                        <span className="font-serif text-4xl font-bold text-charcoal-800 block">
-                                            {pricing.accommodation.doubleRoom.standard.toFixed(2)}€
-                                        </span>
-                                        <span className="text-charcoal-400 text-xs uppercase tracking-wide font-semibold">/jour</span>
-                                    </td>
-                                    <td className="py-8 px-8 text-center bg-cream-50/30">
-                                        <span className="font-serif text-3xl font-bold text-forest-600/80 block">
-                                            {pricing.accommodation.doubleRoom.socialAid.toFixed(2)}€
-                                        </span>
-                                        <span className="text-forest-400 text-xs uppercase tracking-wide font-semibold">/jour</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="text-charcoal-500 text-sm"
+                >
+                    Mise à jour {pricing.lastUpdate}
+                </motion.p>
+            </div>
+
+            {/* Room Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {rooms.map((room, index) => (
+                    <RoomCard
+                        key={room.label}
+                        room={room}
+                        index={index}
+                        style={roomStyles[index]}
+                    />
+                ))}
+            </div>
 
             {/* Tarifs Dépendance GIR */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-16"
+                transition={{ duration: 0.6 }}
             >
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 px-2">
-                    <div>
-                        <span className="inline-block px-3 py-1 mb-3 text-xs font-bold tracking-widest text-forest-600 uppercase bg-forest-50 rounded-full">
-                            Dépendance
-                        </span>
-                        <h3 className="font-serif text-3xl md:text-4xl text-charcoal-800 font-bold">
-                            Tarifs GIR
-                        </h3>
-                    </div>
-                    <p className="text-charcoal-500 text-sm font-medium max-w-sm text-right italic">
-                        Le tarif dépendance est calculé selon le niveau d'autonomie (GIR).
-                    </p>
+                <div className="text-center mb-12">
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-block py-1 px-3 rounded-full bg-forest-50 text-forest-600 text-sm font-bold tracking-wider mb-4 border border-forest-100"
+                    >
+                        DÉPENDANCE
+                    </motion.span>
+
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4"
+                    >
+                        Tarifs GIR
+                    </motion.h3>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-charcoal-500 text-sm italic max-w-md mx-auto"
+                    >
+                        Le tarif dépendance est calculé selon le niveau d&apos;autonomie (GIR).
+                    </motion.p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* GIR 1-2 */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
-                    >
-                        <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
+                    {/* GIR Cards */}
+                    {[
+                        { gir: "1-2", level: "Élevé", data: pricing.dependency.gir1_2, percent: 75, color: "terracotta" },
+                        { gir: "3-4", level: "Moyen", data: pricing.dependency.gir3_4, percent: 50, color: "amber" },
+                        { gir: "5-6", level: "Faible", data: pricing.dependency.gir5_6, percent: 25, color: "forest" },
+                    ].map((item, index) => (
+                        <motion.div
+                            key={item.gir}
+                            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{
+                                duration: 0.6,
+                                delay: index * 0.15,
+                                type: "spring",
+                                stiffness: 100,
+                            }}
+                            whileHover={{
+                                scale: 1.03,
+                                y: -5,
+                                transition: { duration: 0.3 },
+                            }}
+                            className="relative group"
+                        >
+                            <div className={`absolute inset-0 bg-gradient-to-br from-${item.color}-400 to-${item.color}-600 rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:scale-105`} />
 
-                        <div className="flex justify-between items-start mb-8">
-                            <div className="relative w-16 h-16 flex items-center justify-center">
-                                {/* Pie Chart Background */}
-                                <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                    <path className="text-terracotta-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" />
-                                    {/* Filled Segment (75%) */}
-                                    <motion.path
-                                        className="text-terracotta-500 drop-shadow-sm"
-                                        animate={{ strokeDasharray: ["0, 100", "75, 100", "75, 100", "0, 100"] }}
-                                        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0 }}
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="3"
-                                        strokeLinecap="round"
-                                    />
-                                </svg>
-                                <span className="text-terracotta-600 font-bold text-lg relative z-10">1-2</span>
+                            <div className="relative bg-gradient-to-br from-white via-cream-50 to-cream-100 rounded-3xl p-8 border-2 border-cream-200 shadow-xl group-hover:shadow-2xl transition-all duration-500 overflow-hidden">
+
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="relative w-16 h-16 flex items-center justify-center">
+                                        {/* Animated Pie Chart */}
+                                        <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                            <path
+                                                className={`text-${item.color}-100`}
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="3"
+                                            />
+                                            <motion.path
+                                                className={`text-${item.color}-500 drop-shadow-sm`}
+                                                animate={{ strokeDasharray: [`0, 100`, `${item.percent}, 100`, `${item.percent}, 100`, `0, 100`] }}
+                                                transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.1 * index }}
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="3"
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                        <span className={`text-${item.color}-600 font-bold text-lg relative z-10`}>{item.gir}</span>
+                                    </div>
+                                    <span className={`px-3 py-1 bg-${item.color}-50 text-${item.color}-600 text-xs font-bold uppercase rounded-full tracking-wider border border-${item.color}-100`}>
+                                        {item.level}
+                                    </span>
+                                </div>
+
+                                <h4 className="font-serif text-xl font-bold text-charcoal-800 mb-2">
+                                    {item.data.label}
+                                </h4>
+                                <p className="text-sm text-charcoal-500 mb-6 leading-relaxed min-h-[48px]">
+                                    {item.data.description}
+                                </p>
+
+                                <div className="pt-4 border-t border-cream-100">
+                                    <p className="font-serif text-3xl font-bold text-charcoal-800">
+                                        {item.data.rate.toFixed(2)}€
+                                        <span className="text-sm font-sans font-semibold text-charcoal-400 ml-1 uppercase">/jour</span>
+                                    </p>
+                                </div>
+
+                                {/* Bottom accent */}
+                                <motion.div
+                                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-${item.color}-400 to-${item.color}-600 rounded-b-3xl`}
+                                    initial={{ scaleX: 0 }}
+                                    whileHover={{ scaleX: 1 }}
+                                    transition={{ duration: 0.4 }}
+                                    style={{ originX: 0 }}
+                                />
                             </div>
-                            <span className="px-3 py-1 bg-cream-50 text-charcoal-500 text-xs font-bold uppercase rounded-full tracking-wider border border-cream-100 h-fit">Élevé</span>
-                        </div>
-
-                        <h4 className="font-serif text-2xl font-bold text-charcoal-800 mb-3">
-                            {pricing.dependency.gir1_2.label}
-                        </h4>
-                        <p className="text-sm text-charcoal-500 mb-8 min-h-[40px] leading-relaxed">
-                            {pricing.dependency.gir1_2.description}
-                        </p>
-
-                        <div className="pt-6 border-t border-cream-50">
-                            <p className="font-serif text-4xl font-bold text-charcoal-800">
-                                {pricing.dependency.gir1_2.rate.toFixed(2)}€
-                                <span className="text-sm font-sans font-bold text-charcoal-400 ml-1 uppercase text-xs">/jour</span>
-                            </p>
-                        </div>
-                    </motion.div>
-
-                    {/* GIR 3-4 */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
-                    >
-                        <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
-
-                        <div className="flex justify-between items-start mb-8">
-                            <div className="relative w-16 h-16 flex items-center justify-center">
-                                {/* Pie Chart Background */}
-                                <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                    <path className="text-terracotta-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" />
-                                    {/* Filled Segment (50%) */}
-                                    <motion.path
-                                        className="text-terracotta-500 drop-shadow-sm"
-                                        animate={{ strokeDasharray: ["0, 100", "50, 100", "50, 100", "0, 100"] }}
-                                        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.1 }}
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="3"
-                                        strokeLinecap="round"
-                                    />
-                                </svg>
-                                <span className="text-terracotta-600 font-bold text-lg relative z-10">3-4</span>
-                            </div>
-                            <span className="px-3 py-1 bg-cream-50 text-charcoal-500 text-xs font-bold uppercase rounded-full tracking-wider border border-cream-100 h-fit">Moyen</span>
-                        </div>
-
-                        <h4 className="font-serif text-2xl font-bold text-charcoal-800 mb-3">
-                            {pricing.dependency.gir3_4.label}
-                        </h4>
-                        <p className="text-sm text-charcoal-500 mb-8 min-h-[40px] leading-relaxed">
-                            {pricing.dependency.gir3_4.description}
-                        </p>
-
-                        <div className="pt-6 border-t border-cream-50">
-                            <p className="font-serif text-4xl font-bold text-charcoal-800">
-                                {pricing.dependency.gir3_4.rate.toFixed(2)}€
-                                <span className="text-sm font-sans font-bold text-charcoal-400 ml-1 uppercase text-xs">/jour</span>
-                            </p>
-                        </div>
-                    </motion.div>
-
-                    {/* GIR 5-6 */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="bg-cream-50 rounded-[2rem] p-8 border border-cream-100 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
-                    >
-                        <div className="absolute top-0 left-0 w-full h-1 bg-terracotta-400 group-hover:bg-terracotta-500 transition-colors"></div>
-
-                        <div className="flex justify-between items-start mb-8">
-                            <div className="relative w-16 h-16 flex items-center justify-center">
-                                {/* Pie Chart Background */}
-                                <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                    <path className="text-terracotta-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" />
-                                    {/* Filled Segment (25%) */}
-                                    <motion.path
-                                        className="text-terracotta-500 drop-shadow-sm"
-                                        animate={{ strokeDasharray: ["0, 100", "25, 100", "25, 100", "0, 100"] }}
-                                        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.2 }}
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="3"
-                                        strokeLinecap="round"
-                                    />
-                                </svg>
-                                <span className="text-terracotta-600 font-bold text-lg relative z-10">5-6</span>
-                            </div>
-                            <span className="px-3 py-1 bg-cream-50 text-charcoal-500 text-xs font-bold uppercase rounded-full tracking-wider border border-cream-100 h-fit">Faible</span>
-                        </div>
-
-                        <h4 className="font-serif text-2xl font-bold text-charcoal-800 mb-3">
-                            {pricing.dependency.gir5_6.label}
-                        </h4>
-                        <p className="text-sm text-charcoal-500 mb-8 min-h-[40px] leading-relaxed">
-                            {pricing.dependency.gir5_6.description}
-                        </p>
-
-                        <div className="pt-6 border-t border-cream-50">
-                            <p className="font-serif text-4xl font-bold text-charcoal-800">
-                                {pricing.dependency.gir5_6.rate.toFixed(2)}€
-                                <span className="text-sm font-sans font-bold text-charcoal-400 ml-1 uppercase text-xs">/jour</span>
-                            </p>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    ))}
                 </div>
             </motion.div>
 
-            {/* Info aides */}
+            {/* Info aides - Simple improved version */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-gradient-to-r from-cream-200 to-cream-100 rounded-3xl p-8"
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ scale: 1.01 }}
+                className="relative group"
             >
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 shadow-soft">
-                        <svg
-                            className="w-8 h-8 text-forest-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                <div className="absolute inset-0 bg-gradient-to-r from-forest-400 to-terracotta-400 rounded-3xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-500" />
+
+                <div className="relative bg-gradient-to-br from-cream-50 via-white to-cream-100 rounded-3xl p-8 border-2 border-cream-200 shadow-lg group-hover:shadow-xl transition-all duration-300">
+                    <div className="flex flex-col md:flex-row items-start gap-6">
+                        <motion.div
+                            className="w-16 h-16 bg-gradient-to-br from-forest-400 to-forest-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-xl"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 className="font-serif text-xl font-semibold text-charcoal-900 mb-2">
-                            Aides financières disponibles
-                        </h4>
-                        <p className="text-charcoal-600 mb-4">
-                            Notre établissement est habilité à l&apos;aide sociale à l&apos;hébergement
-                            (ASH) et conventionné APL. Nous vous accompagnons dans vos démarches
-                            pour obtenir les aides auxquelles vous avez droit.
-                        </p>
-                        <div className="flex flex-wrap gap-3">
-                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-forest-600 shadow-soft">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                Aide Sociale à l&apos;Hébergement (ASH)
-                            </span>
-                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-forest-600 shadow-soft">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                Aide Personnalisée au Logement (APL)
-                            </span>
-                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-forest-600 shadow-soft">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                Allocation Personnalisée d&apos;Autonomie (APA)
-                            </span>
+                            <svg
+                                className="w-8 h-8 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </motion.div>
+                        <div className="flex-1">
+                            <h4 className="font-serif text-2xl font-bold text-charcoal-900 mb-3">
+                                Aides financières disponibles
+                            </h4>
+                            <p className="text-charcoal-600 mb-6 leading-relaxed">
+                                Notre établissement est habilité à l&apos;aide sociale à l&apos;hébergement
+                                (ASH) et conventionné APL. Nous vous accompagnons dans vos démarches
+                                pour obtenir les aides auxquelles vous avez droit.
+                            </p>
+                            <div className="flex flex-wrap gap-3">
+                                {[
+                                    { acronym: "ASH", name: "Aide Sociale à l'Hébergement", color: "forest" },
+                                    { acronym: "APL", name: "Aide Personnalisée au Logement", color: "terracotta" },
+                                    { acronym: "APA", name: "Allocation Personnalisée d'Autonomie", color: "violet" },
+                                ].map((aid, i) => (
+                                    <motion.span
+                                        key={aid.acronym}
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: 0.1 * i }}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        className={`inline-flex items-center gap-2 px-4 py-2 bg-${aid.color}-50 rounded-full text-sm font-bold text-${aid.color}-600 shadow-sm border border-${aid.color}-100 cursor-default`}
+                                    >
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+                                        {aid.name}
+                                    </motion.span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
