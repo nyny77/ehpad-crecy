@@ -159,16 +159,16 @@ export default function HeroSection() {
                                     animate={{
                                         scaleX: 1,
                                         boxShadow: [
-                                            "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)",
-                                            "0 0 20px rgba(200, 0, 64, 0.6), 0 0 40px rgba(200, 0, 64, 0.4)",
-                                            "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)"
+                                            "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)",
+                                            "0 0 20px rgba(64, 64, 74, 0.6), 0 0 40px rgba(64, 64, 74, 0.4)",
+                                            "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)"
                                         ]
                                     }}
                                     transition={{
                                         scaleX: { duration: 1.5, delay: 0.5, ease: "circOut" },
                                         boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                                     }}
-                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto mb-6 rounded-full"
+                                    className="h-1 w-24 md:w-40 bg-gradient-to-r from-charcoal-900 via-charcoal-600 to-charcoal-900 mx-auto mb-6 rounded-full"
                                 />
 
                                 {/* Animated Slogan */}
@@ -262,7 +262,7 @@ export default function HeroSection() {
                 }
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+                className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20"
             >
                 <div className="w-[30px] h-[50px] rounded-3xl border-2 border-white/50 flex justify-center p-2">
                     <motion.div

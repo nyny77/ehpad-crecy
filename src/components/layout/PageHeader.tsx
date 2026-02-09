@@ -250,16 +250,16 @@ export default function PageHeader({
                             animate={{
                                 scaleX: 1,
                                 boxShadow: [
-                                    "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)",
-                                    "0 0 20px rgba(200, 0, 64, 0.6), 0 0 40px rgba(200, 0, 64, 0.4)",
-                                    "0 0 10px rgba(200, 0, 64, 0.3), 0 0 20px rgba(200, 0, 64, 0.2)"
+                                    "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)",
+                                    "0 0 20px rgba(64, 64, 74, 0.6), 0 0 40px rgba(64, 64, 74, 0.4)",
+                                    "0 0 10px rgba(64, 64, 74, 0.3), 0 0 20px rgba(64, 64, 74, 0.2)"
                                 ]
                             }}
                             transition={{
                                 scaleX: { duration: 1, delay: 0.8, ease: "easeOut" },
                                 boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                             }}
-                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-terracotta-400 via-terracotta-500 to-terracotta-400 mx-auto rounded-full mb-6"
+                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-charcoal-900 via-charcoal-600 to-charcoal-900 mx-auto rounded-full mb-6"
                         />
 
                         {/* Description */}
@@ -297,12 +297,12 @@ export default function PageHeader({
                 transition={{ delay: 1.5, duration: 0.6 }}
             >
                 <motion.div
-                    className="w-8 h-12 rounded-full border-2 border-terracotta-300/50 flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm"
+                    className="w-8 h-12 rounded-full border-2 border-charcoal-500/50 flex items-start justify-center p-2 bg-white/30 backdrop-blur-sm"
                     animate={{ y: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
                     <motion.div
-                        className="w-1.5 h-3 bg-terracotta-500 rounded-full"
+                        className="w-1.5 h-3 bg-charcoal-700 rounded-full"
                         animate={{ y: [0, 8, 0], opacity: [1, 0.5, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                     />

@@ -14,7 +14,7 @@ export default function VisitePage() {
                 image="/images/global-hero.jpg"
             />
 
-            <Section className="py-12">
+            <Section className="pt-12 pb-32">
                 <div className="container-custom space-y-12">
 
                     {/* Section Grand Salon */}

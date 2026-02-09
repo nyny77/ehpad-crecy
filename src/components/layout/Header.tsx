@@ -61,9 +61,9 @@ export default function Header() {
                         >
                             <defs>
                                 <linearGradient id="headerWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#C80040" />
-                                    <stop offset="50%" stopColor="#E91E63" />
-                                    <stop offset="100%" stopColor="#F54D75" />
+                                    <stop offset="0%" stopColor="#1A1A1F" />
+                                    <stop offset="50%" stopColor="#595966" />
+                                    <stop offset="100%" stopColor="#9696A6" />
                                 </linearGradient>
                             </defs>
                             <path
@@ -75,7 +75,7 @@ export default function Header() {
                                 key={pathname}
                                 fill="none"
                                 stroke="url(#headerWaveGradient)"
-                                strokeWidth="15"
+                                strokeWidth="30"
                                 d="M0,50 Q360,100 720,50 T1440,50"
                                 initial={{ pathLength: 0 }}
                                 animate={{ pathLength: 1 }}
