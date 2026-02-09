@@ -61,9 +61,9 @@ export default function Header() {
                         >
                             <defs>
                                 <linearGradient id="headerWaveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#1A1A1F" />
-                                    <stop offset="50%" stopColor="#595966" />
-                                    <stop offset="100%" stopColor="#9696A6" />
+                                    <stop offset="0%" stopColor="#85002A" />
+                                    <stop offset="50%" stopColor="#C80040" />
+                                    <stop offset="100%" stopColor="#FF85A3" />
                                 </linearGradient>
                             </defs>
                             <path
