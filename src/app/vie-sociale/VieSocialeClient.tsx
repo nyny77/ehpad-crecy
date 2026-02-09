@@ -244,7 +244,7 @@ export default function VieSocialeClient({ initialArticles }: VieSocialeClientPr
             <PageHeader
                 title="Vie Sociale"
                 subtitle="Le cœur battant de notre maison"
-                description="Animations, sorties, événements festifs... Découvrez tous les moments de partage qui rythment le quotidien de nos résidents."
+                description="Découvrez tous les moments de partage qui rythment le quotidien des résidents."
                 image="/images/global-hero.jpg"
                 alt="Vie sociale à l'EHPAD"
             />
