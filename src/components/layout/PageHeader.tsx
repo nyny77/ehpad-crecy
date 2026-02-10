@@ -259,7 +259,7 @@ export default function PageHeader({
                                 scaleX: { duration: 1, delay: 0.8, ease: "easeOut" },
                                 boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                             }}
-                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-charcoal-900 via-charcoal-600 to-charcoal-900 mx-auto rounded-full mb-6"
+                            className="relative z-10 w-24 h-1 bg-gradient-to-r from-[#85002A] via-[#C80040] to-[#FF85A3] mx-auto rounded-full mb-6"
                         />
 
                         {/* Description */}
