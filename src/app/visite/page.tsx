@@ -9,7 +9,7 @@ export default function VisitePage() {
         <main className="min-h-screen bg-cream-100">
             <PageHeader
                 title="Visite Virtuelle"
-                subtitle="Découvrez notre établissement comme si vous y étiez"
+                subtitle="Découvrez notre établissement comme si vous y étiez (Espace en cours de test bêta)"
                 description="Faites un tour dans notre jardin et visualisez les espaces de vie. (Ceci est une démonstration)"
                 image="/images/global-hero.jpg"
             />
