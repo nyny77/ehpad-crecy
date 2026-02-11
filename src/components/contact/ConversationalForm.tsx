@@ -153,6 +153,7 @@ export default function ConversationalForm() {
                 name="contact-live"
                 method="POST"
                 data-netlify="true"
+                encType="multipart/form-data"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >

@@ -99,6 +99,13 @@
       "alt": "Vue aérienne des années 1970 montrant la construction du collège voisin et la première extension de l'EHPAD"
     },
     {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Hospice ",
+      "src": "/images/uploads/915_001.jpg",
+      "alt": "Hospice"
+    },
+    {
       "id": "img-aerial3",
       "category": "garden",
       "src": "/images/uploads/mrc2.jpg",
