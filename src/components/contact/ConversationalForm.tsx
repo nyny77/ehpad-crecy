@@ -56,7 +56,8 @@ export default function ConversationalForm() {
         try {
             // Construction explicite du FormData pour éviter les oublis
             const body = new FormData();
-            body.append("form-name", "contact-v2");
+            body.append("form-name", "contact-final");
+            body.append("bot-field", ""); // Honeypot field must be present
 
             // Ajout explicite de chaque champ
             body.append("subject", formData.subject);
@@ -150,14 +151,14 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-v2"
+                name="contact-final"
                 method="POST"
                 data-netlify="true"
                 encType="multipart/form-data"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                <input type="hidden" name="form-name" value="contact-v2" />
+                <input type="hidden" name="form-name" value="contact-final" />
                 {/* Honeypot field for spam protection */}
                 <p className="hidden">
                     <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
