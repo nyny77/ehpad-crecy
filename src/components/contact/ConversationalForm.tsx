@@ -54,14 +54,28 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // 1. On récupère automatiquement tous les champs présents dans le DOM (y compris les hidden et le bot-field)
-            const body = new FormData(e.currentTarget as HTMLFormElement);
+            // 1. Construction MANUELLE du FormData pour éviter les doublons (DOM vs State)
+            const body = new FormData();
 
-            // 2. On ajoute MANUELLEMENT les fichiers car les inputs type="file" ont disparu du DOM (étape 2)
+            // Champs techniques Netlify
+            body.append("form-name", "contact-final");
+            // @ts-ignore - Ajout dynamique du bot-field s'il existe
+            if (formData["bot-field"]) body.append("bot-field", formData["bot-field"]);
+
+            // Champs textes
+            body.append("subject", formData.subject);
+            body.append("message", formData.message);
+            body.append("firstName", formData.firstName);
+            body.append("lastName", formData.lastName);
+            body.append("email", formData.email);
+            body.append("phone", formData.phone);
+            body.append("wantsVisit", formData.wantsVisit ? "true" : "false");
+
+            // Champs fichiers
             if (formData.cv) body.append("cv", formData.cv);
             if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
 
-            console.log("Envoi du formulaire contact-final:", Object.fromEntries(body.entries()));
+            console.log("Envoi du formulaire contact-final (Clean):", Object.fromEntries(body.entries()));
 
             await fetch("/", {
                 method: "POST",
