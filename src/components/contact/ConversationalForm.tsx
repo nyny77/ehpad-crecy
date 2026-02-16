@@ -54,28 +54,24 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // 1. Construction MANUELLE du FormData pour éviter les doublons (DOM vs State)
+            // 1. Récupérer les champs DOM (hidden mirrors + inputs de l'étape 3)
+            const rawBody = new FormData(e.currentTarget as HTMLFormElement);
+
+            // 2. Dédupliquer : pour chaque champ, ne garder que la première valeur
             const body = new FormData();
+            const seen = new Set<string>();
+            for (const [key, value] of rawBody.entries()) {
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    body.append(key, value);
+                }
+            }
 
-            // Champs techniques Netlify
-            body.append("form-name", "contact-v3");
-            // @ts-ignore - Ajout dynamique du bot-field s'il existe
-            if (formData["bot-field"]) body.append("bot-field", formData["bot-field"]);
-
-            // Champs textes
-            body.append("subject", formData.subject);
-            body.append("message", formData.message);
-            body.append("firstName", formData.firstName);
-            body.append("lastName", formData.lastName);
-            body.append("email", formData.email);
-            body.append("phone", formData.phone);
-            body.append("wantsVisit", formData.wantsVisit ? "true" : "false");
-
-            // Champs fichiers
+            // 3. Ajouter les fichiers (ils sont dans le state React, pas dans le DOM à l'étape 3)
             if (formData.cv) body.append("cv", formData.cv);
             if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
 
-            console.log("Envoi du formulaire contact-v3 (Clean):", Object.fromEntries(body.entries()));
+            console.log("Envoi du formulaire contact-v4:", Object.fromEntries(body.entries()));
 
             await fetch("/", {
                 method: "POST",
@@ -154,7 +150,7 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-v3"
+                name="contact-v4"
                 method="POST"
                 data-netlify="true"
                 encType="multipart/form-data"
@@ -165,9 +161,12 @@ export default function ConversationalForm() {
                     IMPORTANT : Ce formulaire est détecté par Netlify grâce au fichier public/static-forms.html 
                     Si vous ajoutez/modifiez des champs ici (surtout les fichiers), mettez à jour static-forms.html !
                 */}
-                <input type="hidden" name="form-name" value="contact-v3" />
+                <input type="hidden" name="form-name" value="contact-v4" />
 
-                {/* Les champs sont construits manuellement dans handleSubmit via FormData, pas besoin de miroirs DOM */}
+                {/* Miroirs cachés UNIQUEMENT pour les champs des étapes 1 et 2 (absents du DOM à l'étape 3) */}
+                <input type="hidden" name="subject" value={formData.subject} />
+                <input type="hidden" name="message" value={formData.message} />
+                <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
 
                 {/* Honeypot field for spam protection */}
                 <p className="hidden">
