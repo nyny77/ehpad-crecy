@@ -147,6 +147,10 @@ export default function ConversationalForm() {
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
+                {/* 
+                    IMPORTANT : Ce formulaire est détecté par Netlify grâce au fichier public/static-forms.html 
+                    Si vous ajoutez/modifiez des champs ici (surtout les fichiers), mettez à jour static-forms.html !
+                */}
                 <input type="hidden" name="form-name" value="contact-final" />
 
                 {/* CHAMPS CACHÉS MIROIRS (Pour garantir la présence dans le FormData même si l'étape est passée) */}

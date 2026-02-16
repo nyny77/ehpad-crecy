@@ -9,14 +9,18 @@
 
 <body>
     <!-- 
-        Fichier statique pour la détection Netlify.
-        Correspondance exacte avec les champs React.
-        Ne PAS supprimer.
+        Fichier statique pour la détection Netlify Forms.
+        Ce fichier est indispensable pour que les robots de Netlify détectent les champs 
+        (notamment les fichiers 'cv' et 'coverLetter') qui sont rendus conditionnellement par React 
+        et donc absents du HTML initial.
+        
+        Ne PAS supprimer ce fichier ni modifier les noms ("name") des champs sans mettre à jour React.
     -->
-    <form name="contact-final" netlify="true" netlify-honeypot="bot-field" hidden enctype="multipart/form-data">
+    <form name="contact-final" data-netlify="true" netlify-honeypot="bot-field" hidden enctype="multipart/form-data">
         <input type="hidden" name="form-name" value="contact-final" />
         <input name="bot-field" />
 
+        <!-- Champs textes -->
         <input type="text" name="subject" />
         <textarea name="message"></textarea>
         <input type="text" name="firstName" />
@@ -25,6 +29,7 @@
         <input type="tel" name="phone" />
         <input type="checkbox" name="wantsVisit" />
 
+        <!-- Champs fichiers (Crucial pour que Netlify accepte les PJ) -->
         <input type="file" name="cv" />
         <input type="file" name="coverLetter" />
     </form>
