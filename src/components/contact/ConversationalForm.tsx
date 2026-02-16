@@ -58,7 +58,7 @@ export default function ConversationalForm() {
             const body = new FormData();
 
             // Champs techniques Netlify
-            body.append("form-name", "contact-final");
+            body.append("form-name", "contact-v3");
             // @ts-ignore - Ajout dynamique du bot-field s'il existe
             if (formData["bot-field"]) body.append("bot-field", formData["bot-field"]);
 
@@ -75,7 +75,7 @@ export default function ConversationalForm() {
             if (formData.cv) body.append("cv", formData.cv);
             if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
 
-            console.log("Envoi du formulaire contact-final (Clean):", Object.fromEntries(body.entries()));
+            console.log("Envoi du formulaire contact-v3 (Clean):", Object.fromEntries(body.entries()));
 
             await fetch("/", {
                 method: "POST",
@@ -154,7 +154,7 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-final"
+                name="contact-v3"
                 method="POST"
                 data-netlify="true"
                 encType="multipart/form-data"
@@ -165,16 +165,9 @@ export default function ConversationalForm() {
                     IMPORTANT : Ce formulaire est détecté par Netlify grâce au fichier public/static-forms.html 
                     Si vous ajoutez/modifiez des champs ici (surtout les fichiers), mettez à jour static-forms.html !
                 */}
-                <input type="hidden" name="form-name" value="contact-final" />
+                <input type="hidden" name="form-name" value="contact-v3" />
 
-                {/* CHAMPS CACHÉS MIROIRS (Pour garantir la présence dans le FormData même si l'étape est passée) */}
-                <input type="hidden" name="subject" value={formData.subject} />
-                <input type="hidden" name="message" value={formData.message} />
-                <input type="hidden" name="firstName" value={formData.firstName} />
-                <input type="hidden" name="lastName" value={formData.lastName} />
-                <input type="hidden" name="email" value={formData.email} />
-                <input type="hidden" name="phone" value={formData.phone} />
-                <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
+                {/* Les champs sont construits manuellement dans handleSubmit via FormData, pas besoin de miroirs DOM */}
 
                 {/* Honeypot field for spam protection */}
                 <p className="hidden">
