@@ -101,6 +101,13 @@
     {
       "id": "img-{{now}}",
       "category": "other",
+      "src": "/images/uploads/gemini_generated_image_uztwe6uztwe6uztw.png",
+      "title": "Extension Bat B et C",
+      "alt": "Extension Bat B et C"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
       "title": "Hospice ",
       "src": "/images/uploads/915_001.jpg",
       "alt": "Hospice"
