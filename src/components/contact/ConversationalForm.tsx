@@ -14,8 +14,6 @@ export default function ConversationalForm() {
         subject: string;
         message: string;
         wantsVisit: boolean;
-        cv: File | null;
-        coverLetter: File | null;
     }>({
         firstName: "",
         lastName: "",
@@ -24,29 +22,23 @@ export default function ConversationalForm() {
         subject: "",
         message: "",
         wantsVisit: false,
-        cv: null,
-        coverLetter: null,
     });
 
+    // Nom du fichier sélectionné (pour l'affichage)
+    const [cvFileName, setCvFileName] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    // Pour scroller en haut du formulaire à chaque changement d'étape
     const formRef = useRef<HTMLDivElement>(null);
+    // Ref vers l'input file permanent (hors AnimatePresence)
+    const cvInputRef = useRef<HTMLInputElement>(null);
 
     const handleStepChange = (newStep: number) => {
         setStep(newStep);
-        // formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Peut être irritant, désactivé
     };
 
     const handleChange = (field: string, value: any) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-        if (e.target.files && e.target.files[0]) {
-            setFormData(prev => ({ ...prev, [field]: e.target.files![0] }));
-        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -54,14 +46,21 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // Récupérer TOUS les champs du DOM (hidden mirrors garantissent la présence de tous les champs)
+            // new FormData(form) capture :
+            // - les hidden inputs (form-name, subject, message, firstName, lastName, email, phone, wantsVisit)
+            // - l'input file persistant (cv) — toujours dans le DOM
+            // - le honeypot (bot-field)
             const body = new FormData(e.currentTarget as HTMLFormElement);
 
-            // Ajouter les fichiers depuis le state React (ils ne sont plus dans le DOM à l'étape 3)
-            if (formData.cv) body.append("cv", formData.cv);
-            if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
-
-            console.log("Envoi du formulaire contact-v5:", [...body.entries()].map(([k, v]) => `${k}=${v instanceof File ? v.name : v}`).join(", "));
+            // Debug
+            console.log("=== ENVOI FORMULAIRE contact-v5 ===");
+            for (const [key, value] of body.entries()) {
+                if (value instanceof File) {
+                    console.log(`  ${key}: [FILE] ${value.name} (${value.size} bytes)`);
+                } else {
+                    console.log(`  ${key}: ${value}`);
+                }
+            }
 
             await fetch("/", {
                 method: "POST",
@@ -143,18 +142,17 @@ export default function ConversationalForm() {
                 name="contact-v5"
                 method="POST"
                 data-netlify="true"
+                netlify-honeypot="bot-field"
                 encType="multipart/form-data"
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                {/* 
-                    IMPORTANT : Ce formulaire est détecté par Netlify grâce au fichier public/static-forms.html 
-                    Si vous ajoutez/modifiez des champs ici (surtout les fichiers), mettez à jour static-forms.html !
-                */}
+                {/* Champ technique Netlify */}
                 <input type="hidden" name="form-name" value="contact-v5" />
 
-                {/* Hidden mirrors pour TOUS les champs — obligatoire car AnimatePresence empêche 
-                    la capture des inputs visibles par new FormData(form) */}
+                {/* Hidden mirrors pour TOUS les champs texte.
+                    Ces inputs sont HORS AnimatePresence = toujours dans le DOM au moment du submit.
+                    Les inputs visibles dans les étapes n'ont PAS de name= pour éviter les doublons. */}
                 <input type="hidden" name="subject" value={formData.subject} />
                 <input type="hidden" name="message" value={formData.message} />
                 <input type="hidden" name="firstName" value={formData.firstName} />
@@ -163,10 +161,27 @@ export default function ConversationalForm() {
                 <input type="hidden" name="phone" value={formData.phone} />
                 <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
 
-                {/* Honeypot field for spam protection */}
+                {/* Honeypot */}
                 <p className="hidden">
-                    <label>Don't fill this out if you're human: <input name="bot-field" onChange={(e) => handleChange("bot-field", e.target.value)} /></label>
+                    <label>Don&apos;t fill this out if you&apos;re human: <input name="bot-field" /></label>
                 </p>
+
+                {/* INPUT FILE PERSISTANT — TOUJOURS dans le DOM, HORS AnimatePresence.
+                    Caché visuellement mais présent pour que new FormData(form) le capture. */}
+                <input
+                    ref={cvInputRef}
+                    type="file"
+                    name="cv"
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                            setCvFileName(e.target.files[0].name);
+                        }
+                    }}
+                    className="sr-only"
+                    aria-hidden="true"
+                    tabIndex={-1}
+                />
 
                 <AnimatePresence mode="wait">
                     {step === 1 && (
@@ -190,7 +205,6 @@ export default function ConversationalForm() {
                                         type="button"
                                         onClick={() => {
                                             handleChange("subject", option.id);
-                                            // Auto-advance
                                             setTimeout(() => nextStep(), 200);
                                         }}
                                         className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 ${formData.subject === option.id
@@ -217,13 +231,12 @@ export default function ConversationalForm() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-6"
                         >
-                            {/* Message */}
+                            {/* Message — PAS de name= ici, le hidden mirror s'en charge */}
                             <div>
                                 <label className="block text-sm font-medium text-charcoal-700 mb-2">
                                     {formData.subject === 'recrutement' ? 'Votre motivation' : 'Votre message'} <span className="text-terracotta-500">*</span>
                                 </label>
                                 <textarea
-                                    name="message"
                                     rows={6}
                                     value={formData.message}
                                     onChange={(e) => handleChange("message", e.target.value)}
@@ -232,26 +245,21 @@ export default function ConversationalForm() {
                                 />
                             </div>
 
-                            {/* Recrutement Files */}
+                            {/* Bouton pour déclencher l'input file persistant */}
                             {formData.subject === 'recrutement' && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-charcoal-700 mb-2">CV (PDF)</label>
-                                        <div className="relative">
-                                            <input
-                                                type="file"
-                                                name="cv"
-                                                accept=".pdf,.doc,.docx"
-                                                onChange={(e) => handleFileChange(e, 'cv')}
-                                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                            />
-                                            <div className="px-4 py-3 bg-cream-50 border-2 border-dashed border-terracotta-200 rounded-xl flex items-center gap-2 text-terracotta-600 hover:bg-terracotta-50 transition-colors">
-                                                <Upload className="w-5 h-5" />
-                                                <span className="text-sm truncate">
-                                                    {formData.cv ? formData.cv.name : "Téléverser mon CV"}
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => cvInputRef.current?.click()}
+                                            className="w-full px-4 py-3 bg-cream-50 border-2 border-dashed border-terracotta-200 rounded-xl flex items-center gap-2 text-terracotta-600 hover:bg-terracotta-50 transition-colors text-left"
+                                        >
+                                            <Upload className="w-5 h-5 shrink-0" />
+                                            <span className="text-sm truncate">
+                                                {cvFileName || "Téléverser mon CV"}
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             )}
@@ -261,7 +269,6 @@ export default function ConversationalForm() {
                                 <label className="flex items-start gap-3 cursor-pointer p-4 bg-cream-50 rounded-xl border border-cream-100 hover:border-terracotta-200 transition-colors">
                                     <input
                                         type="checkbox"
-                                        name="wantsVisit"
                                         checked={formData.wantsVisit}
                                         onChange={(e) => handleChange("wantsVisit", e.target.checked)}
                                         className="mt-1 w-5 h-5 text-terracotta-600 rounded focus:ring-terracotta-500 border-gray-300"
@@ -283,23 +290,24 @@ export default function ConversationalForm() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-4"
                         >
+                            {/* PAS de name= sur ces inputs — les hidden mirrors s'en chargent */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-charcoal-700 mb-2">Prénom *</label>
-                                    <input type="text" name="firstName" required value={formData.firstName} onChange={(e) => handleChange("firstName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                    <input type="text" required value={formData.firstName} onChange={(e) => handleChange("firstName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-charcoal-700 mb-2">Nom *</label>
-                                    <input type="text" name="lastName" required value={formData.lastName} onChange={(e) => handleChange("lastName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                    <input type="text" required value={formData.lastName} onChange={(e) => handleChange("lastName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-charcoal-700 mb-2">Email *</label>
-                                <input type="email" name="email" required value={formData.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                <input type="email" required value={formData.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-charcoal-700 mb-2">Téléphone</label>
-                                <input type="tel" name="phone" value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                <input type="tel" value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
                             </div>
                         </motion.div>
                     )}
