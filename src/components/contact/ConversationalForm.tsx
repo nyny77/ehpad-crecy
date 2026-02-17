@@ -54,24 +54,14 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // 1. Récupérer les champs DOM (hidden mirrors + inputs de l'étape 3)
-            const rawBody = new FormData(e.currentTarget as HTMLFormElement);
+            // Récupérer TOUS les champs du DOM (hidden mirrors garantissent la présence de tous les champs)
+            const body = new FormData(e.currentTarget as HTMLFormElement);
 
-            // 2. Dédupliquer : pour chaque champ, ne garder que la première valeur
-            const body = new FormData();
-            const seen = new Set<string>();
-            for (const [key, value] of rawBody.entries()) {
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    body.append(key, value);
-                }
-            }
-
-            // 3. Ajouter les fichiers (ils sont dans le state React, pas dans le DOM à l'étape 3)
+            // Ajouter les fichiers depuis le state React (ils ne sont plus dans le DOM à l'étape 3)
             if (formData.cv) body.append("cv", formData.cv);
             if (formData.coverLetter) body.append("coverLetter", formData.coverLetter);
 
-            console.log("Envoi du formulaire contact-v4:", Object.fromEntries(body.entries()));
+            console.log("Envoi du formulaire contact-v5:", [...body.entries()].map(([k, v]) => `${k}=${v instanceof File ? v.name : v}`).join(", "));
 
             await fetch("/", {
                 method: "POST",
@@ -150,7 +140,7 @@ export default function ConversationalForm() {
             </div>
 
             <form
-                name="contact-v4"
+                name="contact-v5"
                 method="POST"
                 data-netlify="true"
                 encType="multipart/form-data"
@@ -161,11 +151,16 @@ export default function ConversationalForm() {
                     IMPORTANT : Ce formulaire est détecté par Netlify grâce au fichier public/static-forms.html 
                     Si vous ajoutez/modifiez des champs ici (surtout les fichiers), mettez à jour static-forms.html !
                 */}
-                <input type="hidden" name="form-name" value="contact-v4" />
+                <input type="hidden" name="form-name" value="contact-v5" />
 
-                {/* Miroirs cachés UNIQUEMENT pour les champs des étapes 1 et 2 (absents du DOM à l'étape 3) */}
+                {/* Hidden mirrors pour TOUS les champs — obligatoire car AnimatePresence empêche 
+                    la capture des inputs visibles par new FormData(form) */}
                 <input type="hidden" name="subject" value={formData.subject} />
                 <input type="hidden" name="message" value={formData.message} />
+                <input type="hidden" name="firstName" value={formData.firstName} />
+                <input type="hidden" name="lastName" value={formData.lastName} />
+                <input type="hidden" name="email" value={formData.email} />
+                <input type="hidden" name="phone" value={formData.phone} />
                 <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
 
                 {/* Honeypot field for spam protection */}
