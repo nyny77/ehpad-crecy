@@ -43,13 +43,6 @@
       "alt": "Patio pour les moments de convivialité"
     },
     {
-      "id": "img-{{now}}",
-      "category": "other",
-      "title": "Route de la chapelle debut 20 eme",
-      "src": "/images/uploads/01.jpg",
-      "alt": "Route de la chapelle debut 20 eme"
-    },
-    {
       "id": "img-aerial1",
       "category": "other",
       "src": "/images/uploads/mrc1.jpg",
@@ -62,6 +55,13 @@
       "src": "/images/uploads/mr3.jpg",
       "title": "Vue aérienne",
       "alt": "Photographie aérienne révélant l'intégration de l'établissement dans le paysage de Crécy-la-Chapelle"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Route de la chapelle debut 20 eme",
+      "src": "/images/uploads/01.jpg",
+      "alt": "Route de la chapelle debut 20 eme"
     },
     {
       "id": "img-hist1",
@@ -85,13 +85,6 @@
       "alt": "Photographie ancienne école et hospice."
     },
     {
-      "id": "img-{{now}}",
-      "category": "other",
-      "title": "Hospice ",
-      "src": "/images/uploads/915_001.jpg",
-      "alt": "Hospice"
-    },
-    {
       "id": "img-hist5",
       "category": "history",
       "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
@@ -104,6 +97,13 @@
       "src": "/images/uploads/gemini_generated_image_uztwe6uztwe6uztw.png",
       "title": "Extension Bat B et C",
       "alt": "Extension Bat B et C"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Hospice ",
+      "src": "/images/uploads/915_001.jpg",
+      "alt": "Hospice"
     },
     {
       "id": "img-aerial3",
