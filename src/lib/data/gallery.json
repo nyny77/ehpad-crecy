@@ -85,6 +85,13 @@
       "alt": "Photographie ancienne école et hospice."
     },
     {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Hospice ",
+      "src": "/images/uploads/915_001.jpg",
+      "alt": "Hospice"
+    },
+    {
       "id": "img-hist5",
       "category": "history",
       "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
@@ -97,13 +104,6 @@
       "src": "/images/uploads/gemini_generated_image_uztwe6uztwe6uztw.png",
       "title": "Extension Bat B et C",
       "alt": "Extension Bat B et C"
-    },
-    {
-      "id": "img-{{now}}",
-      "category": "other",
-      "title": "Hospice ",
-      "src": "/images/uploads/915_001.jpg",
-      "alt": "Hospice"
     },
     {
       "id": "img-aerial3",
