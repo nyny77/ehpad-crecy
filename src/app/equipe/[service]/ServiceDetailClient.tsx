@@ -14,7 +14,7 @@ interface ServiceData {
     highlights: string[];
     image: string;
     detailImage: string;
-    dailyRoutine?: { time: string; activity: string }[];
+
     skills?: string[];
     quote?: string;
     training?: string;
@@ -197,34 +197,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                 ))}
                             </motion.div>
 
-                            {/* Journée Type - Timeline */}
-                            {service.dailyRoutine && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className="bg-white rounded-2xl p-8 border border-cream-200 shadow-sm relative overflow-hidden"
-                                >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-forest-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-                                    <h3 className="font-serif text-2xl text-charcoal-900 mb-8 flex items-center gap-3">
-                                        <span className="w-8 h-8 rounded-full bg-forest-100 flex items-center justify-center text-forest-600">
-                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        </span>
-                                        Une journée type
-                                    </h3>
-
-                                    <div className="relative border-l-2 border-cream-200 ml-3 space-y-8 pl-8 py-2">
-                                        {service.dailyRoutine.map((item, idx) => (
-                                            <div key={idx} className="relative">
-                                                <span className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-white bg-terracotta-400 box-content shadow-sm"></span>
-                                                <span className="block text-terracotta-600 font-bold text-sm uppercase tracking-wider mb-1">{item.time}</span>
-                                                <p className="text-charcoal-700 font-medium text-lg">{item.activity}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
                         </div>
 
                         {/* Colonne Latérale : Compétences & Formation */}
