@@ -16,6 +16,7 @@ export default function NetlifyIdentityRedirect() {
         const checkInterval = setInterval(() => {
             if (window.netlifyIdentity) {
                 console.log("NetlifyIdentity found, attaching auto-close listener");
+                window.netlifyIdentity.init();
                 window.netlifyIdentity.on("login", handleLogin);
                 clearInterval(checkInterval);
             }
