@@ -42,10 +42,7 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-end p-6">
-                        <h3 className="text-white font-serif font-bold text-xl mb-1 drop-shadow-lg">{img.title}</h3>
-                        <span className="text-white/90 text-sm capitalize font-medium tracking-wide drop-shadow-md">{img.category}</span>
-                    </div>
+
                 </div>
             </TiltCard>
         </motion.div>
