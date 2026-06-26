@@ -143,9 +143,6 @@ export default function Footer() {
                         <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors">
                             Accessibilité
                         </Link>
-                        <Link href="/admin/index.html" className="hover:text-terracotta-400 transition-colors font-medium">
-                            Administration
-                        </Link>
                         <span className="flex items-center gap-2">
                             <span className="w-2 h-2 bg-forest-500 rounded-full animate-pulse" />
                             Établissement public
