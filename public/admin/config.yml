@@ -56,7 +56,7 @@ collections:
             ]}
 
   - name: "gazette"
-    label: "La Gazette"
+    label: "Le Petit Écho du Cœur"
     files:
       - name: "latest"
         label: "Dernière Gazette"
