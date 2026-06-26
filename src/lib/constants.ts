@@ -84,7 +84,7 @@ export const NAV_LINKS = [
     { href: "/histoire", label: "Notre Ville" },
     { href: "/equipe", label: "Notre Équipe" },
     { href: "/galerie", label: "Galerie Photos" },
-    { href: "/vie-sociale", label: "Vie Sociale" },
+    { href: "/blog", label: "Blog" },
     { href: "/admissions", label: "Admissions" },
     { href: "/hebergement", label: "Tarifs" },
     { href: "/recrutement", label: "Recrutement" },

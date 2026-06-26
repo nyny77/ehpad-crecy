@@ -27,7 +27,7 @@ export const CHAT_RULES: ChatRule[] = [
         id: "restauration",
         keywords: ["manger", "repas", "cuisine", "nourriture", "menu", "cantine"],
         response: "Notre chef prépare tous les repas sur place avec des produits frais. Les menus sont validés par une diététicienne et s'adaptent aux régimes spécifiques (sans sel, texture modifiée...). Les familles peuvent aussi venir déjeuner !",
-        relatedLinks: [{ label: "Voir la Vie Sociale", url: "/vie-sociale" }]
+        relatedLinks: [{ label: "Voir le Blog", url: "/blog" }]
     },
     {
         id: "admission",

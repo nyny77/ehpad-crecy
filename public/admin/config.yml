@@ -20,9 +20,24 @@ collections:
           - { name: "photos", label: "Liste des photos", widget: "list", fields: [
               { name: "id", label: "ID Unique", widget: "string", default: "img-{{now}}" },
               { name: "title", label: "Titre", widget: "string" },
-              { name: "category", label: "Catégorie", widget: "select", options: ["chamber", "lounge", "garden", "restaurant", "other"], default: "other" },
+              { name: "category", label: "Catégorie", widget: "select", options: ["chamber", "lounge", "garden", "restaurant", "other", "event", "autre"], default: "other" },
               { name: "src", label: "Image", widget: "image" },
               { name: "alt", label: "Description Alt (Accessibilité)", widget: "string" }
+            ]}
+
+
+  - name: "visite_virtuelle"
+    label: "Visite Virtuelle (Photos Maison)"
+    files:
+      - name: "photos"
+        label: "Photos de l'établissement"
+        file: "src/lib/data/visite-gallery.json"
+        fields:
+          - { name: "photos", label: "Liste des photos", widget: "list", fields: [
+              { name: "id", label: "ID Unique", widget: "string", default: "img-{{now}}" },
+              { name: "title", label: "Titre", widget: "string" },
+              { name: "src", label: "Image", widget: "image" },
+              { name: "alt", label: "Description Alt (Accessibilité)", widget: "string", required: false }
             ]}
 
   - name: "recrutement"

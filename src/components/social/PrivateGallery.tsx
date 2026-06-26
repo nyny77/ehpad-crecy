@@ -13,17 +13,16 @@ interface PrivatePhoto {
 }
 
 export default function PrivateGallery() {
-    const images: PrivatePhoto[] = privateGalleryData.photos;
+    const images: PrivatePhoto[] = [...privateGalleryData.photos].reverse();
     const [selectedImage, setSelectedImage] = useState<PrivatePhoto | null>(null);
 
     return (
         <section className="py-12">
             <div className="bg-white rounded-3xl p-8 border border-cream-200 shadow-sm">
                 <div className="text-center mb-10">
-                    <h2 className="font-serif text-3xl text-charcoal-800 mb-4">Galerie Privée - Souvenirs de Vie</h2>
+                    <h2 className="font-serif text-3xl text-charcoal-800 mb-4">Galerie Photos - Souvenirs de Vie</h2>
                     <p className="text-charcoal-600 max-w-2xl mx-auto">
-                        Cet espace est réservé aux familles et aux résidents. Retrouvez ici les photos des anniversaires,
-                        des sorties et des moments de convivialité partagés au quotidien.
+                        Retrouvez ici les photos des anniversaires, des sorties et des moments de convivialité partagés au quotidien.
                     </p>
                 </div>
 

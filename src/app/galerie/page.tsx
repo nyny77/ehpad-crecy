@@ -11,6 +11,8 @@ import TiltCard from "@/components/ui/TiltCard";
 
 const CATEGORIES = [
     { id: "all", label: "Tout voir" },
+    { id: "event", label: "Événements & Sorties" },
+    { id: "autre", label: "Autres moments" },
     { id: "chamber", label: "Chambres" },
     { id: "lounge", label: "Salons & Vie Sociale" },
     { id: "garden", label: "Extérieurs" },
@@ -51,7 +53,7 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
 }
 
 export default function GaleriePage() {
-    const images: GalleryImage[] = INITIAL_GALLERY;
+    const images: GalleryImage[] = [...INITIAL_GALLERY].reverse();
     const [filter, setFilter] = useState("all");
     const [adminMode, setAdminMode] = useState(false);
 

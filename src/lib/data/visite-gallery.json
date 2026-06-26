@@ -1,0 +1,151 @@
+{
+  "photos": [
+    {
+      "id": "img-batd1",
+      "category": "other",
+      "src": "/images/uploads/04.png",
+      "title": "Bâtiment D",
+      "alt": "Vue du bâtiment D de l'EHPAD de Crécy"
+    },
+    {
+      "id": "img-batd2",
+      "category": "garden",
+      "src": "/images/uploads/gemini_generated_image_aiclk3aiclk3aicl.png",
+      "title": "Bâtiment D",
+      "alt": "Perspective du bâtiment D entouré de jardins paysagers"
+    },
+    {
+      "id": "img-ext1",
+      "category": "garden",
+      "src": "/images/uploads/20260121_102117.jpg",
+      "title": "Extérieur",
+      "alt": "Jardin et allées accessibles de l'EHPAD de Crécy-la-Chapelle"
+    },
+    {
+      "id": "img-ext2",
+      "category": "garden",
+      "src": "/images/uploads/20260121_102032.jpg",
+      "title": "Extérieur",
+      "alt": "Entrée"
+    },
+    {
+      "id": "img-ext3",
+      "category": "garden",
+      "src": "/images/uploads/47.png",
+      "title": "Extérieur",
+      "alt": "Vue des jardins de l'établissement en hiver."
+    },
+    {
+      "id": "img-patio",
+      "category": "lounge",
+      "src": "/images/uploads/066.png",
+      "title": "Patio",
+      "alt": "Patio pour les moments de convivialité"
+    },
+    {
+      "id": "img-{{now}}",
+      "category": "other",
+      "title": "Route de la chapelle debut 20 eme",
+      "src": "/images/uploads/01.jpg",
+      "alt": "Route de la chapelle debut 20 eme"
+    },
+    {
+      "id": "img-aerial1",
+      "category": "other",
+      "src": "/images/uploads/mrc1.jpg",
+      "title": "Vue aérienne",
+      "alt": "Vue aérienne de l'EHPAD de Crécy montrant l'ensemble des bâtiments."
+    },
+    {
+      "id": "img-aerial2",
+      "category": "other",
+      "src": "/images/uploads/mr3.jpg",
+      "title": "Vue aérienne",
+      "alt": "Photographie aérienne révélant l'intégration de l'établissement dans le paysage de Crécy-la-Chapelle"
+    },
+    {
+      "id": "img-hist1",
+      "category": "other",
+      "src": "/images/uploads/618934987_1275353754617630_3350859517941962359_n.jpg",
+      "title": "L'hospice en 1902",
+      "alt": "Photographie historique de l'ancien hospice de Crécy datant de 1902"
+    },
+    {
+      "id": "img-hist2",
+      "category": "history",
+      "src": "/images/uploads/619072146_1275353671284305_8556990753465559996_n.jpg",
+      "title": "Ancien Hospice",
+      "alt": "L'ancien hospice de Crécy-la-Chapelle au début du XXe siècle"
+    },
+    {
+      "id": "img-hist3",
+      "category": "history",
+      "src": "/images/uploads/619086734_1275353564617649_3308024949503674612_n.jpg",
+      "title": "Vue historique",
+      "alt": "Carte postale ancienne montrant le bâtiment original de l'hospice"
+    },
+    {
+      "id": "img-hist4",
+      "category": "history",
+      "src": "/images/uploads/image-9d00408b-ba7a-4fb5-8fb6-b139ab20c933.png",
+      "title": "Vue ancienne",
+      "alt": "Photographie ancienne école et hospice."
+    },
+    {
+      "id": "img-hist5",
+      "category": "history",
+      "src": "/images/uploads/117743253_5008809999145138_4594219130140762954_n.jpg",
+      "title": "Vue aérienne années 70",
+      "alt": "Vue aérienne des années 1970 montrant la construction du collège voisin et la première extension de l'EHPAD"
+    },
+    {
+      "id": "img-aerial3",
+      "category": "garden",
+      "src": "/images/uploads/mrc2.jpg",
+      "title": "Vue aérienne",
+      "alt": "Vue aérienne"
+    },
+    {
+      "id": "img-aerial4",
+      "category": "garden",
+      "src": "/images/uploads/mrc3.jpg",
+      "title": "Vue aérienne",
+      "alt": "Photographie "
+    },
+    {
+      "id": "img-aerial5",
+      "category": "garden",
+      "src": "/images/uploads/mrc4.jpg",
+      "title": "Vue aérienne",
+      "alt": "Vue d'ensemble aérienne de l'EHPAD et de son environnement."
+    },
+    {
+      "id": "hist-2",
+      "category": "other",
+      "title": "La Collégiale",
+      "src": "/images/history/collegiale.png",
+      "alt": "La Collégiale Notre-Dame de Crécy-la-Chapelle, monument historique du XIIe siècle"
+    },
+    {
+      "id": "hist-3",
+      "category": "other",
+      "title": "La Tour de Crécy",
+      "src": "/images/history/tour.jpg",
+      "alt": "Le Beffroi"
+    },
+    {
+      "id": "hist-4",
+      "category": "history",
+      "title": "Le Marché",
+      "src": "/images/history/marche.jpg",
+      "alt": "Le marché traditionnel de Crécy-la-Chapelle avec ses étals et ses habitants."
+    },
+    {
+      "id": "hist-1",
+      "category": "other",
+      "title": "Le Grand Morin",
+      "src": "/images/history/canal.jpg",
+      "alt": "Le canal du Grand Morin traversant Crécy-la-Chapelle."
+    }
+  ]
+}
