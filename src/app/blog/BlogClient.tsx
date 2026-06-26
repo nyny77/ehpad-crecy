@@ -231,8 +231,8 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
         <>
             <PageHeader
                 title="Blog"
-                subtitle="Le cœur battant de notre maison"
-                description="Découvrez tous les moments de partage et actualités qui rythment le quotidien des résidents."
+                subtitle="Actualités de l'établissement"
+                description="Retrouvez ici toutes les dernières nouvelles, nos projets et les événements de la vie de l'EHPAD."
                 image="/images/global-hero.jpg"
                 alt="Blog de l'EHPAD"
             />
