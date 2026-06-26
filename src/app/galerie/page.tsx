@@ -53,6 +53,7 @@ export default function GaleriePage() {
     const images: GalleryImage[] = [...INITIAL_GALLERY].reverse();
     const [filter, setFilter] = useState("all");
     const [adminMode, setAdminMode] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(24);
 
     // Lightbox State
     const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
@@ -86,7 +87,10 @@ export default function GaleriePage() {
                     {CATEGORIES.map(cat => (
                         <button
                             key={cat.id}
-                            onClick={() => setFilter(cat.id)}
+                            onClick={() => {
+                                setFilter(cat.id);
+                                setVisibleCount(24);
+                            }}
                             className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat.id
                                 ? "bg-terracotta-500 text-white shadow-md scale-105"
                                 : "bg-white border border-cream-300 text-charcoal-600 hover:bg-cream-50 hover:border-terracotta-300"
@@ -124,7 +128,7 @@ export default function GaleriePage() {
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     <AnimatePresence>
-                        {filteredImages.map((img) => (
+                        {filteredImages.slice(0, visibleCount).map((img) => (
                             <GalleryImageCard
                                 key={img.id}
                                 img={img}
@@ -133,6 +137,17 @@ export default function GaleriePage() {
                         ))}
                     </AnimatePresence>
                 </motion.div>
+
+                {visibleCount < filteredImages.length && (
+                    <div className="flex justify-center mt-12">
+                        <button
+                            onClick={() => setVisibleCount(prev => prev + 24)}
+                            className="px-8 py-3 bg-white border-2 border-terracotta-200 text-terracotta-600 rounded-full font-medium hover:bg-terracotta-50 transition-colors shadow-sm hover:scale-105 duration-300"
+                        >
+                            Voir plus de photos
+                        </button>
+                    </div>
+                )}
 
                 {filteredImages.length === 0 && (
                     <div className="text-center py-24 bg-white rounded-3xl border border-cream-200 shadow-sm mx-auto max-w-2xl">
