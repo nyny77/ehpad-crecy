@@ -66,7 +66,7 @@ collections:
             - { name: "date", label: "Date de mise en ligne", widget: "datetime" }
 
   - name: "blog"
-    label: "Actualités"
+    label: "Blog"
     folder: "content/articles"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
