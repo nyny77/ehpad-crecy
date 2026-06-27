@@ -237,14 +237,16 @@ export default function PageHeader({
 
                         {/* Titre principal avec effet de vague */}
                         <h1
-                            className="relative z-10 font-serif text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold mx-auto leading-tight mb-6"
+                            className="relative z-10 font-serif text-3xl md:text-4xl lg:text-5xl font-bold mx-auto leading-tight mb-6 w-full"
                             style={{
                                 background: "linear-gradient(90deg, #40404A 0%, #40404A 45%, #C80040 50%, #40404A 55%, #40404A 100%)",
                                 backgroundSize: "200% 100%",
                                 backgroundClip: "text",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
-                                animation: "sweep-highlight 6s ease-in-out infinite"
+                                animation: "sweep-highlight 6s ease-in-out infinite",
+                                overflowWrap: "break-word",
+                                wordBreak: "break-word",
                             }}
                         >
                             <AnimatedTitle>{title}</AnimatedTitle>
