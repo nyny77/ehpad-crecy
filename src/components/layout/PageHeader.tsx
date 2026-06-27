@@ -29,29 +29,41 @@ const letterVariants: Variants = {
     }),
 };
 
-// Composant pour animer le titre lettre par lettre
+// Composant pour animer le titre mot par mot (sans coupure en milieu de mot)
 function AnimatedTitle({ children }: { children: React.ReactNode }) {
     const text = typeof children === 'string' ? children : String(children);
-    const letters = text.split('');
+    const words = text.split(' ');
+
+    let letterIndex = 0;
 
     return (
-        <span className="inline-flex flex-wrap justify-center">
-            {letters.map((letter, i) => (
-                <motion.span
-                    key={i}
-                    custom={i}
-                    variants={letterVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className={letter === ' ' ? 'w-3 md:w-4' : ''}
-                    style={{ display: 'inline-block' }}
-                >
-                    {letter === ' ' ? '\u00A0' : letter}
-                </motion.span>
-            ))}
+        <span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
+            {words.map((word, wordIdx) => {
+                const letters = word.split('');
+                const wordStart = letterIndex;
+                letterIndex += letters.length + 1; // +1 for the space
+
+                return (
+                    <span key={wordIdx} className="whitespace-nowrap inline-flex">
+                        {letters.map((letter, i) => (
+                            <motion.span
+                                key={i}
+                                custom={wordStart + i}
+                                variants={letterVariants}
+                                initial="hidden"
+                                animate="visible"
+                                style={{ display: 'inline-block' }}
+                            >
+                                {letter}
+                            </motion.span>
+                        ))}
+                    </span>
+                );
+            })}
         </span>
     );
 }
+
 
 // Particules décoratives flottantes
 function FloatingParticles() {

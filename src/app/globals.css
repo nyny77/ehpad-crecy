@@ -1264,3 +1264,238 @@ html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
   /* cream-100 */
   border-color: #595966 !important;
 }
+
+/* ═══════════════════════════════════════════════════════
+   PRINT STYLES — Livret d'Accueil Version PDF
+   ═══════════════════════════════════════════════════════ */
+@media print {
+  /* ─── Page Setup ─── */
+  @page {
+    size: A4;
+    margin: 15mm 12mm 20mm 12mm;
+  }
+
+  /* ─── Reset backgrounds & colors for print ─── */
+  html, body {
+    background: white !important;
+    color: #1a1a1f !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ─── Hide non-print elements ─── */
+  header,
+  footer,
+  #chatbot-toggle,
+  #chatbot-window,
+  .accessibility-toggle,
+  [aria-label="Menu"],
+  [aria-label="Navigation du livret"],
+  [aria-label="Retour en haut"] {
+    display: none !important;
+  }
+
+  /* Hide progress bar, sidenav, scroll indicator, back-to-top */
+  .fixed {
+    display: none !important;
+    position: static !important;
+  }
+
+  /* Show print header */
+  .print-header {
+    display: block !important;
+    position: static !important;
+  }
+
+  /* ─── Main content adjustments ─── */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .min-h-screen {
+    min-height: auto !important;
+  }
+
+  .min-h-\[85vh\] {
+    min-height: auto !important;
+    padding: 20px 0 !important;
+  }
+
+  /* ─── Hero section: compact for print ─── */
+  #bienvenue {
+    min-height: auto !important;
+    padding: 15mm 0 8mm !important;
+    page-break-after: always;
+  }
+
+  #bienvenue .absolute {
+    display: none !important;
+  }
+
+  /* ─── Section spacing ─── */
+  section {
+    padding: 8mm 0 !important;
+    scroll-margin-top: 0 !important;
+    page-break-inside: avoid;
+  }
+
+  /* Page breaks before major sections */
+  #equipe,
+  #quotidien,
+  #hygiene,
+  #droits,
+  #contacts {
+    page-break-before: always;
+  }
+
+  /* ─── Typography adjustments ─── */
+  h1 {
+    font-size: 26pt !important;
+    color: #C80040 !important;
+  }
+
+  h2 {
+    font-size: 18pt !important;
+    color: #1a1a1f !important;
+    margin-bottom: 4mm !important;
+  }
+
+  h3 {
+    font-size: 13pt !important;
+    color: #1a1a1f !important;
+  }
+
+  h4 {
+    font-size: 11pt !important;
+  }
+
+  p, li, span {
+    font-size: 10pt !important;
+    color: #333 !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ─── Cards: solid borders for print ─── */
+  .rounded-2xl,
+  .rounded-xl {
+    background: white !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    page-break-inside: avoid;
+  }
+
+  /* Card accent lines - keep them */
+  .rounded-2xl .absolute.top-0.left-0.w-full.h-1 {
+    display: block !important;
+    position: absolute !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ─── Grid layouts: keep compact ─── */
+  .grid {
+    gap: 3mm !important;
+  }
+
+  /* ─── Key figures row ─── */
+  .grid-cols-2,
+  .grid-cols-4 {
+    display: grid !important;
+  }
+
+  /* ─── Checklist items: print-friendly ─── */
+  #arrivee button {
+    border: 1px solid #ddd !important;
+    background: white !important;
+    padding: 3mm !important;
+    margin-bottom: 2mm !important;
+  }
+
+  /* ─── Hide interactive/animated elements ─── */
+  button.print\:hidden,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Make motion divs static */
+  [style*="transform"],
+  [style*="opacity"] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* ─── Links: show URL in print ─── */
+  a[href^="tel:"]::after {
+    content: none !important;
+  }
+
+  a {
+    color: #C80040 !important;
+    text-decoration: none !important;
+  }
+
+  /* ─── Background sections ─── */
+  .bg-cream-100\/50,
+  .bg-gradient-to-br {
+    background: white !important;
+  }
+
+  /* ─── Footer QR section ─── */
+  section.bg-gradient-to-br.from-charcoal-800 {
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    page-break-before: always;
+  }
+
+  section.bg-gradient-to-br.from-charcoal-800 * {
+    color: #333 !important;
+  }
+
+  /* ─── Icons: ensure they print ─── */
+  svg {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ─── Colored badges/pills: keep colors ─── */
+  .rounded-full[style*="background"],
+  .rounded-xl[style*="background"],
+  .rounded-lg[style*="background"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ─── Max width adjustments ─── */
+  .max-w-5xl,
+  .max-w-3xl,
+  .max-w-4xl {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .lg\:ml-32 {
+    margin-left: 0 !important;
+  }
+
+  /* ─── Scroll indicator ─── */
+  .tracking-widest {
+    display: none !important;
+  }
+
+  /* ─── Page footer with page numbers ─── */
+  @page {
+    @bottom-center {
+      content: "EHPAD de Crécy — Livret d'Accueil Professionnel";
+      font-size: 8pt;
+      color: #999;
+    }
+  }
+}

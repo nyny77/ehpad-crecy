@@ -88,6 +88,7 @@ export const NAV_LINKS = [
     { href: "/admissions", label: "Admissions" },
     { href: "/hebergement", label: "Tarifs" },
     { href: "/recrutement", label: "Recrutement" },
+    { href: "/livret-accueil", label: "Livret d'Accueil" },
     { href: "/visite", label: "Visite Virtuelle" },
 ];
 
