@@ -83,15 +83,7 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
                                             Le Petit Echo du Coeur 📰
                                         </a>
                                     )}
-                                    <Link
-                                        href="/admin/index.html"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg font-medium text-sm transition-transform hover:scale-105"
-                                        style={{ backgroundColor: '#1f2937', color: 'white' }}
-                                    >
-                                        ⚙️ Administration
-                                    </Link>
+
                                     {adminMode && (
                                         <>
                                             <a

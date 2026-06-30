@@ -183,6 +183,17 @@ export default function Header() {
                                 <span className="relative z-10 whitespace-nowrap">Nous rencontrer</span>
                             </motion.button>
                         </Link>
+
+                        {/* Admin Link - Discreet */}
+                        <Link 
+                            href="/admin/index.html" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="ml-2 text-charcoal-400 hover:text-terracotta-600 transition-colors p-2 rounded-full hover:bg-cream-100 dark:hover:bg-charcoal-800" 
+                            title="Administration"
+                        >
+                            ⚙️
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button - Enhanced */}
@@ -276,6 +287,17 @@ export default function Header() {
                                         Nous rencontrer
                                     </button>
                                 </Link>
+                                <div className="mt-4 flex justify-center">
+                                    <Link 
+                                        href="/admin/index.html" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="text-sm text-charcoal-400 hover:text-terracotta-600 flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-cream-100" 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        ⚙️ Administration
+                                    </Link>
+                                </div>
                             </motion.div>
                         </div>
                     </motion.div>

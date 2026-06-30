@@ -81,18 +81,6 @@ export default function GaleriePage() {
                     </h2>
                 </div>
 
-                {/* Admin Button */}
-                <div className="text-center mt-6 mb-2">
-                    <Link
-                        href="/admin/index.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full shadow-lg font-medium text-sm transition-transform hover:scale-105"
-                        style={{ backgroundColor: '#1f2937', color: 'white' }}
-                    >
-                        ⚙️ Administration
-                    </Link>
-                </div>
             </section>
 
             {/* Grid */}
