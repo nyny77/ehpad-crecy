@@ -9,16 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 import TiltCard from "@/components/ui/TiltCard";
 
-const CATEGORIES = [
-    { id: "all", label: "Tout voir" },
-    { id: "event", label: "Événements & Sorties" },
-    { id: "autre", label: "Autres moments" },
-    { id: "chamber", label: "Chambres" },
-    { id: "lounge", label: "Salons & Vie Sociale" },
-    { id: "garden", label: "Extérieurs" },
-    { id: "restaurant", label: "Restauration" },
-    { id: "history", label: "Histoire" },
-];
+
 
 // Individual gallery image with 3D tilt using shared component
 function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => void }) {
@@ -51,7 +42,6 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
 
 export default function GaleriePage() {
     const images: GalleryImage[] = [...INITIAL_GALLERY].reverse();
-    const [filter, setFilter] = useState("all");
     const [adminMode, setAdminMode] = useState(false);
     const [visibleCount, setVisibleCount] = useState(24);
 
@@ -68,10 +58,6 @@ export default function GaleriePage() {
         return () => unsubscribe();
     }, []);
 
-    const filteredImages = filter === "all"
-        ? images
-        : images.filter(img => img.category === filter);
-
     return (
         <main className="pb-20 bg-cream-100 min-h-screen">
             {/* Hero */}
@@ -83,22 +69,16 @@ export default function GaleriePage() {
 
             {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}
             <section className="container-custom px-4" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
-                <div className="flex flex-wrap justify-center gap-3">
-                    {CATEGORIES.map(cat => (
-                        <button
-                            key={cat.id}
-                            onClick={() => {
-                                setFilter(cat.id);
-                                setVisibleCount(24);
-                            }}
-                            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat.id
-                                ? "bg-terracotta-500 text-white shadow-md scale-105"
-                                : "bg-white border border-cream-300 text-charcoal-600 hover:bg-cream-50 hover:border-terracotta-300"
-                                }`}
-                        >
-                            {cat.label}
-                        </button>
-                    ))}
+                <div className="text-center mb-6 mt-4">
+                    <h2 className="font-serif text-3xl md:text-5xl font-bold text-terracotta-600 inline-block relative">
+                        ✨ Plongez dans nos souvenirs ! ✨
+                        <motion.div
+                            className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-terracotta-400 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: 96 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                        />
+                    </h2>
                 </div>
 
                 {/* Admin Button */}
@@ -122,7 +102,7 @@ export default function GaleriePage() {
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     <AnimatePresence>
-                        {filteredImages.slice(0, visibleCount).map((img) => (
+                        {images.slice(0, visibleCount).map((img) => (
                             <GalleryImageCard
                                 key={img.id}
                                 img={img}
@@ -132,7 +112,7 @@ export default function GaleriePage() {
                     </AnimatePresence>
                 </motion.div>
 
-                {visibleCount < filteredImages.length && (
+                {visibleCount < images.length && (
                     <div className="flex justify-center mt-12">
                         <button
                             onClick={() => setVisibleCount(prev => prev + 24)}
@@ -143,7 +123,7 @@ export default function GaleriePage() {
                     </div>
                 )}
 
-                {filteredImages.length === 0 && (
+                {images.length === 0 && (
                     <div className="text-center py-24 bg-white rounded-3xl border border-cream-200 shadow-sm mx-auto max-w-2xl">
                         <p className="text-charcoal-400 font-medium text-lg">Aucune photo dans cette catégorie pour le moment.</p>
                     </div>
