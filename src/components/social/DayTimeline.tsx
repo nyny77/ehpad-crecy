@@ -13,7 +13,7 @@ const EVENTS = [
         icon: <Sun className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         badgeColor: "bg-terracotta-500",
-        image: "/images/timeline/morning.png",
+        image: "/images/timeline/reveil.png",
         side: "left"
     },
     {
@@ -23,7 +23,7 @@ const EVENTS = [
         icon: <BookOpen className="w-6 h-6" />,
         color: "bg-forest-100 text-forest-600",
         badgeColor: "bg-forest-500",
-        image: "/images/timeline/activities.png",
+        image: "/images/timeline/activites.png",
         side: "right"
     },
     {
@@ -33,7 +33,7 @@ const EVENTS = [
         icon: <Utensils className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         badgeColor: "bg-terracotta-500",
-        image: "/images/timeline/lunch.png",
+        image: "/images/timeline/dejeuner.png",
         side: "left"
     },
     {
@@ -43,7 +43,7 @@ const EVENTS = [
         icon: <Music className="w-6 h-6" />,
         color: "bg-forest-100 text-forest-600",
         badgeColor: "bg-forest-500",
-        image: "/images/timeline/social.png",
+        image: "/images/timeline/vie-sociale.png",
         side: "right"
     },
     {
@@ -53,7 +53,7 @@ const EVENTS = [
         icon: <Coffee className="w-6 h-6" />,
         color: "bg-terracotta-100 text-terracotta-600",
         badgeColor: "bg-terracotta-500",
-        image: "/images/timeline/snack.png",
+        image: "/images/timeline/gouter.png",
         side: "left"
     },
     {
@@ -63,7 +63,7 @@ const EVENTS = [
         icon: <Moon className="w-6 h-6" />,
         color: "bg-charcoal-100 text-charcoal-600",
         badgeColor: "bg-charcoal-700",
-        image: "/images/timeline/evening.png",
+        image: "/images/timeline/diner.png",
         side: "right"
     }
 ];
