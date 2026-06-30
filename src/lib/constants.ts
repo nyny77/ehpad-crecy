@@ -85,6 +85,7 @@ export const NAV_LINKS = [
     { href: "/equipe", label: "Notre Équipe" },
     { href: "/galerie", label: "Galerie Photos" },
     { href: "/blog", label: "Blog" },
+    { href: "/animation", label: "Animation & Vie Sociale" },
     { href: "/admissions", label: "Admissions" },
     { href: "/hebergement", label: "Tarifs" },
     { href: "/recrutement", label: "Recrutement" },
