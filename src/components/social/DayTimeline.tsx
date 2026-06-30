@@ -185,7 +185,7 @@ export default function DayTimeline() {
 
                                             {/* Badge horaire flottant */}
                                             <motion.div
-                                                className={`absolute top-4 left-4 px-5 py-2 ${event.badgeColor} text-white rounded-2xl text-sm font-bold shadow-lg backdrop-blur-sm bg-opacity-90`}
+                                                className={`absolute bottom-4 right-4 px-5 py-2 ${event.badgeColor} text-white rounded-2xl text-sm font-bold shadow-lg backdrop-blur-sm bg-opacity-90`}
                                                 whileHover={{ scale: 1.1, rotate: -2 }}
                                             >
                                                 {event.time}
