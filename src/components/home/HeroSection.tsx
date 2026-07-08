@@ -32,20 +32,20 @@ export default function HeroSection() {
             style={{ perspective: "1000px" }}
         >
             {/* Background Image with Parallax */}
-            <motion.div style={{ y }} className="absolute inset-0 z-0">
+            <motion.div style={{ y }} className="absolute inset-0 z-0 overflow-hidden">
                 <Image
                     src={EHPAD_INFO.heroImage}
                     alt="EHPAD de Crécy"
                     fill
-                    className="object-cover object-center"
+                    className="object-cover object-center scale-[1.05] md:scale-[1.10]"
                     priority
                 />
                 {/* Overlay équilibré (30%) */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
                 
-                {/* Effet de fondu sur les bords (Vignette) */}
-                <div className="absolute inset-y-0 left-0 w-16 md:w-32 lg:w-64 bg-gradient-to-r from-cream-100 via-cream-100/80 to-transparent pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-16 md:w-32 lg:w-64 bg-gradient-to-l from-cream-100 via-cream-100/80 to-transparent pointer-events-none" />
+                {/* Effet de fondu très léger sur les bords */}
+                <div className="absolute inset-y-0 left-0 w-8 md:w-16 bg-gradient-to-r from-cream-100/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-cream-100/50 to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Main Content Container with Tilt + Fade on scroll */}

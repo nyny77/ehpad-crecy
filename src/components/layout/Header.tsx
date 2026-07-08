@@ -90,7 +90,7 @@ export default function Header() {
             </div>
 
             <div className="container-custom">
-                <nav className="flex items-center justify-between lg:justify-center gap-4 lg:gap-8">
+                <nav className="flex items-center justify-between lg:justify-center gap-2 lg:gap-4">
                     {/* Logo with enhanced shadow */}
                     <Link href="/" className="group flex items-center gap-3">
                         <motion.div
@@ -98,7 +98,7 @@ export default function Header() {
                             whileTap={{ scale: 0.95 }}
                             className={`relative flex-shrink-0 overflow-hidden rounded-full transition-all duration-500 shadow-lg ring-2 ring-white/50 dark:ring-charcoal-700/50 ${isScrolled ? "shadow-md" : "shadow-xl"
                                 }`}
-                            style={{ width: isScrolled ? 50 : 65, height: isScrolled ? 50 : 65 }}
+                            style={{ width: isScrolled ? 40 : 55, height: isScrolled ? 40 : 55 }}
                         >
                             <Image
                                 src="/images/logo.png"
@@ -112,13 +112,13 @@ export default function Header() {
                     </Link>
 
                     {/* Desktop Navigation - Modern pill style */}
-                    <div className="hidden lg:flex items-center gap-1">
+                    <div className="hidden lg:flex items-center gap-0.5 xl:gap-1">
                         {NAV_LINKS.map((link) => {
                             const isActive = isActiveLink(link.href);
                             return (
                                 <Link key={link.href} href={link.href} className="relative group">
                                     <motion.div
-                                        className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive
+                                        className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
                                             ? "text-white"
                                             : "text-charcoal-700 hover:text-white"
                                             }`}
@@ -156,14 +156,14 @@ export default function Header() {
                         })}
 
                         {/* CTA Button - Enhanced with gradient and animation */}
-                        <Link href="/contact" className="ml-3">
+                        <Link href="/contact" className="ml-1 xl:ml-3">
                             <motion.button
                                 whileHover={{
                                     scale: 1.05,
                                     boxShadow: '0 8px 30px rgba(200, 0, 64, 0.35)'
                                 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="relative overflow-hidden px-6 py-2.5 rounded-full text-sm font-semibold text-white shadow-lg transition-all duration-300"
+                                className="relative overflow-hidden px-4 py-1.5 xl:px-5 xl:py-2 rounded-full text-[12px] xl:text-[13px] font-semibold text-white shadow-lg transition-all duration-300"
                                 style={{
                                     background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)',
                                 }}
@@ -189,7 +189,7 @@ export default function Header() {
                             href="/admin/index.html" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="ml-2 text-charcoal-400 hover:text-terracotta-600 transition-colors p-2 rounded-full hover:bg-cream-100 dark:hover:bg-charcoal-800" 
+                            className="ml-1 text-charcoal-400 hover:text-terracotta-600 transition-colors p-1.5 rounded-full hover:bg-cream-100 dark:hover:bg-charcoal-800" 
                             title="Administration"
                         >
                             ⚙️

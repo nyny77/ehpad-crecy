@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
+import SplashScreen from "@/components/ui/SplashScreen";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
@@ -62,6 +63,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
+        <SplashScreen />
         <NetlifyIdentityRedirect />
         <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
           <ErrorBoundary>
