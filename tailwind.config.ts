@@ -79,6 +79,30 @@ const config: Config = {
           800: "#2C2C33",
           900: "#1A1A1F",
         },
+        "medical-blue": {
+          50: "#F0F5FA",
+          100: "#E1EDF6",
+          200: "#C4DBED",
+          300: "#99C2DF",
+          400: "#66A4CD",
+          500: "#3D82B3", // Base pour l'aspect hospitalier
+          600: "#2A6694",
+          700: "#225177",
+          800: "#1E4362",
+          900: "#1C3953",
+        },
+        "hotel-beige": {
+          50: "#FCFAF8",
+          100: "#F8F3EA",
+          200: "#EFE2D0",
+          300: "#E2CCB1",
+          400: "#D4B48F",
+          500: "#C1996C", // Base pour l'aspect hôtellerie / lieu de vie
+          600: "#B08355",
+          700: "#936644",
+          800: "#79543A",
+          900: "#624431",
+        },
       },
       fontFamily: {
         serif: ["var(--font-playfair)", "Playfair Display", "Georgia", "serif"],

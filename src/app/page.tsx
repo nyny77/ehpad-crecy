@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-      <IntroSection />
       <FeaturesSection />
+      <IntroSection />
       <TeamPreview />
       <CTASection />
     </main>
