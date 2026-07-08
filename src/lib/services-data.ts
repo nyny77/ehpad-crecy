@@ -274,6 +274,7 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
         ],
         image: "/images/services/hotelier.png",
         detailImage: "/images/services/hotelier.png",
+        imagePosition: "object-right",
         dailyRoutine: [
             { time: "08:00", activity: "Bio-nettoyage des chambres" },
             { time: "10:30", activity: "Entretien des parties communes" },
@@ -286,14 +287,14 @@ Au-delà de ses missions d'entretien, il est présent auprès des résidents. So
     },
     {
         id: "rh",
-        title: "La Responsable RH",
-        subtitle: "Ressources Humaines & Bien-être au travail",
-        shortDescription: "La responsable RH veille au bon climat social et à l'épanouissement de tous les collaborateurs.",
-        fullDescription: `La responsable des Ressources Humaines de l'EHPAD de Crécy joue un rôle central dans la vie de l'établissement. Elle est le point de contact privilégié pour l'ensemble des collaborateurs et veille au maintien d'un climat social serein et bienveillant.
+        title: "L'agent RH",
+        subtitle: "Ressources Humaines & Qualité de vie au travail",
+        shortDescription: "L'agent RH veille au bon climat social et à l'épanouissement de tous les collaborateurs.",
+        fullDescription: `L'agent RH de l'EHPAD de Crécy joue un rôle central dans la vie de l'établissement. Il est le point de contact privilégié pour l'ensemble des collaborateurs et veille au maintien d'un climat social serein et bienveillant.
 
-Son action s'articule autour de plusieurs missions essentielles : la gestion de la paie, le recrutement de nouveaux talents, l'accompagnement des carrières, la formation continue et le développement des compétences. Elle s'assure que chaque membre de l'équipe dispose des moyens nécessaires pour exercer son métier dans les meilleures conditions.
+Son action s'articule autour de plusieurs missions essentielles : la gestion de la paie, le recrutement de nouveaux talents, l'accompagnement des carrières, la formation continue et le développement des compétences. Il s'assure que chaque membre de l'équipe dispose des moyens nécessaires pour exercer son métier dans les meilleures conditions.
 
-Au-delà de la gestion administrative, elle porte une attention particulière à la qualité de vie au travail. Son écoute attentive et sa disponibilité contribuent à créer un environnement où chacun se sent reconnu et valorisé.`,
+Au-delà de la gestion administrative, il porte une attention particulière à la qualité de vie au travail. Son écoute attentive et sa disponibilité contribuent à créer un environnement où chacun se sent reconnu et valorisé.`,
         highlights: [
             "Gestion de la paie",
             "Formation continue",

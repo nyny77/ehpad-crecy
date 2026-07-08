@@ -41,6 +41,7 @@ export default function BentoGrid() {
                     image={service.image}
                     index={index}
                     size={getSize(index)}
+                    imagePosition={service.imagePosition}
                 />
             ))}
         </div>

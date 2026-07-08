@@ -13,6 +13,7 @@ interface ServiceCardProps {
     image: string;
     index: number;
     size?: "small" | "large" | "horizontal" | "vertical";
+    imagePosition?: string;
 }
 
 export default function ServiceCard({
@@ -23,6 +24,7 @@ export default function ServiceCard({
     image,
     index,
     size = "small",
+    imagePosition = "object-center",
 }: ServiceCardProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
@@ -94,7 +96,7 @@ export default function ServiceCard({
                                     src={image}
                                     alt={title}
                                     fill
-                                    className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"}`}
+                                    className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"} ${imagePosition}`}
                                 />
 
                                 {/* Overlay gradient */}
