@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useTransform, useTime } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface ServiceCardProps {
     id: string;
@@ -26,13 +26,6 @@ export default function ServiceCard({
 }: ServiceCardProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
-
-    // --- Automatic Floating Logic ---
-    const time = useTime();
-
-    // Automatic gentle floating animation
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5); // +/- 5 degrees
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5); // +/- 5 degrees
 
     // Mouse handlers removed, only hover state remains
 
@@ -87,25 +80,13 @@ export default function ServiceCard({
 
                 <div
                     ref={ref}
-                    style={{ perspective: "1000px" }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={handleMouseLeave}
                     className="h-full"
                 >
-                    <motion.div
-                        className="h-full"
-                        animate={{
-                            y: [0, -15, 0], // Stronger float
-                        }}
-                        transition={{
-                            duration: floatDuration,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.1
-                        }}
-                    >
+                    <div className="h-full">
                         <div
-                            className={`relative overflow-hidden rounded-3xl bg-cream-50 shadow-card transition-all duration-500 h-full min-h-[300px] ${isHovered ? "shadow-2xl scale-[1.02]" : ""}`}
+                            className={`relative overflow-hidden rounded-3xl bg-cream-50 shadow-card transition-all duration-500 h-full min-h-[220px] ${isHovered ? "shadow-2xl scale-[1.02]" : ""}`}
                         >
                             {/* Image */}
                             <div className="absolute inset-0">
@@ -114,14 +95,6 @@ export default function ServiceCard({
                                     alt={title}
                                     fill
                                     className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"}`}
-                                // Automatic slow zoom effect via CSS transition above, or we can use animate
-                                />
-
-                                {/* Animate image slow zoom automatically */}
-                                <motion.div
-                                    className="absolute inset-0"
-                                    animate={{ scale: [1, 1.1, 1] }}
-                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                                 />
 
                                 {/* Overlay gradient */}
@@ -134,7 +107,7 @@ export default function ServiceCard({
                             </div>
 
                             {/* Contenu - Avec fond semi-transparent pour lisibilité garantie */}
-                            <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/60 to-transparent pt-20">
+                            <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/60 to-transparent pt-16">
                                 {/* Badge */}
                                 <motion.span
                                     animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0.9 }}
@@ -145,7 +118,7 @@ export default function ServiceCard({
 
                                 {/* Titre */}
                                 <h3
-                                    className={`font-serif font-bold text-white mb-2 !text-white ${isBigTitle ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}
+                                    className={`font-serif font-bold text-white mb-2 !text-white ${isBigTitle ? "text-xl md:text-2xl" : "text-lg md:text-xl"}`}
                                     style={{ textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}
                                 >
                                     {title}
@@ -208,7 +181,7 @@ export default function ServiceCard({
                                 }}
                             />
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </motion.div>
         </Link>

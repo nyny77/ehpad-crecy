@@ -61,15 +61,19 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
       </head>
-      <body className="font-sans text-charcoal-800 bg-cream-50 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
+      <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
         <NetlifyIdentityRedirect />
-        <ErrorBoundary>
-          <Header />
-          {children}
-          <Footer />
-          <AccessibilityToggle />
-          <ChatBot />
-        </ErrorBoundary>
+        <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
+          <ErrorBoundary>
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+            <AccessibilityToggle />
+            <ChatBot />
+          </ErrorBoundary>
+        </div>
       </body>
     </html>
   );

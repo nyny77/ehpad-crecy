@@ -83,7 +83,7 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
             <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} rounded-3xl opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:scale-110`} />
 
             {/* Main card - Theme aware */}
-            <div className={`relative h-full rounded-3xl px-3 py-6 flex flex-col items-center transition-all duration-500 ${isDarkMode
+            <div className={`relative h-full rounded-3xl p-4 md:p-5 flex flex-col items-center transition-all duration-500 ${isDarkMode
                 ? 'bg-gradient-to-br from-charcoal-800 via-charcoal-900 to-black border border-charcoal-700/50 group-hover:border-white/20'
                 : 'bg-gradient-to-br from-white via-cream-50 to-cream-100 border-2 border-cream-200 shadow-xl group-hover:border-terracotta-300 group-hover:shadow-2xl'
                 }`}>
@@ -93,46 +93,16 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
                     {/* Orbiting particle 1 */}
                     <motion.div
                         className={`absolute w-2 h-2 ${style.bg} rounded-full ${isDarkMode ? 'opacity-60' : 'opacity-40'}`}
-                        animate={{
-                            x: [0, 100, 200, 100, 0],
-                            y: [0, -50, 0, 50, 0],
-                        }}
-                        transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: index * 0.5
-                        }}
                         style={{ top: "20%", left: "10%" }}
                     />
                     {/* Orbiting particle 2 */}
                     <motion.div
                         className={`absolute w-3 h-3 ${style.bg} rounded-full ${isDarkMode ? 'opacity-40' : 'opacity-25'}`}
-                        animate={{
-                            x: [0, -80, 0, 80, 0],
-                            y: [0, 60, 0, -60, 0],
-                        }}
-                        transition={{
-                            duration: 10,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: index * 0.3
-                        }}
                         style={{ top: "60%", right: "20%" }}
                     />
                     {/* Glowing orb */}
                     <motion.div
                         className={`absolute w-32 h-32 ${style.bg} rounded-full blur-2xl ${isDarkMode ? 'opacity-10' : 'opacity-20'}`}
-                        animate={{
-                            scale: [1, 1.3, 1],
-                            opacity: isDarkMode ? [0.1, 0.2, 0.1] : [0.15, 0.25, 0.15],
-                        }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.2
-                        }}
                         style={{ top: "-20%", right: "-20%" }}
                     />
                 </div>
@@ -141,31 +111,13 @@ function ValueCard({ value, index }: { value: typeof VALUES[0], index: number })
                 <div className="relative flex justify-center mb-6">
                     {/* Outer pulsing ring */}
                     <motion.div
-                        className={`absolute inset-0 w-24 h-24 mx-auto rounded-full ${style.ring} ring-8 opacity-50`}
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 0.2, 0.5],
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.25
-                        }}
+                        className={`absolute inset-0 w-16 h-16 mx-auto rounded-full ${style.ring} ring-8 opacity-50`}
                     />
 
                     {/* Icon background with gradient and shadow */}
                     <motion.div
-                        className={`relative w-24 h-24 bg-gradient-to-br ${style.gradient} rounded-full flex items-center justify-center shadow-2xl ${style.glow} group-hover:shadow-3xl transition-shadow duration-500`}
-                        animate={{
-                            rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{
-                            duration: 6,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.3
-                        }}
+                        className={`relative w-16 h-16 bg-gradient-to-br ${style.gradient} rounded-full flex items-center justify-center shadow-2xl ${style.glow} group-hover:shadow-3xl transition-shadow duration-500`}
+
                         whileHover={{
                             scale: 1.15,
                             rotate: 360,

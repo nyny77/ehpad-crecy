@@ -23,16 +23,12 @@ export default function HeroSection() {
     // --- Automatic Floating Logic ---
     const time = useTime();
 
-    // Create a gentle floating motion using sine/cosine waves (subtle tilt)
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 3);
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 3);
-
     const sloganWords = EHPAD_INFO.slogan.split(" ");
 
     return (
         <section
             ref={containerRef}
-            className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-100 perspective-1000"
+            className="relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-cream-100 perspective-1000"
             style={{ perspective: "1000px" }}
         >
             {/* Background Image with Parallax */}
@@ -46,20 +42,22 @@ export default function HeroSection() {
                 />
                 {/* Overlay équilibré (30%) */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+                
+                {/* Effet de fondu sur les bords (Vignette) */}
+                <div className="absolute inset-y-0 left-0 w-16 md:w-32 lg:w-64 bg-gradient-to-r from-cream-100 via-cream-100/80 to-transparent pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-16 md:w-32 lg:w-64 bg-gradient-to-l from-cream-100 via-cream-100/80 to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Main Content Container with Tilt + Fade on scroll */}
             <motion.div
                 style={{
-                    rotateX,
-                    rotateY,
                     opacity: contentOpacity,
                     y: contentY,
                 }}
-                className="relative z-10 container-custom px-4 pt-20"
+                className="relative z-10 container-custom px-4 md:px-8 flex flex-col items-center"
             >
                 {/* Glass Card */}
-                <div className="relative max-w-4xl mx-auto">
+                <div className="relative max-w-2xl mx-auto">
 
                     {/* Pulsing Background Glow - Automatic Animation */}
                     <motion.div
@@ -98,16 +96,11 @@ export default function HeroSection() {
                     {/* Floating Wrapper for the Card */}
                     <motion.div
                         animate={{
-                            y: [0, -18, 0] // Vertical floating
-                        }}
-                        transition={{
-                            duration: 5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
+                            y: 0
                         }}
                     >
                         {/* The Card Itself */}
-                        <div className="hero-glass-card relative bg-cream-50/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden group">
+                        <div className="hero-glass-card relative bg-cream-50/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-6 lg:p-8 shadow-2xl overflow-hidden group">
 
                             {/* Effet de brillance interne */}
                             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -132,26 +125,10 @@ export default function HeroSection() {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 1, ease: "easeOut" }}
-                                    className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight"
-                                    style={{
-                                        background: "linear-gradient(90deg, #40404A 0%, #40404A 45%, #C80040 50%, #40404A 55%, #40404A 100%)",
-                                        backgroundSize: "200% 100%",
-                                        backgroundClip: "text",
-                                        WebkitBackgroundClip: "text",
-                                        WebkitTextFillColor: "transparent",
-                                        animation: "sweep-highlight 6s ease-in-out infinite"
-                                    }}
+                                    className="font-serif text-3xl md:text-4xl font-bold mb-6 leading-tight tracking-tight text-charcoal-900"
                                 >
                                     {EHPAD_INFO.name}
                                 </motion.h1>
-
-                                {/* CSS Keyframes for the sweep highlight */}
-                                <style jsx>{`
-                                    @keyframes sweep-highlight {
-                                        0% { background-position: 100% 50%; }
-                                        100% { background-position: -100% 50%; }
-                                    }
-                                `}</style>
 
                                 {/* Divider with Glow Effect */}
                                 <motion.div
@@ -176,15 +153,15 @@ export default function HeroSection() {
                                     {sloganWords.map((word, index) => (
                                         <motion.span
                                             key={index}
-                                            initial={{ opacity: 0, y: 20, rotateX: 90 }}
-                                            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
                                             transition={{
                                                 duration: 0.8,
                                                 delay: 0.8 + index * 0.1,
                                                 type: "spring",
                                                 damping: 12
                                             }}
-                                            className="text-xl md:text-2xl lg:text-3xl text-charcoal-700 font-serif italic"
+                                            className="text-lg md:text-xl lg:text-2xl text-charcoal-700 font-serif italic"
                                         >
                                             {word}
                                         </motion.span>
@@ -233,7 +210,7 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 2.2 }}
-                    className="absolute -bottom-24 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+                    className="mt-8 hidden md:flex flex-col items-center gap-2"
                 >
                     <div className="hero-info-badge flex items-center gap-3 px-6 py-3 bg-cream-50/80 backdrop-blur-md rounded-full shadow-xl border border-white/50">
                         <span className="relative flex h-3 w-3">
@@ -256,22 +233,10 @@ export default function HeroSection() {
                 </motion.div>
             </motion.div >
 
-            {/* Scroll Indicator */}
-            < motion.div
-                initial={{ opacity: 0 }
-                }
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3, duration: 1 }}
-                className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20"
-            >
-                <div className="w-[30px] h-[50px] rounded-3xl border-2 border-white/50 flex justify-center p-2">
-                    <motion.div
-                        animate={{ y: [0, 15, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-1 h-2 bg-white rounded-full mb-1"
-                    />
-                </div>
-            </motion.div >
+            {/* Vague de séparation */}
+            <div className="absolute bottom-0 left-0 w-full z-20">
+                <WaveSeparator position="bottom" className="text-cream-100" />
+            </div>
         </section >
     );
 }

@@ -130,13 +130,11 @@ export default function PageHeader({
     const contentY = useTransform(scrollYProgress, [0, 0.25], [0, -30]);
 
     const time = useTime();
-    const rotateX = useTransform(time, (t) => Math.sin(t / 2000) * 5);
-    const rotateY = useTransform(time, (t) => Math.cos(t / 2500) * 5);
 
     return (
         <section
             ref={containerRef}
-            className="page-header-section relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-cream-50"
+            className="page-header-section relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-cream-50"
             style={{ perspective: "1000px" }}
         >
             {/* Image de fond avec parallax */}
@@ -149,6 +147,10 @@ export default function PageHeader({
                     priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+
+                {/* Effet de fondu sur les bords (Vignette) */}
+                <div className="absolute inset-y-0 left-0 w-16 md:w-32 lg:w-64 bg-gradient-to-r from-cream-50 via-cream-50/80 to-transparent pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-16 md:w-32 lg:w-64 bg-gradient-to-l from-cream-50 via-cream-50/80 to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Particules décoratives */}
@@ -156,8 +158,8 @@ export default function PageHeader({
 
             {/* Contenu avec effet 3D tilt + fade on scroll */}
             <motion.div
-                style={{ rotateX, rotateY, opacity: contentOpacity, y: contentY }}
-                className="relative z-10 container-custom text-center px-4 pt-32 lg:pt-28 2xl:pt-48 mt-8 lg:mt-0"
+                style={{ opacity: contentOpacity, y: contentY }}
+                className="relative z-10 container-custom text-center px-4"
             >
                 <div className="relative inline-block group">
                     {/* Pulsing Background Glow */}
@@ -180,19 +182,13 @@ export default function PageHeader({
                         animate={{
                             opacity: 1,
                             scale: 1,
-                            y: [0, -20, 0] // Floating effect increased
+                            y: 0
                         }}
                         transition={{
                             opacity: { duration: 1, ease: [0.215, 0.61, 0.355, 1] },
-                            scale: { duration: 1, ease: [0.215, 0.61, 0.355, 1] },
-                            y: {
-                                duration: 4, // Faster float
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                                delay: 0.5
-                            }
+                            scale: { duration: 1, ease: [0.215, 0.61, 0.355, 1] }
                         }}
-                        className="relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-8 lg:p-10 2xl:p-14 shadow-2xl max-w-5xl mx-auto overflow-hidden group"
+                        className="relative bg-white/80 backdrop-blur-sm border border-white/20 rounded-[2.5rem] p-6 lg:p-8 shadow-2xl max-w-2xl mx-auto overflow-hidden group"
                     >
                         {/* Lueurs chaudes internes */}
                         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-terracotta-200/40 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
@@ -219,7 +215,7 @@ export default function PageHeader({
                                 transition={{ duration: 0.7, delay: 0.3 }}
                                 className="inline-block mb-5 relative z-10"
                             >
-                                <span className="inline-flex items-center gap-2 text-sm md:text-base font-bold text-terracotta-600 uppercase tracking-[0.2em] px-4 py-2 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50 shadow-sm">
+                                <span className="inline-flex items-center gap-2 text-xs md:text-sm font-bold text-terracotta-600 uppercase tracking-[0.15em] px-3 py-1.5 bg-gradient-to-r from-terracotta-100/80 to-forest-100/80 rounded-full border border-terracotta-200/50 shadow-sm">
                                     <motion.span
                                         className="w-2 h-2 rounded-full bg-terracotta-500"
                                         animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
@@ -237,26 +233,14 @@ export default function PageHeader({
 
                         {/* Titre principal avec effet de vague */}
                         <h1
-                            className="relative z-10 font-serif text-3xl md:text-4xl lg:text-5xl font-bold mx-auto leading-tight mb-6 w-full"
+                            className="relative z-10 font-serif text-3xl md:text-4xl font-bold mx-auto leading-tight mb-4 w-full text-charcoal-900"
                             style={{
-                                background: "linear-gradient(90deg, #40404A 0%, #40404A 45%, #C80040 50%, #40404A 55%, #40404A 100%)",
-                                backgroundSize: "200% 100%",
-                                backgroundClip: "text",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                animation: "sweep-highlight 6s ease-in-out infinite",
                                 overflowWrap: "break-word",
                                 wordBreak: "break-word",
                             }}
                         >
                             <AnimatedTitle>{title}</AnimatedTitle>
                         </h1>
-                        <style jsx>{`
-                            @keyframes sweep-highlight {
-                                0% { background-position: 100% 50%; }
-                                100% { background-position: -100% 50%; }
-                            }
-                        `}</style>
 
                         {/* Ligne décorative avec effet de glow */}
                         <motion.div
@@ -282,7 +266,7 @@ export default function PageHeader({
                                 initial={{ opacity: 0, y: 15 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.7, delay: 0.6 }}
-                                className="relative z-10 text-lg md:text-xl text-charcoal-700 max-w-2xl mx-auto font-serif italic leading-relaxed"
+                                className="relative z-10 text-base md:text-lg text-charcoal-700 max-w-xl mx-auto font-serif italic leading-relaxed"
                             >
                                 {typeof description === 'string' ? <p>{description}</p> : description}
                             </motion.div>
@@ -305,7 +289,7 @@ export default function PageHeader({
 
             {/* Indicateur de scroll */}
             <motion.div
-                className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30"
+                className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 0.6 }}
