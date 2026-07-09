@@ -109,18 +109,18 @@ export default function ServiceCard({
                             </div>
 
                             {/* Contenu - Avec fond semi-transparent pour lisibilité garantie */}
-                            <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/60 to-transparent pt-16">
+                            <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/60 to-transparent pt-16 ${isBigTitle ? "p-4 md:p-6" : "p-3 md:p-4"} ${id === "animation" ? "!pb-2 md:!pb-3" : ""}`}>
                                 {/* Badge */}
                                 <motion.span
                                     animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0.9 }}
-                                    className="inline-block self-start px-3 py-1 bg-terracotta-500 text-white rounded-full text-xs font-bold uppercase tracking-wider mb-2 shadow-sm border border-terracotta-400"
+                                    className={`inline-block self-start bg-terracotta-500 text-white rounded-full font-bold uppercase tracking-wider mb-2 shadow-sm border border-terracotta-400 ${id === "animation" ? "px-2 py-0.5 text-[9px]" : isBigTitle ? "px-3 py-1 text-xs" : "px-2 py-0.5 text-[10px]"}`}
                                 >
                                     {subtitle}
                                 </motion.span>
 
                                 {/* Titre */}
                                 <h3
-                                    className={`font-serif font-bold text-white mb-2 !text-white ${isBigTitle ? "text-xl md:text-2xl" : "text-lg md:text-xl"}`}
+                                    className={`font-serif font-bold text-white mb-1 !text-white ${isBigTitle ? "text-xl md:text-2xl mb-2" : "text-base leading-tight"}`}
                                     style={{ textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}
                                 >
                                     {title}
@@ -133,7 +133,7 @@ export default function ServiceCard({
                                         y: isHovered ? 0 : 5,
                                     }}
                                     transition={{ duration: 0.3 }}
-                                    className={`text-white/90 font-medium ${isBigTitle ? "text-base" : "text-sm"} line-clamp-3`}
+                                    className={`text-white/90 font-medium ${isBigTitle ? "text-base" : "text-xs md:text-sm"} line-clamp-2 md:line-clamp-3`}
                                     style={{ textShadow: "0 1px 2px rgba(0,0,0,0.8)" }}
                                 >
                                     {description}
@@ -144,10 +144,11 @@ export default function ServiceCard({
                                     animate={{
                                         opacity: isHovered ? 1 : 0,
                                         x: isHovered ? 0 : -10,
-                                        height: isHovered ? "auto" : 0
+                                        height: isHovered ? "auto" : 0,
+                                        marginTop: isHovered ? 16 : 0
                                     }}
                                     transition={{ duration: 0.3 }}
-                                    className="mt-4 flex items-center gap-2 text-terracotta-300 overflow-hidden"
+                                    className="flex items-center gap-2 text-terracotta-300 overflow-hidden"
                                 >
                                     <span className="text-sm font-bold uppercase tracking-wide">Découvrir</span>
                                     <svg

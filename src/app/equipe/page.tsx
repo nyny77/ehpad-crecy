@@ -24,7 +24,7 @@ export default function EquipePage() {
                 <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-terracotta-100/40 rounded-full blur-3xl -translate-y-1/3 -translate-x-1/4 pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-forest-100/30 rounded-full blur-3xl translate-y-1/3 translate-x-1/4 pointer-events-none" />
 
-                <div className="container-custom relative z-10">
+                <div className="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                     <BentoGrid />
                 </div>
             </section>

@@ -153,7 +153,7 @@ export default function AnimationPage() {
     return (
         <main className="min-h-screen bg-cream-50">
             <PageHeader
-                title="Animation & Vie Sociale"
+                title="Coordinatrice de la vie sociale"
                 subtitle="Au cœur de la vie de l'EHPAD"
                 description="Découvrez nos activités quotidiennes, nos événements festifs et les moments de partage qui rythment la vie de nos résidents."
                 image="/images/global-hero.jpg"
