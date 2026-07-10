@@ -41,8 +41,8 @@ export default function BentoGrid() {
         "admin",
         "cuisine",
         "idec",
-        "benevoles", // photo, placé juste avant les dessins
-        "kine",      // nouvelle photo
+        "benevoles",
+        "kine",
         "soignants",
         "infirmiere",
         "bienetre",
