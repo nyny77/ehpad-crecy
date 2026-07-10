@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import PageHeader from "@/components/layout/PageHeader";
 import PricingSection from "@/components/admissions/PricingSection";
 import TiltCard from "@/components/ui/TiltCard";
 import { EHPAD_INFO } from "@/lib/constants";
@@ -77,14 +76,9 @@ export default function HebergementPage() {
     return (
         <>
             {/* Hero compact */}
-            <PageHeader
-                title="Hébergement & Tarifs"
-                subtitle="Votre futur chez-vous"
-                description={`${EHPAD_INFO.capacity.description} dans un cadre chaleureux et confortable. Découvrez nos tarifs transparents et les aides disponibles.`}
-            />
-
+            
             {/* Section Chambres */}
-            <section className="section-padding bg-cream-100">
+            <section className="pt-32 md:pt-40 section-padding bg-cream-100">
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Images */}

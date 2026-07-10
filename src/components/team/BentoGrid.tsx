@@ -23,7 +23,7 @@ export default function BentoGrid() {
             "soignants": "small",       // original index 10
             "infirmiere": "large",      // original index 11
             "bienetre": "horizontal",   // original index 12
-            "kine": "small",            // original index 13
+            "kine": "vertical",         // new photo, made vertical
             "medecins": "small",        // original index 14
             "benevoles": "horizontal",  // changed to horizontal
         };
@@ -42,10 +42,10 @@ export default function BentoGrid() {
         "cuisine",
         "idec",
         "benevoles", // photo, placé juste avant les dessins
+        "kine",      // nouvelle photo
         "soignants",
         "infirmiere",
         "bienetre",
-        "kine",
         "medecins"
     ];
 

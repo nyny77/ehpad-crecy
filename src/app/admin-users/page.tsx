@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { isAdmin, openLoginWidget } from "@/lib/netlifyAuth";
-import PageHeader from "@/components/layout/PageHeader";
 import { motion } from "framer-motion";
 import ConfirmationModal from "@/components/ui/ConfirmationModal";
 
@@ -205,14 +204,7 @@ export default function AdminUsersPage() {
 
     return (
         <>
-            <PageHeader
-                title="Administration des Utilisateurs"
-                subtitle="Gestion des accès"
-                description="Validez les nouvelles inscriptions et gérez les accès à l'espace Vie Sociale."
-                image="/images/global-hero.jpg"
-                alt="Admin"
-            />
-
+            
             <section className="py-12 bg-cream-50 min-h-[50vh]">
                 <div className="container-custom">
                     <div className="flex justify-between items-center mb-8">

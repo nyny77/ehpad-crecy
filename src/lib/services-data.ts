@@ -133,6 +133,7 @@ Leur champ d'action est vaste : sécurité incendie, maintenance préventive et 
         ],
         image: "/images/services/technique.png",
         detailImage: "/images/services/technique.png",
+        detailImage2: "/images/services/tech2.png",
         dailyRoutine: [
             { time: "08:00", activity: "Tour de contrôle sécurité et chaufferie" },
             { time: "09:00", activity: "Réparations courantes dans les chambres" },
@@ -374,14 +375,14 @@ Au-delà de l'aspect esthétique, elle participe au maintien des liens sociaux. 
     },
     {
         id: "kine",
-        title: "Le kinésithérapeute",
+        title: "La Kiné",
         subtitle: "Rééducation & Maintien de la mobilité",
         shortDescription: "Des séances adaptées pour maintenir mobilité et autonomie.",
-        fullDescription: `Le kinésithérapeute joue un rôle essentiel dans le maintien de l'autonomie des résidents. Il intervient sur prescription médicale pour rééduquer, soulager et préserver les capacités physiques.
+        fullDescription: `La kinésithérapeute joue un rôle essentiel dans le maintien de l'autonomie des résidents. Elle intervient sur prescription médicale pour rééduquer, soulager et préserver les capacités physiques.
 
-Chaque prise en charge est personnalisée et adaptée aux capacités et objectifs de chacun. Il propose des séances pouvant inclure des exercices de mobilisation, des massages, des soins antalgiques ou du renforcement musculaire.
+Chaque prise en charge est personnalisée et adaptée aux capacités et objectifs de chacun. Elle propose des séances pouvant inclure des exercices de mobilisation, des massages, des soins antalgiques ou du renforcement musculaire.
 
-Il travaille en étroite collaboration avec l'équipe soignante et médicale. Cette coordination permet d'assurer une continuité des soins et d'optimiser les résultats de la rééducation.`,
+Elle travaille en étroite collaboration avec l'équipe soignante et médicale. Cette coordination permet d'assurer une continuité des soins et d'optimiser les résultats de la rééducation.`,
         highlights: [
             "Rééducation personnalisée",
             "Maintien de la mobilité",
@@ -389,6 +390,7 @@ Il travaille en étroite collaboration avec l'équipe soignante et médicale. Ce
             "Soulagement des douleurs",
         ],
         image: "/images/services/kine.png",
+        imagePosition: "object-top",
         detailImage: "/images/services/kine.png",
         dailyRoutine: [
             { time: "09:00", activity: "Prise en charge individuelle en chambre" },

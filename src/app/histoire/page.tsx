@@ -2,19 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
-import PageHeader from "@/components/layout/PageHeader";
 import Section from "@/components/layout/Section";
 import { motion } from "framer-motion";
 
 export default function HistoirePage() {
     return (
-        <main className="min-h-screen bg-cream-100">
-            <PageHeader
-                title="Histoire de Crécy-la-Chapelle"
-                subtitle="Découvrez la Venise Briarde, votre future ville"
-                description="Plongez dans le passé fascinant de notre cité médiévale, entre canaux pittoresques, patrimoine architectural et traditions séculaires."
-            />
-
+        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
+            
             <Section className="py-16 md:py-24">
                 <div className="max-w-4xl mx-auto space-y-16">
                     {/* Introduction */}

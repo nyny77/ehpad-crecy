@@ -14,6 +14,8 @@ interface ServiceData {
     highlights: string[];
     image: string;
     detailImage: string;
+    detailImage2?: string;
+    imagePosition?: string;
 
     skills?: string[];
     quote?: string;
@@ -130,20 +132,54 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                 className="absolute inset-4 bg-terracotta-100 rounded-[3rem] -z-10 rotate-[-4deg]"
                             />
 
-                            <div className="relative w-full max-w-md aspect-[4/5] p-3 bg-white rounded-2xl shadow-xl rotate-[2deg]">
-                                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent z-20"></div>
-                                <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
-                                    <Image
-                                        src={service.detailImage}
-                                        alt={service.title}
-                                        fill
-                                        className="object-cover"
-                                        priority
-                                    />
-                                    {/* Grain sur l'image */}
-                                    <div className="absolute inset-0 bg-terracotta-500/10 mix-blend-overlay pointer-events-none"></div>
+                            {service.detailImage2 ? (
+                                <div className="relative w-full max-w-lg aspect-square">
+                                    <motion.div 
+                                        whileHover={{ scale: 1.05, rotate: -4, zIndex: 30 }}
+                                        className="absolute top-0 left-0 w-2/3 aspect-[4/5] p-3 bg-white rounded-2xl shadow-lg -rotate-[6deg] z-10 transition-transform duration-300"
+                                    >
+                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
+                                            <Image
+                                                src={service.detailImage}
+                                                alt={service.title}
+                                                fill
+                                                className={`object-cover ${service.imagePosition || 'object-center'}`}
+                                            />
+                                            <div className="absolute inset-0 bg-terracotta-500/10 mix-blend-overlay pointer-events-none"></div>
+                                        </div>
+                                    </motion.div>
+                                    
+                                    <motion.div 
+                                        whileHover={{ scale: 1.05, rotate: 2, zIndex: 30 }}
+                                        className="absolute bottom-0 right-0 w-2/3 aspect-[4/5] p-3 bg-white rounded-2xl shadow-xl rotate-[4deg] z-20 transition-transform duration-300"
+                                    >
+                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
+                                            <Image
+                                                src={service.detailImage2}
+                                                alt={`${service.title} - photo 2`}
+                                                fill
+                                                className={`object-cover ${service.imagePosition || 'object-center'}`}
+                                            />
+                                            <div className="absolute inset-0 bg-terracotta-500/10 mix-blend-overlay pointer-events-none"></div>
+                                        </div>
+                                    </motion.div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="relative w-full max-w-md aspect-[4/5] p-3 bg-white rounded-2xl shadow-xl rotate-[2deg]">
+                                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent z-20"></div>
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
+                                        <Image
+                                            src={service.detailImage}
+                                            alt={service.title}
+                                            fill
+                                            className={`object-cover ${service.imagePosition || 'object-center'}`}
+                                            priority
+                                        />
+                                        {/* Grain sur l'image */}
+                                        <div className="absolute inset-0 bg-terracotta-500/10 mix-blend-overlay pointer-events-none"></div>
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Éléments décoratifs flottants */}
                             <motion.div

@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { MoveRight } from "lucide-react";
-import PageHeader from "@/components/layout/PageHeader";
 import AdmissionStepsSection from "@/components/admissions/AdmissionStepsSection";
 import FinancialAidSection from "@/components/admissions/FinancialAidSection";
 import { EHPAD_INFO } from "@/lib/constants";
@@ -12,14 +11,9 @@ export const metadata: Metadata = {
 
 export default function AdmissionsPage() {
     return (
-        <main className="bg-cream-100 min-h-screen">
+        <main className="pt-32 md:pt-40 bg-cream-100 min-h-screen">
             {/* Hero Section */}
-            <PageHeader
-                title="Admissions"
-                subtitle="Démarches simplifiées"
-                description="Nous vous accompagnons à chaque étape. Faites votre demande en ligne simplement via ViaTrajectoire."
-            />
-
+            
             {/* Animated Steps Section */}
             <AdmissionStepsSection />
 

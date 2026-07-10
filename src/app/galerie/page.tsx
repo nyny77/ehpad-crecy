@@ -6,7 +6,7 @@ import Image from "next/image";
 import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
 import { motion, AnimatePresence } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
+
 import TiltCard from "@/components/ui/TiltCard";
 
 
@@ -59,13 +59,9 @@ export default function GaleriePage() {
     }, []);
 
     return (
-        <main className="pb-20 bg-cream-100 min-h-screen">
+        <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
             {/* Hero */}
-            <PageHeader
-                title="Galerie Photos"
-                subtitle="Découverte des lieux"
-                description="Explorez notre établissement à travers une sélection de photos : vues aériennes, jardins, façades et images historiques du début du XXe siècle."
-            />
+            
 
             {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}
             <section className="container-custom px-4" style={{ paddingTop: "40px", paddingBottom: "40px" }}>

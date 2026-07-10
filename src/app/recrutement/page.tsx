@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CAREERS_OFFERS, SPONTANEOUS_APPLICATION } from "@/lib/careers";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
+
 
 // Styles for Advantage Cards (reused logic from IntroSection/VieSociale)
 const advantageStyles = {
@@ -108,41 +108,19 @@ function AdvantageCard({ advantage, index }: { advantage: any, index: number }) 
 
                 {/* Icon container with pulse animation */}
                 <div className="relative flex justify-center mb-6">
-                    {/* Outer pulsing ring */}
-                    <motion.div
-                        className={`absolute inset-0 w-20 h-20 mx-auto rounded-full ${style.ring} ring-8 opacity-50`}
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 0.2, 0.5],
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.25
-                        }}
-                    />
-
-                    {/* Icon background with gradient */}
-                    <motion.div
-                        className={`relative w-20 h-20 bg-gradient-to-br ${style.gradient} rounded-full flex items-center justify-center shadow-lg ${style.glow} group-hover:shadow-xl transition-shadow duration-500 text-white`}
-                        whileHover={{
-                            scale: 1.15,
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                        }}
-                    >
+                    <div className={`absolute inset-0 ${style.bg} blur-md opacity-20 rounded-full animate-pulse`} />
+                    <div className={`relative w-20 h-20 rounded-2xl bg-gradient-to-br ${style.gradient} flex items-center justify-center ${style.glow} transform -rotate-6 group-hover:rotate-0 transition-transform duration-500 text-white`}>
                         {advantage.icon}
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-serif text-xl font-bold text-center mb-3 text-charcoal-900 group-hover:text-terracotta-600 transition-colors">
+                <h3 className="text-xl font-bold text-charcoal-800 mb-3 text-center">
                     {advantage.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-center text-sm leading-relaxed text-charcoal-600 font-medium">
+                <p className="text-charcoal-600 text-center font-medium leading-relaxed">
                     {advantage.description}
                 </p>
 
@@ -261,42 +239,38 @@ const jobStyles = {
     }
 };
 
-function JobCard({ offer }: { offer: typeof CAREERS_OFFERS[0] }) {
-    // Determine style based on contract type (or default)
-    const styleKey = Object.keys(jobStyles).find(key => offer.contract.includes(key)) || "Default";
-    const style = jobStyles[styleKey as keyof typeof jobStyles];
+function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: number }) {
+    const style = jobStyles[offer.contractType as keyof typeof jobStyles] || jobStyles.CDI;
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ y: -10 }}
-            className="h-full group relative"
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className={`bg-white rounded-[2rem] p-8 border border-cream-200 shadow-lg hover:shadow-2xl transition-all duration-300 relative group overflow-hidden`}
         >
-            {/* Animated gradient background that expands on hover - subtler than advantages */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:scale-105`} />
+            <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${style.gradient} opacity-5 rounded-bl-[4rem] -z-10 group-hover:scale-110 transition-transform duration-500`} />
 
-            <div className="relative h-full bg-white rounded-[2.5rem] p-8 border border-cream-200 shadow-lg group-hover:shadow-2xl group-hover:border-transparent transition-all duration-300 flex flex-col overflow-hidden">
-
-                {/* Top colored accent line */}
-                <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${style.gradient}`} />
-
-                <div className="flex justify-between items-start mb-6 mt-2">
-                    <h3 className="text-2xl font-serif font-bold text-charcoal-900 leading-snug group-hover:text-terracotta-700 transition-colors">
-                        {offer.title}
-                    </h3>
-                    <span className={`text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider text-center whitespace-nowrap ml-3 border ${style.badge} shadow-sm`}>
-                        {offer.contract}
-                    </span>
+            <div className="flex flex-col h-full z-10 relative">
+                <div className="mb-6">
+                    <div className="flex items-center justify-between mb-4">
+                        <span className={`px-4 py-1.5 rounded-full text-sm font-bold ${style.badge}`}>
+                            {offer.contractType}
+                        </span>
+                        {offer.isUrgent && (
+                            <span className="flex items-center gap-1 text-terracotta-600 text-sm font-bold bg-terracotta-50 px-3 py-1.5 rounded-full animate-pulse">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                URGENT
+                            </span>
+                        )}
+                    </div>
+                    <h3 className="text-2xl font-bold text-charcoal-900 mb-2">{offer.title}</h3>
+                    <p className="text-charcoal-600 text-sm">{offer.hours} • Prise de poste : {offer.startDate}</p>
                 </div>
 
-                <p className="text-charcoal-600 mb-8 flex-grow leading-relaxed font-medium">
-                    {offer.description}
-                </p>
-
-                <div className={`p-6 rounded-2xl ${style.lightBg} mb-8 border ${style.border}`}>
-                    <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${style.text} flex items-center gap-2`}>
+                <div className="mb-8 flex-grow">
+                    <h4 className="flex items-center gap-2 font-bold text-charcoal-900 mb-4">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                         Profil recherché
                     </h4>
@@ -338,13 +312,9 @@ export default function RecrutementPage() {
     }, []);
 
     return (
-        <main className="pb-20 bg-cream-100 min-h-screen">
+        <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
             {/* Hero Section */}
-            <PageHeader
-                title="Innovons ensemble"
-                subtitle="Nous recrutons"
-                description="Établissement public de la Fonction Publique Hospitalière, nous cherchons des professionnels passionnés pour accompagner nos résidents au quotidien."
-            />
+            
 
             {/* Admin Button - EN DEHORS du PageHeader */}
             {adminMode && (

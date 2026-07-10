@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
 import ConversationalForm from "@/components/contact/ConversationalForm";
 import { EHPAD_INFO } from "@/lib/constants";
 
@@ -9,14 +8,9 @@ export default function ContactPage() {
     return (
         <>
             {/* Hero compact */}
-            <PageHeader
-                title="Nous sommes à votre écoute"
-                subtitle="Contactez-nous"
-                description="L'EHPAD de Crécy-la-Chapelle vous accueille en Seine-et-Marne (77). Venez nous rencontrer ou posez vos questions."
-            />
-
+            
             {/* Section Contact */}
-            <section className="section-padding bg-cream-100">
+            <section className="pt-32 md:pt-40 section-padding bg-cream-100">
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                         {/* Informations de contact */}

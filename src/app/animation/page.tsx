@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 import DayTimeline from "@/components/social/DayTimeline";
 
@@ -99,41 +98,19 @@ function ActivityCard({ activity, index }: { activity: any, index: number }) {
 
                 {/* Icon container with pulse animation */}
                 <div className="relative flex justify-center mb-6">
-                    {/* Outer pulsing ring */}
-                    <motion.div
-                        className={`absolute inset-0 w-20 h-20 mx-auto rounded-full ${style.ring} ring-8 opacity-50`}
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 0.2, 0.5],
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: index * 0.25
-                        }}
-                    />
-
-                    {/* Icon background with gradient */}
-                    <motion.div
-                        className={`relative w-20 h-20 bg-gradient-to-br ${style.gradient} rounded-full flex items-center justify-center shadow-lg ${style.glow} group-hover:shadow-xl transition-shadow duration-500 text-white`}
-                        whileHover={{
-                            scale: 1.15,
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                        }}
-                    >
+                    <div className={`absolute inset-0 ${style.bg} blur-md opacity-20 rounded-full animate-pulse`} />
+                    <div className={`relative w-20 h-20 rounded-2xl bg-gradient-to-br ${style.gradient} flex items-center justify-center ${style.glow} transform -rotate-6 group-hover:rotate-0 transition-transform duration-500 text-white`}>
                         {activity.icon}
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-serif text-xl font-bold text-center mb-3 text-charcoal-900 group-hover:text-terracotta-600 transition-colors">
+                <h3 className="text-xl font-bold text-charcoal-800 mb-3 text-center">
                     {activity.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-center text-sm leading-relaxed text-charcoal-600 font-medium">
+                <p className="text-charcoal-600 text-center font-medium leading-relaxed">
                     {activity.description}
                 </p>
 
@@ -151,15 +128,8 @@ function ActivityCard({ activity, index }: { activity: any, index: number }) {
 
 export default function AnimationPage() {
     return (
-        <main className="min-h-screen bg-cream-50">
-            <PageHeader
-                title="Coordinatrice de la vie sociale"
-                subtitle="Au cœur de la vie de l'EHPAD"
-                description="Découvrez nos activités quotidiennes, nos événements festifs et les moments de partage qui rythment la vie de nos résidents."
-                image="/images/global-hero.jpg"
-                alt="Animation et vie sociale à l'EHPAD"
-            />
-
+        <main className="pt-32 md:pt-40 min-h-screen bg-cream-50">
+            
             {/* Section activités (toujours visible) - Avec fond coloré et vagues */}
             <section className="section-padding relative py-24 md:py-32 bg-cream-100 overflow-hidden">
                 <WaveSeparator position="top" className="text-cream-100" />

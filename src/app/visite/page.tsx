@@ -1,6 +1,6 @@
 "use client";
 
-import PageHeader from "@/components/layout/PageHeader";
+
 import Section from "@/components/layout/Section";
 import PanoramaViewer from "@/components/virtual-tour/PanoramaViewer";
 import { useState, useEffect } from "react";
@@ -38,13 +38,8 @@ export default function VisitePage() {
     }, [selectedPhotoIndex]);
 
     return (
-        <main className="min-h-screen bg-cream-100">
-            <PageHeader
-                title="Visite Virtuelle"
-                subtitle="Découvrez notre établissement comme si vous y étiez (Espace en cours de test bêta)"
-                description="Faites un tour dans notre jardin et visualisez les espaces de vie. (Ceci est une démonstration)"
-                image="/images/global-hero.jpg"
-            />
+        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
+            
 
             <Section className="pt-12 pb-32">
                 <div className="container-custom space-y-12">

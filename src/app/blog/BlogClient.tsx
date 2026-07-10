@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import gazetteData from "@/lib/data/gazette.json";
 import { motion } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
+
 import BlogGrid from "@/components/blog/BlogGrid";
 import { BlogPost } from "@/lib/blog";
 import { isAuthenticated, isAdmin, logout, onAuthChange } from "@/lib/netlifyAuth";
@@ -49,15 +49,9 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
 
     return (
         <>
-            <PageHeader
-                title="Blog"
-                subtitle="Actualités de l'établissement"
-                description="Retrouvez ici toutes les dernières nouvelles, nos projets et les événements de la vie de l'EHPAD."
-                image="/images/global-hero.jpg"
-                alt="Blog de l'EHPAD"
-            />
+            
 
-            <section className="py-8 pb-16 bg-cream-100">
+            <section className="pt-32 md:pt-40 py-8 pb-16 bg-cream-100">
                 <div className="container-custom">
                     {isLoading ? (
                         <div className="flex items-center justify-center py-20">

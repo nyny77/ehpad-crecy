@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -9,13 +8,8 @@ export const metadata: Metadata = {
 
 export default function AccessibilitePage() {
     return (
-        <main className="min-h-screen bg-cream-100">
-            <PageHeader
-                title="Accessibilité"
-                subtitle="Notre engagement"
-                description="Déclaration d'accessibilité numérique conforme au RGAA"
-            />
-
+        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
+            
             <section className="section-padding">
                 <div className="container-custom max-w-4xl">
                     <div className="space-y-12">
