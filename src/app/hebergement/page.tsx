@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
-import PricingTable from "@/components/pricing/PricingTable";
+import PricingSection from "@/components/admissions/PricingSection";
 import TiltCard from "@/components/ui/TiltCard";
 import { EHPAD_INFO } from "@/lib/constants";
 
@@ -170,22 +170,7 @@ export default function HebergementPage() {
             </section>
 
             {/* Section Tarifs */}
-            <section className="section-padding bg-cream-100">
-                <div className="container-custom">
-                    <div className="text-center mb-12">
-                        <span className="text-terracotta-500 font-medium">Transparence</span>
-                        <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
-                            Nos tarifs en toute clarté
-                        </h2>
-                        <p className="text-charcoal-600 max-w-2xl mx-auto">
-                            En tant qu&apos;établissement public, nous nous engageons à vous fournir
-                            une information claire et transparente sur nos tarifs.
-                        </p>
-                    </div>
-
-                    <PricingTable />
-                </div>
-            </section>
+            <PricingSection />
 
             {/* CTA */}
             <section className="section-padding bg-cream-100">
