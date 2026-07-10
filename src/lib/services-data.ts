@@ -2,7 +2,7 @@
 export const SERVICES_EXTENDED = [
     {
         id: "direction",
-        title: "La direction multisite",
+        title: "La Directrice",
         subtitle: "Pilotage & Vision stratégique",
         shortDescription: "La directrice multisite coordonne l'ensemble des activités avec une vision stratégique et humaine.",
         fullDescription: `La directrice multisite de l'EHPAD de Crécy assure le pilotage stratégique de l'établissement avec une vision à la fois globale et attentive aux détails du quotidien. Elle garantit la cohérence du projet d'établissement et veille au respect des valeurs qui nous unissent.
@@ -230,7 +230,7 @@ Il vous accueille avec chaleur et disponibilité. De la constitution du dossier 
     },
     {
         id: "cuisine",
-        title: "La restauration",
+        title: "Le Cuisinier",
         subtitle: "Service hôtelier & Repas équilibrés",
         shortDescription: "Des repas savoureux et équilibrés chaque jour, servis avec attention.",
         fullDescription: `Le service de restauration de l'EHPAD de Crécy propose chaque jour des menus variés et équilibrés. Une attention particulière est portée à la qualité des repas pour garantir le plaisir gustatif de chacun.
@@ -447,6 +447,7 @@ Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent 
         ],
         image: "/images/services/benevole.png",
         detailImage: "/images/services/benevole.png",
+        imageAspect: "aspect-[4/3]",
         dailyRoutine: [
             { time: "Après-midi", activity: "Arrivée et accueil par l'animatrice" },
             { time: "Activité", activity: "Animation d'atelier ou visites individuelles" },

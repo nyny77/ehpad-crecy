@@ -16,6 +16,7 @@ interface ServiceData {
     detailImage: string;
     detailImage2?: string;
     imagePosition?: string;
+    imageAspect?: string;
 
     skills?: string[];
     quote?: string;
@@ -165,7 +166,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                     </motion.div>
                                 </div>
                             ) : (
-                                <div className="relative w-full max-w-md aspect-[4/5] p-3 bg-white rounded-2xl shadow-xl rotate-[2deg]">
+                                <div className={`relative w-full ${service.imageAspect && service.imageAspect !== 'aspect-[4/5]' ? 'max-w-2xl' : 'max-w-md'} ${service.imageAspect || 'aspect-[4/5]'} p-3 bg-white rounded-2xl shadow-xl rotate-[2deg]`}>
                                     <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent z-20"></div>
                                     <div className="relative w-full h-full rounded-xl overflow-hidden border border-cream-200">
                                         <Image
