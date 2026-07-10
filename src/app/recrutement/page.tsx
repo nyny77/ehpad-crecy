@@ -398,8 +398,8 @@ export default function RecrutementPage() {
                         </div>
                     ) : (
                         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                            {CAREERS_OFFERS.map((offer) => (
-                                <JobCard key={offer.id} offer={offer} />
+                            {CAREERS_OFFERS.map((offer, index) => (
+                                <JobCard key={offer.id} offer={offer} index={index} />
                             ))}
                         </div>
                     )}
