@@ -7,31 +7,53 @@ export default function BentoGrid() {
     // Configuration "Tetris" optimisée pour 16 tuiles
     // Layout équilibré: 2 large + 3 horizontal + 3 vertical + 8 small = 28 cells (7 rows)
 
-    const getSize = (index: number): "small" | "large" | "horizontal" | "vertical" => {
-        const sizes: Record<number, "small" | "large" | "horizontal" | "vertical"> = {
-            0: "large",       // Direction (Photo) - tuile principale
-            1: "vertical",    // IDEC (Photo)
-            2: "horizontal",  // Animatrice (Photo)
-            3: "vertical",    // Psychologue (Photo)
-            4: "horizontal",  // Technique (Photo)
-            5: "small",       // RH (Photo)
-            6: "small",       // Lingerie (Photo)
-            7: "vertical",    // Admin (Photo)
-            8: "small",       // Cuisine (Photo)
-            9: "small",       // Hotelier (Photo)
-            10: "small",      // Soignante (Dessin)
-            11: "large",      // Infirmiere (Dessin) - tuile importante bas
-            12: "horizontal", // Bien-etre (Dessin)
-            13: "small",      // Kine (Dessin)
-            14: "small",      // Medecins (Dessin)
-            15: "small",      // Benevoles (Dessin)
+    const getSize = (id: string): "small" | "large" | "horizontal" | "vertical" => {
+        // Mapping sizes strictly based on their original index in SERVICES_EXTENDED
+        const sizes: Record<string, "small" | "large" | "horizontal" | "vertical"> = {
+            "direction": "large",       // original index 0
+            "hotelier": "vertical",     // original index 1
+            "animation": "horizontal",  // original index 2
+            "psychologue": "vertical",  // original index 3
+            "technique": "horizontal",  // original index 4
+            "rh": "small",              // original index 5
+            "lingerie": "small",        // original index 6
+            "admin": "vertical",        // original index 7
+            "cuisine": "small",         // original index 8
+            "idec": "small",            // original index 9
+            "soignants": "small",       // original index 10
+            "infirmiere": "large",      // original index 11
+            "bienetre": "horizontal",   // original index 12
+            "kine": "small",            // original index 13
+            "medecins": "small",        // original index 14
+            "benevoles": "horizontal",  // changed to horizontal
         };
-        return sizes[index] || "small";
+        return sizes[id] || "small";
     };
+
+    const ORDER = [
+        "direction",
+        "hotelier",
+        "animation",
+        "psychologue",
+        "technique",
+        "rh",
+        "lingerie",
+        "admin",
+        "cuisine",
+        "idec",
+        "benevoles", // photo, placé juste avant les dessins
+        "soignants",
+        "infirmiere",
+        "bienetre",
+        "kine",
+        "medecins"
+    ];
+
+    const orderedServices = ORDER.map(id => SERVICES.find(s => s.id === id)).filter(Boolean) as typeof SERVICES;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 auto-rows-[300px] gap-4 md:gap-6 grid-flow-dense">
-            {SERVICES.map((service, index) => (
+            {orderedServices.map((service, index) => (
                 <ServiceCard
                     key={service.id}
                     id={service.id}
@@ -40,7 +62,7 @@ export default function BentoGrid() {
                     description={service.shortDescription}
                     image={service.image}
                     index={index}
-                    size={getSize(index)}
+                    size={getSize(service.id)}
                     imagePosition={service.imagePosition}
                 />
             ))}

@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
 import BentoGrid from "@/components/team/BentoGrid";
 
 export default function EquipePage() {
@@ -11,13 +10,6 @@ export default function EquipePage() {
 
     return (
         <>
-            {/* Hero compact */}
-            <PageHeader
-                title="Des professionnels passionnés"
-                subtitle="Notre équipe"
-                description="Découvrez les différents services et métiers qui font la richesse de notre établissement. Chaque membre de notre équipe contribue au bien-être quotidien de nos résidents."
-            />
-
             {/* Grille Bento des services */}
             <section ref={ref} className="section-padding bg-cream-100 texture-paper relative overflow-hidden">
                 {/* Formes organiques d'arrière-plan */}

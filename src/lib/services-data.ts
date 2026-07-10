@@ -443,8 +443,8 @@ Formés et accompagnés par l'équipe d'animation, les bénévoles s'intègrent 
             "Lien social",
             "Accompagnement individuel",
         ],
-        image: "/images/services/benevoles.png",
-        detailImage: "/images/services/benevoles.png",
+        image: "/images/services/benevole.png",
+        detailImage: "/images/services/benevole.png",
         dailyRoutine: [
             { time: "Après-midi", activity: "Arrivée et accueil par l'animatrice" },
             { time: "Activité", activity: "Animation d'atelier ou visites individuelles" },

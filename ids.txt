@@ -1,0 +1,16 @@
+direction
+hotelier
+animation
+psychologue
+technique
+rh
+lingerie
+admin
+cuisine
+idec
+soignants
+infirmiere
+bienetre
+kine
+medecins
+benevoles
