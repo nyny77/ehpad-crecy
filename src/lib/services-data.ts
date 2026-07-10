@@ -120,29 +120,29 @@ Auprès des familles, il propose un soutien dans les moments de questionnement, 
         title: "Le technicien",
         subtitle: "Maintenance & Sécurité",
         shortDescription: "Une équipe dédiée à la sécurité et au bon fonctionnement de l'établissement.",
-        fullDescription: `Le service technique et sécurité de l'EHPAD de Crécy veille au bon fonctionnement de l'ensemble des installations. Une équipe dédiée assure la maintenance quotidienne et le suivi technique.
+        fullDescription: `Le service technique et sécurité de l'EHPAD de Crécy veille au bon fonctionnement de l'ensemble des installations et à la modernisation des outils de travail.
 
-Ensemble, ils veillent au bon fonctionnement de l'ensemble des installations et à la sécurité des résidents et du personnel. Leur expertise complémentaire permet de gérer efficacement la maintenance quotidienne ainsi que les projets de travaux plus importants.
+Leur champ d'action est très vaste. Au-delà de la maintenance préventive et curative classique, l'équipe technique assure des missions stratégiques telles que la participation aux commissions de sécurité, le suivi rigoureux et la coordination des différents travaux au sein de l'établissement.
 
-Leur champ d'action est vaste : sécurité incendie, maintenance préventive et curative, entretien des espaces verts, et petits travaux de réparation. Ils garantissent ainsi un environnement sûr, aux normes et confortable pour tous.`,
+Ils interviennent également sur le volet numérique et IT (création de sites web, conception d'applications métiers, gestion du réseau informatique), garantissant ainsi un environnement de travail moderne, sûr, et aux normes pour tous.`,
         highlights: [
-            "Maintenance préventive",
-            "Suivi des travaux",
-            "Maintenance quotidienne",
-            "Sécurité des locaux",
+            "Coordination et suivi de travaux",
+            "Réseau informatique & Web",
+            "Commissions de sécurité",
+            "Maintenance globale",
         ],
         image: "/images/services/technique.png",
         detailImage: "/images/services/technique.png",
         detailImage2: "/images/services/tech2.png",
         dailyRoutine: [
             { time: "08:00", activity: "Tour de contrôle sécurité et chaufferie" },
-            { time: "09:00", activity: "Réparations courantes dans les chambres" },
-            { time: "11:00", activity: "Entretien des espaces verts" },
-            { time: "14:00", activity: "Suivi des entreprises extérieures" },
-            { time: "16:00", activity: "Maintenance préventive matériel" },
+            { time: "10:00", activity: "Gestion du réseau IT et développements" },
+            { time: "13:30", activity: "Coordination et suivi des travaux en cours" },
+            { time: "15:00", activity: "Préparation des commissions de sécurité" },
+            { time: "16:30", activity: "Maintenance préventive et réparations" },
         ],
-        skills: ["Polyvalence", "Électricité/Plomberie", "Sécurité Incendie", "Réactivité", "Bricolage"],
-        quote: "Notre mission : que tout fonctionne parfaitement pour le confort et la sécurité de tous."
+        skills: ["Réseau Informatique", "Développement Web", "Gestion de projet", "Sécurité Incendie", "Maintenance"],
+        quote: "Notre mission : allier technique traditionnelle et innovation numérique pour la sécurité et le confort de tous."
     },
     {
         id: "rh",
