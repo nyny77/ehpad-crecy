@@ -40,7 +40,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                 <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-forest-100/30 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
                 <div className="container-custom relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
                         {/* Contenu */}
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
@@ -120,7 +120,7 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                             initial={{ opacity: 0, scale: 0.95, rotate: 2 }}
                             animate={{ opacity: 1, scale: 1, rotate: 2 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className="relative lg:h-[600px] flex items-center justify-center"
+                            className="relative lg:h-[600px] flex items-start pt-10 justify-center lg:sticky lg:top-24"
                         >
                             {/* Blob d'arrière-plan animé */}
                             <motion.div
