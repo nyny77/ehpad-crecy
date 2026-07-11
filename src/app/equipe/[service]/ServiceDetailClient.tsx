@@ -74,49 +74,45 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                 <span className="block h-2 w-24 bg-terracotta-400 mt-4 rounded-full"></span>
                             </h1>
 
-                            <p className="text-xl text-charcoal-700 leading-relaxed mb-10 font-light">
-                                {service.shortDescription}
-                            </p>
-
-                            {/* Points clés - Transformation en Cartes */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                                {service.highlights.map((highlight, index) => (
-                                    <motion.div
+                            {/* Description complète et compétences remontées ici */}
+                            <div className="prose prose-lg max-w-none prose-headings:font-serif prose-p:text-charcoal-600 prose-strong:text-terracotta-600 mb-10">
+                                {service.fullDescription.split("\n\n").map((paragraph, index) => (
+                                    <p
                                         key={index}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.4 + index * 0.1 }}
-                                        className="flex items-start gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-sm border border-cream-200 hover:border-terracotta-200 hover:bg-white transition-all shadow-sm hover:shadow-md group"
+                                        className={`leading-relaxed mb-6 text-lg ${index === 0 ? "first-letter:text-5xl first-letter:font-serif first-letter:text-terracotta-500 first-letter:mr-3 first-letter:float-left first-letter:leading-[1]" : ""}`}
                                     >
-                                        <div className="w-10 h-10 bg-cream-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-terracotta-50 transition-colors">
-                                            <svg
-                                                className="w-5 h-5 text-terracotta-500"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
-                                        </div>
-                                        <span className="text-charcoal-800 font-medium leading-tight pt-2">{highlight}</span>
-                                    </motion.div>
+                                        {paragraph}
+                                    </p>
                                 ))}
                             </div>
 
-                            <Link href="/contact">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="btn-primary"
-                                >
-                                    Nous contacter
-                                </motion.button>
-                            </Link>
+                            {service.skills && (
+                                <div className="mb-8">
+                                    <h3 className="font-serif text-xl text-charcoal-900 mb-4 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-terracotta-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        Savoir-faire & Qualités
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {service.skills.map((skill, idx) => (
+                                            <span key={idx} className="px-4 py-2 bg-white text-charcoal-700 rounded-full text-sm font-medium border border-cream-200 shadow-sm">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {service.training && (
+                                <div className="mb-8">
+                                    <h3 className="font-serif text-xl text-charcoal-900 mb-2 flex items-center gap-2">
+                                        <svg className="w-5 h-5 text-terracotta-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                        Formation requise
+                                    </h3>
+                                    <p className="text-charcoal-700 font-medium">
+                                        {service.training}
+                                    </p>
+                                </div>
+                            )}
                         </motion.div>
 
                         {/* Image - Style "Photo Album" */}
@@ -214,72 +210,56 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                     )}
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-                        {/* Colonne Principale : Description + Timeline */}
-                        <div className="lg:col-span-7 space-y-16">
-
-                            {/* Description */}
+                        {/* Colonne Principale : Short Description + Contact */}
+                        <div className="lg:col-span-7 space-y-10">
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="prose prose-lg max-w-none prose-headings:font-serif prose-p:text-charcoal-600 prose-strong:text-terracotta-600"
                             >
-                                {service.fullDescription.split("\n\n").map((paragraph, index) => (
-                                    <p
-                                        key={index}
-                                        className={`leading-relaxed mb-6 text-lg ${index === 0 ? "first-letter:text-5xl first-letter:font-serif first-letter:text-terracotta-500 first-letter:mr-3 first-letter:float-left first-letter:leading-[1]" : ""}`}
+                                <h2 className="font-serif text-3xl text-charcoal-900 mb-6">En bref</h2>
+                                <p className="text-xl text-charcoal-700 leading-relaxed mb-10 font-light">
+                                    {service.shortDescription}
+                                </p>
+                                <Link href="/contact">
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="btn-primary"
                                     >
-                                        {paragraph}
-                                    </p>
-                                ))}
+                                        Nous contacter
+                                    </motion.button>
+                                </Link>
                             </motion.div>
-
-
                         </div>
 
-                        {/* Colonne Latérale : Compétences & Formation */}
+                        {/* Colonne Latérale : Highlights */}
                         <div className="lg:col-span-5 space-y-8">
-                            {/* Carte Compétences */}
-                            {service.skills && (
-                                <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.2 }}
-                                    className="bg-white rounded-2xl p-8 border border-cream-200 shadow-sm"
-                                >
-                                    <h3 className="font-serif text-xl text-charcoal-900 mb-6 flex items-center gap-2">
-                                        <svg className="w-5 h-5 text-terracotta-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        Savoir-faire & Qualités
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {service.skills.map((skill, idx) => (
-                                            <span key={idx} className="px-4 py-2 bg-cream-50 text-charcoal-700 rounded-full text-sm font-medium border border-cream-200">
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-
-                            {/* Carte Formation */}
-                            {service.training && (
-                                <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.3 }}
-                                    className="bg-terracotta-50/50 rounded-2xl p-8 border border-terracotta-100"
-                                >
-                                    <h3 className="font-serif text-xl text-charcoal-900 mb-4 flex items-center gap-2">
-                                        <svg className="w-5 h-5 text-terracotta-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                                        Formation requise
-                                    </h3>
-                                    <p className="text-charcoal-700 font-medium">
-                                        {service.training}
-                                    </p>
-                                </motion.div>
-                            )}
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                className="bg-white rounded-2xl p-8 border border-cream-200 shadow-sm"
+                            >
+                                <h3 className="font-serif text-xl text-charcoal-900 mb-6 flex items-center gap-2">
+                                    <svg className="w-5 h-5 text-terracotta-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                    Points clés
+                                </h3>
+                                <div className="grid grid-cols-1 gap-4">
+                                    {service.highlights.map((highlight, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-start gap-4 p-3 rounded-lg bg-cream-50"
+                                        >
+                                            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
+                                                <svg className="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                            </div>
+                                            <span className="text-charcoal-800 font-medium leading-tight pt-1">{highlight}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>
