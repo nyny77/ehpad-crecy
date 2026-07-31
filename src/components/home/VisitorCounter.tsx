@@ -73,7 +73,7 @@ export default function VisitorCounter() {
                         </div>
                         <div>
                             <p className="text-sm text-charcoal-500 font-medium uppercase tracking-wider">Visiteurs uniques</p>
-                            <p className="text-3xl font-bold text-charcoal-900 font-serif">
+                            <p className="text-3xl font-bold text-charcoal-900 font-sans tabular-nums tracking-tight">
                                 <AnimatedCounter value={uniqueVisits} />
                             </p>
                         </div>
@@ -86,7 +86,7 @@ export default function VisitorCounter() {
                         </div>
                         <div>
                             <p className="text-sm text-charcoal-500 font-medium uppercase tracking-wider">Vues totales</p>
-                            <p className="text-3xl font-bold text-charcoal-900 font-serif">
+                            <p className="text-3xl font-bold text-charcoal-900 font-sans tabular-nums tracking-tight">
                                 <AnimatedCounter value={visits} />
                             </p>
                         </div>
