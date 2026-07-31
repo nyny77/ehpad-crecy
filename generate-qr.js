@@ -5,7 +5,7 @@ const fs = require('fs');
 async function generate() {
     try {
         // 1. Generate standard QR code
-        const url = 'https://ehpad-crecy.netlify.app/livret-accueil';
+        const url = 'https://ehpadcrecy.netlify.app/livret-accueil';
         const qrPath = 'Livret/qr-temp.png';
         const outPath = 'Livret/QR_Code_Livret_Logo.png';
         const logoPath = 'public/images/logo.png';
