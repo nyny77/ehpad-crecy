@@ -121,7 +121,7 @@ export const VALUES = [
 export const SIGNUP_ROLES = [
     { value: "famille", label: "Famille de résident" },
     { value: "soignants", label: "Aide-soignante" },
-    { value: "infirmiere", label: "Infirmière" },
+    { value: "infirmiere", label: "Infirmier/ère" },
     { value: "animation", label: "Animation" },
     { value: "cuisine", label: "Restauration" },
     { value: "bienetre", label: "Coiffure / Esthétique" },

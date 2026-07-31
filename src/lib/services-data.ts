@@ -317,22 +317,23 @@ Nos aides-soignants sont présents 24h/24, de jour comme de nuit, pour accompagn
     },
     {
         id: "infirmiere",
-        title: "L'infirmière",
+        title: "L'infirmier/ère",
         subtitle: "Soins infirmiers & Suivi médical",
-        shortDescription: "Nos infirmières assurent la coordination des soins 24h/24.",
-        fullDescription: `L'équipe infirmière de l'EHPAD de Crécy joue un rôle central dans la qualité des soins prodigués à nos résidents. Nos infirmières diplômées d'État assurent une coordination rigoureuse des soins, garantissant un suivi médical optimal.
+        shortDescription: "Nos infirmier(e)s assurent la coordination des soins 24h/24.",
+        fullDescription: `L'équipe infirmière de l'EHPAD de Crécy joue un rôle central dans la qualité des soins prodigués à nos résidents. Nos infirmier(e)s diplômé(e)s d'État assurent une coordination rigoureuse des soins, garantissant un suivi médical optimal.
 
-Elles sont le lien essentiel entre les résidents, leurs familles et l'ensemble de l'équipe médicale. Leur expertise permet d'anticiper les besoins, d'adapter les traitements et de réagir rapidement en cas de nécessité.
+Ils/Elles sont le lien essentiel entre les résidents, leurs familles et l'ensemble de l'équipe médicale. Leur expertise permet d'anticiper les besoins, d'adapter les traitements et de réagir rapidement en cas de nécessité.
 
-Au-delà des soins techniques, nos infirmières apportent une présence rassurante et une écoute attentive. Elles prennent le temps d'expliquer, de rassurer et d'accompagner chaque résident dans son parcours de santé.`,
+Au-delà des soins techniques, nos infirmier(e)s apportent une présence rassurante et une écoute attentive. Ils/Elles prennent le temps d'expliquer, de rassurer et d'accompagner chaque résident dans son parcours de santé.`,
         highlights: [
             "Coordination des soins 24h/24",
             "Administration des traitements",
             "Suivi des constantes",
             "Lien avec les familles",
         ],
-        image: "/images/services/infirmiere.png",
-        detailImage: "/images/services/infirmiere.png",
+        image: "/images/services/IDE.png",
+        detailImage: "/images/services/IDE.png",
+        imagePosition: "object-left",
         dailyRoutine: [
             { time: "06:45", activity: "Transmissions et préparation des traitements" },
             { time: "08:00", activity: "Tour des soins, pansements, injections" },

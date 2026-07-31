@@ -12,7 +12,7 @@ interface ServiceCardProps {
     description: string;
     image: string;
     index: number;
-    size?: "small" | "large" | "horizontal" | "vertical";
+    size?: "small" | "large" | "xlarge" | "horizontal" | "vertical";
     imagePosition?: string;
 }
 
@@ -39,6 +39,8 @@ export default function ServiceCard({
     // Calcul des classes de taille
     const getSizeClasses = () => {
         switch (size) {
+            case "xlarge":
+                return "md:col-span-3 md:row-span-2";
             case "large":
                 return "md:col-span-2 md:row-span-2";
             case "horizontal":
@@ -50,7 +52,7 @@ export default function ServiceCard({
         }
     };
 
-    const isBigTitle = size === "large" || size === "horizontal";
+    const isBigTitle = size === "xlarge" || size === "large" || size === "horizontal";
     // Randomize slightly based on index to avoid robotic uniformity
     const floatDuration = 4 + (index % 2); // Faster 
     const blurDuration = 3 + (index % 2);

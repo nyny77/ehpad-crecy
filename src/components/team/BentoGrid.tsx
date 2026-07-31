@@ -7,9 +7,9 @@ export default function BentoGrid() {
     // Configuration "Tetris" optimisée pour 16 tuiles
     // Layout équilibré: 2 large + 3 horizontal + 3 vertical + 8 small = 28 cells (7 rows)
 
-    const getSize = (id: string): "small" | "large" | "horizontal" | "vertical" => {
+    const getSize = (id: string): "small" | "large" | "xlarge" | "horizontal" | "vertical" => {
         // Mapping sizes strictly based on their original index in SERVICES_EXTENDED
-        const sizes: Record<string, "small" | "large" | "horizontal" | "vertical"> = {
+        const sizes: Record<string, "small" | "large" | "xlarge" | "horizontal" | "vertical"> = {
             "direction": "large",       // original index 0
             "hotelier": "vertical",     // original index 1
             "animation": "horizontal",  // original index 2
@@ -21,7 +21,7 @@ export default function BentoGrid() {
             "cuisine": "small",         // original index 8
             "idec": "small",            // original index 9
             "soignants": "small",       // original index 10
-            "infirmiere": "large",      // original index 11
+            "infirmiere": "xlarge",     // original index 11
             "bienetre": "horizontal",   // original index 12
             "kine": "vertical",         // new photo, made vertical
             "medecins": "small",        // original index 14
@@ -45,7 +45,6 @@ export default function BentoGrid() {
         "kine",
         "soignants",
         "infirmiere",
-        "bienetre",
         "medecins"
     ];
 

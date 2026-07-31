@@ -133,10 +133,16 @@ export default function DayTimeline() {
                         {Array.from({ length: 13 }).map((_, i) => {
                             const hour = 8 + i; // 8h à 20h
                             return (
-                                <div key={hour} className="relative flex items-center justify-end w-full pr-4 h-0">
-                                    <span className="text-xs font-bold text-terracotta-300 font-serif mr-2">{hour}h</span>
-                                    {/* Tiret */}
-                                    <div className="absolute right-0 w-3 h-px bg-terracotta-300" />
+                                <div key={hour} className="relative flex items-center justify-end w-full pr-6 h-0 group">
+                                    <motion.div 
+                                        className="px-3 py-1 bg-white border-2 border-terracotta-200 rounded-full text-terracotta-500 font-bold font-serif text-sm shadow-sm relative z-10"
+                                        whileHover={{ scale: 1.1, rotate: 5 }}
+                                    >
+                                        {hour}h
+                                    </motion.div>
+                                    {/* Tiret avec point */}
+                                    <div className="absolute right-0 w-6 h-px border-dashed border-t-2 border-terracotta-300" />
+                                    <div className="absolute right-[-4px] w-2 h-2 rounded-full bg-terracotta-400 z-10" />
                                 </div>
                             );
                         })}
@@ -185,9 +191,15 @@ export default function DayTimeline() {
 
                                             {/* Badge horaire flottant */}
                                             <motion.div
-                                                className={`absolute bottom-4 right-4 px-5 py-2 ${event.badgeColor} text-white rounded-2xl text-sm font-bold shadow-lg backdrop-blur-sm bg-opacity-90`}
-                                                whileHover={{ scale: 1.1, rotate: -2 }}
+                                                className={`absolute bottom-[-10px] right-6 px-6 py-2 ${event.badgeColor} text-white rounded-[2rem] rounded-tr-none text-base font-black shadow-xl backdrop-blur-sm bg-opacity-95 flex items-center gap-2 border-4 border-white`}
+                                                whileHover={{ scale: 1.1, rotate: 5, y: -5 }}
+                                                initial={{ rotate: -3 }}
+                                                animate={{ rotate: [-3, 3, -3] }}
+                                                transition={{ rotate: { repeat: Infinity, duration: 3, ease: "easeInOut" } }}
                                             >
+                                                <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
                                                 {event.time}
                                             </motion.div>
                                         </div>
