@@ -15,7 +15,7 @@ export default function LivretAccueilPage() {
             className="bg-charcoal-900 rounded-3xl p-2 md:p-3 shadow-2xl border border-charcoal-700"
         >
             <iframe 
-                src="/documents/livret-accueil.pdf" 
+                src="/documents/livret-accueil.pdf?v=2" 
                 className="w-full h-[90vh] md:h-[1200px] rounded-2xl border-none bg-white"
                 title="Livret d'Accueil PDF"
             />
