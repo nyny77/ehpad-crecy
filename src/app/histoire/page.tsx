@@ -1,320 +1,234 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
-import Section from "@/components/layout/Section";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const LOCATIONS = [
+    {
+        id: "eau",
+        title: "L'Eau : L'Âme de Crécy",
+        subtitle: "Une ville tissée par la rivière",
+        description: "La première chose qui vous frappera à Crécy, c'est la présence apaisante de l'eau. Au fil des siècles, les habitants ont creusé de petits canaux, appelés ici des « brassets ». C'est une ville où il fait bon écouter le clapotis de l'eau.",
+        quote: "La Venise Briarde",
+        image: "/images/history/canal.jpg",
+        size: "large",
+        theme: "charcoal"
+    },
+    {
+        id: "beffroi",
+        title: "Le Beffroi",
+        subtitle: "Une silhouette unique",
+        description: "Sa base massive en pierre est le vestige d'une tour de défense du XIIe siècle, surmontée d'une tour plus fine en briques rouges ajoutée en 1874.",
+        quote: "Symbole de la ville",
+        image: "/images/history/tour.jpg",
+        size: "vertical",
+        theme: "terracotta"
+    },
+    {
+        id: "marche",
+        title: "Cœur de Ville",
+        subtitle: "Vivant et paisible",
+        description: "Un centre-ville à taille humaine avec ses commerces de proximité, son marché traditionnel et son ambiance de village convivial.",
+        image: "/images/history/marche.jpg",
+        size: "vertical",
+        theme: "sage"
+    },
+    {
+        id: "peintres",
+        title: "Vallée des Peintres",
+        subtitle: "Terre d'inspiration",
+        description: "Des maîtres comme Corot ou Altmann y ont posé leur chevalet, charmés par les reflets changeants du Grand Morin et la douceur des paysages briards.",
+        image: "/images/history/peintre.jpg",
+        size: "large",
+        theme: "forest"
+    },
+    {
+        id: "collegiale",
+        title: "La Collégiale",
+        subtitle: "Chef-d'œuvre gothique",
+        description: "Elle veille sur la ville depuis des siècles. Ce joyau du 13ème siècle est lumineux, élégant et inspire la sérénité.",
+        quote: "Un repère de paix",
+        image: "/images/history/collegiale.png",
+        size: "large",
+        theme: "charcoal"
+    },
+    {
+        id: "hospice",
+        title: "L'Hospice & l'École",
+        subtitle: "Une double vocation",
+        description: "L'histoire de notre établissement est riche. Construit comme Hospice en 1868, il accueillait aussi une école primaire tenue par des bonnes sœurs où des générations d'enfants ont grandi.",
+        image: "/images/history/hospice-ecole.jpg",
+        size: "wide",
+        theme: "terracotta"
+    }
+];
+
+// Helper pour les tailles
+const getSizeClasses = (size: string) => {
+    switch (size) {
+        case "large": return "md:col-span-2 md:row-span-2";
+        case "vertical": return "md:col-span-1 md:row-span-2";
+        case "wide": return "lg:col-span-4 md:col-span-2 md:row-span-2";
+        default: return "md:col-span-1 md:row-span-2";
+    }
+};
+
+// Helper pour les couleurs
+const getThemeColors = (theme: string) => {
+    switch (theme) {
+        case "terracotta": return "bg-terracotta-900/90 text-white border-terracotta-400";
+        case "forest": return "bg-forest-900/90 text-white border-forest-400";
+        case "sage": return "bg-sage-900/90 text-white border-sage-400";
+        case "charcoal": return "bg-charcoal-900/90 text-white border-charcoal-400";
+        default: return "bg-charcoal-900/90 text-white border-charcoal-400";
+    }
+};
 
 export default function HistoirePage() {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+
     return (
-        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
-            
-            <Section className="py-16 md:py-24">
-                <div className="max-w-4xl mx-auto space-y-16">
-                    {/* Introduction */}
-                    {/* Introduction - Style Editorial "Lettre Ouverte" */}
-                    <div className="relative py-10">
-                        {/* Fond lumineux subtil */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-radial from-terracotta-100/50 via-cream-100/30 to-transparent blur-3xl -z-10" />
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-center relative z-10"
-                        >
-                            {/* Grande guillemet décorative */}
-                            <div className="text-8xl leading-none text-terracotta-200 font-serif absolute -top-12 left-0 right-0 mx-auto select-none pointer-events-none opacity-50">
-                                &ldquo;
-                            </div>
-
-                            <h2 className="relative font-serif text-3xl md:text-5xl text-charcoal-800 leading-tight mb-8 drop-shadow-sm px-4">
-                                <span className="block text-terracotta-600 italic mb-2">Vous allez bientôt poser vos valises...</span>
-                                <span className="text-charcoal-900">pour entamer une nouvelle étape de votre vie.</span>
-                            </h2>
-
-                            {/* Séparateur élégant */}
-                            <div className="flex items-center justify-center gap-4 mb-8 opacity-60">
-                                <div className="h-px w-12 bg-terracotta-400" />
-                                <div className="w-2 h-2 rounded-full bg-terracotta-500" />
-                                <div className="h-px w-12 bg-terracotta-400" />
-                            </div>
-
-                            <div className="prose prose-lg prose-stone mx-auto">
-                                <p className="text-xl text-charcoal-600 leading-relaxed font-medium">
-                                    Nous avons préparé ce petit reportage pour vous emmener faire un premier tour de ce lieu charmant qui vous attend.
-                                </p>
-                                <p className="text-charcoal-500 italic mt-4">
-                                    Oubliez le tumulte des grandes villes... Ici, vous arrivez dans un <strong>havre de paix</strong>, chargé d'histoire et bercé par l'eau.
-                                </p>
-                            </div>
-                        </motion.div>
+        <main className="min-h-screen bg-cream-100 relative overflow-hidden" ref={containerRef}>
+            <div className="container-custom pt-48 md:pt-64 pb-32 relative z-10">
+                
+                {/* Hero Section - Postcard Style */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 50, rotate: -2 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 60, damping: 20 }}
+                    className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-2xl border-[12px] border-white relative mb-24 mt-16 md:mt-24"
+                >
+                    {/* Timbre décoratif */}
+                    <div className="absolute top-6 right-6 w-16 h-20 bg-cream-200 border-2 border-dashed border-terracotta-300 rounded-sm flex flex-col items-center justify-center transform rotate-6 opacity-80 select-none">
+                        <span className="text-[10px] font-bold text-terracotta-600 uppercase tracking-widest">Crécy</span>
+                        <svg className="w-6 h-6 text-terracotta-400 mt-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
                     </div>
 
-                    {/* 1. L'Eau */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2"
+                    <div className="text-center relative z-10">
+                        <motion.h1 
+                            className="font-serif text-5xl md:text-7xl font-bold text-charcoal-900 mb-6 drop-shadow-sm"
+                            initial={{ scale: 0.9 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
                         >
-                            <Image
-                                src="/images/history/canal.jpg"
-                                alt="Les canaux de Crécy-la-Chapelle"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">1. L'Eau : L'Âme de Crécy</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                La première chose qui vous frappera à Crécy, c'est la présence apaisante de l'eau. La ville n'est pas seulement traversée par une rivière, le Grand Morin, elle est littéralement tissée par elle.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Au fil des siècles, les habitants ont creusé de petits canaux, appelés ici des "brassets", pour faire tourner les moulins et protéger la ville. Aujourd'hui, ces canaux offrent un spectacle permanent et tranquille. C'est une ville où il fait bon écouter le clapotis de l'eau et regarder passer les canards.
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-forest-300 pl-4 italic text-forest-700">
-                                Les "brassets", ces petits canaux qui donnent à Crécy son surnom de "Venise Briarde".
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* 2. Le Beffroi */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-2"
-                        >
-                            <Image
-                                src="/images/history/tour.jpg"
-                                alt="Le Beffroi de Crécy-la-Chapelle"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="order-2 md:order-1"
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">2. Le Beffroi : Une Silhouette Unique</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Monument emblématique de la "Venise Briarde", le Beffroi raconte l'histoire de la ville en superposant deux époques. Sa base massive en pierre est le vestige d'une tour de défense du XIIe siècle, ancienne porte fortifiée de la ville.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Elle est surmontée d'une tour plus fine en briques rouges, ajoutée en 1874 pour accueillir l'horloge et les cloches. Ce mariage architectural surprenant, entre base militaire médiévale et clocher civil du XIXe siècle, lui confère son allure si particulière.
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-wood-300 pl-4 italic text-wood-700">
-                                "Une base militaire médiévale surmontée d'un clocher civil : une silhouette unique en Seine-et-Marne."
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* 3. L'Hospice et l'École */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-1"
-                        >
-                            <Image
-                                src="/images/history/hospice-ecole.jpg"
-                                alt="L'ancien Hospice et École de Crécy"
-                                fill
-                                className="object-cover sepia-[0.2]"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">3. L'Hospice et l'École : Une Double Vocation</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                L'histoire de notre établissement est riche et singulière. Construit initialement comme "Hospice" suite à l'annexion d'une portion de Montplaisir en 1868, le bâtiment a longtemps abrité une double vie.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Comme en témoignent les cartes postales d'époque (notamment celle de 1902), il accueillait non seulement les aînés mais aussi une <strong>école primaire tenue par des bonnes sœurs</strong>. Des générations d'enfants de Crécy ont appris à lire et écrire ici, sous le même toit que leurs aînés. C'est ce mélange de vie, d'apprentissage et de soin qui constitue l'âme profonde de nos murs.
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-terracotta-300 pl-4 italic text-terracotta-700">
-                                "Hospice d'un côté, école des sœurs de l'autre : un lieu où toutes les générations se croisaient."
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* 4. La Collégiale */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-1"
-                        >
-                            <Image
-                                src="/images/history/collegiale.png"
-                                alt="La Collégiale Notre-Dame"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="order-2 md:order-1"
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">4. La Collégiale Notre-Dame</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Vous ne pourrez pas la manquer. Elle veille sur la ville depuis des siècles. La Collégiale Notre-Dame de l'Assomption est le joyau de Crécy.
-                            </p>
-                            <p className="text-charcoal-600">
-                                C'est une église magnifique, de style gothique, construite au 13ème siècle (la même époque que Saint-Louis !). Elle est lumineuse, élégante et inspire la sérénité. C'est un repère visuel important dans le paysage, et un lieu de grand calme pour ceux qui cherchent le recueillement.
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-golden-300 pl-4 italic text-golden-700">
-                                La magnifique Collégiale Notre-Dame, un chef-d'œuvre de l'art gothique qui veille sur Crécy depuis le 13ème siècle.
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* 5. Cœur de Ville */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2"
-                        >
-                            <Image
-                                src="/images/history/marche.jpg"
-                                alt="Le marché de Crécy"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">5. Un Cœur de Ville Vivant et Paisible</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Crécy est une ville d'histoire, mais c'est aussi une ville bien vivante ! Le centre-ville est à taille humaine, chaleureux et accueillant.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Vous y trouverez cette ambiance de "bourgade" où les gens prennent le temps de se saluer. Il y a des commerces de proximité, des boulangeries qui sentent bon le pain frais, des pharmacies, et un marché traditionnel. C'est un cadre de vie rassurant où tout le nécessaire est à portée de main, dans une atmosphère qui reste toujours paisible, loin de l'agitation.
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-terracotta-300 pl-4 italic text-terracotta-700">
-                                Le cœur de ville, avec ses commerces et son ambiance de village convivial.
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* 6. La Vallée des Peintres */}
-                    <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform -rotate-2"
-                        >
-                            <Image
-                                src="/images/history/peintre.jpg"
-                                alt="La Vallée des Peintres"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="order-2 md:order-1"
-                        >
-                            <h2 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-6">6. La Vallée des Peintres</h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Pour finir notre découverte, sachez que vous habitez dans un lieu d'art et de lumière. Surnommée la "Vallée des Peintres", Crécy a inspiré des générations d'artistes.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Des maîtres comme Corot, Alexandre Altmann ou Dunoyer de Segonzac y ont posé leur chevalet, charmés par les reflets changeants du Grand Morin et la douceur des paysages. Aujourd'hui encore, cette âme artistique perdure, et il n'est pas rare de croiser des peintres au bord de l'eau, capturant la poésie de notre "Venise Briarde".
-                            </p>
-                            <blockquote className="mt-6 border-l-4 border-forest-300 pl-4 italic text-forest-700">
-                                Une terre d'inspiration pour Corot et les impressionnistes, où l'art et la nature ne font qu'un.
-                            </blockquote>
-                        </motion.div>
-                    </div>
-
-                    {/* Mot de la Fin */}
-                    <div className="bg-white p-8 md:p-12 rounded-3xl shadow-soft text-center max-w-3xl mx-auto border border-cream-200">
-                        <h3 className="text-2xl font-serif bg-gradient-to-r from-terracotta-500 to-terracotta-400 bg-clip-text text-transparent mb-4">Le Mot de la Fin</h3>
-                        <p className="text-charcoal-600 mb-6">
-                            Chers futurs résidents,
-                            <br /><br />
-                            Crécy-la-Chapelle est une ville qui prend soin de ses habitants, un écrin de verdure et d'eau où l'histoire se mêle à la douceur de vivre. Nous espérons que ce petit aperçu vous a plu et que vous vous sentirez vite chez vous dans cette belle "Venise Briarde".
-                            <br /><br />
-                            <strong>Nous avons hâte de vous accueillir.</strong>
+                            Notre Ville
+                        </motion.h1>
+                        
+                        <div className="w-24 h-1 bg-gradient-to-r from-terracotta-400 to-sage-400 mx-auto rounded-full mb-8" />
+                        
+                        <p className="font-serif text-2xl md:text-3xl text-terracotta-600 italic mb-6 leading-relaxed">
+                            "Vous allez bientôt poser vos valises..."
                         </p>
-                        <a href="/contact" className="btn-primary">
-                            Venir visiter
-                        </a>
+                        
+                        <p className="text-lg md:text-xl text-charcoal-600 leading-relaxed max-w-2xl mx-auto">
+                            Oubliez le tumulte des grandes villes. Ici, vous arrivez dans un <strong>havre de paix</strong>, chargé d'histoire et bercé par l'eau. Bienvenue dans la Venise Briarde.
+                        </p>
                     </div>
 
-                    {/* Liens Utiles */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="grid md:grid-cols-3 gap-6 text-center"
-                    >
-                        <a
-                            href="https://www.crecylachapelle.eu/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group"
-                        >
-                            <div className="w-12 h-12 bg-terracotta-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-terracotta-200 transition-colors">
-                                <svg className="w-6 h-6 text-terracotta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                            </div>
-                            <h4 className="font-serif font-bold text-lg text-charcoal-800 mb-2">Mairie</h4>
-                            <p className="text-sm text-charcoal-600">Site officiel de la ville</p>
-                        </a>
+                    {/* Décoration "Scribble" */}
+                    <svg className="absolute bottom-4 left-10 w-24 h-12 text-sage-200 opacity-60 pointer-events-none" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 25 Q 25 5, 50 25 T 95 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </motion.div>
 
-                        <a
-                            href="https://www.crecylachapelle.eu/tourisme-loisirs/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group"
+                {/* Bento Grid Gallery */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[300px] max-w-6xl mx-auto">
+                    {LOCATIONS.map((loc, index) => (
+                        <motion.div
+                            key={loc.id}
+                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-10%" }}
+                            transition={{ 
+                                type: "spring", 
+                                stiffness: 80, 
+                                damping: 20, 
+                                delay: index * 0.1 
+                            }}
+                            className={`relative rounded-3xl overflow-hidden group shadow-xl ${getSizeClasses(loc.size)}`}
                         >
-                            <div className="w-12 h-12 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-forest-200 transition-colors">
-                                <svg className="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            {/* Background Image */}
+                            <Image
+                                src={loc.image}
+                                alt={loc.title}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            
+                            {/* Always visible bottom gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-charcoal-900/20 to-transparent opacity-80" />
+                            
+                            {/* Default State Content */}
+                            <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform transition-transform duration-500 group-hover:translate-y-full">
+                                <h3 className="text-2xl md:text-3xl font-serif font-bold !text-white mb-1 drop-shadow-md">
+                                    {loc.title}
+                                </h3>
+                                <p className="text-cream-100 font-medium text-sm md:text-base uppercase tracking-widest">
+                                    {loc.subtitle}
+                                </p>
                             </div>
-                            <h4 className="font-serif font-bold text-lg text-charcoal-800 mb-2">Tourisme</h4>
-                            <p className="text-sm text-charcoal-600">Découvrir la région</p>
-                        </a>
 
-                        <a
-                            href="https://www.transilien.com/fr/gare/crecy-la-chapelle-8711616"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-cream-200 hover:shadow-md transition-all group"
-                        >
-                            <div className="w-12 h-12 bg-wood-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-wood-200 transition-colors">
-                                <svg className="w-6 h-6 text-wood-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                            {/* Hover Reveal Overlay (Glassmorphism) */}
+                            <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-xl overflow-y-auto ${getThemeColors(loc.theme)}`}>
+                                <motion.div
+                                    initial={{ y: 20, opacity: 0 }}
+                                    whileHover={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="my-auto"
+                                >
+                                    <h3 className="text-2xl font-serif font-bold mb-4 drop-shadow-md border-b-2 border-current pb-2 inline-block !text-white">
+                                        {loc.title}
+                                    </h3>
+                                    <p className="text-base md:text-lg leading-relaxed mb-4 text-white">
+                                        {loc.description}
+                                    </p>
+                                    {loc.quote && (
+                                        <p className="font-serif italic text-white/90">
+                                            "{loc.quote}"
+                                        </p>
+                                    )}
+                                </motion.div>
                             </div>
-                            <h4 className="font-serif font-bold text-lg text-charcoal-800 mb-2">Accès & Transports</h4>
-                            <p className="text-sm text-charcoal-600">Gare SNCF / Bus</p>
-                        </a>
-                    </motion.div>
+                        </motion.div>
+                    ))}
                 </div>
-            </Section>
-        </main >
+
+                {/* Final Call to Action Block */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-24 mb-12 bg-white p-8 md:p-12 rounded-[3rem] shadow-soft text-center max-w-3xl mx-auto border-4 border-cream-200 relative overflow-hidden"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-terracotta-50/50 to-sage-50/50" />
+                    
+                    <div className="relative z-10">
+                        <h3 className="text-3xl font-serif bg-gradient-to-r from-terracotta-500 to-sage-500 bg-clip-text text-transparent mb-6 font-bold">
+                            Prêt à découvrir Crécy ?
+                        </h3>
+                        <p className="text-charcoal-600 mb-8 text-lg md:text-xl">
+                            Crécy-la-Chapelle est une ville qui prend soin de ses habitants. Nous espérons que ce petit aperçu vous a plu !
+                        </p>
+                        
+                        <div className="flex flex-wrap justify-center gap-4">
+                            <a href="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-terracotta-500 !text-white rounded-full font-bold hover:bg-terracotta-600 hover:scale-105 transition-all shadow-md hover:shadow-lg">
+                                Venir visiter la résidence
+                            </a>
+                            <a href="https://www.crecylachapelle.eu/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-4 bg-white !text-charcoal-800 border-2 border-cream-300 rounded-full font-bold hover:border-terracotta-400 hover:!text-terracotta-500 transition-colors">
+                                Site de la Mairie
+                            </a>
+                        </div>
+                    </div>
+                </motion.div>
+                
+            </div>
+        </main>
     );
 }

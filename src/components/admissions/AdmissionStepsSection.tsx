@@ -212,13 +212,33 @@ export default function AdmissionStepsSection() {
     return (
         <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
             <div className="container-custom relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-16 relative">
+                    {/* Floating Emojis */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0, y: 20 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ type: "spring", delay: 0.2, bounce: 0.6 }}
+                        className="absolute -top-6 left-1/4 md:left-[20%] text-4xl md:text-5xl transform -rotate-12 select-none"
+                    >
+                        📋
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0, y: 20 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ type: "spring", delay: 0.4, bounce: 0.6 }}
+                        className="absolute top-10 right-1/4 md:right-[20%] text-4xl md:text-5xl transform rotate-12 select-none"
+                    >
+                        ✨
+                    </motion.div>
+
                     <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="inline-block text-terracotta-500 font-medium mb-4"
+                        className="inline-block py-1.5 px-5 rounded-full bg-terracotta-100 text-terracotta-700 font-bold tracking-wider uppercase text-sm mb-4 shadow-sm border border-terracotta-200"
                     >
                         Votre parcours
                     </motion.span>
@@ -228,17 +248,20 @@ export default function AdmissionStepsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="font-serif text-3xl md:text-4xl text-charcoal-900 mb-4"
+                        className="font-serif text-5xl md:text-7xl text-charcoal-900 mt-2 mb-6 font-bold drop-shadow-sm"
                     >
                         Votre parcours d&apos;admission
                     </motion.h2>
+
+                    {/* Colorful fun underline */}
+                    <div className="w-32 h-1.5 bg-gradient-to-r from-terracotta-400 via-amber-400 to-forest-400 mx-auto rounded-full mb-8" />
 
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-charcoal-600"
+                        className="text-charcoal-600 max-w-2xl mx-auto text-xl md:text-2xl leading-relaxed"
                     >
                         4 étapes simples vers votre nouvelle vie
                     </motion.p>

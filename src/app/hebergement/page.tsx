@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -73,6 +75,24 @@ function FeatureCard({ feature, index }: { feature: typeof roomFeatures[0], inde
 }
 
 export default function HebergementPage() {
+    const [activeRoom, setActiveRoom] = useState<'simple' | 'double'>('simple');
+    const [userInteracted, setUserInteracted] = useState(false);
+
+    // Auto-switch between simple and double
+    useEffect(() => {
+        if (userInteracted) return;
+        
+        const interval = setInterval(() => {
+            setActiveRoom(prev => prev === 'simple' ? 'double' : 'simple');
+        }, 5000); // switch every 5 seconds
+        return () => clearInterval(interval);
+    }, [userInteracted]);
+
+    const handleRoomChange = (room: 'simple' | 'double') => {
+        setActiveRoom(room);
+        setUserInteracted(true);
+    };
+
     return (
         <>
             {/* Hero compact */}
@@ -83,44 +103,28 @@ export default function HebergementPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Images */}
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
+                            key={activeRoom}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
                             className="relative"
                         >
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-4">
-                                    <div className="relative h-48 rounded-2xl overflow-hidden">
+                                    <div className="relative h-64 rounded-2xl overflow-hidden shadow-md">
                                         <Image
-                                            src="/images/hebergement/chambre1.png"
-                                            alt="Chambre simple"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="relative h-32 rounded-2xl overflow-hidden">
-                                        <Image
-                                            src="/images/hebergement/detail.png"
-                                            alt="Détail chambre"
+                                            src={activeRoom === 'simple' ? "/images/hebergement/chambre1.png" : "/images/hebergement/chambre2.png"}
+                                            alt={activeRoom === 'simple' ? "Chambre simple" : "Chambre double"}
                                             fill
                                             className="object-cover"
                                         />
                                     </div>
                                 </div>
-                                <div className="space-y-4 pt-8">
-                                    <div className="relative h-40 rounded-2xl overflow-hidden">
+                                <div className="space-y-4 pt-12">
+                                    <div className="relative h-64 rounded-2xl overflow-hidden shadow-md">
                                         <Image
-                                            src="/images/hebergement/chambre2.png"
-                                            alt="Chambre double"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="relative h-48 rounded-2xl overflow-hidden">
-                                        <Image
-                                            src="/images/hebergement/sdb.png"
-                                            alt="Salle de bain"
+                                            src={activeRoom === 'simple' ? "/images/hebergement/detail.png" : "/images/hebergement/sdb.png"}
+                                            alt={activeRoom === 'simple' ? "Détail chambre" : "Salle de bain"}
                                             fill
                                             className="object-cover"
                                         />
@@ -141,19 +145,67 @@ export default function HebergementPage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
+                            className="flex flex-col"
                         >
-                            <span className="text-forest-500 font-medium">Nos chambres</span>
-                            <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-6">
-                                Un espace de vie personnalisé
-                            </h2>
-                            <p className="text-charcoal-600 mb-8 leading-relaxed">
-                                Chaque chambre est conçue pour offrir confort et sérénité.
-                                Nos résidents peuvent personnaliser leur espace avec leurs effets
-                                personnels et souvenirs, pour se sentir véritablement chez eux.
-                            </p>
+                            <span className="text-forest-500 font-medium uppercase tracking-wider text-sm mb-2">Nos chambres</span>
+                            
+                            {/* Toggle Switch */}
+                            <div className="flex mb-6">
+                                <div className="relative inline-flex p-[3px] rounded-full overflow-hidden shadow-lg">
+                                    <motion.div 
+                                        className="absolute top-1/2 left-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_280deg,#C80040_360deg)] opacity-90 origin-center"
+                                        style={{ x: '-50%', y: '-50%' }}
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                                    />
+                                    <div className="inline-flex bg-white rounded-full p-1 relative z-10 w-full h-full">
+                                        <button
+                                            onClick={() => handleRoomChange('simple')}
+                                            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
+                                                activeRoom === 'simple'
+                                                    ? 'bg-[#C80040] text-white shadow-md'
+                                                    : 'text-charcoal-600 hover:text-charcoal-900'
+                                            }`}
+                                        >
+                                            Chambre Simple
+                                        </button>
+                                        <button
+                                            onClick={() => handleRoomChange('double')}
+                                            className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
+                                                activeRoom === 'double'
+                                                    ? 'bg-[#C80040] text-white shadow-md'
+                                                    : 'text-charcoal-600 hover:text-charcoal-900'
+                                            }`}
+                                        >
+                                            Chambre Double
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <motion.h2 
+                                key={`title-${activeRoom}`}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="font-serif text-3xl md:text-4xl text-charcoal-900 mb-6"
+                            >
+                                {activeRoom === 'simple' ? "Un espace de vie personnalisé" : "Un espace à partager (Couples)"}
+                            </motion.h2>
+
+                            <motion.p 
+                                key={`desc-${activeRoom}`}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="text-charcoal-600 mb-8 leading-relaxed"
+                            >
+                                {activeRoom === 'simple' 
+                                    ? "Chaque chambre simple est conçue pour offrir confort et intimité. Nos résidents peuvent personnaliser leur espace avec leurs effets personnels et souvenirs, pour se sentir véritablement chez eux."
+                                    : "Nos chambres doubles sont spacieuses et parfaitement adaptées pour accueillir les couples. Elles offrent le confort d'un grand espace commun tout en conservant une atmosphère chaleureuse."
+                                }
+                            </motion.p>
 
                             {/* Features avec 3D */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-4 mt-auto">
                                 {roomFeatures.map((feature, index) => (
                                     <FeatureCard key={feature.label} feature={feature} index={index} />
                                 ))}
@@ -164,7 +216,10 @@ export default function HebergementPage() {
             </section>
 
             {/* Section Tarifs */}
-            <PricingSection />
+            <PricingSection 
+                externalRoomType={activeRoom}
+                onExternalRoomChange={handleRoomChange}
+            />
 
             {/* CTA */}
             <section className="section-padding bg-cream-100">

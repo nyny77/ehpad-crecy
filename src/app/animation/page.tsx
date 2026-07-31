@@ -128,7 +128,7 @@ function ActivityCard({ activity, index }: { activity: any, index: number }) {
 
 export default function AnimationPage() {
     return (
-        <main className="pt-32 md:pt-40 min-h-screen bg-cream-50">
+        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
             
             {/* Section activités (toujours visible) - Avec fond coloré et vagues */}
             <section className="section-padding relative py-24 md:py-32 bg-cream-100 overflow-hidden">
@@ -166,13 +166,40 @@ export default function AnimationPage() {
                 </div>
 
                 <div className="container-custom relative z-10">
-                    <div className="text-center mb-12">
-                        <span className="text-forest-600 font-bold tracking-wider uppercase text-sm">Animations</span>
-                        <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-3 mb-6">
+                    <div className="text-center mb-16 relative">
+                        {/* Floating Fun Emojis */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0, y: 20 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ type: "spring", delay: 0.2, bounce: 0.6 }}
+                            className="absolute -top-6 left-1/4 md:left-[20%] text-4xl md:text-5xl transform -rotate-12 select-none"
+                        >
+                            🎉
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0, y: 20 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ type: "spring", delay: 0.4, bounce: 0.6 }}
+                            className="absolute top-10 right-1/4 md:right-[20%] text-4xl md:text-5xl transform rotate-12 select-none"
+                        >
+                            🎨
+                        </motion.div>
+
+                        <span className="inline-block py-1.5 px-5 rounded-full bg-forest-100 text-forest-700 font-bold tracking-wider uppercase text-sm mb-4 shadow-sm border border-forest-200">
+                            Animations
+                        </span>
+                        
+                        <h2 className="font-serif text-5xl md:text-7xl text-charcoal-900 mt-2 mb-6 font-bold drop-shadow-sm">
                             Un programme varié
                         </h2>
-                        <p className="text-charcoal-600 max-w-2xl mx-auto text-lg leading-relaxed">
-                            Notre animatrice propose chaque semaine un programme d&apos;activités
+                        
+                        {/* Colorful fun underline */}
+                        <div className="w-32 h-1.5 bg-gradient-to-r from-terracotta-400 via-yellow-400 to-blue-400 mx-auto rounded-full mb-8" />
+                        
+                        <p className="text-charcoal-600 max-w-2xl mx-auto text-xl md:text-2xl leading-relaxed">
+                            Notre coordinatrice de la vie sociale propose chaque semaine un programme d&apos;activités
                             adapté aux envies et capacités de chacun.
                         </p>
                     </div>

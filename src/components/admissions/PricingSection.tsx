@@ -12,14 +12,22 @@ import {
     RoomType
 } from "@/lib/pricing-data";
 
-export default function PricingSection() {
-    const [roomType, setRoomType] = useState<RoomType>("simple");
+export default function PricingSection({
+    externalRoomType,
+    onExternalRoomChange
+}: {
+    externalRoomType?: RoomType;
+    onExternalRoomChange?: (room: RoomType) => void;
+} = {}) {
+    const [internalRoomType, setInternalRoomType] = useState<RoomType>("simple");
     const [showDetails, setShowDetails] = useState(false);
+    const roomType = externalRoomType || internalRoomType;
+    const setRoomType = onExternalRoomChange || setInternalRoomType;
 
     const currentPricing = PRICING_DATA[roomType];
 
     return (
-        <section className="py-24 bg-cream-50 relative overflow-hidden" id="tarifs">
+        <section className="py-24 bg-cream-100 relative overflow-hidden" id="tarifs">
             {/* Background Decorations */}
             <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-terracotta-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-sage-100/40 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -43,31 +51,40 @@ export default function PricingSection() {
 
                 {/* Room Type Toggle */}
                 <div className="flex justify-center mb-12">
-                    <div className="bg-white p-1.5 rounded-full shadow-md inline-flex relative">
-                        <button
-                            onClick={() => setRoomType("simple")}
-                            className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "simple" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"
-                                }`}
-                        >
-                            Chambre Simple
-                        </button>
-                        <button
-                            onClick={() => setRoomType("double")}
-                            className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "double" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"
-                                }`}
-                        >
-                            Chambre Double
-                        </button>
-                        {/* Animated slider */}
-                        <motion.div
-                            className="absolute inset-y-1.5 w-1/2 bg-terracotta-500 rounded-full z-0 shadow-sm"
-                            initial={false}
-                            animate={{
-                                left: roomType === "simple" ? "0.375rem" : "50%",
-                                width: roomType === "simple" ? "calc(50% - 0.375rem)" : "calc(50% - 0.375rem)",
-                            }}
-                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    <div className="relative inline-flex p-[3px] rounded-full overflow-hidden shadow-lg">
+                        {/* Serpentin / Rotating Border */}
+                        <motion.div 
+                            className="absolute top-1/2 left-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_280deg,#C80040_360deg)] opacity-90 origin-center"
+                            style={{ x: '-50%', y: '-50%' }}
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                         />
+                        <div className="bg-white p-1.5 rounded-full inline-flex relative z-10 w-full h-full">
+                            <button
+                                onClick={() => setRoomType("simple")}
+                                className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "simple" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"
+                                    }`}
+                            >
+                                Chambre Simple
+                            </button>
+                            <button
+                                onClick={() => setRoomType("double")}
+                                className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "double" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"
+                                    }`}
+                            >
+                                Chambre Double
+                            </button>
+                            {/* Animated slider */}
+                            <motion.div
+                                className="absolute inset-y-1.5 w-1/2 bg-[#C80040] rounded-full z-0 shadow-sm"
+                                initial={false}
+                                animate={{
+                                    left: roomType === "simple" ? "0.375rem" : "50%",
+                                    width: roomType === "simple" ? "calc(50% - 0.375rem)" : "calc(50% - 0.375rem)",
+                                }}
+                                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -83,7 +100,7 @@ export default function PricingSection() {
                     >
                         <div className="bg-charcoal-900 text-white p-8 md:p-12 text-center relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
-                            <h3 className="font-serif text-3xl mb-2 relative z-10">{currentPricing.name}</h3>
+                            <h3 className="font-serif text-3xl mb-2 relative z-10 !text-white">{currentPricing.name}</h3>
                             <p className="text-white/80 mb-8 relative z-10">Reste à charge mensuel estimé*</p>
                             
                             <div className="flex items-baseline justify-center gap-2 relative z-10">
