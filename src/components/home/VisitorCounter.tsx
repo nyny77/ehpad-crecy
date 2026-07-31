@@ -44,8 +44,7 @@ export default function VisitorCounter() {
         fetchCounters();
     }, []);
 
-    if (!hasLoaded) return null;
-
+    // Remove blocking return so we can see the skeleton or '...'
     return (
         <section className="py-12 bg-cream-100 relative overflow-hidden">
             <div className="container-custom px-4 relative z-10">
