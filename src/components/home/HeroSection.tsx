@@ -120,15 +120,24 @@ export default function HeroSection() {
                             />
 
                             <div className="text-center relative z-10">
-                                {/* Title with Sweeping Highlight + Glow Effect */}
-                                <motion.h1
+                                {/* Logo with Sweeping Highlight + Glow Effect */}
+                                <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 1, ease: "easeOut" }}
-                                    className="font-serif text-3xl md:text-4xl font-bold mb-6 leading-tight tracking-tight text-charcoal-900"
+                                    className="flex justify-center mb-6"
                                 >
-                                    {EHPAD_INFO.name}
-                                </motion.h1>
+                                    <div className="relative w-64 h-24 md:w-80 md:h-32">
+                                        <Image
+                                            src="/images/logo.png"
+                                            alt={EHPAD_INFO.name}
+                                            fill
+                                            className="object-contain drop-shadow-md"
+                                            priority
+                                        />
+                                    </div>
+                                    <h1 className="sr-only">{EHPAD_INFO.name}</h1>
+                                </motion.div>
 
                                 {/* Divider with Glow Effect */}
                                 <motion.div
