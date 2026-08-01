@@ -13,17 +13,17 @@ export default function EventWidget({ files }: EventWidgetProps) {
     if (!files || files.length === 0) return null;
 
     return (
-        <>
+        <div className="w-full flex flex-col items-center gap-16 mt-16 pb-24 xl:contents xl:mt-0 xl:pb-0 z-20 relative">
             {files.slice(0, 2).map((file, index) => {
                 const isPdf = file.toLowerCase().endsWith('.pdf');
                 // The first file goes on the left, the second on the right
-                const sideClass = index === 0 ? "left-8" : "right-8";
+                const sideClass = index === 0 ? "xl:left-8" : "xl:right-8";
                 const rotationClass = index === 0 ? "-rotate-3" : "rotate-3";
                 const rotationValue = index === 0 ? -3 : 3;
                 const delay = 2.5 + (index * 0.2);
 
                 return (
-                    <div key={file} className={`hidden xl:flex flex-col absolute ${sideClass} top-1/2 -translate-y-1/2 z-20 pointer-events-none`}>
+                    <div key={file} className={`flex flex-col relative xl:absolute ${sideClass} xl:top-1/2 xl:-translate-y-1/2 pointer-events-none`}>
                         <motion.div
                             initial={{ opacity: 0, x: index === 0 ? -50 : 50, rotate: 0 }}
                             animate={{ opacity: 1, x: 0, rotate: rotationValue }}
@@ -60,6 +60,6 @@ export default function EventWidget({ files }: EventWidgetProps) {
                     </div>
                 );
             })}
-        </>
+        </div>
     );
 }
