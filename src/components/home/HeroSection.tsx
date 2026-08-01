@@ -7,7 +7,13 @@ import { motion, useScroll, useTransform, useTime } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
-export default function HeroSection() {
+import EventWidget from "@/components/home/EventWidget";
+
+interface HeroSectionProps {
+    eventFiles?: string[];
+}
+
+export default function HeroSection({ eventFiles = [] }: HeroSectionProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -241,6 +247,8 @@ export default function HeroSection() {
                     </div>
                 </motion.div>
             </motion.div >
+
+            <EventWidget files={eventFiles} />
 
             {/* Vague de séparation */}
             <div className="absolute bottom-0 left-0 w-full z-20">
