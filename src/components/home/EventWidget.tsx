@@ -13,7 +13,7 @@ export default function EventWidget({ files }: EventWidgetProps) {
     if (!files || files.length === 0) return null;
 
     return (
-        <div className="w-full flex flex-col items-center gap-16 mt-16 pb-24 xl:contents xl:mt-0 xl:pb-0 z-20 relative">
+        <div className="w-full flex flex-row overflow-x-auto snap-x snap-mandatory items-center gap-6 px-6 mt-12 pb-16 xl:contents z-20 relative pointer-events-auto xl:pointer-events-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
             {files.slice(0, 2).map((file, index) => {
                 const isPdf = file.toLowerCase().endsWith('.pdf');
                 // The first file goes on the left, the second on the right
@@ -23,12 +23,12 @@ export default function EventWidget({ files }: EventWidgetProps) {
                 const delay = 2.5 + (index * 0.2);
 
                 return (
-                    <div key={file} className={`flex flex-col relative xl:absolute ${sideClass} xl:top-1/2 xl:-translate-y-1/2 pointer-events-none`}>
+                    <div key={file} className={`flex-none w-[85vw] max-w-sm snap-center relative xl:w-auto xl:absolute ${sideClass} xl:top-1/2 xl:-translate-y-1/2 pointer-events-none flex justify-center py-6`}>
                         <motion.div
                             initial={{ opacity: 0, x: index === 0 ? -50 : 50, rotate: 0 }}
                             animate={{ opacity: 1, x: 0, rotate: rotationValue }}
                             transition={{ duration: 0.8, delay, type: "spring" }}
-                            className={`pointer-events-auto relative bg-white p-4 pb-12 rounded-sm shadow-2xl hover:shadow-3xl transition-shadow w-80 md:w-96 ${rotationClass}`}
+                            className={`pointer-events-auto relative bg-white p-4 pb-12 rounded-sm shadow-2xl hover:shadow-3xl transition-shadow w-full md:w-96 ${rotationClass}`}
                             whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
                         >
                             {/* Trombone (Paperclip) */}
