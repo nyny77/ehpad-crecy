@@ -12,11 +12,11 @@ export default function LivretAccueilPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-charcoal-900 rounded-3xl p-2 md:p-3 shadow-2xl border border-charcoal-700"
+            className="bg-charcoal-900 rounded-3xl p-2 md:p-3 shadow-2xl border border-charcoal-700 h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)]"
         >
             <iframe 
                 src="/documents/livret-accueil.pdf?v=2" 
-                className="w-full h-[90vh] md:h-[1200px] rounded-2xl border-none bg-white"
+                className="w-full h-full rounded-2xl border-none bg-white"
                 title="Livret d'Accueil PDF"
             />
         </motion.div>
