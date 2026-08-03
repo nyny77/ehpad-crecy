@@ -8,9 +8,10 @@ export default function FeaturesSection() {
     return (
         <section className="relative py-24 bg-cream-100 text-charcoal-900 overflow-hidden">
             <div className="container-custom relative z-10">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
                     {/* Texte Narratif */}
                     <motion.div
+                        className="lg:col-span-5"
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -63,24 +64,24 @@ export default function FeaturesSection() {
 
                     {/* Image Illustration */}
                     <motion.div
-                        initial={{ opacity: 0, x: 30, rotate: 1 }}
+                        initial={{ opacity: 0, x: 30, rotate: 2 }}
                         whileInView={{ opacity: 1, x: 0, rotate: -2 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative h-[500px] w-full hidden lg:block"
+                        className="relative hidden lg:block lg:col-span-7 scale-[1.35] translate-x-16 -translate-y-12 z-20"
                     >
                         {/* Blob Background for Image */}
                         <div className="absolute inset-0 bg-terracotta-100 rounded-[3rem] rotate-3 scale-95 opacity-50 blur-xl translate-y-4" />
 
-                        <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/50">
-                            <Image
-                                src="/images/facade-photo.jpg"
+                        <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/50">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/images/Image1.png"
                                 alt="Façade de l'EHPAD de Crécy"
-                                fill
-                                className="object-cover hover:scale-105 transition-transform duration-700"
+                                className="w-full h-auto hover:scale-105 transition-transform duration-700 block"
                             />
                             {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/40 via-transparent to-transparent opacity-60" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/40 via-transparent to-transparent opacity-60 pointer-events-none" />
 
                             <div className="absolute bottom-8 left-8 text-white max-w-xs">
                                 <p className="font-serif italic text-xl">"Une maison où il fait bon vivre"</p>
