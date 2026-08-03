@@ -2,7 +2,7 @@
 export const EHPAD_INFO = {
     name: "EHPAD de Crécy",
     fullName: "EHPAD de Crécy-la-Chapelle",
-    slogan: "L'art de bien vivre, entouré et en toute sérénité.",
+    slogan: "Bien plus qu'un EHPAD, un véritable lieu de vie.",
 
     // Coordonnées
     address: {

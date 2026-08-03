@@ -26,7 +26,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "EHPAD de Crécy | L'art de bien vivre, entouré et en toute sérénité",
+  title: "EHPAD de Crécy | Bien plus qu'un EHPAD, un véritable lieu de vie",
   description:
     "EHPAD public de Crécy-la-Chapelle (77) - 63 lits en Seine-et-Marne. Un lieu de vie chaleureux où bienveillance, professionnalisme et vie sociale s'unissent pour le bien-être de nos résidents.",
   keywords: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "EHPAD de Crécy" }],
   openGraph: {
-    title: "EHPAD de Crécy | L'art de bien vivre, entouré et en toute sérénité",
+    title: "EHPAD de Crécy | Bien plus qu'un EHPAD, un véritable lieu de vie",
     description:
       "EHPAD public de Crécy-la-Chapelle - Un lieu de vie chaleureux en Seine-et-Marne.",
     locale: "fr_FR",

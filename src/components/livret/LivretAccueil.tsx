@@ -341,7 +341,7 @@ export default function LivretAccueil() {
             </motion.p>
 
             <motion.p variants={fadeInUp} className="text-base text-charcoal-400 dark:text-charcoal-400 italic max-w-xl mx-auto mb-10">
-              &ldquo;L&apos;art de bien vivre, entouré et en toute sérénité.&rdquo;
+              &ldquo;Bien plus qu&apos;un EHPAD, un véritable lieu de vie.&rdquo;
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
