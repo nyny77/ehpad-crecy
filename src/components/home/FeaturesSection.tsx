@@ -80,12 +80,6 @@ export default function FeaturesSection() {
                                 alt="Façade de l'EHPAD de Crécy"
                                 className="w-full h-auto hover:scale-105 transition-transform duration-700 block"
                             />
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/40 via-transparent to-transparent opacity-60 pointer-events-none" />
-
-                            <div className="absolute bottom-8 left-8 text-white max-w-xs">
-                                <p className="font-serif italic text-xl">"Une maison où il fait bon vivre"</p>
-                            </div>
                         </div>
                     </motion.div>
                 </div>
