@@ -26,7 +26,7 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                     className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
                 >
                     <Image
-                        src={img.src}
+                        src={img.thumbSrc || img.src}
                         alt={img.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
