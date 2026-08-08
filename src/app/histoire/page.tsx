@@ -200,6 +200,83 @@ export default function HistoirePage() {
                     ))}
                 </div>
 
+                {/* Video Section */}
+                <motion.div
+                    id="videos"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-6xl mx-auto mt-24 px-4 scroll-mt-32"
+                >
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-charcoal-900 mb-6">
+                            Découvrez Crécy-la-Chapelle
+                        </h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-terracotta-400 to-sage-400 mx-auto rounded-full mb-6" />
+                        <p className="text-lg text-charcoal-600 max-w-2xl mx-auto">
+                            Plongez dans l'atmosphère unique de la Venise Briarde à travers ce reportage et cette balade au fil de l'eau.
+                        </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center justify-items-center">
+                        
+                        {/* Facebook Video (Landscape) */}
+                        <div className="w-full lg:col-span-2">
+                            <div className="relative rounded-[1.5rem] overflow-hidden shadow-2xl bg-white p-2 md:p-3 border-[6px] border-cream-200 aspect-video group transform transition-transform hover:scale-[1.01] duration-500">
+                                <div className="relative w-full h-full bg-charcoal-900 rounded-[1rem] overflow-hidden flex justify-center items-center">
+                                    <iframe 
+                                        src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1969625513836414&show_text=false" 
+                                        width="100%" 
+                                        height="100%" 
+                                        style={{ border: "none", overflow: "hidden" }} 
+                                        scrolling="no" 
+                                        frameBorder="0" 
+                                        allowFullScreen={true} 
+                                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                                        className="w-full h-full absolute inset-0 z-10"
+                                    ></iframe>
+                                </div>
+                                {/* Titre sous la vidéo */}
+                                <div className="absolute bottom-4 left-0 right-0 z-20 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span className="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-bold text-charcoal-800 shadow-lg border border-white/50">
+                                        Reportage sur notre ville
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Local Video (Portrait - Mockup Smartphone) */}
+                        <div className="w-full max-w-[320px] lg:col-span-1 mx-auto">
+                            <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl bg-white p-2 border-[6px] border-cream-200 aspect-[9/16] group transform transition-transform hover:scale-[1.02] duration-500">
+                                {/* Encoche "Notch" décorative */}
+                                <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-20">
+                                    <div className="w-28 h-6 bg-cream-200 rounded-b-2xl pointer-events-none"></div>
+                                </div>
+                                <div className="relative w-full h-full bg-charcoal-900 rounded-[2rem] overflow-hidden group">
+                                    <video 
+                                        src="/videos/balade-crecy.mp4"
+                                        className="w-full h-full object-cover"
+                                        controls
+                                        playsInline
+                                        preload="metadata"
+                                        poster="/images/history/canal.jpg"
+                                    >
+                                        Votre navigateur ne supporte pas la balise vidéo.
+                                    </video>
+                                    
+                                </div>
+                                {/* Titre sous la vidéo */}
+                                <div className="absolute bottom-6 left-0 right-0 z-20 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span className="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-bold text-charcoal-800 shadow-lg border border-white/50">
+                                        Balade au fil de l'eau
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </motion.div>
+
                 {/* Final Call to Action Block */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
