@@ -76,6 +76,11 @@ export default function RootLayout({
             <ChatBot />
           </ErrorBoundary>
         </div>
+		<Script
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token":"baeb6883e409468f899c3311a5263f48"}'
+        />
       </body>
     </html>
   );
