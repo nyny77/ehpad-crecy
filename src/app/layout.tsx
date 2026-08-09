@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -76,11 +75,7 @@ export default function RootLayout({
             <ChatBot />
           </ErrorBoundary>
         </div>
-		<Script
-          type="module"
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token":"baeb6883e409468f899c3311a5263f48"}'
-        />
+		
       </body>
     </html>
   );
