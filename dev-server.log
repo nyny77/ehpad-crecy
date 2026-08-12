@@ -1,0 +1,27 @@
+
+> ehpad-crecy@0.1.0 dev
+> node scripts/optimize-gallery.js && next dev
+
+Starting gallery optimization...
+
+Optimization Summary:
+- Total Photos Processed: 102
+- New Thumbnails Created: 0
+- Skipped (already exist): 102
+- JSON file updated successfully.
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.53:3000
+
+✓ Starting...
+Creating turbopack project {
+  dir: 'C:\\Users\\atoda\\.gemini\\antigravity\\scratch\\ehpad-crecy',
+  testMode: true
+}
+✓ Ready in 8.8s
+○ Compiling / ...
+ GET / 200 in 5.4s (compile: 5.0s, render: 448ms)
+ GET / 200 in 258ms (compile: 16ms, render: 242ms)
+ GET / 200 in 202ms (compile: 17ms, render: 185ms)
+ GET /equipe 200 in 196ms (compile: 160ms, render: 37ms)
+✓ Compiled in 212ms
