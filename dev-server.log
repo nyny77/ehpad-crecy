@@ -25,3 +25,10 @@ Creating turbopack project {
  GET / 200 in 202ms (compile: 17ms, render: 185ms)
  GET /equipe 200 in 196ms (compile: 160ms, render: 37ms)
 ✓ Compiled in 212ms
+ GET /equipe 200 in 499ms (compile: 137ms, render: 362ms)
+ GET /equipe/technique 200 in 1019ms (compile: 923ms, generate-params: 791ms, render: 96ms)
+ GET /equipe/technique 200 in 52ms (compile: 15ms, generate-params: 6ms, render: 37ms)
+ GET / 200 in 373ms (compile: 15ms, render: 357ms)
+ GET /equipe 200 in 67ms (compile: 15ms, render: 52ms)
+✓ Compiled in 206ms
+✓ Compiled in 836ms

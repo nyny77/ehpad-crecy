@@ -10,7 +10,7 @@ export default function BentoGrid() {
     const getSize = (id: string): "small" | "large" | "xlarge" | "horizontal" | "vertical" => {
         // Mapping sizes strictly based on their original index in SERVICES_EXTENDED
         const sizes: Record<string, "small" | "large" | "xlarge" | "horizontal" | "vertical"> = {
-            "direction-generale": "vertical",
+            "direction-generale": "small",   // photo de la directrice en format compact
             "direction": "vertical",    // dimensions proches de la tuile agent hôtelier
             "hotelier": "vertical",     // original index 1
             "animation": "horizontal",  // original index 2
