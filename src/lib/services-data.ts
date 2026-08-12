@@ -1,19 +1,45 @@
 // Extended service data with full descriptions for detail pages
 export const SERVICES_EXTENDED = [
     {
-        id: "direction",
+        id: "direction-generale",
         title: "La Directrice",
-        subtitle: "Pilotage & Vision stratégique",
-        shortDescription: "La directrice multisite coordonne l'ensemble des activités avec une vision stratégique et humaine.",
-        fullDescription: `La directrice multisite de l'EHPAD de Crécy assure le pilotage stratégique de l'établissement avec une vision à la fois globale et attentive aux détails du quotidien. Elle garantit la cohérence du projet d'établissement et veille au respect des valeurs qui nous unissent.
+        subtitle: "Pilotage & Vision stratégique Globale",
+        shortDescription: "La directrice générale supervise 4 sites avec une vision stratégique large, incluant notamment les futurs travaux de reconstruction.",
+        fullDescription: `La directrice générale de l'EHPAD de Crécy assure le pilotage stratégique de 4 sites avec une vision élargie et tournée vers l'avenir. Elle porte les grands projets de l'établissement, notamment les futurs travaux de reconstruction, garantissant ainsi l'évolution de nos structures pour répondre aux besoins de demain.
 
-Son rôle est de coordonner l'ensemble des services, d'impulser une dynamique d'amélioration continue et de maintenir des liens étroits avec les familles, les partenaires et les autorités de tutelle. Elle est garante de la qualité de l'accompagnement proposé aux résidents.
-
-Accessible et à l'écoute, elle accorde une importance particulière à la communication avec les équipes et les familles. Sa présence régulière et son implication personnelle contribuent à maintenir un climat de confiance et de sérénité au sein de l'établissement.`,
+Son rôle est de fixer le cap pour l'ensemble des sites, d'assurer le développement institutionnel et de piloter les projets architecturaux d'envergure. Elle représente l'établissement auprès des hautes instances et des partenaires majeurs.`,
         highlights: [
-            "Vision stratégique",
-            "Coordination multisite",
-            "Projet d'établissement",
+            "Vision stratégique élargie",
+            "Supervision de 4 sites",
+            "Projets de reconstruction",
+            "Développement institutionnel",
+        ],
+        image: "/images/services/directrice-generale.png",
+        imagePosition: "object-[50%_20%]",
+        detailImage: "/images/services/directrice-generale.png",
+        dailyRoutine: [
+            { time: "08:30", activity: "Point stratégique" },
+            { time: "10:00", activity: "Rencontres partenaires" },
+            { time: "14:00", activity: "Gestion budgétaire globale" },
+            { time: "16:00", activity: "Réunions institutionnelles" },
+        ],
+        skills: ["Management", "Gestion financière", "Vision stratégique", "Leadership", "Diplomatie"],
+        quote: "Donner le cap et fédérer les équipes autour d'un projet commun au service de nos aînés."
+    },
+    {
+        id: "direction",
+        title: "La Directrice Adjointe",
+        subtitle: "Pilotage & Vision stratégique",
+        shortDescription: "La directrice adjointe coordonne les activités sur 2 sites avec une proximité humaine et opérationnelle.",
+        fullDescription: `La directrice adjointe assure le pilotage opérationnel de 2 sites avec une vision à la fois globale et attentive aux détails du quotidien. Elle garantit la cohérence du projet d'établissement et veille au respect des valeurs qui nous unissent sur le terrain.
+
+Son rôle est de coordonner l'ensemble des services de ses sites, d'impulser une dynamique d'amélioration continue et de maintenir des liens étroits avec les familles, les partenaires et les autorités de tutelle. Elle est garante de la qualité de l'accompagnement proposé aux résidents.
+
+Accessible et à l'écoute, elle accorde une importance particulière à la communication avec les équipes et les familles. Sa présence régulière et son implication personnelle contribuent à maintenir un climat de confiance et de sérénité.`,
+        highlights: [
+            "Pilotage opérationnel",
+            "Coordination sur 2 sites",
+            "Proximité et écoute",
             "Valeurs humaines",
         ],
         image: "/images/services/direction.png",
