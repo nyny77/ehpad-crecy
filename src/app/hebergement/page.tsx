@@ -18,6 +18,8 @@ const roomFeatures = [
     { icon: "furniture", label: "Mobilier de qualité" },
 ];
 
+const ROOM_SWITCH_DELAY_MS = 30_000;
+
 const iconComponents: { [key: string]: React.ReactNode } = {
     bed: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +86,7 @@ export default function HebergementPage() {
         
         const interval = setInterval(() => {
             setActiveRoom(prev => prev === 'simple' ? 'double' : 'simple');
-        }, 5000); // switch every 5 seconds
+        }, ROOM_SWITCH_DELAY_MS); // switch every 30 seconds
         return () => clearInterval(interval);
     }, [userInteracted]);
 
