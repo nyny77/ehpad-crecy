@@ -33,10 +33,10 @@ export default function Footer() {
                             Navigation
                         </h4>
                         <ul className="space-y-3">
-                            {NAV_LINKS.flatMap(item => item.href ? [item] : (item.subLinks || [])).slice(0, 8).map((link) => (
+                            {NAV_LINKS.flatMap(item => item.href ? [{ label: item.label, href: item.href }] : (item.subLinks || [])).slice(0, 8).map((link) => (
                                 <li key={link.href}>
                                     <Link
-                                        href={link.href!}
+                                        href={link.href}
                                         className="text-cream-300 hover:text-terracotta-400 transition-colors duration-300 flex items-center gap-2"
                                     >
                                         <span className="w-1.5 h-1.5 bg-terracotta-500 rounded-full" />
