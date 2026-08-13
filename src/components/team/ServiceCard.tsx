@@ -98,7 +98,7 @@ export default function ServiceCard({
                                     src={image}
                                     alt={title}
                                     fill
-                                    className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"} ${id === "direction-generale" ? "object-[50%_60%]" : imagePosition}`}
+                                    className={`object-cover transition-transform duration-[20s] ease-in-out ${isHovered ? "scale-110" : "scale-105"} ${id === "direction-generale" ? "object-[50%_20%] md:object-[50%_60%]" : imagePosition}`}
                                 />
 
                                 {/* Overlay gradient */}

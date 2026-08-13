@@ -25,3 +25,5 @@ Creating turbopack project {
  GET /equipe 200 in 50ms (compile: 17ms, render: 33ms)
  GET /histoire 200 in 163ms (compile: 134ms, render: 28ms)
  GET /equipe 200 in 34ms (compile: 10ms, render: 24ms)
+✓ Compiled in 305ms
+ GET /equipe 200 in 632ms (compile: 170ms, render: 463ms)
