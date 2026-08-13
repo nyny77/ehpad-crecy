@@ -1,0 +1,184 @@
+PLAN RESTANT — SITE DE L'EHPAD DE CRÉCY
+Date : 13 août 2026
+
+============================================================
+TRAVAUX DÉJÀ RÉALISÉS
+============================================================
+
+- Écran d'accueil réduit de 5 secondes à 0,6 seconde, une seule fois par session.
+- Vidéo de 21,9 Mo chargée uniquement après un clic.
+- Images hors galerie converties en WebP tout en conservant les originaux.
+- Réduction estimée du poids des images optimisées : 92 %.
+- Miniatures actuelles de la galerie conservées.
+- Cache longue durée ajouté pour les ressources statiques.
+- Animations réduites sur téléphone et selon la préférence d'accessibilité.
+- Vérifications ESLint, TypeScript et build de production réussies.
+
+============================================================
+PRIORITÉ 1 — DROIT À L'IMAGE ET NIVEAU DE DIFFUSION
+============================================================
+
+Les personnes photographiées ont signé un droit à l'image.
+
+À vérifier dans le modèle d'autorisation :
+
+- La diffusion sur un site Internet public est-elle explicitement autorisée ?
+- La diffusion sur les réseaux sociaux est-elle distinguée du site Internet ?
+- La durée de l'autorisation est-elle précisée ?
+- La possibilité de retirer ultérieurement son consentement est-elle expliquée ?
+- Les photographies de résidents protégés prévoient-elles la signature adaptée ?
+
+Si la publication publique sur Internet est autorisée, aucune protection par connexion
+n'est nécessaire pour ces photographies. Le dossier technique nommé « private » pourra
+simplement être renommé lors d'une future maintenance afin d'éviter toute confusion.
+
+Si certaines autorisations limitent les photographies aux familles connectées, celles-ci
+devront être déplacées vers un stockage réellement protégé.
+
+Décision actuelle : aucune modification appliquée sur ce point.
+
+============================================================
+PRIORITÉ 2 — MESURES APRÈS MISE EN LIGNE
+============================================================
+
+Après le prochain déploiement :
+
+- Mesurer PageSpeed sur téléphone et ordinateur.
+- Contrôler les Core Web Vitals :
+  - LCP inférieur à 2,5 secondes ;
+  - INP inférieur à 200 millisecondes ;
+  - CLS inférieur à 0,1.
+- Tester le site en 4G lente et sur un téléphone ancien.
+- Vérifier visuellement les cadrages des photos sur téléphone, tablette et ordinateur.
+- Vérifier que la vidéo ne se télécharge pas avant un clic.
+- Vérifier les en-têtes de cache sur Netlify.
+- Comparer les résultats avant et après optimisation.
+
+============================================================
+PRIORITÉ 3 — OPTIMISATIONS TECHNIQUES COMPLÉMENTAIRES
+============================================================
+
+- Charger le chatbot uniquement après interaction ou après quelques secondes.
+- Charger Netlify Identity uniquement sur les pages nécessitant une authentification.
+- Réduire progressivement la quantité de JavaScript exécutée côté navigateur.
+- Transformer les pages purement informatives en composants serveur lorsque possible.
+- Charger Framer Motion uniquement dans les rubriques qui en ont besoin.
+- Suspendre les animations lorsque leur section n'est plus visible.
+- Étudier une visite panoramique découpée en tuiles si le panorama reste lent.
+- Ajouter une surveillance réelle des Core Web Vitals dans GoatCounter ou un outil dédié.
+
+============================================================
+PRIORITÉ 4 — NAVIGATION ET ACCESSIBILITÉ
+============================================================
+
+- Étudier une simplification du menu principal, particulièrement sur téléphone.
+- Regrouper éventuellement les pages dans cinq grandes entrées :
+  1. Découvrir l'établissement
+  2. Vivre à Crécy
+  3. Admission et tarifs
+  4. Actualités
+  5. Contact
+- Conserver les pages actuelles dans des sous-menus ou dans le pied de page.
+- Réaliser un véritable audit RGAA.
+- Compléter la déclaration d'accessibilité avec le résultat de l'audit.
+- Préparer le schéma pluriannuel et le plan annuel d'accessibilité.
+- Ajouter ou vérifier les sous-titres et transcriptions des vidéos.
+
+Cette modification du menu nécessite une validation avant réalisation.
+
+============================================================
+NOUVELLES RUBRIQUES PROPOSÉES
+============================================================
+
+1. « Aujourd'hui à Crécy » — priorité recommandée
+
+- Menu du jour.
+- Activités du jour.
+- Prochain événement.
+- Message de l'équipe.
+- Une photographie ou création du jour avec autorisation adaptée.
+- Anniversaires uniquement avec consentement.
+- Boutons pour appeler, envoyer une carte ou consulter le programme.
+
+Objectif : rendre le site utile quotidiennement aux résidents et aux familles.
+
+2. « Préparer mon entrée » — très recommandée
+
+- Parcours guidé d'admission.
+- Liste personnalisée des documents nécessaires.
+- Simulateur tarifaire clair.
+- Comparateur entre chambre simple et chambre double.
+- Calendrier des étapes.
+- Checklist imprimable pour le jour d'arrivée.
+- Prise de rendez-vous et accès direct à ViaTrajectoire.
+
+Objectif : réduire l'anxiété et simplifier les démarches des familles.
+
+3. « Vous avez dit, nous avons fait »
+
+- Propositions des résidents et des familles.
+- Décisions du Conseil de la vie sociale.
+- Améliorations réalisées.
+- Projets en cours.
+- Résultats anonymisés des enquêtes de satisfaction.
+- Engagements qualité et environnementaux.
+
+Objectif : renforcer la transparence et la participation.
+
+4. « La Place du village »
+
+- Calendrier d'activités ouvert aux habitants.
+- Appels à bénévoles.
+- Ateliers intergénérationnels.
+- Partenariats avec les écoles, associations et commerces.
+- Formulaire pour proposer une activité.
+
+Objectif : ouvrir davantage l'EHPAD sur Crécy-la-Chapelle.
+
+5. « Mémoire vivante de Crécy » — projet visionnaire
+
+- Carte interactive de Crécy-la-Chapelle.
+- Témoignages audio des résidents.
+- Photographies anciennes et actuelles.
+- Histoires associées aux rues et aux bâtiments.
+- Contributions des familles et des écoles.
+- Parcours sonore utilisable pendant une promenade.
+
+Objectif : faire des résidents les transmetteurs de la mémoire locale.
+
+6. Espace familles nouvelle génération
+
+- Album familial selon le niveau de diffusion autorisé.
+- Invitations aux événements.
+- Résumé hebdomadaire.
+- Envoi de cartes, messages vocaux ou petites vidéos.
+- Gestion claire des consentements et préférences de communication.
+
+Ne pas intégrer directement de données médicales sans architecture et hébergement adaptés.
+
+============================================================
+ORDRE DE TRAVAIL CONSEILLÉ
+============================================================
+
+1. Déployer les optimisations déjà réalisées.
+2. Mesurer les performances réelles après déploiement.
+3. Vérifier précisément les autorisations de droit à l'image.
+4. Corriger les éventuels problèmes de cadrage ou de performance détectés.
+5. Alléger encore le JavaScript et les services chargés globalement.
+6. Compléter l'audit RGAA et les documents d'accessibilité.
+7. Créer « Aujourd'hui à Crécy ».
+8. Créer « Préparer mon entrée ».
+9. Développer « Vous avez dit, nous avons fait ».
+10. Étudier « La Place du village » et « Mémoire vivante de Crécy ».
+
+============================================================
+VALIDATIONS À DEMANDER AVANT DE CONTINUER
+============================================================
+
+- Validation d'une éventuelle nouvelle organisation du menu.
+- Choix de la première nouvelle rubrique.
+- Choix des personnes autorisées à mettre à jour les contenus quotidiens.
+- Validation des informations qui peuvent être rendues publiques.
+- Vérification juridique du modèle de droit à l'image.
+- Validation d'un éventuel espace familles réellement privé.
+
