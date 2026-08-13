@@ -9,7 +9,7 @@ import SplashScreen from "@/components/ui/SplashScreen";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
-import ChatBot from "@/components/ui/ChatBot";
+import ChatBot from "@/components/ui/ChatBotWrapper";
 import PerformanceMotionProvider from "@/components/providers/PerformanceMotionProvider";
 
 const playfair = Playfair_Display({
@@ -60,7 +60,7 @@ export default function RootLayout({
       <head>
         <Script
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
         />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
