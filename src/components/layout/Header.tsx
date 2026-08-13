@@ -111,78 +111,95 @@ export default function Header() {
                         </motion.div>
                     </Link>
 
-                    {/* Desktop Navigation - Modern pill style */}
+                    {/* Desktop Navigation - Modern dropdown style */}
                     <div className="hidden lg:flex items-center gap-0.5 xl:gap-1">
-                        {NAV_LINKS.map((link) => {
-                            const isActive = isActiveLink(link.href);
+                        {NAV_LINKS.map((item) => {
+                            const isActive = item.href ? isActiveLink(item.href) : item.subLinks?.some(sub => isActiveLink(sub.href));
                             return (
-                                <Link key={link.href} href={link.href} className="relative group">
-                                    <motion.div
-                                        className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
-                                            ? "text-white"
-                                            : "text-charcoal-700 hover:text-white"
-                                            }`}
-                                        whileHover={{ y: -2 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        {/* Hover/Active background - pill style with gradient */}
-                                        <span
-                                            className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
-                                                ? ""
-                                                : "opacity-0 group-hover:opacity-100"
-                                                }`}
-                                            style={{
-                                                background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)'
-                                            }}
-                                        />
+                                <div key={item.label} className="relative group">
+                                    {item.href ? (
+                                        <Link href={item.href} className="relative group">
+                                            <motion.div
+                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
+                                                    ? "text-white"
+                                                    : "text-charcoal-700 hover:text-white"
+                                                    }`}
+                                                whileHover={{ y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <span
+                                                    className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
+                                                        ? ""
+                                                        : "opacity-0 group-hover:opacity-100"
+                                                        }`}
+                                                    style={{
+                                                        background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)'
+                                                    }}
+                                                />
+                                                <span className="relative z-10 whitespace-nowrap">
+                                                    {item.label}
+                                                </span>
+                                                {isActive && (
+                                                    <motion.span
+                                                        className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
+                                                        initial={{ scale: 0 }}
+                                                        animate={{ scale: 1 }}
+                                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                                    />
+                                                )}
+                                            </motion.div>
+                                        </Link>
+                                    ) : (
+                                        <div className="relative group/btn cursor-default py-2">
+                                            <motion.div
+                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
+                                                    ? "text-white"
+                                                    : "text-charcoal-700 hover:text-white"
+                                                    }`}
+                                                whileHover={{ y: -2 }}
+                                            >
+                                                <span
+                                                    className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
+                                                        ? ""
+                                                        : "opacity-0 group-hover:opacity-100"
+                                                        }`}
+                                                    style={{
+                                                        background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)'
+                                                    }}
+                                                />
+                                                <span className="relative z-10 whitespace-nowrap flex items-center gap-1">
+                                                    {item.label}
+                                                    <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </span>
+                                                {isActive && (
+                                                    <motion.span
+                                                        className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
+                                                        initial={{ scale: 0 }}
+                                                        animate={{ scale: 1 }}
+                                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                                    />
+                                                )}
+                                            </motion.div>
 
-                                        {/* Link text */}
-                                        <span className="relative z-10 whitespace-nowrap">
-                                            {link.label}
-                                        </span>
-
-                                        {/* Active indicator dot */}
-                                        {isActive && (
-                                            <motion.span
-                                                className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-terracotta-500 rounded-full"
-                                                initial={{ scale: 0 }}
-                                                animate={{ scale: 1 }}
-                                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                            />
-                                        )}
-                                    </motion.div>
-                                </Link>
+                                            {/* Dropdown Menu */}
+                                            {item.subLinks && (
+                                                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 z-50 min-w-[220px]">
+                                                    <div className="bg-white/98 backdrop-blur-md rounded-xl shadow-xl border border-cream-100 overflow-hidden py-2 flex flex-col">
+                                                        {item.subLinks.map(sub => (
+                                                            <Link key={sub.href} href={sub.href} className={`px-4 py-2.5 text-[13px] xl:text-sm transition-colors hover:bg-cream-50 ${isActiveLink(sub.href) ? 'text-terracotta-600 bg-cream-50 font-bold' : 'text-charcoal-700'}`}>
+                                                                {sub.label}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             );
                         })}
-
-                        {/* CTA Button - Enhanced with gradient and animation */}
-                        <Link href="/contact" className="ml-1 xl:ml-3">
-                            <motion.button
-                                whileHover={{
-                                    scale: 1.05,
-                                    boxShadow: '0 8px 30px rgba(200, 0, 64, 0.35)'
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                                className="relative overflow-hidden px-4 py-1.5 xl:px-5 xl:py-2 rounded-full text-[12px] xl:text-[13px] font-semibold text-white shadow-lg transition-all duration-300"
-                                style={{
-                                    background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)',
-                                }}
-                            >
-                                {/* Animated shine effect */}
-                                <motion.span
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
-                                    initial={{ x: "-100%" }}
-                                    animate={{ x: "200%" }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        repeatDelay: 3,
-                                        ease: "easeInOut"
-                                    }}
-                                />
-                                <span className="relative z-10 whitespace-nowrap">Nous rencontrer</span>
-                            </motion.button>
-                        </Link>
 
                         {/* Admin Link - Discreet */}
                         <Link 
@@ -234,7 +251,7 @@ export default function Header() {
                 </nav>
             </div>
 
-            {/* Mobile Menu - Enhanced */}
+            {/* Mobile Menu - Accordion style */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
@@ -244,29 +261,50 @@ export default function Header() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="lg:hidden absolute top-full left-0 right-0 bg-cream-50/98 dark:bg-charcoal-900/98 backdrop-blur-xl shadow-2xl border-t border-cream-200/50 dark:border-charcoal-700/50"
                     >
-                        <div className="container-custom py-6 flex flex-col gap-2">
-                            {NAV_LINKS.map((link, index) => {
-                                const isActive = isActiveLink(link.href);
+                        <div className="container-custom py-6 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
+                            {NAV_LINKS.map((item, index) => {
+                                const isActive = item.href ? isActiveLink(item.href) : item.subLinks?.some(sub => isActiveLink(sub.href));
                                 return (
                                     <motion.div
-                                        key={link.href}
+                                        key={item.label}
                                         initial={{ opacity: 0, x: -30 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.05, duration: 0.3 }}
+                                        className="flex flex-col"
                                     >
-                                        <Link
-                                            href={link.href}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`flex items-center gap-3 py-3.5 px-5 text-lg font-medium rounded-xl transition-all duration-300 ${isActive
-                                                ? "bg-terracotta-100 dark:bg-terracotta-900/30 text-terracotta-600 dark:text-terracotta-400"
-                                                : "text-charcoal-700 dark:text-cream-100 hover:bg-cream-100 dark:hover:bg-charcoal-800"
-                                                }`}
-                                        >
-                                            {isActive && (
-                                                <span className="w-2 h-2 bg-terracotta-500 rounded-full" />
-                                            )}
-                                            {link.label}
-                                        </Link>
+                                        {item.href ? (
+                                            <Link
+                                                href={item.href}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className={`flex items-center gap-3 py-3.5 px-5 text-lg font-medium rounded-xl transition-all duration-300 ${isActive
+                                                    ? "bg-terracotta-100 dark:bg-terracotta-900/30 text-terracotta-600 dark:text-terracotta-400"
+                                                    : "text-charcoal-700 dark:text-cream-100 hover:bg-cream-100 dark:hover:bg-charcoal-800"
+                                                    }`}
+                                            >
+                                                {isActive && (
+                                                    <span className="w-2 h-2 bg-terracotta-500 rounded-full" />
+                                                )}
+                                                {item.label}
+                                            </Link>
+                                        ) : (
+                                            <div className="flex flex-col">
+                                                <div className={`font-serif text-xl font-bold py-3 text-charcoal-900 dark:text-cream-50 border-b border-cream-200/50 dark:border-charcoal-700/50 ${index > 0 ? "mt-4" : ""}`}>
+                                                    {item.label}
+                                                </div>
+                                                <div className="flex flex-col gap-1 mt-2 pl-2 border-l-2 border-terracotta-100 dark:border-terracotta-900/50">
+                                                    {item.subLinks?.map((sub) => (
+                                                        <Link
+                                                            key={sub.href}
+                                                            href={sub.href}
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                            className={`py-2 px-3 text-base rounded-lg transition-colors ${isActiveLink(sub.href) ? "bg-terracotta-50 dark:bg-terracotta-900/20 text-terracotta-600 dark:text-terracotta-400 font-medium" : "text-charcoal-700 dark:text-cream-300 hover:bg-cream-100 dark:hover:bg-charcoal-800"}`}
+                                                        >
+                                                            {sub.label}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </motion.div>
                                 );
                             })}
@@ -277,17 +315,7 @@ export default function Header() {
                                 transition={{ delay: (NAV_LINKS.length) * 0.05 + 0.1, duration: 0.3 }}
                                 className="pt-4 mt-2 border-t border-cream-200/50 dark:border-charcoal-700/50"
                             >
-                                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <button
-                                        className="w-full py-4 rounded-xl text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
-                                        style={{
-                                            background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)',
-                                        }}
-                                    >
-                                        Nous rencontrer
-                                    </button>
-                                </Link>
-                                <div className="mt-4 flex justify-center">
+                                <div className="mt-2 flex justify-center">
                                     <Link 
                                         href="/admin/index.html" 
                                         target="_blank" 

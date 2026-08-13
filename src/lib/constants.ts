@@ -78,19 +78,49 @@ export const EHPAD_INFO = {
 // NOTE: SERVICES data has been consolidated into src/lib/services-data.ts
 // Use SERVICES_EXTENDED from services-data.ts for service information
 
-// Navigation
-export const NAV_LINKS = [
-    { href: "/", label: "Accueil" },
-    { href: "/histoire", label: "Notre Ville" },
-    { href: "/equipe", label: "Notre Équipe" },
-    { href: "/galerie", label: "Galerie Photos" },
-    { href: "/blog", label: "Blog" },
-    { href: "/animation", label: "Animation & Vie Sociale" },
-    { href: "/admissions", label: "Admissions" },
-    { href: "/hebergement", label: "Tarifs" },
-    { href: "/recrutement", label: "Recrutement" },
-    { href: "/livret-accueil", label: "Livret d'Accueil" },
-    { href: "/visite", label: "Visite Virtuelle" },
+export interface NavLink {
+    label: string;
+    href?: string;
+    subLinks?: { label: string; href: string }[];
+}
+
+export const NAV_LINKS: NavLink[] = [
+    {
+        label: "Découvrir",
+        subLinks: [
+            { label: "Visite Virtuelle", href: "/visite" },
+            { label: "Notre Ville", href: "/histoire" },
+            { label: "Notre Équipe", href: "/equipe" },
+        ]
+    },
+    {
+        label: "Vivre à Crécy",
+        subLinks: [
+            { label: "Animation & Vie Sociale", href: "/animation" },
+            { label: "Galerie Photos", href: "/galerie" },
+            { label: "Livret d'Accueil", href: "/livret-accueil" },
+        ]
+    },
+    {
+        label: "Admissions",
+        subLinks: [
+            { label: "Parcours d'admission", href: "/admissions" },
+            { label: "Tarifs et aides", href: "/hebergement" },
+        ]
+    },
+    {
+        label: "Actualités",
+        subLinks: [
+            { label: "Blog", href: "/blog" },
+        ]
+    },
+    {
+        label: "Contact",
+        subLinks: [
+            { label: "Accès & Contact", href: "/contact" },
+            { label: "Recrutement", href: "/recrutement" },
+        ]
+    },
 ];
 
 // Valeurs de l'établissement
