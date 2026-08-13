@@ -94,10 +94,11 @@ export const NAV_LINKS: NavLink[] = [
         ]
     },
     {
-        label: "Vivre à Crécy",
+        label: "Vie à l'EHPAD",
         subLinks: [
             { label: "Animation & Vie Sociale", href: "/animation" },
             { label: "Galerie Photos", href: "/galerie" },
+            { label: "Le Blog", href: "/blog" },
         ]
     },
     {
@@ -105,12 +106,6 @@ export const NAV_LINKS: NavLink[] = [
         subLinks: [
             { label: "Préparer mon entrée", href: "/admissions" },
             { label: "Tarifs et aides", href: "/hebergement" },
-        ]
-    },
-    {
-        label: "Actualités",
-        subLinks: [
-            { label: "Blog", href: "/blog" },
         ]
     },
     {
