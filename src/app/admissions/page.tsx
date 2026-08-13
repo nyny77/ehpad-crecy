@@ -2,22 +2,38 @@ import { Metadata } from "next";
 import { MoveRight } from "lucide-react";
 import AdmissionStepsSection from "@/components/admissions/AdmissionStepsSection";
 import FinancialAidSection from "@/components/admissions/FinancialAidSection";
+import AdmissionChecklists from "@/components/admissions/AdmissionChecklists";
+import AdmissionFAQ from "@/components/admissions/AdmissionFAQ";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
-    title: "Admissions | EHPAD de Crécy-la-Chapelle",
-    description: "Tout savoir sur les démarches d'admission via ViaTrajectoire, les tarifs et les aides financières (APA, APL, ASH).",
+    title: "Préparer mon entrée | EHPAD de Crécy-la-Chapelle",
+    description: "Le guide complet pas-à-pas pour préparer votre admission : aides financières, démarches ViaTrajectoire, documents à fournir et trousseau.",
 };
 
 export default function AdmissionsPage() {
     return (
         <main className="pt-32 md:pt-40 bg-cream-100 min-h-screen">
             {/* Hero Section */}
-            
-            {/* Animated Steps Section */}
+            <section className="container-custom mb-16 text-center">
+                <span className="inline-block py-1.5 px-5 rounded-full bg-forest-100 text-forest-700 font-bold tracking-wider uppercase text-sm mb-4 border border-forest-200">
+                    Guide complet
+                </span>
+                <h1 className="font-serif text-5xl md:text-7xl text-charcoal-900 font-bold mb-6">
+                    Préparer mon entrée
+                </h1>
+                <p className="text-charcoal-600 max-w-2xl mx-auto text-xl leading-relaxed">
+                    De la simulation financière à la préparation de la valise, découvrez le parcours d'admission pas-à-pas pour une entrée en toute sérénité.
+                </p>
+            </section>
+
+            {/* Etape 1: S'informer (Tarifs et aides) */}
+            <FinancialAidSection />
+
+            {/* Etape 2 et 3: Parcours ViaTrajectoire et Visite */}
             <AdmissionStepsSection />
 
-            {/* Downloads Section */}
+            {/* Telechargement direct ViaTrajectoire */}
             <section className="py-16 bg-cream-100">
                 <div className="container-custom">
                     <div className="bg-gradient-to-r from-terracotta-600 to-terracotta-400 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
@@ -50,16 +66,17 @@ export default function AdmissionsPage() {
                                         L'inscription se fait désormais prioritairement en ligne pour simplifier vos démarches.
                                     </p>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Animated Financial Aid Section */}
-            <FinancialAidSection />
+            {/* Etape 4: Checklists et Organisation */}
+            <AdmissionChecklists />
+
+            {/* FAQ */}
+            <AdmissionFAQ />
         </main >
     );
 }

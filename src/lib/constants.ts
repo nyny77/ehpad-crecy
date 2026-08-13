@@ -98,13 +98,12 @@ export const NAV_LINKS: NavLink[] = [
         subLinks: [
             { label: "Animation & Vie Sociale", href: "/animation" },
             { label: "Galerie Photos", href: "/galerie" },
-            { label: "Livret d'Accueil", href: "/livret-accueil" },
         ]
     },
     {
         label: "Admissions",
         subLinks: [
-            { label: "Parcours d'admission", href: "/admissions" },
+            { label: "Préparer mon entrée", href: "/admissions" },
             { label: "Tarifs et aides", href: "/hebergement" },
         ]
     },
@@ -119,6 +118,7 @@ export const NAV_LINKS: NavLink[] = [
         subLinks: [
             { label: "Accès & Contact", href: "/contact" },
             { label: "Recrutement", href: "/recrutement" },
+            { label: "Livret d'Accueil (Agents)", href: "/livret-accueil" },
         ]
     },
 ];
