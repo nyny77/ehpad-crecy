@@ -10,6 +10,7 @@ import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
 import ChatBot from "@/components/ui/ChatBot";
+import PerformanceMotionProvider from "@/components/providers/PerformanceMotionProvider";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -63,19 +64,21 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
-        <SplashScreen />
-        <NetlifyIdentityRedirect />
-        <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
-          <ErrorBoundary>
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-            <AccessibilityToggle />
-            <ChatBot />
-          </ErrorBoundary>
-        </div>
+        <PerformanceMotionProvider>
+          <SplashScreen />
+          <NetlifyIdentityRedirect />
+          <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
+            <ErrorBoundary>
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <AccessibilityToggle />
+              <ChatBot />
+            </ErrorBoundary>
+          </div>
+        </PerformanceMotionProvider>
 		<Script
   data-goatcounter="https://ehpadcrecy.goatcounter.com/count"
   async

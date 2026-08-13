@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import WaveSeparator from "@/components/ui/WaveSeparator";

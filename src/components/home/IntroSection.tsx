@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Heart, Sparkles, Eye, Users } from "lucide-react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { motion, useInView, useTransform, useTime } from "framer-motion";
 import { VALUES } from "@/lib/constants";
 import WaveSeparator from "@/components/ui/WaveSeparator";

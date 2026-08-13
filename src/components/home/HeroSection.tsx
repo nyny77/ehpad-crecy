@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { motion, useScroll, useTransform, useTime } from "framer-motion";
 import { EHPAD_INFO } from "@/lib/constants";
 import WaveSeparator from "@/components/ui/WaveSeparator";

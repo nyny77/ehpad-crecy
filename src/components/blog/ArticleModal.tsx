@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
+import { getOptimizedImageSrc } from "@/lib/optimized-image";
 
 interface ArticleModalProps {
     article: Article | null;
@@ -43,7 +44,7 @@ export default function ArticleModal({ article, onClose }: ArticleModalProps) {
                         <div className="relative bg-gray-100 flex-shrink-0 min-h-[200px] flex items-center justify-center">
                             {article.image ? (
                                 <img
-                                    src={article.image}
+                                    src={getOptimizedImageSrc(article.image)}
                                     alt={article.title}
                                     className="w-full h-auto max-h-[50vh] object-contain mx-auto"
                                 />

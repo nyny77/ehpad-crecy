@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Sun, Coffee, Utensils, Moon, Music, BookOpen } from "lucide-react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { useRef } from "react";
 
 const EVENTS = [

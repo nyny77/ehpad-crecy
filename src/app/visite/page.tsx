@@ -5,6 +5,7 @@ import Section from "@/components/layout/Section";
 import PanoramaViewer from "@/components/virtual-tour/PanoramaViewer";
 import { useState, useEffect } from "react";
 import visiteData from "@/lib/data/visite-gallery.json";
+import { getOptimizedImageSrc } from "@/lib/optimized-image";
 
 export default function VisitePage() {
     const photos = visiteData.photos;
@@ -61,7 +62,7 @@ export default function VisitePage() {
                         {/* Visite du Jardin */}
                         <div className="h-[500px] w-full bg-cream-100 rounded-2xl border-4 border-white shadow-xl overflow-hidden mb-16">
                             <PanoramaViewer
-                                imagePath="/images/jardin-360.jpg"
+                                imagePath={getOptimizedImageSrc("/images/jardin-360.jpg")}
                                 title="Le petit jardin en hiver"
                                 initialYaw={0}
                             />
@@ -78,7 +79,7 @@ export default function VisitePage() {
                                         onClick={() => setSelectedPhotoIndex(index)}
                                     >
                                         <img
-                                            src={img.src}
+                                            src={getOptimizedImageSrc(img.src)}
                                             alt={img.alt || img.title}
                                             className="w-full h-full object-cover"
                                             loading="lazy"
@@ -122,7 +123,7 @@ export default function VisitePage() {
 
                     <div className="relative max-w-6xl w-full max-h-[90vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
                         <img 
-                            src={photos[selectedPhotoIndex].src} 
+                            src={getOptimizedImageSrc(photos[selectedPhotoIndex].src)}
                             alt={photos[selectedPhotoIndex].alt || photos[selectedPhotoIndex].title}
                             className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
                         />

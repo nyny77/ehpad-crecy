@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import Link from "next/link";
 import PricingSection from "@/components/admissions/PricingSection";
 import TiltCard from "@/components/ui/TiltCard";

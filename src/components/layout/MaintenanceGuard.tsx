@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { initNetlifyIdentity, onAuthChange, openLoginWidget, logout, isAuthenticated, isAuthorized, NetlifyUser, closeWidget } from "@/lib/netlifyAuth";
 import { EHPAD_INFO } from "@/lib/constants";
 

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { motion } from "framer-motion";
 
 interface ServiceCardProps {

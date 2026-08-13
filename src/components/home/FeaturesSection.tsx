@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { getOptimizedImageSrc } from "@/lib/optimized-image";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function FeaturesSection() {
@@ -74,9 +74,8 @@ export default function FeaturesSection() {
                         <div className="absolute inset-0 bg-terracotta-100 rounded-[3rem] rotate-3 scale-95 opacity-50 blur-xl translate-y-4" />
 
                         <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/50">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/images/Image1.png"
+                                src={getOptimizedImageSrc("/images/Image1.png")}
                                 alt="Façade de l'EHPAD de Crécy"
                                 className="w-full h-auto hover:scale-105 transition-transform duration-700 block"
                             />

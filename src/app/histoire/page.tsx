@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const LOCATIONS = [
@@ -258,8 +258,8 @@ export default function HistoirePage() {
                                         className="w-full h-full object-cover"
                                         controls
                                         playsInline
-                                        preload="metadata"
-                                        poster="/images/history/canal.jpg"
+                                        preload="none"
+                                        poster="/images/optimized/history/canal.webp"
                                     >
                                         Votre navigateur ne supporte pas la balise vidéo.
                                     </video>

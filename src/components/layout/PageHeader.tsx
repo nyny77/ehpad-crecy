@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import Image from "@/components/ui/OptimizedImage";
 import { motion, useScroll, useTransform, useTime, Variants } from "framer-motion";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
@@ -34,14 +34,13 @@ function AnimatedTitle({ children }: { children: React.ReactNode }) {
     const text = typeof children === 'string' ? children : String(children);
     const words = text.split(' ');
 
-    let letterIndex = 0;
-
     return (
         <span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
             {words.map((word, wordIdx) => {
                 const letters = word.split('');
-                const wordStart = letterIndex;
-                letterIndex += letters.length + 1; // +1 for the space
+                const wordStart = words
+                    .slice(0, wordIdx)
+                    .reduce((total, previousWord) => total + previousWord.length + 1, 0);
 
                 return (
                     <span key={wordIdx} className="whitespace-nowrap inline-flex">

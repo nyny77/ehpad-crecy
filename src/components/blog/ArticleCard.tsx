@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
+import { getOptimizedImageSrc } from "@/lib/optimized-image";
 
 interface ArticleCardProps {
     article: Article;
@@ -77,7 +78,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                     <div className="relative h-48 bg-gradient-to-br from-terracotta-100 to-forest-100 overflow-hidden shrink-0">
                         {article.image ? (
                             <img
-                                src={article.image}
+                                src={getOptimizedImageSrc(article.image)}
                                 alt={article.title}
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />

@@ -55,10 +55,8 @@ export default function ChatBot() {
         // Analyze logic
         setTimeout(() => {
             const lowerText = userText.toLowerCase();
-            let matchedRule: ChatRule | undefined;
-
             // Simple keyword matching
-            matchedRule = CHAT_RULES.find(rule =>
+            const matchedRule: ChatRule | undefined = CHAT_RULES.find(rule =>
                 rule.keywords.some(keyword => lowerText.includes(keyword))
             );
 
