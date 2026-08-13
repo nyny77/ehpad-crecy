@@ -11,7 +11,7 @@ export default function EquipePage() {
     return (
         <>
             {/* Grille Bento des services */}
-            <section ref={ref} className="pt-32 md:pt-40 section-padding bg-cream-100 texture-paper relative overflow-hidden">
+            <section ref={ref} className="section-padding !pt-40 md:!pt-48 bg-cream-100 texture-paper relative overflow-hidden">
                 {/* Formes organiques d'arrière-plan */}
                 <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-terracotta-100/40 rounded-full blur-3xl -translate-y-1/3 -translate-x-1/4 pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-forest-100/30 rounded-full blur-3xl translate-y-1/3 translate-x-1/4 pointer-events-none" />

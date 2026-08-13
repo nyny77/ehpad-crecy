@@ -18,17 +18,10 @@ Creating turbopack project {
   dir: 'C:\\Users\\atoda\\.gemini\\antigravity\\scratch\\ehpad-crecy',
   testMode: true
 }
-✓ Ready in 8.8s
-○ Compiling / ...
- GET / 200 in 5.4s (compile: 5.0s, render: 448ms)
- GET / 200 in 258ms (compile: 16ms, render: 242ms)
- GET / 200 in 202ms (compile: 17ms, render: 185ms)
- GET /equipe 200 in 196ms (compile: 160ms, render: 37ms)
-✓ Compiled in 212ms
- GET /equipe 200 in 499ms (compile: 137ms, render: 362ms)
- GET /equipe/technique 200 in 1019ms (compile: 923ms, generate-params: 791ms, render: 96ms)
- GET /equipe/technique 200 in 52ms (compile: 15ms, generate-params: 6ms, render: 37ms)
- GET / 200 in 373ms (compile: 15ms, render: 357ms)
- GET /equipe 200 in 67ms (compile: 15ms, render: 52ms)
-✓ Compiled in 206ms
-✓ Compiled in 836ms
+✓ Ready in 8.7s
+○ Compiling /equipe ...
+ GET /equipe 200 in 6.0s (compile: 5.6s, render: 471ms)
+ GET / 200 in 567ms (compile: 410ms, render: 157ms)
+ GET /equipe 200 in 50ms (compile: 17ms, render: 33ms)
+ GET /histoire 200 in 163ms (compile: 134ms, render: 28ms)
+ GET /equipe 200 in 34ms (compile: 10ms, render: 24ms)
