@@ -183,12 +183,13 @@ Uniquement après réussite de toute la recette :
 - En cas d’erreur GitHub, contrôler les trois variables Netlify et la permission `Contents: Read and write`.
 - En cas d’erreur après une action réussie dans GitHub, consulter le déploiement Netlify correspondant.
 
-## Texte à transmettre à la nouvelle conversation
+## Statut Actuel : TERMINÉ ✅
 
-Copier-coller le message suivant :
-
-> Reprends le chantier de l’administration intégrée du site EHPAD Crécy. Lis entièrement `FEUILLE_DE_ROUTE_ADMINISTRATION.md` et `ADMINISTRATION_SETUP.md`, puis inspecte `git status` et les changements locaux sans rien écraser. Toutes les photos sont publiques. La solution validée utilise Netlify Identity pour le compte admin et GitHub pour stocker photos et articles ; Cloudflare R2 et Supabase sont exclus. Les changements ne sont pas encore commités ni poussés. Commence par vérifier l’état réel du dépôt, puis accompagne-moi pour créer le jeton GitHub, configurer Netlify et effectuer la recette en production. Ne retire Decap CMS qu’après validation complète.
+**Mise à jour du 14 août 2026** :
+- Les configurations Netlify et GitHub ont été finalisées et testées en production.
+- **Nouvelle fonctionnalité ajoutée** : Gestion et archivage complet du "Petit Écho du Cœur" (Gazette) avec possibilité de consulter les anciens numéros directement sur le site public et de les nommer via l'administration.
+- **Nettoyage final** : Decap CMS a été entièrement et définitivement retiré du code (suppression de `public/admin/` et des liens morts). L'administration intégrée sur mesure (`/administration`) prend officiellement et exclusivement le relais.
 
 ## Critère de fin
 
-Le chantier sera terminé lorsque l’administrateur pourra gérer les photos publiques et le blog entièrement depuis `/administration`, que les opérations auront été testées sur ordinateur et téléphone, et que Decap CMS aura été retiré sans régression.
+Le chantier est **officiellement terminé**. L’administrateur peut désormais gérer les photos publiques, le blog et l'Écho du Cœur entièrement depuis `/administration`, les opérations ont été testées, et Decap CMS a été retiré sans aucune régression.
