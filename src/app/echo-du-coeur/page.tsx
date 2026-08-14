@@ -23,7 +23,7 @@ export default function EchoDuCoeurPage() {
                 >
                     {selectedGazette ? (
                         <iframe
-                            src={`${selectedGazette.file}?v=${Date.now()}`}
+                            src={`${selectedGazette.file}#pagemode=bookmarks`}
                             className="w-full h-full rounded-2xl border-none bg-white"
                             title="Le Petit Echo du Coeur PDF"
                         />
