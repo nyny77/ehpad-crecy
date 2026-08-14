@@ -30,6 +30,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     const [pending, setPending] = useState<PendingPhoto[]>([]);
     const [uploading, setUploading] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [processingId, setProcessingId] = useState<string | null>(null);
     const [editValues, setEditValues] = useState({ title: "", alt: "" });
     const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
     const activeCount = useMemo(() => photos.filter((photo) => !photo.deletedAt).length, [photos]);
@@ -93,6 +94,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     const photoAction = async (photo: GalleryImage, action: "trash" | "restore" | "permanent") => {
         const prompt = action === "permanent" ? "Supprimer définitivement cette photo ? Cette action est irréversible." : action === "trash" ? "Placer cette photo dans la corbeille ?" : null;
         if (prompt && !window.confirm(prompt)) return;
+        setProcessingId(photo.id);
         try {
             await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ id: photo.id, action }) });
             if (action === "permanent") setPhotos((current) => current.filter((item) => item.id !== photo.id));
@@ -102,16 +104,21 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
             });
         } catch (error) {
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Action impossible" });
+        } finally {
+            setProcessingId(null);
         }
     };
 
     const saveEdit = async (photo: GalleryImage) => {
+        setProcessingId(photo.id);
         try {
             await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "update", id: photo.id, ...editValues }) });
             setPhotos((current) => current.map((item) => item.id === photo.id ? { ...item, ...editValues } : item));
             setEditingId(null);
         } catch (error) {
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Modification impossible" });
+        } finally {
+            setProcessingId(null);
         }
     };
 
@@ -120,6 +127,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
         const index = active.findIndex((item) => item.id === photo.id);
         const target = index + direction;
         if (index < 0 || target < 0 || target >= active.length) return;
+        setProcessingId(photo.id);
         [active[index], active[target]] = [active[target], active[index]];
         const previous = photos;
         setPhotos([...active, ...photos.filter((item) => item.deletedAt)]);
@@ -128,6 +136,8 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
         } catch (error) {
             setPhotos(previous);
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Réorganisation impossible" });
+        } finally {
+            setProcessingId(null);
         }
     };
 
@@ -172,8 +182,8 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                                     <div className="flex gap-2"><button onClick={() => saveEdit(photo)} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700"><Save size={16} /> Enregistrer</button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100 text-charcoal-600"><X size={17} /></button></div>
                                 </div> : <>
                                     <h3 className="font-semibold text-charcoal-900">{photo.title}</h3>
-                                    {photo.deletedAt ? <div className="flex gap-2 mt-4"><button onClick={() => photoAction(photo, "restore")} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700"><RotateCcw size={16} /> Restaurer</button><button onClick={() => photoAction(photo, "permanent")} className="p-2 rounded-xl bg-red-50 text-red-700" title="Suppression définitive"><Trash2 size={17} /></button></div> :
-                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={activeIndex === 0} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter"><ArrowUp size={16} /></button><button disabled={activeIndex === activeCount - 1} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre"><ArrowDown size={16} /></button><button onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "", alt: photo.alt }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700"><Pencil size={16} /> Modifier</button><button onClick={() => photoAction(photo, "trash")} className="p-2 rounded-xl bg-red-50 text-red-700" title="Mettre à la corbeille"><Trash2 size={16} /></button></div>}
+                                    {photo.deletedAt ? <div className="flex gap-2 mt-4"><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "restore")} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700 disabled:opacity-50"><RotateCcw size={16} /> Restaurer</button><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "permanent")} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Suppression définitive"><Trash2 size={17} /></button></div> :
+                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={activeIndex === 0 || processingId === photo.id} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowUp size={16} />}</button><button disabled={activeIndex === activeCount - 1 || processingId === photo.id} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowDown size={16} />}</button><button disabled={processingId === photo.id} onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "", alt: photo.alt }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-50"><Pencil size={16} /> Modifier</button><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "trash")} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Mettre à la corbeille">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />}</button></div>}
                                 </>}
                             </div>
                         </article>;
