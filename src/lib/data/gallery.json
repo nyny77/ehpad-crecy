@@ -49,14 +49,6 @@
       "thumbSrc": "/images/thumbnails/1000003570.jpg"
     },
     {
-      "id": "private-6",
-      "src": "/images/private/1000003626.jpg",
-      "title": "Photo 7",
-      "category": "event",
-      "alt": "Photo privée 7",
-      "thumbSrc": "/images/thumbnails/1000003626.jpg"
-    },
-    {
       "id": "private-7",
       "src": "/images/private/1000003651.jpg",
       "title": "Photo 8",
@@ -327,14 +319,6 @@
       "category": "event",
       "alt": "Photo privée 42",
       "thumbSrc": "/images/thumbnails/20250724_115506.jpg"
-    },
-    {
-      "id": "private-42",
-      "src": "/images/private/20250801_113135.jpg",
-      "title": "Photo 43",
-      "category": "event",
-      "alt": "Photo privée 43",
-      "thumbSrc": "/images/thumbnails/20250801_113135.jpg"
     },
     {
       "id": "private-43",
