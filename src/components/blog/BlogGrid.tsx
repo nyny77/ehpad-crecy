@@ -30,9 +30,7 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
 
                 {isAdminUser && (
                     <Link
-                        href="/admin/#/collections/blog/new"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/administration#blog"
                         className="flex items-center gap-2 px-6 py-3 !text-white rounded-full shadow-lg hover:shadow-xl transition-all font-bold"
                         style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
                     >
@@ -71,9 +69,7 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                     <p className="text-charcoal-600">Aucun article pour le moment</p>
                     {isAdminUser && (
                         <Link
-                            href="/admin/#/collections/blog/new"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="/administration#blog"
                             className="mt-4 text-terracotta-500 font-medium hover:underline inline-block"
                         >
                             Créer le premier article

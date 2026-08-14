@@ -203,9 +203,7 @@ export default function Header() {
 
                         {/* Admin Link - Discreet */}
                         <Link 
-                            href="/admin/index.html" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                            href="/administration"
                             className="ml-1 text-charcoal-400 hover:text-terracotta-600 transition-colors p-1.5 rounded-full hover:bg-cream-100 dark:hover:bg-charcoal-800" 
                             title="Administration"
                         >
@@ -317,9 +315,7 @@ export default function Header() {
                             >
                                 <div className="mt-2 flex justify-center">
                                     <Link 
-                                        href="/admin/index.html" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
+                                        href="/administration"
                                         className="text-sm text-charcoal-400 hover:text-terracotta-600 flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-cream-100" 
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >

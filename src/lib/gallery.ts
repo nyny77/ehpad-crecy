@@ -7,6 +7,7 @@ export interface GalleryImage {
     alt: string;
     category: string; // Type enlarged for CMS flexibility
     title?: string;
+    deletedAt?: string;
 }
 
 // Ensure type safety when importing JSON

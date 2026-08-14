@@ -41,7 +41,7 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
 }
 
 export default function GaleriePage() {
-    const images: GalleryImage[] = [...INITIAL_GALLERY].reverse();
+    const images: GalleryImage[] = [...INITIAL_GALLERY].filter((photo) => !photo.deletedAt).reverse();
     const [adminMode, setAdminMode] = useState(false);
     const [visibleCount, setVisibleCount] = useState(24);
 

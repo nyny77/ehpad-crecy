@@ -12,9 +12,10 @@ export interface BlogPost {
     image: string | null;
     excerpt: string;
     content: string;
+    draft?: boolean;
 }
 
-export function getAllPosts(): BlogPost[] {
+export function getAllPosts(options: { includeDrafts?: boolean } = {}): BlogPost[] {
     if (!fs.existsSync(postsDirectory)) {
         return [];
     }
@@ -40,8 +41,9 @@ export function getAllPosts(): BlogPost[] {
             image: matterResult.data.image || null,
             excerpt: matterResult.data.excerpt || '',
             content: matterResult.content,
+            draft: matterResult.data.draft === true,
         } as BlogPost;
-    });
+    }).filter((post) => options.includeDrafts || !post.draft);
 
     // Sort posts by date
     return allPostsData.sort((a, b) => {

@@ -81,9 +81,7 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
                                     {adminMode && (
                                         <>
                                             <a
-                                                href="/admin/#/collections/gazette"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                                href="/administration#blog"
                                                 className="flex items-center gap-2 px-3 py-2 bg-charcoal-800 !text-white font-medium rounded-full hover:bg-charcoal-700 transition-colors text-sm"
                                                 title="Modifier le Petit echo du coeur"
                                             >
