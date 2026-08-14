@@ -132,7 +132,7 @@ export default function BlogManager({ initialArticles }: { initialArticles: Blog
     };
 
     return (
-        <section className="grid xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] gap-8 items-start">
+        <section className="grid xl:grid-cols-[minmax(0,1.5fr)_minmax(400px,1fr)] gap-8 items-start">
             <form onSubmit={saveArticle} className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 md:p-8 space-y-5">
                 <div className="flex items-center justify-between gap-4">
                     <div>
@@ -197,7 +197,7 @@ export default function BlogManager({ initialArticles }: { initialArticles: Blog
                     <h2 className="font-serif text-2xl text-charcoal-900">Articles</h2>
                     <button onClick={() => setForm(emptyForm())} className="p-2 rounded-full bg-terracotta-50 text-terracotta-700" title="Nouvel article"><Plus size={19} /></button>
                 </div>
-                <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1">
+                <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-3">
                     {orderedArticles.map((article) => (
                         <article key={article.id} className={`rounded-2xl border p-4 ${form.id === article.id ? "border-terracotta-400 bg-terracotta-50" : "border-cream-200"}`}>
                             <div className="flex items-start justify-between gap-3">
