@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -26,8 +26,13 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#962d3a",
+};
+
 export const metadata: Metadata = {
   title: "EHPAD de Crécy | Bien plus qu'un EHPAD, un véritable lieu de vie",
+  manifest: "/manifest.json",
   description:
     "EHPAD public de Crécy-la-Chapelle (77) - 63 lits en Seine-et-Marne. Un lieu de vie chaleureux où bienveillance, professionnalisme et vie sociale s'unissent pour le bien-être de nos résidents.",
   keywords: [
@@ -47,6 +52,11 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     type: "website",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "EHPAD Crécy",
+  },
 };
 
 
@@ -62,6 +72,7 @@ export default function RootLayout({
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"
           strategy="lazyOnload"
         />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
         <PerformanceMotionProvider>
@@ -84,6 +95,23 @@ export default function RootLayout({
   async
   src="https://gc.zgo.at/count.js"
 />
+        <Script
+          id="register-sw"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful');
+                  }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                  });
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );

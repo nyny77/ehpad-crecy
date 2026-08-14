@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Hors-ligne - EHPAD Crécy</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #f6f3eb; /* cream-100 */
+            color: #3b3a39; /* charcoal-800 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 2rem;
+        }
+        h1 {
+            color: #962d3a; /* terracotta-500 */
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+        button {
+            background-color: #3b3a39;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #272625;
+        }
+    </style>
+</head>
+<body>
+    <img src="/icon-192x192.png" alt="EHPAD Crécy Logo" width="100" style="margin-bottom: 2rem;">
+    <h1>Vous êtes hors-ligne</h1>
+    <p>Il semblerait que vous n'ayez plus de connexion internet. Vérifiez votre réseau pour accéder à l'application.</p>
+    <button onclick="window.location.reload()">Réessayer</button>
+</body>
+</html>
