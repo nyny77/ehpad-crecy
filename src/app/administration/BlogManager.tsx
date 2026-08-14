@@ -142,6 +142,11 @@ export default function BlogManager({ initialArticles }: { initialArticles: Blog
                     {editing && <button type="button" onClick={() => setForm(emptyForm())} className="text-sm px-4 py-2 rounded-full bg-cream-100 text-charcoal-700">Nouveau</button>}
                 </div>
 
+                <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl flex gap-3 text-blue-800 text-sm">
+                    <span className="text-xl">ℹ️</span>
+                    <p><strong>Délai de mise à jour :</strong> L'ajout, la modification ou la suppression d'un article prend environ 2 à 3 minutes pour être visible publiquement sur le site, le temps que le serveur génère les pages.</p>
+                </div>
+
                 {message && <div className={`rounded-xl p-3 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
 
                 <label className="block text-sm font-semibold text-charcoal-700">Titre *

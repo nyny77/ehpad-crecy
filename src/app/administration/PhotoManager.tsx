@@ -177,7 +177,11 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
             )}
 
             <div>
-                <div className="flex items-center justify-between mb-4"><h2 className="font-serif text-3xl text-charcoal-900">Photothèque publique</h2><span className="text-sm text-charcoal-500">{photos.length} photo(s)</span></div>
+                <div className="flex items-center justify-between"><h2 className="font-serif text-3xl text-charcoal-900">Photothèque publique</h2><span className="text-sm text-charcoal-500">{photos.length} photo(s)</span></div>
+                <div className="mb-6 p-3 bg-blue-50 border border-blue-100 rounded-xl flex gap-3 text-blue-800 text-sm">
+                    <span className="text-xl">ℹ️</span>
+                    <p><strong>Délai de mise à jour :</strong> Toute modification (ajout, suppression, modification, réorganisation) prend environ 2 à 3 minutes pour être visible sur la galerie publique du site, le temps que le serveur génère les pages.</p>
+                </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {photos.map((photo, index) => {
                         const isSelected = selectedIds.has(photo.id);
