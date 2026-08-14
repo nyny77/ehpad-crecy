@@ -1,6 +1,6 @@
 import type { Handler } from "@netlify/functions";
 import { isAdminRequest, json } from "./_shared/admin-auth";
-import { commitChanges } from "./_shared/github";
+import { commitChanges, readRepositoryText } from "./_shared/github";
 
 const MAX_PDF_BYTES = 10 * 1024 * 1024; // 10MB max for PDF
 
@@ -26,15 +26,30 @@ export const handler: Handler = async (event, context) => {
     try {
         const body = JSON.parse(event.body || "{}");
         const file = decodeFile(body.fileBase64);
+        const title = body.title || "Nouvelle gazette";
         
         // Ensure name is clean and ends with .pdf
         const name = `${Date.now()}-${safeBaseName(String(body.fileName || "gazette"))}.pdf`;
         const publicPath = `/documents/${name}`;
         
+        let existingData = { gazettes: [] as any[] };
+        try {
+            const oldContent = await readRepositoryText("src/lib/data/gazette.json");
+            existingData = JSON.parse(oldContent);
+            if (!existingData.gazettes) {
+                existingData = { gazettes: (existingData as any).file ? [{ title: "Ancienne gazette", file: (existingData as any).file, date: (existingData as any).date }] : [] };
+            }
+        } catch (e) {
+            console.log("Could not read existing gazette.json, assuming new", e);
+        }
+        
         const newGazetteData = {
+            title,
             file: publicPath,
             date: new Date().toISOString()
         };
+
+        existingData.gazettes.unshift(newGazetteData);
 
         // We commit 2 files at once: the new PDF, and the updated gazette.json
         await commitChanges(`Gazette : nouvelle parution (${name})`, [
@@ -45,7 +60,7 @@ export const handler: Handler = async (event, context) => {
             },
             {
                 path: "src/lib/data/gazette.json",
-                content: JSON.stringify(newGazetteData, null, 2) + "\n",
+                content: JSON.stringify(existingData, null, 2) + "\n",
                 encoding: "utf-8",
             }
         ]);

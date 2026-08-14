@@ -58,12 +58,17 @@ collections:
   - name: "gazette"
     label: "Le Petit Écho du Cœur"
     files:
-      - name: "latest"
-        label: "Dernière Gazette"
+      - name: "archives"
+        label: "Archives des Gazettes"
         file: "src/lib/data/gazette.json"
         fields:
-            - { name: "file", label: "Fichier PDF", widget: "file", allowed_extensions: ["pdf"] }
-            - { name: "date", label: "Date de mise en ligne", widget: "datetime" }
+          - name: "gazettes"
+            label: "Liste des Gazettes"
+            widget: "list"
+            fields:
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "file", label: "Fichier PDF", widget: "file", allowed_extensions: ["pdf"] }
+              - { name: "date", label: "Date de mise en ligne", widget: "datetime" }
 
   - name: "blog"
     label: "Blog"
