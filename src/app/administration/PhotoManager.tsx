@@ -31,9 +31,9 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     const [uploading, setUploading] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [processingId, setProcessingId] = useState<string | null>(null);
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [editValues, setEditValues] = useState({ title: "", alt: "" });
     const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
-    const activeCount = useMemo(() => photos.filter((photo) => !photo.deletedAt).length, [photos]);
 
     const selectFiles = (event: ChangeEvent<HTMLInputElement>) => {
         const selected = Array.from(event.target.files || []);
@@ -91,19 +91,16 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
         }
     };
 
-    const photoAction = async (photo: GalleryImage, action: "trash" | "restore" | "permanent") => {
-        const prompt = action === "permanent" ? "Supprimer définitivement cette photo ? Cette action est irréversible." : action === "trash" ? "Placer cette photo dans la corbeille ?" : null;
-        if (prompt && !window.confirm(prompt)) return;
-        setProcessingId(photo.id);
+    const deletePhotos = async (ids: string[]) => {
+        const count = ids.length;
+        if (!window.confirm(`Supprimer définitivement ${count > 1 ? `ces ${count} photos` : "cette photo"} ? Cette action est irréversible.`)) return;
+        setProcessingId(ids.length === 1 ? ids[0] : "bulk");
         try {
-            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ id: photo.id, action }) });
-            if (action === "permanent") setPhotos((current) => current.filter((item) => item.id !== photo.id));
-            else setPhotos((current) => {
-                const updated = current.map((item) => item.id === photo.id ? { ...item, deletedAt: action === "trash" ? new Date().toISOString() : undefined } : item);
-                return [...updated.filter((item) => !item.deletedAt), ...updated.filter((item) => item.deletedAt)];
-            });
+            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "delete", ids }) });
+            setPhotos((current) => current.filter((item) => !ids.includes(item.id)));
+            setSelectedIds(new Set());
         } catch (error) {
-            setMessage({ type: "error", text: error instanceof Error ? error.message : "Action impossible" });
+            setMessage({ type: "error", text: error instanceof Error ? error.message : "Suppression impossible" });
         } finally {
             setProcessingId(null);
         }
@@ -123,18 +120,17 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     };
 
     const movePhoto = async (photo: GalleryImage, direction: -1 | 1) => {
-        const active = photos.filter((item) => !item.deletedAt);
-        const index = active.findIndex((item) => item.id === photo.id);
+        const index = photos.findIndex((item) => item.id === photo.id);
         const target = index + direction;
-        if (index < 0 || target < 0 || target >= active.length) return;
+        if (index < 0 || target < 0 || target >= photos.length) return;
         setProcessingId(photo.id);
-        [active[index], active[target]] = [active[target], active[index]];
-        const previous = photos;
-        setPhotos([...active, ...photos.filter((item) => item.deletedAt)]);
+        const newPhotos = [...photos];
+        [newPhotos[index], newPhotos[target]] = [newPhotos[target], newPhotos[index]];
+        setPhotos(newPhotos);
         try {
-            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "reorder", ids: active.map((item) => item.id) }) });
+            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "reorder", ids: newPhotos.map((item) => item.id) }) });
         } catch (error) {
-            setPhotos(previous);
+            setPhotos(photos);
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Réorganisation impossible" });
         } finally {
             setProcessingId(null);
@@ -168,12 +164,32 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                 )}
             </div>
             {message && <div className={`rounded-2xl p-4 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
+            
+            {selectedIds.size > 0 && (
+                <div className="bg-terracotta-50 rounded-2xl p-4 border border-terracotta-200 flex flex-wrap items-center justify-between gap-4 sticky top-4 z-10 shadow-sm">
+                    <span className="font-semibold text-terracotta-900">{selectedIds.size} photo(s) sélectionnée(s)</span>
+                    <div className="flex gap-2">
+                        <button onClick={() => setSelectedIds(new Set(photos.map(p => p.id)))} className="px-4 py-2 text-sm font-medium text-terracotta-700 bg-white rounded-full border border-terracotta-200 hover:bg-terracotta-100">Tout sélectionner</button>
+                        <button onClick={() => setSelectedIds(new Set())} className="px-4 py-2 text-sm font-medium text-terracotta-700 bg-white rounded-full border border-terracotta-200 hover:bg-terracotta-100">Annuler</button>
+                        <button disabled={processingId === "bulk"} onClick={() => deletePhotos(Array.from(selectedIds))} className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full disabled:opacity-50 hover:bg-red-700">{processingId === "bulk" ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />} Supprimer</button>
+                    </div>
+                </div>
+            )}
+
             <div>
-                <div className="flex items-center justify-between mb-4"><h2 className="font-serif text-3xl text-charcoal-900">Photothèque publique</h2><span className="text-sm text-charcoal-500">{activeCount} photo(s) active(s)</span></div>
+                <div className="flex items-center justify-between mb-4"><h2 className="font-serif text-3xl text-charcoal-900">Photothèque publique</h2><span className="text-sm text-charcoal-500">{photos.length} photo(s)</span></div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {photos.map((photo) => {
-                        const activeIndex = photos.filter((item) => !item.deletedAt).findIndex((item) => item.id === photo.id);
-                        return <article key={photo.id} className={`bg-white rounded-2xl overflow-hidden border shadow-sm ${photo.deletedAt ? "opacity-60 border-red-200" : "border-cream-200"}`}>
+                    {photos.map((photo, index) => {
+                        const isSelected = selectedIds.has(photo.id);
+                        return <article key={photo.id} className={`relative bg-white rounded-2xl overflow-hidden border shadow-sm transition-colors ${isSelected ? "border-terracotta-500 ring-2 ring-terracotta-500 ring-offset-2" : "border-cream-200"}`}>
+                            <div className="absolute top-3 left-3 z-10">
+                                <input type="checkbox" checked={isSelected} onChange={(e) => {
+                                    const next = new Set(selectedIds);
+                                    if (e.target.checked) next.add(photo.id);
+                                    else next.delete(photo.id);
+                                    setSelectedIds(next);
+                                }} className="w-5 h-5 accent-terracotta-600 cursor-pointer shadow-sm" />
+                            </div>
                             <img src={photo.thumbSrc || photo.src} alt={photo.alt} className="w-full aspect-[4/3] object-cover" />
                             <div className="p-4">
                                 {editingId === photo.id ? <div className="space-y-2">
@@ -182,8 +198,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                                     <div className="flex gap-2"><button onClick={() => saveEdit(photo)} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700"><Save size={16} /> Enregistrer</button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100 text-charcoal-600"><X size={17} /></button></div>
                                 </div> : <>
                                     <h3 className="font-semibold text-charcoal-900">{photo.title}</h3>
-                                    {photo.deletedAt ? <div className="flex gap-2 mt-4"><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "restore")} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700 disabled:opacity-50"><RotateCcw size={16} /> Restaurer</button><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "permanent")} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Suppression définitive"><Trash2 size={17} /></button></div> :
-                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={activeIndex === 0 || processingId === photo.id} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowUp size={16} />}</button><button disabled={activeIndex === activeCount - 1 || processingId === photo.id} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowDown size={16} />}</button><button disabled={processingId === photo.id} onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "", alt: photo.alt }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-50"><Pencil size={16} /> Modifier</button><button disabled={processingId === photo.id} onClick={() => photoAction(photo, "trash")} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Mettre à la corbeille">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />}</button></div>}
+                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={index === 0 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowUp size={16} />}</button><button disabled={index === photos.length - 1 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowDown size={16} />}</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "", alt: photo.alt }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-50"><Pencil size={16} /> Modifier</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => deletePhotos([photo.id])} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Supprimer définitivement">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />}</button></div>
                                 </>}
                             </div>
                         </article>;

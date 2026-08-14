@@ -10,7 +10,6 @@ interface GalleryPhoto {
     alt: string;
     category: string;
     title?: string;
-    deletedAt?: string;
 }
 
 const GALLERY_PATH = "src/lib/data/gallery.json";
@@ -63,13 +62,23 @@ export const handler: Handler = async (event, context) => {
             );
         } else if (action === "reorder") {
             const orderedIds = Array.isArray(body.ids) ? body.ids.map(String) : [];
-            const active = data.photos.filter((photo) => !photo.deletedAt);
-            const byId = new Map(active.map((photo) => [photo.id, photo]));
-            if (orderedIds.length !== active.length || orderedIds.some((id: string) => !byId.has(id))) {
+            const byId = new Map(data.photos.map((photo) => [photo.id, photo]));
+            if (orderedIds.length !== data.photos.length || orderedIds.some((id: string) => !byId.has(id))) {
                 return json(400, { error: "Ordre des photos invalide" });
             }
-            const deleted = data.photos.filter((photo) => photo.deletedAt);
-            data.photos = [...deleted, ...orderedIds.reverse().map((id: string) => byId.get(id)!)];
+            data.photos = orderedIds.reverse().map((id: string) => byId.get(id)!);
+        } else if (action === "delete") {
+            const idsToDelete = Array.isArray(body.ids) ? body.ids : (body.id ? [body.id] : []);
+            if (idsToDelete.length === 0) return json(400, { error: "Aucune photo sélectionnée" });
+            
+            const toDelete = data.photos.filter(p => idsToDelete.includes(p.id));
+            if (toDelete.length === 0) return json(404, { error: "Photos introuvables" });
+            
+            data.photos = data.photos.filter((item) => !idsToDelete.includes(item.id));
+            for (const photo of toDelete) {
+                changes.push({ path: repositoryPath(photo.src), content: null });
+                if (photo.thumbSrc) changes.push({ path: repositoryPath(photo.thumbSrc), content: null });
+            }
         } else {
             const photo = data.photos.find((item) => item.id === body.id);
             if (!photo) return json(404, { error: "Photo introuvable" });
@@ -79,14 +88,6 @@ export const handler: Handler = async (event, context) => {
                 if (!title || !alt) return json(400, { error: "Titre et description obligatoires" });
                 photo.title = title.slice(0, 160);
                 photo.alt = alt.slice(0, 300);
-            } else if (action === "trash") {
-                photo.deletedAt = new Date().toISOString();
-            } else if (action === "restore") {
-                delete photo.deletedAt;
-            } else if (action === "permanent") {
-                data.photos = data.photos.filter((item) => item.id !== photo.id);
-                changes.push({ path: repositoryPath(photo.src), content: null });
-                if (photo.thumbSrc) changes.push({ path: repositoryPath(photo.thumbSrc), content: null });
             } else {
                 return json(400, { error: "Action inconnue" });
             }
