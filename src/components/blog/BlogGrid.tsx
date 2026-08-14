@@ -8,11 +8,10 @@ import ArticleCard from "./ArticleCard";
 import ArticleModal from "./ArticleModal";
 
 interface BlogGridProps {
-    isAdminUser?: boolean;
     articles?: Article[];
 }
 
-export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGridProps) {
+export default function BlogGrid({ articles = [] }: BlogGridProps) {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     return (
@@ -27,17 +26,6 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                         Découvrez les moments partagés à l&apos;EHPAD
                     </p>
                 </div>
-
-                {isAdminUser && (
-                    <Link
-                        href="/administration#blog"
-                        className="flex items-center gap-2 px-6 py-3 !text-white rounded-full shadow-lg hover:shadow-xl transition-all font-bold"
-                        style={{ background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)' }}
-                    >
-                        <span className="text-xl">+</span>
-                        Nouvel article
-                    </Link>
-                )}
             </div>
 
             {/* Grille d'articles */}
@@ -67,14 +55,6 @@ export default function BlogGrid({ isAdminUser = false, articles = [] }: BlogGri
                         </svg>
                     </div>
                     <p className="text-charcoal-600">Aucun article pour le moment</p>
-                    {isAdminUser && (
-                        <Link
-                            href="/administration#blog"
-                            className="mt-4 text-terracotta-500 font-medium hover:underline inline-block"
-                        >
-                            Créer le premier article
-                        </Link>
-                    )}
                 </div>
             )}
 

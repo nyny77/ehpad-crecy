@@ -99,6 +99,7 @@ export const NAV_LINKS: NavLink[] = [
             { label: "Animation & Vie Sociale", href: "/animation" },
             { label: "Galerie Photos", href: "/galerie" },
             { label: "Le Blog", href: "/blog" },
+            { label: "L'Écho du Coeur", href: "/echo-du-coeur" },
         ]
     },
     {
