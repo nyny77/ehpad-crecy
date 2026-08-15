@@ -265,9 +265,9 @@ export default function CourrierManager() {
             </head>
             <body>
                 <div class="photo-half">
-                    ${message.photoUrl ? \`
-                        <img src="\${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public\${message.photoUrl}'"/>
-                    \` : \`
+                    ${message.photoUrl ? `
+                        <img src="${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${message.photoUrl}'"/>
+                    ` : `
                         <div class="no-photo">
                             <h2>Le Postier Numérique</h2>
                             <p>EHPAD de Crécy-la-Chapelle</p>
@@ -275,13 +275,13 @@ export default function CourrierManager() {
                                 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#B4533A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                             </div>
                         </div>
-                    \`}
+                    `}
                 </div>
                 
                 <div class="text-half">
                     <div class="message-side">
-                        <div class="message-content">\${message.text}</div>
-                        <div class="message-signature">\${message.senderName}</div>
+                        <div class="message-content">${message.text}</div>
+                        <div class="message-signature">${message.senderName}</div>
                     </div>
                     
                     <div class="divider"></div>
@@ -290,17 +290,17 @@ export default function CourrierManager() {
                         <div class="stamp">Timbre</div>
                         <div class="postmark">
                             EHPAD CRÉCY
-                            <span>\${new Date(message.date).toLocaleDateString("fr-FR")}</span>
+                            <span>${new Date(message.date).toLocaleDateString("fr-FR")}</span>
                         </div>
                         
                         <div class="address-lines">
                             <div class="line">
-                                <span class="line-content">\${residentName}</span>
+                                <span class="line-content">${residentName}</span>
                                 <span class="line-subtitle">Résident</span>
                             </div>
                             <div class="line">
-                                <span class="line-content">\${residentRoom || "EHPAD de Crécy-la-Chapelle"}</span>
-                                <span class="line-subtitle">\${residentRoom ? 'Chambre' : 'Établissement'}</span>
+                                <span class="line-content">${residentRoom || "EHPAD de Crécy-la-Chapelle"}</span>
+                                <span class="line-subtitle">${residentRoom ? 'Chambre' : 'Établissement'}</span>
                             </div>
                             <div class="line">
                                 <span class="line-content">18, rue de la Chapelle</span>
@@ -319,7 +319,7 @@ export default function CourrierManager() {
                 </script>
             </body>
             </html>
-        \`;
+        `;
 
         contentWindow.document.open();
         contentWindow.document.write(html);
