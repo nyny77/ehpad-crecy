@@ -113,6 +113,7 @@ export const NAV_LINKS: NavLink[] = [
         label: "Contact",
         subLinks: [
             { label: "Accès & Contact", href: "/contact" },
+            { label: "Portail Familles", href: "/familles" },
             { label: "Recrutement", href: "/recrutement" },
             { label: "Livret d'Accueil (Agents)", href: "/livret-accueil" },
         ]
