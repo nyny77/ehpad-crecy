@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { FileUp, LoaderCircle, Plus, Trash2, Image as ImageIcon, Type, Heading1, List, Search, X, Sparkles } from "lucide-react";
+import { FileUp, LoaderCircle, Plus, Trash2, Image as ImageIcon, Type, Heading1, List, Search, X } from "lucide-react";
 import { adminFetch } from "@/lib/admin-api";
 import gazetteData from "@/lib/data/gazette.json";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
@@ -47,7 +47,6 @@ export default function GazetteManager() {
     
     // Image Search State
     const [imageSearchBlockId, setImageSearchBlockId] = useState<string | null>(null);
-    const [aiPromptBlockId, setAiPromptBlockId] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -60,7 +59,7 @@ export default function GazetteManager() {
     };
 
     const updateBlock = (id: string, field: string, value: string) => {
-        setBlocks(blocks.map(b => b.id === id ? { ...b, [field]: value } : b));
+        setBlocks(prevBlocks => prevBlocks.map(b => b.id === id ? { ...b, [field]: value } : b));
     };
 
     const removeBlock = (id: string) => {
@@ -82,31 +81,27 @@ export default function GazetteManager() {
     const handleImageSearch = async () => {
         if (!searchQuery.trim()) return;
         setIsSearching(true);
-        const accessKey = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
-        
-        if (accessKey) {
-            try {
-                const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=12&orientation=landscape&client_id=${accessKey}`);
-                const data = await res.json();
-                setSearchResults(data.results || []);
-            } catch (e) {
-                console.error("Erreur Unsplash:", e);
-                // Fallback to loremflickr
-                mockImageSearch();
+        try {
+            const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchQuery)}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url&iiurlwidth=800&format=json&origin=*`;
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            if (data.query && data.query.pages) {
+                const pages = Object.values(data.query.pages) as any[];
+                const results = pages.map(p => ({
+                    id: p.pageid,
+                    url: p.imageinfo?.[0]?.thumburl || p.imageinfo?.[0]?.url,
+                    title: p.title?.replace("File:", "").replace(/\.[a-zA-Z]+$/, "")
+                })).filter(r => r.url); // only keep those with a URL
+                setSearchResults(results);
+            } else {
+                setSearchResults([]);
             }
-        } else {
-            mockImageSearch();
+        } catch (e) {
+            console.error("Erreur Wikimedia:", e);
+            setSearchResults([]);
         }
         setIsSearching(false);
-    };
-
-    const mockImageSearch = () => {
-        const results = Array.from({length: 8}).map((_, i) => ({
-            id: `mock-${i}`,
-            urls: { regular: `https://loremflickr.com/800/600/${encodeURIComponent(searchQuery)}?lock=${i + Date.now()}` },
-            alt_description: `Illustration ${searchQuery}`
-        }));
-        setSearchResults(results);
     };
 
     const selectImageResult = (url: string) => {
@@ -118,6 +113,8 @@ export default function GazetteManager() {
             setSearchQuery("");
         }
     };
+
+
 
     const publishGeneratedGazette = async () => {
         if (!title.trim()) {
@@ -378,25 +375,14 @@ export default function GazetteManager() {
                                                         </label>
                                                     </div>
                                                     
-                                                    <div className="flex-1 flex flex-col items-center justify-center px-4 md:border-r border-cream-300">
+                                                    <div className="flex-1 flex flex-col items-center justify-center px-4">
                                                         <button 
                                                             type="button"
                                                             onClick={() => setImageSearchBlockId(block.id)}
                                                             className="flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500"
                                                         >
                                                             <Search size={32} className="mb-2" />
-                                                            <span className="font-medium text-center">Chercher image<br/><span className="text-sm font-normal">(Banque pro)</span></span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div className="flex-1 flex flex-col items-center justify-center px-4">
-                                                        <button 
-                                                            type="button"
-                                                            onClick={() => setAiPromptBlockId(block.id)}
-                                                            className="flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500"
-                                                        >
-                                                            <Sparkles size={32} className="mb-2" />
-                                                            <span className="font-medium text-center">Générer par IA<br/><span className="text-sm font-normal">(Magique 🪄)</span></span>
+                                                            <span className="font-medium text-center">Chercher image<br/><span className="text-sm font-normal">(Banque libre)</span></span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -457,7 +443,7 @@ export default function GazetteManager() {
                                     <div className="p-4 border-b border-cream-200 flex items-center justify-between bg-cream-50">
                                         <h3 className="font-serif text-xl text-charcoal-900 font-bold flex items-center gap-2">
                                             <Search size={20} className="text-terracotta-500" />
-                                            Recherche d'illustrations professionnelles
+                                            Recherche d'illustrations libres de droits
                                         </h3>
                                         <button onClick={() => { setImageSearchBlockId(null); setSearchResults([]); setSearchQuery(""); }} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
                                             <X size={20} />
@@ -488,13 +474,14 @@ export default function GazetteManager() {
                                                 {searchResults.map((res) => (
                                                     <button 
                                                         key={res.id} 
-                                                        onClick={() => selectImageResult(res.urls?.regular || res.url || res.urls?.small)}
+                                                        onClick={() => selectImageResult(res.url)}
                                                         className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 border-2 border-transparent hover:border-terracotta-500 transition-all focus:outline-none focus:ring-4 focus:ring-terracotta-200"
+                                                        title={res.title}
                                                     >
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img src={res.urls?.small || res.urls?.regular || res.url} alt={res.alt_description || "Illustration"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                                                            <span className="text-white text-sm font-medium">Sélectionner</span>
+                                                        <img src={res.url} alt={res.title || "Illustration"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                                                            <span className="text-white text-xs font-medium text-center line-clamp-2">{res.title}</span>
                                                         </div>
                                                     </button>
                                                 ))}
@@ -515,50 +502,6 @@ export default function GazetteManager() {
                                                 <p>Tapez un mot-clé ci-dessus pour trouver de belles images libres de droits.</p>
                                             </div>
                                         )}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* AI Generation Modal */}
-                        {aiPromptBlockId && (
-                            <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-                                <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden">
-                                    <div className="p-4 border-b border-cream-200 flex items-center justify-between bg-cream-50">
-                                        <h3 className="font-serif text-xl text-charcoal-900 font-bold flex items-center gap-2">
-                                            <Sparkles size={20} className="text-terracotta-500" />
-                                            Génération d'image par Intelligence Artificielle
-                                        </h3>
-                                        <button onClick={() => { setAiPromptBlockId(null); setSearchQuery(""); }} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
-                                            <X size={20} />
-                                        </button>
-                                    </div>
-                                    <div className="p-6">
-                                        <p className="text-charcoal-600 mb-4">Décrivez l'image que vous souhaitez générer (ex: "un chat roux qui dort dans un jardin fleuri au printemps", "un gâteau d'anniversaire festif style aquarelle").</p>
-                                        <div className="flex flex-col gap-4">
-                                            <textarea 
-                                                placeholder="Votre description détaillée..." 
-                                                value={searchQuery}
-                                                onChange={e => setSearchQuery(e.target.value)}
-                                                className="w-full px-4 py-3 rounded-xl border border-cream-300 focus:border-terracotta-500 focus:ring-1 focus:ring-terracotta-500 text-charcoal-900 min-h-[100px] resize-y"
-                                                autoFocus
-                                            />
-                                            <button 
-                                                onClick={() => {
-                                                    if (!searchQuery.trim()) return;
-                                                    // Use pollinations.ai for free, instant, keyless image generation
-                                                    const aiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(searchQuery)}?width=800&height=600&nologo=true`;
-                                                    updateBlock(aiPromptBlockId, "content", aiUrl);
-                                                    updateBlock(aiPromptBlockId, "base64", ""); // Treat as URL
-                                                    setAiPromptBlockId(null);
-                                                    setSearchQuery("");
-                                                }} 
-                                                disabled={!searchQuery.trim()}
-                                                className="px-6 py-3 bg-terracotta-600 text-white font-semibold rounded-xl hover:bg-terracotta-700 transition-colors flex items-center justify-center gap-2"
-                                            >
-                                                <Sparkles size={20} /> Générer la magie !
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
