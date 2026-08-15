@@ -15,17 +15,21 @@ import {
 import PhotoManager from "./PhotoManager";
 import BlogManager from "./BlogManager";
 import GazetteManager from "./GazetteManager";
-import { Newspaper } from "lucide-react";
+import ResidentManager from "./ResidentManager";
+import CourrierManager from "./CourrierManager";
+import { Newspaper, Users, Mail } from "lucide-react";
 
 type AccessState = "loading" | "guest" | "forbidden" | "admin";
 
 export default function AdminDashboard({ initialArticles, initialPhotos }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[] }) {
     const [access, setAccess] = useState<AccessState>("loading");
-    const [tab, setTab] = useState<"photos" | "blog" | "gazette">("photos");
+    const [tab, setTab] = useState<"photos" | "blog" | "gazette" | "residents" | "courrier">("photos");
 
     useEffect(() => {
         if (window.location.hash === "#blog") setTab("blog");
         if (window.location.hash === "#gazette") setTab("gazette");
+        if (window.location.hash === "#residents") setTab("residents");
+        if (window.location.hash === "#courrier") setTab("courrier");
         let unsubscribe = () => {};
         let attempts = 0;
         const timer = window.setInterval(() => {
@@ -88,21 +92,29 @@ export default function AdminDashboard({ initialArticles, initialPhotos }: { ini
                     </button>
                 </div>
 
-                <nav className="inline-flex bg-white rounded-2xl border border-cream-200 p-1.5 shadow-sm mb-8" aria-label="Sections d’administration">
-                    <button onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Camera size={19} /> Photos
+                <nav className="inline-flex flex-wrap gap-2 bg-white rounded-2xl border border-cream-200 p-1.5 shadow-sm mb-8" aria-label="Sections d’administration">
+                    <button onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                        <Camera size={19} /> <span className="hidden md:inline">Photos</span>
                     </button>
-                    <button onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <BookOpen size={19} /> Blog
+                    <button onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                        <BookOpen size={19} /> <span className="hidden md:inline">Blog</span>
                     </button>
-                    <button onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Newspaper size={19} /> Écho du Coeur
+                    <button onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                        <Newspaper size={19} /> <span className="hidden md:inline">Écho du Coeur</span>
+                    </button>
+                    <button onClick={() => { setTab("residents"); window.history.replaceState(null, "", "#residents"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "residents" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                        <Users size={19} /> <span className="hidden md:inline">Résidents</span>
+                    </button>
+                    <button onClick={() => { setTab("courrier"); window.history.replaceState(null, "", "#courrier"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "courrier" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                        <Mail size={19} /> <span className="hidden md:inline">Courrier</span>
                     </button>
                 </nav>
 
                 {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} />}
                 {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
                 {tab === "gazette" && <GazetteManager />}
+                {tab === "residents" && <ResidentManager />}
+                {tab === "courrier" && <CourrierManager />}
             </div>
         </main>
     );

@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "id": "187ec2d5-b8b7-45e5-b5dc-6ac2dc337015",
+      "residentId": "mock-id-1234",
+      "senderName": "Test AgentTTest Agent",
+      "text": "Coucou papa, c'est l'agent automatique qui teste le systCoucou papa, c'est l'agent automatique qui teste le systeme !",
+      "photoUrl": null,
+      "date": "2026-08-15T20:46:58.302Z",
+      "status": "nouveau"
+    }
+  ]
+}
