@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users, UserPlus, KeyRound, Trash2, RefreshCw, LoaderCircle } from "lucide-react";
-import type { Resident } from "../../../../netlify/functions/admin-residents";
+import type { Resident } from "../../../netlify/functions/admin-residents";
 import { adminFetch } from "@/lib/admin-api";
 
 export default function ResidentManager() {

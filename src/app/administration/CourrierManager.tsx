@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Mail, CheckCircle2, Trash2, LoaderCircle, Printer, Image as ImageIcon } from "lucide-react";
-import type { FamilyMessage } from "../../../../netlify/functions/famille-send-message";
-import type { Resident } from "../../../../netlify/functions/admin-residents";
+import type { FamilyMessage } from "../../../netlify/functions/famille-send-message";
+import type { Resident } from "../../../netlify/functions/admin-residents";
 import { adminFetch } from "@/lib/admin-api";
 
 export default function CourrierManager() {
