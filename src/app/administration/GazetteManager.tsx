@@ -50,6 +50,7 @@ export default function GazetteManager() {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const initialGazettes = (gazetteData as any).gazettes || ((gazetteData as any).file ? [{ title: "Dernière parution", file: (gazetteData as any).file }] : []);
     const [gazettes, setGazettes] = useState<any[]>(initialGazettes);
@@ -78,28 +79,52 @@ export default function GazetteManager() {
         reader.readAsDataURL(file);
     };
 
+    const fetchJsonp = (url: string) => {
+        return new Promise<any>((resolve, reject) => {
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+            (window as any)[callbackName] = (data: any) => {
+                delete (window as any)[callbackName];
+                document.body.removeChild(script);
+                resolve(data);
+            };
+            const script = document.createElement('script');
+            script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'format=json&jsoncallback=' + callbackName;
+            script.onerror = () => {
+                delete (window as any)[callbackName];
+                document.body.removeChild(script);
+                reject(new Error('JSONP failed'));
+            };
+            document.body.appendChild(script);
+        });
+    };
+
     const handleImageSearch = async () => {
         if (!searchQuery.trim()) return;
         setIsSearching(true);
+        setHasSearched(true);
+        setSearchResults([]);
+
         try {
-            const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchQuery)}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url&iiurlwidth=800&format=json&origin=*`;
-            const res = await fetch(url);
-            const data = await res.json();
+            // Using Flickr Public API with JSONP to completely bypass CORS
+            const url = `https://www.flickr.com/services/feeds/photos_public.gne?tags=${encodeURIComponent(searchQuery)}`;
+            const data = await fetchJsonp(url);
             
-            if (data.query && data.query.pages) {
-                const pages = Object.values(data.query.pages) as any[];
-                const results = pages.map(p => ({
-                    id: p.pageid,
-                    url: p.imageinfo?.[0]?.thumburl || p.imageinfo?.[0]?.url,
-                    title: p.title?.replace("File:", "").replace(/\.[a-zA-Z]+$/, "")
-                })).filter(r => r.url); // only keep those with a URL
-                setSearchResults(results);
+            if (data.items && data.items.length > 0) {
+                const results = data.items.map((p: any, idx: number) => {
+                    // Flickr returns _m.jpg (240px thumbnail). We replace it with _c.jpg for 800px.
+                    const bigUrl = p.media?.m ? p.media.m.replace('_m.jpg', '_c.jpg') : '';
+                    return {
+                        id: `flickr-${idx}`,
+                        url: bigUrl || p.media?.m,
+                        title: p.title || searchQuery
+                    };
+                }).filter((r: any) => r.url);
+                setSearchResults(results.slice(0, 20)); // keep top 20 results
             } else {
                 setSearchResults([]);
             }
         } catch (e) {
-            console.error("Erreur Wikimedia:", e);
-            setSearchResults([]);
+            console.error("Erreur Flickr:", e);
         }
         setIsSearching(false);
     };
@@ -111,6 +136,7 @@ export default function GazetteManager() {
             setImageSearchBlockId(null);
             setSearchResults([]);
             setSearchQuery("");
+            setHasSearched(false);
         }
     };
 
@@ -286,8 +312,9 @@ export default function GazetteManager() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col md:flex-row gap-4 mb-6 items-end">
-                            <div className="flex-grow">
+                        <div className="flex flex-col md:flex-row gap-4 mb-6 items-start">
+                            <div className="flex-grow flex flex-col gap-2">
+                                <span className="text-sm font-bold uppercase tracking-wider text-charcoal-500 pl-2">Nom de la Gazette</span>
                                 <RichTextEditor
                                     value={title}
                                     onChange={setTitle}
@@ -305,9 +332,19 @@ export default function GazetteManager() {
                             </div>
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             {blocks.map((block, index) => (
-                                <div key={block.id} className="relative group bg-white border border-cream-200 rounded-2xl p-4 shadow-sm hover:border-terracotta-300 transition-colors">
+                                <div key={block.id} className="relative group bg-white border border-cream-200 rounded-2xl p-4 shadow-sm hover:border-terracotta-300 transition-colors flex flex-col gap-3">
+                                    <div className="flex items-center gap-2 text-terracotta-600 border-b border-cream-100 pb-2 mb-1">
+                                        {block.type === "title" && <Heading1 size={18} />}
+                                        {block.type === "text" && <Type size={18} />}
+                                        {block.type === "image" && <ImageIcon size={18} />}
+                                        {block.type === "toc" && <List size={18} />}
+                                        <span className="text-sm font-bold uppercase tracking-wider">
+                                            {block.type === "title" ? "Gros Titre" : block.type === "text" ? "Paragraphe" : block.type === "image" ? "Photo" : "Sommaire Automatique"}
+                                        </span>
+                                    </div>
+                                    
                                     <div className="absolute -right-3 -top-3 w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-10">
                                         <button onClick={() => removeBlock(block.id)} className="w-full h-full flex items-center justify-center" title="Supprimer">
                                             <Trash2 size={14} />
@@ -328,12 +365,11 @@ export default function GazetteManager() {
                                     </div>
 
                                     {block.type === "toc" && (
-                                        <div className="p-4 bg-cream-50 border border-cream-300 rounded-xl flex items-center gap-4 text-charcoal-600">
+                                        <div className="p-4 bg-cream-50 rounded-xl flex items-center gap-4 text-charcoal-600">
                                             <div className="w-10 h-10 rounded-full bg-cream-200 flex items-center justify-center shrink-0">
                                                 <List size={20} />
                                             </div>
                                             <div>
-                                                <h4 className="font-semibold text-charcoal-900">Sommaire Automatique</h4>
                                                 <p className="text-sm">Ce bloc listera automatiquement tous les Gros Titres de votre gazette.</p>
                                             </div>
                                         </div>
@@ -382,7 +418,7 @@ export default function GazetteManager() {
                                                             className="flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500"
                                                         >
                                                             <Search size={32} className="mb-2" />
-                                                            <span className="font-medium text-center">Chercher image<br/><span className="text-sm font-normal">(Banque libre)</span></span>
+                                                            <span className="font-medium text-center">Chercher image<br/><span className="text-sm font-normal">(Banque photo libre)</span></span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -445,7 +481,7 @@ export default function GazetteManager() {
                                             <Search size={20} className="text-terracotta-500" />
                                             Recherche d'illustrations libres de droits
                                         </h3>
-                                        <button onClick={() => { setImageSearchBlockId(null); setSearchResults([]); setSearchQuery(""); }} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
+                                        <button onClick={() => { setImageSearchBlockId(null); setSearchResults([]); setSearchQuery(""); setHasSearched(false); }} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
                                             <X size={20} />
                                         </button>
                                     </div>
@@ -453,7 +489,7 @@ export default function GazetteManager() {
                                         <div className="flex gap-2 mb-6">
                                             <input 
                                                 type="text" 
-                                                placeholder="Que cherchez-vous ? (ex: Automne, Noël, Chat, Gâteau...)" 
+                                                placeholder="Que cherchez-vous ? (ex: Sapin de Noël enneigé, Gâteau d'anniversaire...)" 
                                                 value={searchQuery}
                                                 onChange={e => setSearchQuery(e.target.value)}
                                                 onKeyDown={e => e.key === 'Enter' && handleImageSearch()}
@@ -463,7 +499,7 @@ export default function GazetteManager() {
                                             <button 
                                                 onClick={handleImageSearch} 
                                                 disabled={isSearching || !searchQuery.trim()}
-                                                className="px-6 py-3 bg-terracotta-600 text-white font-semibold rounded-xl hover:bg-terracotta-700 transition-colors flex items-center justify-center min-w-[120px]"
+                                                className="px-6 py-3 bg-terracotta-600 text-white font-semibold rounded-xl hover:bg-terracotta-700 transition-colors flex items-center justify-center min-w-[140px]"
                                             >
                                                 {isSearching ? <LoaderCircle size={20} className="animate-spin" /> : "Chercher"}
                                             </button>
@@ -475,20 +511,20 @@ export default function GazetteManager() {
                                                     <button 
                                                         key={res.id} 
                                                         onClick={() => selectImageResult(res.url)}
-                                                        className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 border-2 border-transparent hover:border-terracotta-500 transition-all focus:outline-none focus:ring-4 focus:ring-terracotta-200"
+                                                        className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 border-2 border-transparent hover:border-terracotta-500 transition-all focus:outline-none focus:ring-4 focus:ring-terracotta-200 shadow-sm"
                                                         title={res.title}
                                                     >
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img src={res.url} alt={res.title || "Illustration"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
-                                                            <span className="text-white text-xs font-medium text-center line-clamp-2">{res.title}</span>
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                                                            <span className="text-white text-xs font-medium text-center px-2 py-1 bg-charcoal-900/50 rounded-full backdrop-blur-sm shadow-sm transform translate-y-2 group-hover:translate-y-0 transition-all">Choisir image</span>
                                                         </div>
                                                     </button>
                                                 ))}
                                             </div>
                                         )}
 
-                                        {!isSearching && searchResults.length === 0 && searchQuery && (
+                                        {!isSearching && searchResults.length === 0 && hasSearched && (
                                             <div className="py-12 text-center text-charcoal-500 flex flex-col items-center">
                                                 <ImageIcon size={48} className="mb-4 text-cream-300" />
                                                 <p className="text-lg">Aucun résultat trouvé pour "{searchQuery}".</p>
@@ -496,10 +532,11 @@ export default function GazetteManager() {
                                             </div>
                                         )}
                                         
-                                        {!isSearching && searchResults.length === 0 && !searchQuery && (
+                                        {!isSearching && searchResults.length === 0 && !hasSearched && (
                                             <div className="py-12 text-center text-charcoal-400 flex flex-col items-center">
                                                 <Search size={48} className="mb-4 text-cream-200" />
-                                                <p>Tapez un mot-clé ci-dessus pour trouver de belles images libres de droits.</p>
+                                                <p className="font-medium text-charcoal-600">Recherchez de belles photos libres de droits</p>
+                                                <p className="text-sm mt-1">Tapez des mots simples : "Chat", "Automne", "Anniversaire"...</p>
                                             </div>
                                         )}
                                     </div>

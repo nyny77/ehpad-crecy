@@ -33,7 +33,7 @@ export default function EchoDuCoeurPage() {
                             </div>
                         ) : (
                             <iframe
-                                src={`${selectedGazette.file}?v=${Date.now()}`}
+                                src={selectedGazette.file}
                                 className="w-full h-full rounded-2xl border-none bg-white min-h-[600px] lg:min-h-0 print:hidden"
                                 title="Le Petit Echo du Coeur PDF"
                             />

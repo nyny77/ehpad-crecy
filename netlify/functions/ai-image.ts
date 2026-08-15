@@ -2,12 +2,14 @@ import type { Handler } from "@netlify/functions";
 
 export const handler: Handler = async (event) => {
     const prompt = event.queryStringParameters?.prompt;
+    const seed = event.queryStringParameters?.seed;
     if (!prompt) {
         return { statusCode: 400, body: "Prompt manquant" };
     }
 
     try {
-        const aiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=800&height=600&nologo=true`;
+        const seedParam = seed ? `&seed=${seed}` : '';
+        const aiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=800&height=600&nologo=true${seedParam}`;
         
         // Timeout handling just in case
         const controller = new AbortController();
