@@ -1513,3 +1513,12 @@ html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== RICH TEXT EDITOR STYLES ===== */
+.rich-text-content font[size="1"], [contenteditable] font[size="1"] { font-size: 12px !important; }
+.rich-text-content font[size="2"], [contenteditable] font[size="2"] { font-size: 14px !important; }
+.rich-text-content font[size="3"], [contenteditable] font[size="3"] { font-size: 16px !important; }
+.rich-text-content font[size="4"], [contenteditable] font[size="4"] { font-size: 18px !important; }
+.rich-text-content font[size="5"], [contenteditable] font[size="5"] { font-size: 24px !important; }
+.rich-text-content font[size="6"], [contenteditable] font[size="6"] { font-size: 32px !important; line-height: 1.2 !important; }
+.rich-text-content font[size="7"], [contenteditable] font[size="7"] { font-size: 48px !important; line-height: 1.1 !important; }
