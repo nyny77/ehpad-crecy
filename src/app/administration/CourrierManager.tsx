@@ -82,46 +82,244 @@ export default function CourrierManager() {
         const contentWindow = iframe.contentWindow;
         if (!contentWindow) return;
         
-        const photoHtml = message.photoUrl 
-            ? `<div style="text-align:center; margin-bottom: 2rem;">
-                 <img src="${message.photoUrl}" style="max-width:100%; max-height:400px; border-radius:12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
-               </div>`
-            : "";
-            
-        const dateStr = new Date(message.date).toLocaleDateString("fr-FR", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
         const html = `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Message pour ${residentName}</title>
+                <title>Carte Postale pour ${residentName}</title>
+                <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
                 <style>
-                    body { font-family: 'Georgia', serif; color: #333; padding: 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-                    .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; }
-                    .header h1 { margin: 0; color: #B4533A; font-size: 28px; }
-                    .header p { margin: 5px 0 0 0; color: #666; font-family: sans-serif; }
-                    .content { font-size: 20px; white-space: pre-wrap; padding: 20px; background: #faf9f6; border-radius: 12px; border: 1px solid #eae5d9; }
-                    .footer { margin-top: 40px; text-align: right; font-style: italic; font-size: 22px; color: #B4533A; }
+                    @page {
+                        size: A4;
+                        margin: 0; /* No margins, full page */
+                    }
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        background: white;
+                        font-family: sans-serif;
+                        width: 210mm;
+                        height: 297mm; /* A4 */
+                        box-sizing: border-box;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    /* Top half: Photo */
+                    .photo-half {
+                        width: 210mm;
+                        height: 148.5mm; /* Exactly half A4 */
+                        box-sizing: border-box;
+                        padding: ${message.photoUrl ? '0' : '15mm'};
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-bottom: 1px dashed #ccc; /* Cut line */
+                        background-color: ${message.photoUrl ? '#fff' : '#fdfbf7'};
+                        overflow: hidden;
+                    }
+                    .photo-half img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                    .no-photo {
+                        text-align: center;
+                        color: #B4533A;
+                        font-family: 'Playfair Display', serif;
+                    }
+                    .no-photo h2 { font-size: 36px; margin-bottom: 10px; }
+                    .no-photo p { font-size: 20px; color: #666; font-style: italic; }
+
+                    /* Bottom half: Postcard */
+                    .text-half {
+                        width: 210mm;
+                        height: 148.5mm;
+                        box-sizing: border-box;
+                        padding: 15mm;
+                        background: #fff;
+                        position: relative;
+                        display: flex;
+                        gap: 10mm;
+                    }
+                    
+                    /* Postcard vertical divider */
+                    .divider {
+                        width: 1px;
+                        background: #ccc;
+                        height: 100%;
+                        flex-shrink: 0;
+                    }
+
+                    /* Message side (Left) */
+                    .message-side {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .message-content {
+                        font-family: 'Caveat', cursive;
+                        font-size: 26px;
+                        line-height: 1.4;
+                        color: #1a1a1a;
+                        flex-grow: 1;
+                        white-space: pre-wrap;
+                    }
+                    .message-signature {
+                        font-family: 'Caveat', cursive;
+                        font-size: 28px;
+                        font-weight: 700;
+                        text-align: right;
+                        color: #B4533A;
+                        margin-top: 20px;
+                    }
+
+                    /* Address side (Right) */
+                    .address-side {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        position: relative;
+                    }
+                    
+                    /* Stamp */
+                    .stamp {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        width: 25mm;
+                        height: 30mm;
+                        border: 2px dashed #B4533A;
+                        border-radius: 4px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #B4533A;
+                        font-size: 10px;
+                        text-transform: uppercase;
+                        text-align: center;
+                        opacity: 0.7;
+                    }
+
+                    /* Address lines */
+                    .address-lines {
+                        margin-top: 45mm; /* Below stamp */
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12mm;
+                    }
+                    .line {
+                        border-bottom: 1px solid #999;
+                        position: relative;
+                    }
+                    .line-content {
+                        position: absolute;
+                        bottom: 2px;
+                        left: 0;
+                        font-family: 'Playfair Display', serif;
+                        font-size: 22px;
+                        font-weight: 600;
+                        color: #333;
+                    }
+                    .line-subtitle {
+                        position: absolute;
+                        bottom: 2px;
+                        right: 0;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        color: #888;
+                        text-transform: uppercase;
+                    }
+                    
+                    /* Postmark */
+                    .postmark {
+                        position: absolute;
+                        top: 10mm;
+                        right: 15mm;
+                        width: 40mm;
+                        height: 40mm;
+                        border: 2px solid rgba(180, 83, 58, 0.4);
+                        border-radius: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        transform: rotate(-15deg);
+                        color: rgba(180, 83, 58, 0.6);
+                        font-family: sans-serif;
+                        font-weight: bold;
+                        font-size: 11px;
+                        text-transform: uppercase;
+                        z-index: 10;
+                        pointer-events: none;
+                    }
+                    .postmark span {
+                        font-size: 14px;
+                        margin-top: 4px;
+                    }
+                    
                     @media print {
-                        body { padding: 0; }
+                        .no-print { display: none !important; }
                     }
                 </style>
             </head>
             <body>
-                <div class="header">
-                    <h1>Pour ${residentName} ${residentRoom}</h1>
-                    <p>Reçu le ${dateStr}</p>
+                <div class="photo-half">
+                    ${message.photoUrl ? \`
+                        <img src="\${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public\${message.photoUrl}'"/>
+                    \` : \`
+                        <div class="no-photo">
+                            <h2>Le Postier Numérique</h2>
+                            <p>EHPAD de Crécy-la-Chapelle</p>
+                            <div style="margin-top: 20px;">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#B4533A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                        </div>
+                    \`}
                 </div>
-                ${photoHtml}
-                <div class="content">${message.text}</div>
-                <div class="footer">De la part de : ${message.senderName}</div>
+                
+                <div class="text-half">
+                    <div class="message-side">
+                        <div class="message-content">\${message.text}</div>
+                        <div class="message-signature">\${message.senderName}</div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="address-side">
+                        <div class="stamp">Timbre</div>
+                        <div class="postmark">
+                            EHPAD CRÉCY
+                            <span>\${new Date(message.date).toLocaleDateString("fr-FR")}</span>
+                        </div>
+                        
+                        <div class="address-lines">
+                            <div class="line">
+                                <span class="line-content">\${residentName}</span>
+                                <span class="line-subtitle">Résident</span>
+                            </div>
+                            <div class="line">
+                                <span class="line-content">\${residentRoom || "EHPAD de Crécy-la-Chapelle"}</span>
+                                <span class="line-subtitle">\${residentRoom ? 'Chambre' : 'Établissement'}</span>
+                            </div>
+                            <div class="line">
+                                <span class="line-content">18, rue de la Chapelle</span>
+                            </div>
+                            <div class="line">
+                                <span class="line-content">77580 Crécy-la-Chapelle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <script>
-                    window.onload = function() { window.print(); }
+                    document.fonts.ready.then(function() {
+                        setTimeout(() => { window.print(); }, 500);
+                    });
                 </script>
             </body>
             </html>
-        `;
+        \`;
 
         contentWindow.document.open();
         contentWindow.document.write(html);
