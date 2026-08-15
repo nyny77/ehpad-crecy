@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ConversationalForm from "@/components/contact/ConversationalForm";
 import { EHPAD_INFO } from "@/lib/constants";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function ContactPage() {
     return (
@@ -176,12 +177,14 @@ export default function ContactPage() {
             {/* FAQ rapide */}
             <section className="section-padding bg-cream-100">
                 <div className="container-custom">
-                    <div className="text-center mb-12">
-                        <span className="text-forest-500 font-medium">FAQ</span>
-                        <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
-                            Questions fréquentes
-                        </h2>
-                    </div>
+                    <ScrollReveal direction="up">
+                        <div className="text-center mb-12">
+                            <span className="text-forest-500 font-medium">FAQ</span>
+                            <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
+                                Questions fréquentes
+                            </h2>
+                        </div>
+                    </ScrollReveal>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                         {[
