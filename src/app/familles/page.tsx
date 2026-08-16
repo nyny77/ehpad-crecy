@@ -230,7 +230,8 @@ export default function FamillesPage() {
                                             <ImageIcon className="mx-auto h-10 w-10 text-cream-400 group-hover:text-terracotta-500 transition-colors mb-3" />
                                             <p className="text-sm font-medium text-charcoal-700">Choisir dans la galerie</p>
                                         </div>
-                                    </div>
+                                        </div>
+                                    </>
                                 ) : (
                                     <div className="relative rounded-2xl overflow-hidden group">
                                         <img src={image} alt="Photo sélectionnée" className="w-full h-auto object-cover" />
