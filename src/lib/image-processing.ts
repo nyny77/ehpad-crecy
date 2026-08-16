@@ -21,9 +21,9 @@ function canvasBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
     });
 }
 
-async function drawResized(file: File, maxWidth: number, quality: number): Promise<Blob> {
+async function drawResized(file: File, maxDimension: number, quality: number): Promise<Blob> {
     const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
-    const scale = Math.min(1, maxWidth / bitmap.width);
+    const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
     const width = Math.max(1, Math.round(bitmap.width * scale));
     const height = Math.max(1, Math.round(bitmap.height * scale));
     const canvas = document.createElement("canvas");
@@ -52,4 +52,9 @@ export async function processImage(file: File): Promise<ProcessedImage> {
         drawResized(file, 600, 0.76),
     ]);
     return { image, thumbnail };
+}
+
+export async function processGazetteImage(file: File): Promise<Blob> {
+    validateSourceImage(file);
+    return drawResized(file, 1600, 0.8);
 }

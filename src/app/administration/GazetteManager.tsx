@@ -6,6 +6,7 @@ import { adminFetch } from "@/lib/admin-api";
 import gazetteData from "@/lib/data/gazette.json";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import { processGazetteImage } from "@/lib/image-processing";
 
 function encodeBlobBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -146,16 +147,20 @@ export default function GazetteManager() {
         setBlocks(blocks.filter(b => b.id !== id));
     };
 
-    const handleImageUpload = (id: string, e: ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (id: string, e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            updateBlock(id, "content", event.target?.result as string);
-            updateBlock(id, "base64", event.target?.result as string);
-        };
-        reader.readAsDataURL(file);
+        try {
+            const optimized = await processGazetteImage(file);
+            const encoded = await encodeBlobBase64(optimized);
+            updateBlock(id, "content", encoded);
+            updateBlock(id, "base64", encoded);
+            setMessage(null);
+        } catch (error) {
+            setMessage({ type: "error", text: error instanceof Error ? error.message : "Cette image ne peut pas être ajoutée." });
+        } finally {
+            e.target.value = "";
+        }
     };
 
     const fetchJsonp = (url: string) => {
@@ -512,7 +517,7 @@ export default function GazetteManager() {
                                                         <label className="cursor-pointer flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500">
                                                             <ImageIcon size={32} className="mb-2" />
                                                             <span className="font-medium text-center">Ajouter une photo<br/><span className="text-sm font-normal">(Votre ordi)</span></span>
-                                                            <input type="file" accept="image/*" onChange={(e) => handleImageUpload(block.id, e)} className="sr-only" />
+                                                            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => handleImageUpload(block.id, e)} className="sr-only" />
                                                         </label>
                                                     </div>
                                                     

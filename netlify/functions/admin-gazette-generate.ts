@@ -11,13 +11,16 @@ function safeBaseName(value: string): string {
         .replace(/^-+|-+$/g, "").slice(0, 60) || "gazette";
 }
 
-function decodeImage(value: unknown): Buffer {
-    const encoded = String(value || "").replace(/^data:image\/\w+;base64,/i, "");
+function decodeImage(value: unknown): { buffer: Buffer; extension: "jpg" | "png" | "webp" } {
+    const input = String(value || "");
+    const mime = input.match(/^data:image\/(jpeg|jpg|png|webp);base64,/i)?.[1]?.toLowerCase();
+    if (!mime) throw new Error("Format d’image non pris en charge");
+    const encoded = input.replace(/^data:image\/[a-z0-9.+-]+;base64,/i, "");
     const buffer = Buffer.from(encoded, "base64");
     if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) {
         throw new Error("Une image dépasse la limite de 5 Mo");
     }
-    return buffer;
+    return { buffer, extension: mime === "jpeg" || mime === "jpg" ? "jpg" : mime };
 }
 
 export const handler: Handler = async (event, context) => {
@@ -36,8 +39,8 @@ export const handler: Handler = async (event, context) => {
             if (block.type === "image") {
                 if (block.base64) {
                     try {
-                        const buffer = decodeImage(block.base64);
-                        const imageName = `${Date.now()}-${safeBaseName("img")}.jpg`;
+                        const { buffer, extension } = decodeImage(block.base64);
+                        const imageName = `${Date.now()}-${safeBaseName(block.id || "img")}.${extension}`;
                         const publicPath = `/images/gazette/${imageName}`;
                         
                         filesToCommit.push({
@@ -54,9 +57,9 @@ export const handler: Handler = async (event, context) => {
                             layout: block.layout || "center",
                             backgroundColor: block.backgroundColor
                         };
-                    } catch (e) {
-                        logFunctionError("admin-gazette-generate:image-decode", e, context.awsRequestId);
-                        return { ...block, base64: undefined, url: block.content };
+                    } catch (error) {
+                        logFunctionError("admin-gazette-generate:image-decode", error, context.awsRequestId);
+                        throw error;
                     }
                 } else {
                     // External URL case (e.g., from image search)
