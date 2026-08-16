@@ -30,11 +30,13 @@ export default function ConversationalForm() {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const formRef = useRef<HTMLDivElement>(null);
+    const stepHeadingRef = useRef<HTMLHeadingElement>(null);
     // Ref vers l'input file permanent (hors AnimatePresence)
     const cvInputRef = useRef<HTMLInputElement>(null);
 
     const handleStepChange = (newStep: number) => {
         setStep(newStep);
+        window.setTimeout(() => stepHeadingRef.current?.focus(), 0);
     };
 
     const handleChange = (field: string, value: any) => {
@@ -92,6 +94,8 @@ export default function ConversationalForm() {
     if (isSubmitted) {
         return (
             <motion.div
+                role="status"
+                aria-live="polite"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-white rounded-3xl p-10 text-center shadow-warm border border-cream-100"
@@ -119,16 +123,16 @@ export default function ConversationalForm() {
             {/* Header avec progression */}
             <div className="bg-cream-100 p-6 md:p-8 flex items-center justify-between">
                 <div>
-                    <h3 className="font-serif text-xl md:text-2xl text-charcoal-900 font-bold mb-1">
+                    <h3 ref={stepHeadingRef} tabIndex={-1} className="font-serif text-xl md:text-2xl text-charcoal-900 font-bold mb-1 focus:outline-none">
                         {step === 1 && "Comment pouvons-nous vous aider ?"}
                         {step === 2 && "Dites-nous en plus"}
                         {step === 3 && "Vos coordonnées"}
                     </h3>
-                    <p className="text-sm text-charcoal-500">
+                    <p className="text-sm text-charcoal-500" aria-live="polite">
                         Étape {step} sur 3
                     </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2" aria-hidden="true">
                     {[1, 2, 3].map((s) => (
                         <div
                             key={s}
@@ -169,6 +173,7 @@ export default function ConversationalForm() {
                 {/* INPUT FILE PERSISTANT — TOUJOURS dans le DOM, HORS AnimatePresence.
                     Caché visuellement mais présent pour que new FormData(form) le capture. */}
                 <input
+                    id="contact-cv"
                     ref={cvInputRef}
                     type="file"
                     name="cv"
@@ -207,6 +212,7 @@ export default function ConversationalForm() {
                                             handleChange("subject", option.id);
                                             setTimeout(() => nextStep(), 200);
                                         }}
+                                        aria-pressed={formData.subject === option.id}
                                         className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 ${formData.subject === option.id
                                             ? "border-terracotta-500 bg-terracotta-50 text-terracotta-700"
                                             : "border-cream-200 hover:border-terracotta-200 hover:bg-cream-50"
@@ -233,15 +239,17 @@ export default function ConversationalForm() {
                         >
                             {/* Message — PAS de name= ici, le hidden mirror s'en charge */}
                             <div>
-                                <label className="block text-sm font-medium text-charcoal-700 mb-2">
+                                <label htmlFor="contact-message" className="block text-sm font-medium text-charcoal-700 mb-2">
                                     {formData.subject === 'recrutement' ? 'Votre motivation' : 'Votre message'} <span className="text-terracotta-500">*</span>
                                 </label>
                                 <textarea
+                                    id="contact-message"
                                     rows={6}
                                     value={formData.message}
                                     onChange={(e) => handleChange("message", e.target.value)}
                                     placeholder={formData.subject === 'recrutement' ? "Pourquoi souhaitez-vous nous rejoindre ?" : "Bonjour, je vous contacte car..."}
-                                    className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none transition-colors"
+                                    required
+                                    className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2 transition-colors"
                                 />
                             </div>
 
@@ -249,10 +257,11 @@ export default function ConversationalForm() {
                             {formData.subject === 'recrutement' && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-charcoal-700 mb-2">CV (PDF)</label>
+                                        <p className="block text-sm font-medium text-charcoal-700 mb-2">CV (PDF)</p>
                                         <button
                                             type="button"
                                             onClick={() => cvInputRef.current?.click()}
+                                            aria-controls="contact-cv"
                                             className="w-full px-4 py-3 bg-cream-50 border-2 border-dashed border-terracotta-200 rounded-xl flex items-center gap-2 text-terracotta-600 hover:bg-terracotta-50 transition-colors text-left"
                                         >
                                             <Upload className="w-5 h-5 shrink-0" />
@@ -291,23 +300,23 @@ export default function ConversationalForm() {
                             className="space-y-4"
                         >
                             {/* PAS de name= sur ces inputs — les hidden mirrors s'en chargent */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-charcoal-700 mb-2">Prénom *</label>
-                                    <input type="text" required value={formData.firstName} onChange={(e) => handleChange("firstName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                    <label htmlFor="contact-first-name" className="block text-sm font-medium text-charcoal-700 mb-2">Prénom *</label>
+                                    <input id="contact-first-name" type="text" autoComplete="given-name" required value={formData.firstName} onChange={(e) => handleChange("firstName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-charcoal-700 mb-2">Nom *</label>
-                                    <input type="text" required value={formData.lastName} onChange={(e) => handleChange("lastName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                    <label htmlFor="contact-last-name" className="block text-sm font-medium text-charcoal-700 mb-2">Nom *</label>
+                                    <input id="contact-last-name" type="text" autoComplete="family-name" required value={formData.lastName} onChange={(e) => handleChange("lastName", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2" />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-charcoal-700 mb-2">Email *</label>
-                                <input type="email" required value={formData.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                <label htmlFor="contact-email" className="block text-sm font-medium text-charcoal-700 mb-2">Email *</label>
+                                <input id="contact-email" type="email" autoComplete="email" required value={formData.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-charcoal-700 mb-2">Téléphone</label>
-                                <input type="tel" value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none" />
+                                <label htmlFor="contact-phone" className="block text-sm font-medium text-charcoal-700 mb-2">Téléphone</label>
+                                <input id="contact-phone" type="tel" autoComplete="tel" value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} className="w-full px-4 py-3 bg-cream-50 border-2 border-cream-200 rounded-xl focus:border-terracotta-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2" />
                             </div>
                         </motion.div>
                     )}

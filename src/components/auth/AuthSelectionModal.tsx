@@ -25,6 +25,15 @@ export default function AuthSelectionModal({
         return () => setMounted(false);
     }, []);
 
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") onClose();
+        };
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
+    }, [isOpen, onClose]);
+
     if (!mounted) return null;
 
     return createPortal(
@@ -32,6 +41,9 @@ export default function AuthSelectionModal({
             {isOpen && (
                 <>
                     <motion.div
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="auth-selection-title"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -45,8 +57,10 @@ export default function AuthSelectionModal({
                         className="fixed left-1/2 top-1/2 w-full max-w-sm bg-white rounded-2xl shadow-xl z-[10000] p-6 overflow-hidden"
                     >
                         <button
+                            type="button"
                             onClick={onClose}
                             className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                            aria-label="Fermer la fenêtre de connexion"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -59,7 +73,7 @@ export default function AuthSelectionModal({
                                 </svg>
                             </div>
 
-                            <h2 className="font-serif text-xl text-charcoal-900 mb-1">
+                            <h2 id="auth-selection-title" className="font-serif text-xl text-charcoal-900 mb-1">
                                 Espace Famille et Personnel
                             </h2>
                             <p className="text-sm text-charcoal-600 mb-6">
@@ -68,6 +82,7 @@ export default function AuthSelectionModal({
 
                             {/* Bouton Connexion */}
                             <motion.button
+                                type="button"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={onLogin}
@@ -88,6 +103,7 @@ export default function AuthSelectionModal({
 
                             {/* Bouton Inscription */}
                             <motion.button
+                                type="button"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={onSignup}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Article, getCategoryInfo } from "@/lib/articleStorage";
 import { getOptimizedImageSrc } from "@/lib/optimized-image";
@@ -10,6 +11,18 @@ interface ArticleModalProps {
 }
 
 export default function ArticleModal({ article, onClose }: ArticleModalProps) {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        if (!article) return;
+        closeButtonRef.current?.focus();
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") onClose();
+        };
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
+    }, [article, onClose]);
+
     if (!article) return null;
 
     const categoryInfo = getCategoryInfo(article.category);
@@ -26,6 +39,9 @@ export default function ArticleModal({ article, onClose }: ArticleModalProps) {
         <AnimatePresence>
             {article && (
                 <motion.div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="article-modal-title"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -58,8 +74,11 @@ export default function ArticleModal({ article, onClose }: ArticleModalProps) {
 
                             {/* Bouton fermer */}
                             <button
+                                ref={closeButtonRef}
+                                type="button"
                                 onClick={onClose}
                                 className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-charcoal-700 hover:bg-white transition-colors shadow-lg z-10"
+                                aria-label="Fermer l’article"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -82,7 +101,7 @@ export default function ArticleModal({ article, onClose }: ArticleModalProps) {
                             </p>
 
                             {/* Titre */}
-                            <h2 className="font-serif text-2xl md:text-3xl text-charcoal-900 mb-6">
+                            <h2 id="article-modal-title" className="font-serif text-2xl md:text-3xl text-charcoal-900 mb-6">
                                 {article.title}
                             </h2>
 

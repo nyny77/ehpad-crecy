@@ -331,10 +331,10 @@ export default function RecrutementPage() {
 
                 <div className="container-custom relative z-10">
                     <div className="text-center mb-16">
-                        <span className="text-forest-500 font-bold uppercase tracking-wider text-sm">Vos avantages</span>
-                        <h2 className="text-3xl md:text-5xl font-serif text-charcoal-900 mt-2 mb-6">
+                        <span className="text-forest-600 font-bold uppercase tracking-wider text-sm">Vos avantages</span>
+                        <h1 className="text-3xl md:text-5xl font-serif text-charcoal-900 mt-2 mb-6">
                             Pourquoi nous rejoindre ?
-                        </h2>
+                        </h1>
                         <p className="text-charcoal-600 max-w-2xl mx-auto text-lg leading-relaxed">
                             L'EHPAD de Crécy est un établissement <strong>public</strong> rattaché à la Fonction Publique Hospitalière,
                             offrant un cadre de travail privilégié en milieu rural.

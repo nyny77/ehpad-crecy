@@ -9,7 +9,7 @@ export default function EquipePage() {
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <>
+        <main>
             {/* Grille Bento des services */}
             <section ref={ref} className="section-padding !pt-40 md:!pt-48 bg-cream-100 texture-paper relative overflow-hidden">
                 {/* Formes organiques d'arrière-plan */}
@@ -17,6 +17,7 @@ export default function EquipePage() {
                 <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-forest-100/30 rounded-full blur-3xl translate-y-1/3 translate-x-1/4 pointer-events-none" />
 
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
+                    <h1 className="mb-10 text-center font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Notre équipe</h1>
                     <BentoGrid />
                 </div>
             </section>
@@ -69,6 +70,6 @@ export default function EquipePage() {
                     </motion.div>
                 </div>
             </section>
-        </>
+        </main>
     );
 }

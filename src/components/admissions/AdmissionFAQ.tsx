@@ -68,8 +68,12 @@ export default function AdmissionFAQ() {
                             className="bg-white border border-cream-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                         >
                             <button
+                                type="button"
                                 onClick={() => toggleFAQ(index)}
-                                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                                aria-expanded={openIndex === index}
+                                aria-controls={`faq-answer-${index}`}
+                                id={`faq-question-${index}`}
+                                className="w-full flex items-center justify-between p-6 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-terracotta-400"
                             >
                                 <span className="font-serif text-xl font-bold text-charcoal-900 pr-8">
                                     {faq.question}
@@ -85,6 +89,9 @@ export default function AdmissionFAQ() {
                             <AnimatePresence>
                                 {openIndex === index && (
                                     <motion.div
+                                        id={`faq-answer-${index}`}
+                                        role="region"
+                                        aria-labelledby={`faq-question-${index}`}
                                         initial={{ height: 0, opacity: 0 }}
                                         animate={{ height: "auto", opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}

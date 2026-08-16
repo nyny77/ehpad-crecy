@@ -22,6 +22,9 @@ export default function RegistrationSuccessModal({ isOpen, onClose }: Registrati
                     {/* Modal */}
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
                         <motion.div
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="registration-success-title"
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -39,7 +42,7 @@ export default function RegistrationSuccessModal({ isOpen, onClose }: Registrati
                                 <div className="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center mb-4 shadow-lg ring-4 ring-amber-100 relative z-10">
                                     <span className="text-4xl">🎉</span>
                                 </div>
-                                <h3 className="font-serif text-2xl font-bold text-charcoal-900">
+                                <h3 id="registration-success-title" className="font-serif text-2xl font-bold text-charcoal-900">
                                     Bienvenue à bord !
                                 </h3>
                             </div>
@@ -73,6 +76,7 @@ export default function RegistrationSuccessModal({ isOpen, onClose }: Registrati
                                 </div>
 
                                 <button
+                                    type="button"
                                     onClick={onClose}
                                     className="w-full py-4 px-6 rounded-xl font-bold text-white shadow-lg shadow-terracotta-500/20 hover:shadow-xl hover:shadow-terracotta-500/30 transform hover:-translate-y-1 transition-all duration-200 text-lg"
                                     style={{ background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)' }}

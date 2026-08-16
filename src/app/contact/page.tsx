@@ -7,12 +7,13 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function ContactPage() {
     return (
-        <>
+        <main>
             {/* Hero compact */}
             
             {/* Section Contact */}
             <section className="pt-32 md:pt-40 section-padding bg-cream-100">
                 <div className="container-custom">
+                    <h1 className="mb-10 font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Contactez l’EHPAD de Crécy</h1>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                         {/* Informations de contact */}
                         <motion.div
@@ -123,6 +124,7 @@ export default function ContactPage() {
                             <div className="mt-8">
                                 <div className="relative h-48 bg-cream-200 rounded-2xl overflow-hidden">
                                     <iframe
+                                        title="Localisation de l’EHPAD de Crécy-la-Chapelle"
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.5!2d2.9137!3d48.8575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61287a1c1be67%3A0x9c95b4a3b0e6a7d!2s18%20Rue%20de%20la%20Chapelle%2C%2077580%20Cr%C3%A9cy-la-Chapelle!5e0!3m2!1sfr!2sfr!4v1707239400000"
                                         width="100%"
                                         height="100%"
@@ -179,7 +181,7 @@ export default function ContactPage() {
                 <div className="container-custom">
                     <ScrollReveal direction="up">
                         <div className="text-center mb-12">
-                            <span className="text-forest-500 font-medium">FAQ</span>
+                            <span className="text-forest-600 font-medium">FAQ</span>
                             <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
                                 Questions fréquentes
                             </h2>
@@ -229,6 +231,6 @@ export default function ContactPage() {
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     );
 }

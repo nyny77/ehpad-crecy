@@ -7,6 +7,7 @@ export default function LivretAccueilPage() {
   return (
     <main className="min-h-screen pt-24 md:pt-32 pb-12 bg-cream-100">
       <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
+        <h1 className="mb-6 font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Livret d’accueil</h1>
         {/* Le lecteur beaucoup plus grand (90vh de haut, fond gris très clair) */}
         <motion.div 
             initial={{ opacity: 0, y: 20 }}

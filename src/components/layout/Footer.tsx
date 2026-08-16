@@ -15,9 +15,9 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Colonne 1 : À propos */}
                     <div className="lg:col-span-2">
-                        <h3 className="font-serif text-2xl font-semibold text-white mb-4">
+                        <h2 className="font-serif text-2xl font-semibold text-white mb-4">
                             {EHPAD_INFO.name}
-                        </h3>
+                        </h2>
                         <p className="text-cream-300 mb-6 max-w-md leading-relaxed">
                             {EHPAD_INFO.slogan}
                         </p>
@@ -29,9 +29,9 @@ export default function Footer() {
 
                     {/* Colonne 2 : Liens rapides */}
                     <div>
-                        <h4 className="font-serif text-lg font-semibold text-white mb-4">
+                        <h2 className="font-serif text-lg font-semibold text-white mb-4">
                             Navigation
-                        </h4>
+                        </h2>
                         <ul className="space-y-3">
                             {NAV_LINKS.flatMap(item => item.href ? [{ label: item.label, href: item.href }] : (item.subLinks || [])).slice(0, 8).map((link) => (
                                 <li key={link.href}>
@@ -49,9 +49,9 @@ export default function Footer() {
 
                     {/* Colonne 3 : Contact */}
                     <div>
-                        <h4 className="font-serif text-lg font-semibold text-white mb-4">
+                        <h2 className="font-serif text-lg font-semibold text-white mb-4">
                             Nous contacter
-                        </h4>
+                        </h2>
                         <ul className="space-y-4 text-cream-300">
                             <li className="flex items-start gap-3">
                                 <svg
@@ -141,7 +141,7 @@ export default function Footer() {
                             Confidentialité
                         </Link>
                         <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors">
-                            Accessibilité
+                            Accessibilité : partiellement conforme — 95,2 %
                         </Link>
                         <span className="flex items-center gap-2">
                             <span className="w-2 h-2 bg-forest-500 rounded-full animate-pulse" />

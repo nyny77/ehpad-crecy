@@ -252,6 +252,7 @@ export default function HistoirePage() {
                                     src="/videos/balade-crecy.mp4"
                                     poster="/images/history/canal.jpg"
                                     title="Balade au fil de l'eau"
+                                    captionsSrc="/videos/balade-crecy.fr.vtt"
                                     className="rounded-[2rem]"
                                 />
                                 {/* Titre sous la vidéo */}
@@ -264,6 +265,17 @@ export default function HistoirePage() {
                         </div>
 
                     </div>
+
+                    <details className="mt-8 rounded-2xl border border-cream-300 bg-white p-6 text-charcoal-700 shadow-soft">
+                        <summary className="cursor-pointer font-bold text-charcoal-900">Lire la transcription de la balade au fil de l’eau</summary>
+                        <div className="mt-5 space-y-4 leading-relaxed">
+                            <p>Crécy-la-Chapelle est une petite ville de Seine-et-Marne nichée dans une boucle du Grand Morin. Avec un peu plus de 4 700 habitants, elle est traversée par l’eau et entourée de verdure, ce qui lui vaut le surnom de « Venise de la Brie ».</p>
+                            <p>À l’origine, Crécy-en-Brie et La Chapelle-sous-Crécy étaient deux communes séparées. Elles ont fusionné en 1972. La ville, marquée par le Moyen Âge, ses remparts, ses foires et ses échanges, se trouvait entre Champagne et domaine royal. Le Grand Morin faisait tourner les moulins, permettait de laver les peaux et de transporter les marchandises.</p>
+                            <p>La collégiale Notre-Dame de l’Assomption est un joyau gothique dont la voûte est portée par douze ogives. L’église Saint-Georges fut reconstruite au XVIIIe siècle dans le domaine du château, à l’initiative du duc de Penthièvre.</p>
+                            <p>Crécy est aussi une ville d’art, fréquentée notamment par Corot, Dunoyer de Segonzac et Altmann. Autour du centre se trouvent cinq hameaux : Mongrolle, Montbarbin, Férolles, Libernon et Serbonne.</p>
+                            <p>Le Moulin Jaune, jardin onirique créé par Slava Polunin, est classé Jardin remarquable. Le Grand Morin invite également au canoë-kayak, à la marche et au VTT. Crécy-la-Chapelle est présentée comme une ville à taille humaine, médiévale et vivante, où l’eau et la nature imposent un autre rythme.</p>
+                        </div>
+                    </details>
                 </motion.div>
 
                 {/* Final Call to Action Block */}

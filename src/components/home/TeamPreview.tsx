@@ -81,13 +81,11 @@ export default function TeamPreview() {
                         </div>
 
                         <div className="mt-10">
-                            <Link href="/histoire">
-                                <button className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-full font-medium shadow-lg hover:brightness-110 transition-all hover:scale-105">
+                            <Link href="/histoire" className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-full font-medium shadow-lg hover:brightness-110 transition-all hover:scale-105">
                                     Découvrir toute l&apos;histoire
                                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </button>
                             </Link>
                         </div>
                     </motion.div>

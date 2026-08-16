@@ -70,7 +70,7 @@ export default function PricingSection({
 
                 {/* Room Type Toggle */}
                 <div className="flex justify-center mb-12">
-                    <div className="relative inline-flex p-[3px] rounded-full overflow-hidden shadow-lg">
+                    <div className="relative inline-flex p-[3px] rounded-full overflow-hidden shadow-lg" role="group" aria-label="Type de chambre">
                         <motion.div 
                             className="absolute top-1/2 left-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_280deg,#C80040_360deg)] opacity-90 origin-center"
                             style={{ x: '-50%', y: '-50%' }}
@@ -79,13 +79,17 @@ export default function PricingSection({
                         />
                         <div className="bg-white p-1.5 rounded-full inline-flex relative z-10 w-full h-full">
                             <button
+                                type="button"
                                 onClick={() => setRoomType("simple")}
+                                aria-pressed={roomType === "simple"}
                                 className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "simple" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"}`}
                             >
                                 Chambre Simple
                             </button>
                             <button
+                                type="button"
                                 onClick={() => setRoomType("double")}
+                                aria-pressed={roomType === "double"}
                                 className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold transition-colors ${roomType === "double" ? "text-white" : "text-charcoal-600 hover:text-charcoal-900"}`}
                             >
                                 Chambre Double
@@ -125,15 +129,17 @@ export default function PricingSection({
 
                                 <div className="space-y-8">
                                     {/* GIR Selection */}
-                                    <div>
-                                        <label className="block text-sm font-bold text-charcoal-800 mb-3">
+                                    <fieldset>
+                                        <legend className="block text-sm font-bold text-charcoal-800 mb-3">
                                             1. Niveau d'autonomie (GIR)
-                                        </label>
+                                        </legend>
                                         <div className="grid grid-cols-3 gap-2">
                                             {currentPricing.dependanceRates.map((rate, idx) => (
                                                 <button
+                                                    type="button"
                                                     key={idx}
                                                     onClick={() => setSelectedGir(idx)}
+                                                    aria-pressed={selectedGir === idx}
                                                     className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${
                                                         selectedGir === idx 
                                                         ? 'bg-forest-50 border-forest-500 text-forest-700 shadow-sm' 
@@ -144,16 +150,18 @@ export default function PricingSection({
                                                 </button>
                                             ))}
                                         </div>
-                                    </div>
+                                    </fieldset>
 
                                     {/* APA Selection */}
-                                    <div>
-                                        <label className="block text-sm font-bold text-charcoal-800 mb-3">
+                                    <fieldset>
+                                        <legend className="block text-sm font-bold text-charcoal-800 mb-3">
                                             2. Êtes-vous éligible à l'APA ?
-                                        </label>
+                                        </legend>
                                         <div className="grid grid-cols-2 gap-2">
                                             <button
+                                                type="button"
                                                 onClick={() => setHasApa(true)}
+                                                aria-pressed={hasApa}
                                                 className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border-2 ${
                                                     hasApa 
                                                     ? 'bg-forest-50 border-forest-500 text-forest-700 shadow-sm' 
@@ -163,7 +171,9 @@ export default function PricingSection({
                                                 Oui (Cas le plus fréquent)
                                             </button>
                                             <button
+                                                type="button"
                                                 onClick={() => setHasApa(false)}
+                                                aria-pressed={!hasApa}
                                                 className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border-2 ${
                                                     !hasApa 
                                                     ? 'bg-forest-50 border-forest-500 text-forest-700 shadow-sm' 
@@ -176,7 +186,7 @@ export default function PricingSection({
                                         <p className="text-xs text-charcoal-500 mt-3 italic">
                                             L'APA couvre la majeure partie du tarif dépendance pour les GIR 1 à 4.
                                         </p>
-                                    </div>
+                                    </fieldset>
                                 </div>
                             </div>
 
@@ -188,7 +198,7 @@ export default function PricingSection({
                                     Estimation du Reste à charge ({currentPricing.name})
                                 </h4>
                                 
-                                <div className="text-center relative z-10 mb-8 mt-4">
+                                <div className="text-center relative z-10 mb-8 mt-4" aria-live="polite" aria-atomic="true">
                                     <motion.div 
                                         key={`${roomType}-${selectedGir}-${hasApa}`}
                                         initial={{ scale: 0.9, opacity: 0 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useId } from "react";
 import { motion } from "framer-motion";
 
 interface WaveSeparatorProps {
@@ -11,6 +12,7 @@ interface WaveSeparatorProps {
 
 export default function WaveSeparator({ position = "top", className = "text-white", showBorder = true }: WaveSeparatorProps) {
     const pathname = usePathname();
+    const gradientId = useId().replace(/:/g, "");
 
     if (position === "top") {
         // Wave pointing UP - sits above the section, intrudes into previous section
@@ -20,13 +22,15 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                 style={{ transform: 'translateY(-100%)' }}
             >
                 <svg
+                    aria-hidden="true"
+                    focusable="false"
                     className="w-full h-12 sm:h-16 md:h-20"
                     viewBox="0 0 1440 100"
                     preserveAspectRatio="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <defs>
-                        <linearGradient id="waveSeparatorGradientTop" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <linearGradient id={`${gradientId}-top`} x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stopColor="#85002A" />
                             <stop offset="50%" stopColor="#C80040" />
                             <stop offset="100%" stopColor="#FF85A3" />
@@ -41,7 +45,7 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                         <motion.path
                             key={pathname}
                             fill="none"
-                            stroke="url(#waveSeparatorGradientTop)"
+                            stroke={`url(#${gradientId}-top)`}
                             strokeWidth="15"
                             d="M0,50 Q360,0 720,50 T1440,50"
                             initial={{ pathLength: 0 }}
@@ -61,13 +65,15 @@ export default function WaveSeparator({ position = "top", className = "text-whit
     return (
         <div className={`wave-separator absolute bottom-0 left-0 w-full z-10 pointer-events-none ${className}`}>
             <svg
+                aria-hidden="true"
+                focusable="false"
                 className="w-full h-12 sm:h-16 md:h-20"
                 viewBox="0 0 1440 100"
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <defs>
-                    <linearGradient id="waveSeparatorGradientBottom" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <linearGradient id={`${gradientId}-bottom`} x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#85002A" />
                         <stop offset="50%" stopColor="#C80040" />
                         <stop offset="100%" stopColor="#FF85A3" />
@@ -82,7 +88,7 @@ export default function WaveSeparator({ position = "top", className = "text-whit
                     <motion.path
                         key={pathname}
                         fill="none"
-                        stroke="url(#waveSeparatorGradientBottom)"
+                        stroke={`url(#${gradientId}-bottom)`}
                         strokeWidth="15"
                         d="M0,0 Q360,100 720,50 T1440,50"
                         initial={{ pathLength: 0 }}

@@ -100,12 +100,14 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                         {/* Bouton supprimer (admin) */}
                         {isAdmin && onDelete && (
                             <button
+                                type="button"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     onDelete();
                                 }}
                                 className="absolute top-4 right-4 w-8 h-8 bg-terracotta-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-terracotta-600"
                                 title="Supprimer"
+                                aria-label={`Supprimer l’article ${article.title}`}
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -155,6 +157,7 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                         <div className="flex items-center justify-between">
                             {/* Bouton Favorite */}
                             <motion.button
+                                type="button"
                                 whileTap={{ scale: 0.9 }}
                                 onClick={handleToggleFavorite}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-full transition-all ${isFavorite
@@ -162,6 +165,8 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                                     : 'bg-cream-100 text-charcoal-500 hover:bg-terracotta-50 hover:text-terracotta-500'
                                     }`}
                                 title={isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+                                aria-label={`${isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"} : ${article.title}`}
+                                aria-pressed={isFavorite}
                             >
                                 <motion.svg
                                     animate={isFavorite ? { scale: [1, 1.3, 1] } : {}}
@@ -177,7 +182,9 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
                             {/* Lire plus */}
                             {onClick && (
                                 <button
+                                    type="button"
                                     onClick={onClick}
+                                    aria-label={`Lire l’article ${article.title}`}
                                     className="text-terracotta-500 font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all"
                                 >
                                     Lire la suite

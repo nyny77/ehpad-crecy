@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ArrowDown, ArrowUp, ImagePlus, LoaderCircle, Pencil, RotateCcw, Save, Trash2, Upload, X } from "lucide-react";
 import type { GalleryImage } from "@/lib/gallery";
 import { adminFetch } from "@/lib/admin-api";
@@ -15,6 +15,13 @@ interface PendingPhoto {
 }
 
 const bytesToMb = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} Mo`;
+const isUsefulAlt = (value: string) => {
+    const normalized = value.trim();
+    return normalized.length >= 12
+        && !/^(photo|image|illustration|aperçu)(?:\s|[-_:]|\d|$)/i.test(normalized)
+        && !/^(?:img|dsc|pxl|1000)\w*$/i.test(normalized.replace(/\s+/g, ""));
+};
+const isAcceptableAlt = (value: string) => !value.trim() || isUsefulAlt(value);
 
 function blobToBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -42,7 +49,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
             for (const file of selected) {
                 validateSourceImage(file);
                 const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
-                next.push({ id: `${file.name}-${file.lastModified}-${Math.random()}`, file, preview: URL.createObjectURL(file), title: baseName, alt: baseName });
+                next.push({ id: `${file.name}-${file.lastModified}-${Math.random()}`, file, preview: URL.createObjectURL(file), title: baseName, alt: "" });
             }
             setPending((current) => [...current, ...next]);
             setMessage(null);
@@ -62,8 +69,8 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     };
 
     const uploadAll = async () => {
-        if (pending.some((item) => !item.title.trim() || !item.alt.trim())) {
-            setMessage({ type: "error", text: "Un titre et une description sont nécessaires pour chaque photo." });
+        if (pending.some((item) => !item.title.trim() || !isAcceptableAlt(item.alt))) {
+            setMessage({ type: "error", text: "Chaque photo doit avoir un titre. La description peut rester vide si l’image est purement illustrative ; sinon, elle doit être précise et comporter au moins 12 caractères." });
             return;
         }
         setUploading(true);
@@ -107,6 +114,10 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     };
 
     const saveEdit = async (photo: GalleryImage) => {
+        if (!editValues.title.trim() || !isAcceptableAlt(editValues.alt)) {
+            setMessage({ type: "error", text: "Saisissez un titre. Laissez la description vide pour une image illustrative ou rédigez une description précise d’au moins 12 caractères." });
+            return;
+        }
         setProcessingId(photo.id);
         try {
             await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "update", id: photo.id, ...editValues }) });
@@ -153,7 +164,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                                 <img src={item.preview} alt="Aperçu avant publication" className="w-full h-32 object-cover rounded-xl" />
                                 <div className="grid sm:grid-cols-2 gap-3">
                                     <label className="text-sm font-medium text-charcoal-700">Titre<input value={item.title} onChange={(e) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, title: e.target.value } : entry))} className="mt-1 w-full px-3 py-2.5 rounded-xl border border-cream-300 bg-white" /></label>
-                                    <label className="text-sm font-medium text-charcoal-700">Description accessible<input value={item.alt} onChange={(e) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, alt: e.target.value } : entry))} className="mt-1 w-full px-3 py-2.5 rounded-xl border border-cream-300 bg-white" /></label>
+                                    <label className="text-sm font-medium text-charcoal-700">Description accessible (facultative)<input value={item.alt} onChange={(e) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, alt: e.target.value } : entry))} className="mt-1 w-full px-3 py-2.5 rounded-xl border border-cream-300 bg-white" /><span className="mt-1 block text-xs text-charcoal-500">Laisser vide si la photo est uniquement illustrative.</span></label>
                                     <p className="text-xs text-charcoal-500 sm:col-span-2">Original : {bytesToMb(item.file.size)}</p>
                                 </div>
                                 <button onClick={() => removePending(item.id)} className="self-start p-2 rounded-full text-charcoal-500 hover:bg-red-50 hover:text-red-600" aria-label="Retirer"><Trash2 size={19} /></button>
@@ -163,7 +174,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                     </div>
                 )}
             </div>
-            {message && <div className={`rounded-2xl p-4 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
+            {message && <div role={message.type === "error" ? "alert" : "status"} aria-live="polite" className={`rounded-2xl p-4 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
             
             {selectedIds.size > 0 && (
                 <div className="bg-terracotta-50 rounded-2xl p-4 border border-terracotta-200 flex flex-wrap items-center justify-between gap-4 sticky top-4 z-10 shadow-sm">

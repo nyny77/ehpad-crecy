@@ -15,7 +15,7 @@ export default function VisitePage() {
                     <div className="space-y-6">
                         <div className="flex items-end justify-between">
                             <div>
-                                <h2 className="text-3xl font-serif text-charcoal-900 mb-2">Notre Établissement</h2>
+                                <h1 className="text-3xl font-serif text-charcoal-900 mb-2">Visitez notre établissement</h1>
                                 <p className="text-charcoal-600 max-w-2xl">
                                     Nous mettons tout en œuvre pour vous offrir prochainement une immersion complète.
                                 </p>

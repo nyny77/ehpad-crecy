@@ -32,7 +32,7 @@ interface ServiceDetailClientProps {
 export default function ServiceDetailClient({ service, prevService, nextService }: ServiceDetailClientProps) {
 
     return (
-        <>
+        <main>
             {/* Hero du service - Design Organique Refondu */}
             <section className="relative pt-32 pb-24 overflow-hidden bg-cream-100 texture-paper">
                 {/* Formes organiques d'arrière-plan */}
@@ -221,14 +221,8 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                                 <p className="text-xl text-charcoal-700 leading-relaxed mb-10 font-light">
                                     {service.shortDescription}
                                 </p>
-                                <Link href="/contact">
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className="btn-primary"
-                                    >
+                                <Link href="/contact" className="btn-primary inline-flex">
                                         Nous contacter
-                                    </motion.button>
                                 </Link>
                             </motion.div>
                         </div>
@@ -357,9 +351,11 @@ export default function ServiceDetailClient({ service, prevService, nextService 
 
                         <Link
                             href="/equipe"
+                            aria-label="Retour à la liste des services"
                             className="text-charcoal-500 hover:text-terracotta-500 transition-colors"
                         >
                             <svg
+                                aria-hidden="true"
                                 className="w-8 h-8"
                                 fill="none"
                                 stroke="currentColor"
@@ -403,6 +399,6 @@ export default function ServiceDetailClient({ service, prevService, nextService 
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     );
 }

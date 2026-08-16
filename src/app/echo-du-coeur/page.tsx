@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import gazetteData from "@/lib/data/gazette.json";
 import { Calendar } from "lucide-react";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
+import Link from "next/link";
 
 export default function EchoDuCoeurPage() {
     // Support backward compatibility
@@ -14,6 +15,10 @@ export default function EchoDuCoeurPage() {
 
     return (
         <main className="min-h-screen pt-24 md:pt-32 pb-12 bg-cream-100 print:bg-white print:pt-0 print:pb-0">
+            <div className="container-custom px-4 mb-8 print:hidden">
+                <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900">Le Petit Écho du Cœur</h1>
+                <p className="mt-3 text-charcoal-600">Le journal de la vie de l’établissement, rédigé avec les résidents.</p>
+            </div>
             <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 print:px-0 print:gap-0">
                 {/* Main View */}
                 <motion.div
@@ -32,11 +37,21 @@ export default function EchoDuCoeurPage() {
                                 />
                             </div>
                         ) : (
-                            <iframe
-                                src={selectedGazette.file}
-                                className="w-full h-full rounded-2xl border-none bg-white min-h-[600px] lg:min-h-0 print:hidden"
-                                title="Le Petit Echo du Coeur PDF"
-                            />
+                            <div className="flex h-full min-h-[600px] flex-col gap-3 print:hidden">
+                                {selectedGazette.accessibleUrl && (
+                                    <div className="flex flex-col gap-3 rounded-2xl bg-white p-4 text-charcoal-700 sm:flex-row sm:items-center sm:justify-between">
+                                        <p>Ce numéro PDF est également proposé dans une version textuelle compatible avec les lecteurs d’écran.</p>
+                                        <Link href={selectedGazette.accessibleUrl} className="inline-flex shrink-0 justify-center rounded-full bg-terracotta-600 px-5 py-2.5 font-semibold text-white hover:bg-terracotta-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900">
+                                            Lire la version accessible
+                                        </Link>
+                                    </div>
+                                )}
+                                <iframe
+                                    src={selectedGazette.file}
+                                    className="w-full flex-1 rounded-2xl border-none bg-white"
+                                    title={`Le Petit Écho du Cœur — ${selectedGazette.title} — version PDF`}
+                                />
+                            </div>
                         )
                     ) : (
                         <div className="w-full h-full min-h-[400px] rounded-2xl bg-charcoal-800 flex items-center justify-center text-charcoal-400 print:hidden">
@@ -64,7 +79,9 @@ export default function EchoDuCoeurPage() {
                                 return (
                                     <li key={i}>
                                         <button
+                                            type="button"
                                             onClick={() => setSelectedGazette(g)}
+                                            aria-pressed={isSelected}
                                             className={`w-full text-left px-4 py-4 rounded-2xl transition-all border ${
                                                 isSelected 
                                                 ? 'bg-terracotta-600 text-white border-terracotta-600 shadow-md transform scale-[1.02]' 

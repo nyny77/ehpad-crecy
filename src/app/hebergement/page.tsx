@@ -8,6 +8,7 @@ export const metadata = {
 export default function HebergementPage() {
     return (
         <main>
+            <h1 className="sr-only">Hébergement et tarifs</h1>
             <HebergementClient />
         </main>
     );

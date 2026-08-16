@@ -62,12 +62,10 @@ export default function CTASection() {
                         transition={{ duration: 0.6, delay: 0.3 }}
                         className="flex flex-col sm:flex-row items-center justify-center gap-4"
                     >
-                        <Link href="/contact">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center justify-center px-8 py-4 bg-white text-terracotta-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
-                            >
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center px-8 py-4 bg-white text-terracotta-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        >
                                 Programmer une visite
                                 <svg
                                     className="ml-2 w-5 h-5"
@@ -82,15 +80,12 @@ export default function CTASection() {
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                     />
                                 </svg>
-                            </motion.button>
                         </Link>
 
-                        <a href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-semibold rounded-full border-2 border-white/50 hover:border-white hover:bg-white/10 transition-all duration-300"
-                            >
+                        <a
+                            href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}
+                            className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-semibold rounded-full border-2 border-white/50 hover:border-white hover:bg-white/10 transition-all duration-300"
+                        >
                                 <svg
                                     className="mr-2 w-5 h-5"
                                     fill="none"
@@ -105,7 +100,6 @@ export default function CTASection() {
                                     />
                                 </svg>
                                 {EHPAD_INFO.phone}
-                            </motion.button>
                         </a>
                     </motion.div>
 

@@ -144,7 +144,7 @@ export default function HebergementClient() {
                             transition={{ duration: 0.6 }}
                             className="flex flex-col"
                         >
-                            <span className="text-forest-500 font-medium uppercase tracking-wider text-sm mb-2">Nos chambres</span>
+                            <span className="text-forest-600 font-medium uppercase tracking-wider text-sm mb-2">Nos chambres</span>
                             
                             {/* Toggle Switch */}
                             <div className="flex mb-6">
@@ -239,12 +239,8 @@ export default function HebergementClient() {
                                 href={EHPAD_INFO.viaTrajectoireUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-terracotta-500 text-white font-semibold rounded-full shadow-lg hover:bg-terracotta-600 transition-colors"
                             >
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center gap-2 px-8 py-4 bg-terracotta-500 text-white font-semibold rounded-full shadow-lg hover:bg-terracotta-600 transition-colors"
-                                >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
@@ -252,19 +248,12 @@ export default function HebergementClient() {
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
-                                </motion.button>
                             </a>
-                            <Link href="/admissions">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center gap-2 px-8 py-4 bg-white text-forest-600 font-semibold rounded-full shadow-lg"
-                                >
+                            <Link href="/admissions" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-forest-600 font-semibold rounded-full shadow-lg">
                                     En savoir plus sur l&apos;admission
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                </motion.button>
                             </Link>
                         </div>
                         <p className="text-forest-200 text-sm mt-6">

@@ -190,29 +190,17 @@ export default function HeroSection({ eventFiles = [] }: HeroSectionProps) {
                                     transition={{ duration: 0.6, delay: 1.8 }}
                                     className="flex flex-col sm:flex-row items-center justify-center gap-6"
                                 >
-                                    <Link href="/contact" className="w-full sm:w-auto group">
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="w-full sm:w-auto relative overflow-hidden bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-lg hover:brightness-110 shadow-terracotta-500/30"
-                                        >
+                                    <Link href="/contact" className="w-full sm:w-auto group relative overflow-hidden bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white px-8 py-4 rounded-xl font-medium text-lg transition-all shadow-lg hover:brightness-110 shadow-terracotta-500/30">
                                             <span className="relative z-10 flex items-center justify-center gap-2">
                                                 Venir nous rencontrer
                                                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
                                             </span>
-                                        </motion.button>
                                     </Link>
 
-                                    <Link href="/hebergement" className="w-full sm:w-auto">
-                                        <motion.button
-                                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="btn-secondary w-full sm:w-auto text-lg"
-                                        >
+                                    <Link href="/hebergement" className="btn-secondary w-full sm:w-auto text-lg text-center">
                                             Découvrir nos tarifs
-                                        </motion.button>
                                     </Link>
                                 </motion.div>
                             </div>

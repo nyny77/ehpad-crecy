@@ -26,7 +26,7 @@ Audit réalisé sur le dépôt et sur un build de production le 16 août 2026.
 ### Socle actuel
 
 - Next.js 16, React 19 et export statique pour Netlify ;
-- 41 pages statiques générées, incluant les fiches dynamiques de l'équipe, `robots.txt` et le sitemap ;
+- 45 pages statiques générées, incluant les fiches dynamiques de l'équipe, les documents d'accessibilité, le rapport d'audit, la Gazette accessible, `robots.txt` et le sitemap ;
 - 14 fonctions Netlify pour l'administration, les médias, les comptes, le Postier et le contrôle de santé ;
 - PWA installable avec page hors connexion ;
 - authentification Netlify Identity et contrôle du rôle `admin` sur les principales fonctions d'administration ;
@@ -121,14 +121,19 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 - navigation principale et menu mobile mieux utilisables au clavier ;
 - états ARIA du menu, de l'assistant et de la galerie ;
 - fermeture de l'assistant et de la visionneuse avec la touche Échap ;
+- sémantique et états accessibles renforcés sur le simulateur tarifaire, la FAQ, les modales et les boutons visuels ;
+- suppression des liens contenant des boutons imbriqués ;
 - titres `h1` ajoutés sur les pages Accessibilité et Galerie ;
 - métadonnées ajoutées aux pages Animation, Gazette, Familles, Visite et Livret d'accueil ;
 - métadonnées dynamiques pour les fiches de l'équipe ;
 - sitemap, `robots.txt`, cartes sociales et données structurées `NursingHome` ;
 - correction du lien `/tarifs`, des anciens liens `/vie-sociale` et du numéro du chatbot ;
-- cinq tests automatiques de non-régression ;
+- six tests automatiques de non-régression, dont des contrôles d'accessibilité structurelle ;
 - CI GitHub : lint, TypeScript, tests et build à chaque push ou pull request ;
 - point de santé Netlify et procédure de supervision documentée.
+- audit interne RGAA 4.1.2 terminé : 95,2 % (80 critères respectés sur 84 applicables), statut « partiellement conforme », déclaration et rapport détaillé publiés ;
+- premiers tests NVDA et zoom réussis, PDF inspectés, Gazette accessible et vidéo locale sous-titrée ;
+- la galerie dispose d'une description globale ; les images purement illustratives ne génèrent plus d'annonces répétitives et les vidéos sont déclarées sous-titrées.
 
 ## 4. Constats et risques issus de l'audit
 
@@ -167,15 +172,16 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 ### P1 — confiance, contenu et accessibilité
 
 - les tarifs d'avril 2026 sont bien publiés en ligne ; une ancienne copie technique marquée 2025 subsiste toutefois dans `src/lib/constants.ts` et devra être supprimée ou reliée à la source tarifaire 2026 pour éviter une régression future ;
-- la déclaration d'accessibilité annonce une conformité partielle sans résultat d'audit, taux de conformité ni échantillon détaillé ;
-- les menus déroulants, fenêtres modales, visionneuses et chatbot doivent être testés complètement au clavier et avec lecteur d'écran ;
-- plusieurs boutons uniquement visuels n'ont pas encore de libellé accessible explicite ;
-- les vidéos et contenus tiers doivent disposer de sous-titres ou transcriptions ;
-- les textes alternatifs génériques de type « Photo privée 1 » ne décrivent pas réellement le contenu.
+- la déclaration d'accessibilité affiche désormais le statut « partiellement conforme — 95,2 % » et renvoie vers le rapport d'audit détaillé ;
+- les menus déroulants, fenêtres modales, visionneuses, simulateur et chatbot ont reçu une correction technique ; une recette NVDA authentifiée de l'administration et un test VoiceOver restent des améliorations recommandées ;
+- les boutons visuels repérés dans les parcours principaux ont reçu un libellé accessible ; le contrôle exhaustif de l'échantillon reste à faire ;
+- la vidéo locale dispose désormais de sous-titres et d'une transcription ; le sous-titrage du reportage Facebook a été vérifié par l'utilisateur ;
+- les textes alternatifs génériques de type « Photo privée 1 » sont neutralisés au rendu ; une description globale présente l'album et les descriptions individuelles restent possibles lorsqu'une image transmet une information utile ;
+- le livret PDF est balisé ; le PDF image de la Gazette dispose désormais d'une alternative HTML structurée.
 
 ### P1 — qualité et exploitation
 
-- cinq tests de structure et de non-régression sont présents ; les tests métier d'intégration et les parcours E2E restent à créer ;
+- six tests de structure et de non-régression sont présents ; les tests métier d'intégration et les parcours E2E restent à créer ;
 - une vérification continue GitHub Actions contrôle désormais lint, TypeScript, tests et build ;
 - plusieurs règles ESLint importantes sont désactivées, dont les règles des hooks React ;
 - les actions courantes du CMS génèrent de très nombreux commits sur la branche principale ;
@@ -248,10 +254,14 @@ Deux choix cohérents sont possibles :
 - [ ] ajouter parcours E2E : admission, contact, connexion admin, Postier, impression et suppression ;
 - [x] mettre en place une CI : lint, typecheck, tests, build et contrôle des liens ;
 - [ ] ajouter journal d'audit, alertes d'erreur et procédure de restauration ;
-- [ ] réaliser un audit RGAA réel et corriger d'abord les parcours essentiels ;
-- [ ] ajouter `h1`, labels, gestion du focus, fermeture par Échap et navigation clavier ;
-- [ ] fournir sous-titres, transcriptions et descriptions alternatives utiles ;
-- [ ] mettre la déclaration d'accessibilité au format attendu après audit.
+- [x] réaliser l'audit interne RGAA sur un échantillon représentatif et corriger les parcours essentiels ;
+- [ ] organiser une contre-vérification indépendante si une assurance supplémentaire est souhaitée ;
+- [x] ajouter les `h1`, labels, états ARIA, premières gestions du focus, fermeture par Échap et navigation clavier sur les composants prioritaires ;
+- [x] fournir les sous-titres et la transcription de la vidéo locale ;
+- [x] publier une alternative HTML structurée pour la Gazette PDF de janvier 2026 ;
+- [x] neutraliser les descriptions génériques des images illustratives, décrire globalement la galerie et vérifier le reportage Facebook tiers ;
+- [x] publier le statut « partiellement conforme — 95,2 % », le schéma pluriannuel et le plan annuel ;
+- [x] compléter la déclaration d'accessibilité avec l'échantillon, les résultats, les non-conformités et le taux.
 
 **Critères de sortie :** aucun lien interne cassé, coordonnées cohérentes, CI verte et parcours principaux utilisables uniquement au clavier.
 

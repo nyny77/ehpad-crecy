@@ -24,6 +24,15 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
     const [hasReadTerms, setHasReadTerms] = useState(false);
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
+    React.useEffect(() => {
+        if (!isOpen) return;
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose();
+        };
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [isOpen, onClose]);
+
     const handleScroll = () => {
         if (scrollRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
@@ -114,12 +123,17 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                     />
                     <motion.div
                         id="signup-modal-content"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="signup-modal-title"
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-xl z-50 p-8 border border-gray-200"
                     >
                         <button
+                            type="button"
+                            aria-label="Fermer la fenêtre d’inscription"
                             onClick={onClose}
                             className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
                         >
@@ -127,27 +141,29 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         </button>
 
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-serif text-terracotta-600 mb-2">Inscription</h2>
+                            <h2 id="signup-modal-title" className="text-2xl font-serif text-terracotta-600 mb-2">Inscription</h2>
                             <p className="text-gray-600">
                                 Créez votre compte pour suivre l'actualité de l'EHPAD.
                             </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100">
+                            <div role="alert" aria-live="assertive" className="mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100">
                                 {error}
                             </div>
                         )}
 
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="signup-first-name" className="block text-sm font-medium text-gray-700 mb-1">
                                         Prénom
                                     </label>
                                     <input
+                                        id="signup-first-name"
                                         type="text"
                                         name="firstName"
+                                        autoComplete="given-name"
                                         required
                                         value={formData.firstName}
                                         onChange={handleChange}
@@ -155,12 +171,14 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="signup-last-name" className="block text-sm font-medium text-gray-700 mb-1">
                                         Nom
                                     </label>
                                     <input
+                                        id="signup-last-name"
                                         type="text"
                                         name="lastName"
+                                        autoComplete="family-name"
                                         required
                                         value={formData.lastName}
                                         onChange={handleChange}
@@ -170,10 +188,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="signup-role" className="block text-sm font-medium text-gray-700 mb-1">
                                     Fonction / Lien
                                 </label>
                                 <select
+                                    id="signup-role"
                                     name="role"
                                     required
                                     value={formData.role}
@@ -198,10 +217,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                                         exit={{ opacity: 0, height: 0 }}
                                         className="overflow-hidden"
                                     >
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label htmlFor="signup-relationship" className="block text-sm font-medium text-gray-700 mb-1">
                                             Lien de parenté (ex: Fils de Mme Martin)
                                         </label>
                                         <input
+                                            id="signup-relationship"
                                             type="text"
                                             name="relationship"
                                             required={formData.role === 'famille'}
@@ -215,12 +235,14 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             </AnimatePresence>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700 mb-1">
                                     Email
                                 </label>
                                 <input
+                                    id="signup-email"
                                     type="email"
                                     name="email"
+                                    autoComplete="email"
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
@@ -229,12 +251,14 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700 mb-1">
                                     Mot de passe
                                 </label>
                                 <input
+                                    id="signup-password"
                                     type="password"
                                     name="password"
+                                    autoComplete="new-password"
                                     required
                                     minLength={6}
                                     value={formData.password}
@@ -247,9 +271,11 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             <div
                                 ref={scrollRef}
                                 onScroll={handleScroll}
+                                tabIndex={0}
+                                aria-labelledby="privacy-charter-title"
                                 className="bg-cream-50 p-4 rounded-xl border border-cream-200 text-xs text-gray-700 max-h-40 overflow-y-auto mb-4 custom-scrollbar"
                             >
-                                <h4 className="font-bold text-gray-900 mb-2">Charte de confidentialité & Droit à l'image</h4>
+                                <h4 id="privacy-charter-title" className="font-bold text-gray-900 mb-2">Charte de confidentialité & Droit à l'image</h4>
                                 <p className="mb-2">
                                     Cet espace privé contient des photos de la vie sociale de l'EHPAD. En demandant un accès, vous vous engagez formellement à :
                                 </p>
@@ -270,26 +296,26 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             </div>
 
                             {/* Checkbox area - Light mode only */}
-                            <div
-                                className={`flex items-start gap-4 mb-6 group p-3 rounded-xl transition-colors ${hasReadTerms ? 'cursor-pointer hover:bg-cream-100 bg-cream-50' : 'cursor-not-allowed opacity-50 bg-gray-50'}`}
-                                onClick={() => {
-                                    if (hasReadTerms) setTermsAccepted(!termsAccepted);
-                                }}
-                            >
-                                <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200 shadow-sm ${termsAccepted ? 'bg-forest-600 border-forest-600 text-white scale-110' : 'border-gray-300 bg-white group-hover:border-forest-500'}`}>
-                                    {termsAccepted && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
-                                </div>
+                            <label className={`flex items-start gap-4 mb-6 group p-3 rounded-xl transition-colors ${hasReadTerms ? 'cursor-pointer hover:bg-cream-100 bg-cream-50' : 'cursor-not-allowed opacity-50 bg-gray-50'}`}>
+                                <input
+                                    type="checkbox"
+                                    checked={termsAccepted}
+                                    disabled={!hasReadTerms}
+                                    onChange={(event) => setTermsAccepted(event.target.checked)}
+                                    aria-describedby={!hasReadTerms ? "terms-reading-help" : undefined}
+                                    className="shrink-0 mt-0.5 h-6 w-6 rounded border-2 border-gray-300 text-forest-600 focus-visible:ring-2 focus-visible:ring-forest-600 focus-visible:ring-offset-2"
+                                />
                                 <div className="flex flex-col">
                                     <span className="text-sm text-gray-800 select-none">
                                         Je reconnais avoir pris connaissance de la charte ci-dessus. <span className="font-bold">Cocher cette case vaut signature numérique</span> et engagement de ma responsabilité en cas de diffusion non autorisée.
                                     </span>
                                     {!hasReadTerms && (
-                                        <span className="text-xs text-orange-600 mt-1 font-medium">
+                                        <span id="terms-reading-help" className="text-xs text-orange-600 mt-1 font-medium">
                                             ⚠️ Veuillez lire la charte jusqu'en bas pour activer la case.
                                         </span>
                                     )}
                                 </div>
-                            </div>
+                            </label>
 
                             <button
                                 type="submit"

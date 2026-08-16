@@ -10,8 +10,9 @@ interface BlogClientProps {
 
 export default function BlogClient({ initialArticles }: BlogClientProps) {
     return (
-        <section className="pt-32 md:pt-40 py-8 pb-16 bg-cream-100 min-h-screen">
+        <main className="pt-32 md:pt-40 py-8 pb-16 bg-cream-100 min-h-screen">
             <div className="container-custom">
+                <h1 className="font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Actualités de l’EHPAD</h1>
                 <div className="relative mt-8">
                     {/* Contenu */}
                     <motion.div
@@ -23,6 +24,6 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
                     </motion.div>
                 </div>
             </div>
-        </section>
+        </main>
     );
 }

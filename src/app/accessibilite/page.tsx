@@ -1,155 +1,83 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { EHPAD_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
-    title: "Accessibilité | EHPAD de Crécy-la-Chapelle",
-    description: "Déclaration d'accessibilité et engagements de l'EHPAD de Crécy-la-Chapelle pour l'accès à tous.",
+  title: "Accessibilité | EHPAD de Crécy-la-Chapelle",
+  description: "Déclaration d’accessibilité et résultats de l’audit RGAA 2026 de l’EHPAD de Crécy-la-Chapelle.",
 };
 
 export default function AccessibilitePage() {
-    return (
-        <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
-            
-            <section className="section-padding">
-                <div className="container-custom max-w-4xl">
-                    <div className="space-y-12">
-                        <div>
-                            <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900">
-                                Accessibilité du site
-                            </h1>
-                        </div>
-                        {/* Introduction */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Déclaration d'accessibilité
-                            </h2>
-                            <p className="text-charcoal-600 mb-4">
-                                L'<strong>EHPAD de Crécy-la-Chapelle</strong> s'engage à rendre son site internet accessible conformément à l'article 47 de la loi n°2005-102 du 11 février 2005.
-                            </p>
-                            <p className="text-charcoal-600">
-                                Cette déclaration d'accessibilité s'applique au site <strong>ehpad-crecy.netlify.app</strong>.
-                            </p>
-                        </div>
+  return (
+    <main className="min-h-screen bg-cream-100 pt-32 md:pt-40">
+      <section className="section-padding">
+        <div className="container-custom max-w-4xl space-y-8">
+          <header><h1 className="font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Accessibilité du site</h1></header>
 
-                        {/* État de conformité */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                État de conformité
-                            </h2>
-                            <div className="bg-terracotta-50 border-l-4 border-terracotta-500 p-4 rounded-r-lg">
-                                <p className="text-charcoal-700">
-                                    Ce site est en <strong>conformité partielle</strong> avec le référentiel général d'amélioration de l'accessibilité (RGAA) version 4.1.
-                                </p>
-                            </div>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Déclaration d’accessibilité</h2>
+            <p className="text-charcoal-600">L’<strong>EHPAD de Crécy-la-Chapelle</strong> s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005. Cette déclaration s’applique au site <strong>ehpad-crecy.netlify.app</strong>.</p>
+          </section>
 
-                        {/* Résultats des tests */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Mesures d'accessibilité mises en place
-                            </h2>
-                            <ul className="space-y-3">
-                                {[
-                                    "Mode accessibilité avec polices agrandies et contraste élevé activable via le bouton en bas à gauche",
-                                    "Navigation au clavier possible avec indicateurs de focus visibles",
-                                    "Textes alternatifs sur les images",
-                                    "Structure de titres hiérarchique (H1, H2, H3...)",
-                                    "Liens explicites et boutons cliquables",
-                                    "Contrastes de couleurs respectés",
-                                    "Site responsive adapté aux différents appareils",
-                                ].map((item, index) => (
-                                    <li key={index} className="flex items-start gap-3">
-                                        <div className="w-6 h-6 bg-forest-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <svg className="w-4 h-4 text-forest-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                            </svg>
-                                        </div>
-                                        <span className="text-charcoal-600">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">État de conformité</h2>
+            <div className="rounded-r-lg border-l-4 border-forest-500 bg-forest-50 p-4">
+              <p className="text-charcoal-700">Le site est <strong>partiellement conforme au RGAA 4.1.2</strong>. Le taux moyen de conformité est de <strong>95,2 %</strong> : 80 critères respectés sur 84 critères applicables.</p>
+            </div>
+          </section>
 
-                        {/* Contenus non accessibles */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Contenus non accessibles
-                            </h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Certains contenus peuvent ne pas être pleinement accessibles :
-                            </p>
-                            <ul className="list-disc list-inside text-charcoal-600 space-y-2 pl-4">
-                                <li>Certaines images historiques peuvent avoir des descriptions alternatives incomplètes</li>
-                                <li>Les animations visuelles ne peuvent pas être désactivées individuellement (mais le mode accessibilité réduit les effets)</li>
-                                <li>Le contenu vidéo tiers peut ne pas disposer de sous-titres</li>
-                            </ul>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Résultat des tests</h2>
+            <p className="mb-4 text-charcoal-600">L’audit interne a été réalisé le 16 août 2026 sur un échantillon représentatif du site avec le référentiel RGAA 4.1.2.</p>
+            <ul className="list-disc space-y-2 pl-6 text-charcoal-600">
+              <li>84 critères applicables ; 80 respectés ; 4 non conformes.</li>
+              <li>Navigation au clavier et premier parcours NVDA sur Windows validés par l’utilisateur.</li>
+              <li>Zoom navigateur à 200 % et 400 % validé par l’utilisateur.</li>
+              <li>37 pages HTML publiques analysées lors du contrôle structurel initial.</li>
+              <li>Livret d’accueil PDF vérifié ; alternative HTML publiée pour la Gazette image.</li>
+              <li>Vidéo locale sous-titrée et transcrite ; sous-titrage du reportage Facebook vérifié.</li>
+            </ul>
+            <Link href="/accessibilite/rapport-audit-2026" className="mt-6 inline-flex rounded-full bg-charcoal-900 px-6 py-3 font-semibold text-white hover:bg-charcoal-700">Consulter le rapport d’audit détaillé</Link>
+          </section>
 
-                        {/* Technologies utilisées */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Technologies utilisées
-                            </h2>
-                            <div className="flex flex-wrap gap-3">
-                                {["HTML5", "CSS3", "JavaScript", "React", "Next.js", "Tailwind CSS"].map((tech) => (
-                                    <span key={tech} className="px-4 py-2 bg-cream-100 text-charcoal-700 rounded-full text-sm font-medium">
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Contenus non accessibles</h2>
+            <ul className="list-disc space-y-3 pl-6 text-charcoal-600">
+              <li>La pertinence de toutes les alternatives des images éditoriales ajoutées depuis l’administration n’a pas été validée indépendamment.</li>
+              <li>Tous les états dynamiques des composants n’ont pas été mesurés individuellement avec un outil de contraste.</li>
+              <li>Le reportage Facebook sous-titré n’a pas été contre-vérifié indépendamment sur toute la base de référence.</li>
+              <li>Les interfaces d’administration authentifiées n’ont pas été parcourues intégralement avec NVDA dans une session authentifiée.</li>
+            </ul>
+          </section>
 
-                        {/* Retour d'information et contact */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Retour d'information et contact
-                            </h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Si vous n'arrivez pas à accéder à un contenu ou un service, vous pouvez nous contacter pour être orienté vers une alternative accessible ou obtenir le contenu sous une autre forme.
-                            </p>
-                            <div className="bg-cream-50 rounded-xl p-6 border border-cream-200">
-                                <p className="text-charcoal-700 mb-2">
-                                    <strong>Contact :</strong>
-                                </p>
-                                <p className="text-charcoal-600">
-                                    EHPAD de Crécy-la-Chapelle<br />
-                                    {EHPAD_INFO.address.full}<br />
-                                    Téléphone : <a href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`} className="text-terracotta-500 hover:underline">{EHPAD_INFO.phone}</a><br />
-                                    Email : <a href={`mailto:${EHPAD_INFO.email}`} className="text-terracotta-500 hover:underline">{EHPAD_INFO.email}</a>
-                                </p>
-                            </div>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Technologies et outils utilisés</h2>
+            <p className="text-charcoal-600">HTML5, CSS3, JavaScript, React, Next.js et Tailwind CSS. Contrôles avec NVDA sous Windows, zoom navigateur, ESLint, TypeScript, tests Node, lxml, pypdf, PyMuPDF et ffprobe.</p>
+          </section>
 
-                        {/* Voies de recours */}
-                        <div className="bg-white rounded-2xl p-8 shadow-soft">
-                            <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
-                                Voie de recours
-                            </h2>
-                            <p className="text-charcoal-600 mb-4">
-                                Si vous constatez un défaut d'accessibilité vous empêchant d'accéder à un contenu ou une fonctionnalité du site, que vous nous le signalez et que vous ne parvenez pas à obtenir une réponse de notre part, vous êtes en droit de faire parvenir vos doléances ou une demande de saisine au Défenseur des droits.
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <a
-                                    href="https://formulaire.defenseurdesdroits.fr/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-charcoal-800 text-white rounded-full hover:bg-charcoal-700 transition-colors"
-                                >
-                                    Contacter le Défenseur des droits
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Stratégie et plan d’action</h2>
+            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <Link href="/accessibilite/schema-pluriannuel" className="inline-flex justify-center rounded-full bg-charcoal-900 px-6 py-3 font-semibold text-white hover:bg-charcoal-700">Schéma pluriannuel 2026-2028</Link>
+              <Link href="/accessibilite/plan-annuel-2026" className="inline-flex justify-center rounded-full border-2 border-terracotta-500 px-6 py-3 font-semibold text-terracotta-700 hover:bg-terracotta-50">Plan d’action 2026</Link>
+            </div>
+          </section>
 
-                        {/* Date */}
-                        <div className="text-center text-charcoal-500 text-sm">
-                            <p>Cette déclaration a été établie le 3 février 2026.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    );
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Retour d’information et contact</h2>
+            <p className="mb-4 text-charcoal-600">Si vous n’arrivez pas à accéder à un contenu ou un service, contactez-nous afin d’obtenir une alternative accessible.</p>
+            <address className="not-italic text-charcoal-600"><strong className="text-charcoal-700">EHPAD de Crécy-la-Chapelle</strong><br />{EHPAD_INFO.address.full}<br />Téléphone : <a href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`} className="text-terracotta-600 hover:underline">{EHPAD_INFO.phone}</a><br />Email : <a href={`mailto:${EHPAD_INFO.email}`} className="text-terracotta-600 hover:underline">{EHPAD_INFO.email}</a></address>
+          </section>
+
+          <section className="rounded-2xl bg-white p-8 shadow-soft">
+            <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Voie de recours</h2>
+            <p className="mb-4 text-charcoal-600">Si vous constatez un défaut d’accessibilité, que vous nous le signalez et que vous n’obtenez pas de réponse satisfaisante, vous pouvez saisir le Défenseur des droits.</p>
+            <a href="https://formulaire.defenseurdesdroits.fr/" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-full bg-charcoal-800 px-6 py-3 font-semibold text-white hover:bg-charcoal-700">Contacter le Défenseur des droits</a>
+          </section>
+
+          <p className="text-center text-sm text-charcoal-500">Déclaration établie le 3 février 2026 et mise à jour le 16 août 2026.</p>
+        </div>
+      </section>
+    </main>
+  );
 }

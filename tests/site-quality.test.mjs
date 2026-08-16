@@ -73,6 +73,39 @@ test("les fondations d’accessibilité restent présentes", () => {
   assert.match(source("src/app/accessibilite/page.tsx"), /<h1/);
   assert.match(source("src/components/layout/Header.tsx"), /aria-expanded=/);
   assert.match(source("src/components/ui/ChatBot.tsx"), /role="dialog"/);
+  assert.match(source("src/components/admissions/PricingSection.tsx"), /aria-pressed=/);
+  assert.match(source("src/components/admissions/PricingSection.tsx"), /aria-live="polite"/);
+  assert.match(source("src/components/admissions/AdmissionFAQ.tsx"), /aria-expanded=/);
+  assert.match(source("src/app/familles/page.tsx"), /htmlFor="sender-name"/);
+  assert.match(source("src/app/familles/page.tsx"), /aria-controls="camera-photo-input"/);
+  assert.match(source("src/components/contact/ConversationalForm.tsx"), /htmlFor="contact-email"/);
+  assert.match(source("src/components/contact/ConversationalForm.tsx"), /stepHeadingRef\.current\?\.focus/);
+  assert.match(source("src/components/ui/LazyVideo.tsx"), /aria-label=\{`Lire la vidéo/);
+  assert.match(source("src/components/auth/SignupModal.tsx"), /type="checkbox"/);
+  assert.match(source("src/components/auth/SignupModal.tsx"), /aria-modal="true"/);
+  assert.ok(existsSync(join(ROOT, "public/videos/balade-crecy.fr.vtt")));
+  assert.match(source("src/components/ui/LazyVideo.tsx"), /kind="captions"/);
+  assert.ok(existsSync(join(ROOT, "src/app/echo-du-coeur/janvier-2026/page.tsx")));
+  assert.match(source("src/lib/data/gazette.json"), /"accessibleUrl": "\/echo-du-coeur\/janvier-2026"/);
+  assert.match(source("src/app/administration/PhotoManager.tsx"), /isUsefulAlt/);
+  assert.match(source("src/app/galerie/page.tsx"), /accessibleDescription/);
+  assert.match(source("src/app/galerie/page.tsx"), /Agrandir la photo \$\{position\} sur \$\{total\}/);
+  assert.doesNotMatch(source("src/app/globals.css"), /html\s*\{\s*font-size:\s*(?:14|15)px/);
+  assert.match(source("src/app/globals.css"), /--color-terracotta-dark:\s*#9E0033/);
+  assert.match(source("src/components/layout/Footer.tsx"), /Accessibilité : partiellement conforme — 95,2 %/);
+  assert.match(source("src/app/accessibilite/page.tsx"), /partiellement conforme au RGAA 4\.1\.2/);
+  assert.match(source("src/app/accessibilite/page.tsx"), /95,2 %/);
+  assert.ok(existsSync(join(ROOT, "src/app/accessibilite/rapport-audit-2026/page.tsx")));
+  assert.ok(existsSync(join(ROOT, "src/app/accessibilite/schema-pluriannuel/page.tsx")));
+  assert.ok(existsSync(join(ROOT, "src/app/accessibilite/plan-annuel-2026/page.tsx")));
+});
+
+test("les appels à l’action ne contiennent pas d’éléments interactifs imbriqués", () => {
+  const combined = walk(join(ROOT, "src"), [".tsx"])
+    .map((file) => readFileSync(file, "utf8"))
+    .join("\n");
+  assert.doesNotMatch(combined, /<Link\b[\s\S]{0,500}<(?:(?:motion\.)?button)\b/);
+  assert.doesNotMatch(combined, /<a\b[\s\S]{0,500}<(?:(?:motion\.)?button)\b/);
 });
 
 test("la date tarifaire publique correspond à avril 2026", () => {

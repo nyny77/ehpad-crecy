@@ -69,8 +69,9 @@ export default function EventWidget({ files }: EventWidgetProps) {
                     <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-charcoal-900 group">
                         <video
                             src="/videos/balade-crecy.mp4"
+                            aria-hidden="true"
+                            tabIndex={-1}
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            autoPlay
                             muted
                             loop
                             playsInline

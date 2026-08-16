@@ -59,8 +59,10 @@ export default function AccessibilityToggle() {
                         className="absolute bottom-20 left-0 bg-charcoal-900 text-white px-4 py-3 rounded-xl shadow-xl max-w-[220px]"
                     >
                         <button
+                            type="button"
                             onClick={dismissHint}
                             className="absolute -top-2 -right-2 w-6 h-6 bg-charcoal-700 rounded-full flex items-center justify-center text-white hover:bg-charcoal-600"
+                            aria-label="Fermer l’aide sur les options d’affichage"
                         >
                             ×
                         </button>
@@ -77,6 +79,7 @@ export default function AccessibilityToggle() {
 
             {/* Main Toggle Button */}
             <motion.button
+                type="button"
                 onClick={() => {
                     setIsOpen(!isOpen);
                     dismissHint();
@@ -88,6 +91,8 @@ export default function AccessibilityToggle() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Options d'affichage"
+                aria-expanded={isOpen}
+                aria-controls="options-affichage"
                 title="Options d'affichage"
             >
                 {!isAccessible && !isOpen && (
@@ -110,6 +115,7 @@ export default function AccessibilityToggle() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id="options-affichage"
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -123,7 +129,9 @@ export default function AccessibilityToggle() {
                         <div className="space-y-3">
                             {/* Accessibility Toggle */}
                             <button
+                                type="button"
                                 onClick={toggleAccessibility}
+                                aria-pressed={isAccessible}
                                 className={`w-full p-4 rounded-xl flex items-center gap-4 transition-all ${isAccessible
                                     ? "bg-forest-500 text-white"
                                     : "bg-cream-100 text-charcoal-700 hover:bg-cream-200"

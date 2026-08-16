@@ -45,10 +45,12 @@ export default function VisiteGallery({ photos }: { photos: Photo[] }) {
             <h3 className="text-2xl font-serif text-charcoal-900 mb-8 text-center">Quelques vues de la maison</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {photos.map((img: Photo, index: number) => (
-                    <div 
+                    <button
+                        type="button"
                         key={img.id} 
                         className="relative group bg-white rounded-2xl overflow-hidden shadow-sm aspect-[4/3] border border-cream-100 cursor-pointer"
                         onClick={() => setSelectedPhotoIndex(index)}
+                        aria-label={`Agrandir ${img.title}`}
                     >
                         <img
                             src={getOptimizedImageSrc(img.src)}
@@ -59,17 +61,21 @@ export default function VisiteGallery({ photos }: { photos: Photo[] }) {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <p className="text-white font-serif font-bold">{img.title}</p>
                         </div>
-                    </div>
+                    </button>
                 ))}
             </div>
 
             {/* Lightbox Modal */}
             {selectedPhotoIndex !== null && (
-                <div 
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={`Photo agrandie : ${photos[selectedPhotoIndex].title}`}
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm transition-all"
                     onClick={handleClose}
                 >
                     <button 
+                        type="button"
                         className="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50 transition-colors"
                         onClick={handleClose}
                         aria-label="Fermer"
@@ -80,6 +86,7 @@ export default function VisiteGallery({ photos }: { photos: Photo[] }) {
                     </button>
 
                     <button 
+                        type="button"
                         className="absolute left-4 md:left-8 text-white/70 hover:text-white p-2 z-50 transition-colors hidden sm:block"
                         onClick={handlePrev}
                         aria-label="Photo précédente"
@@ -102,16 +109,20 @@ export default function VisiteGallery({ photos }: { photos: Photo[] }) {
                         {/* Mobile controls */}
                         <div className="flex sm:hidden justify-between w-full mt-4 px-4">
                             <button 
+                                type="button"
                                 className="text-white/70 hover:text-white p-2"
                                 onClick={handlePrev}
+                                aria-label="Photo précédente"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                                 </svg>
                             </button>
                             <button 
+                                type="button"
                                 className="text-white/70 hover:text-white p-2"
                                 onClick={handleNext}
+                                aria-label="Photo suivante"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -121,6 +132,7 @@ export default function VisiteGallery({ photos }: { photos: Photo[] }) {
                     </div>
 
                     <button 
+                        type="button"
                         className="absolute right-4 md:right-8 text-white/70 hover:text-white p-2 z-50 transition-colors hidden sm:block"
                         onClick={handleNext}
                         aria-label="Photo suivante"

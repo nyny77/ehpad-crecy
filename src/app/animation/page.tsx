@@ -191,9 +191,9 @@ export default function AnimationPage() {
                             Animations
                         </span>
                         
-                        <h2 className="font-serif text-5xl md:text-7xl text-charcoal-900 mt-2 mb-6 font-bold drop-shadow-sm">
+                        <h1 className="font-serif text-5xl md:text-7xl text-charcoal-900 mt-2 mb-6 font-bold drop-shadow-sm">
                             Un programme varié
-                        </h2>
+                        </h1>
                         
                         {/* Colorful fun underline */}
                         <div className="w-32 h-1.5 bg-gradient-to-r from-terracotta-400 via-yellow-400 to-blue-400 mx-auto rounded-full mb-8" />
