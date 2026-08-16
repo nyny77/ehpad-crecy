@@ -1,3 +1,13 @@
 {
-  "messages": []
+  "messages": [
+    {
+      "id": "360bd46c-e15b-45d7-8af9-250a097083b2",
+      "residentId": "mock-id-1234",
+      "senderName": "Claude",
+      "text": "Djddjdjd",
+      "photoUrl": "/images/messages/msg-1786867261518-579c5a1e.webp",
+      "date": "2026-08-16T08:01:01.518Z",
+      "status": "nouveau"
+    }
+  ]
 }
