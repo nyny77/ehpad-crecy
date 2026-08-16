@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "@/components/ui/OptimizedImage";
-import { INITIAL_GALLERY, INITIAL_GALLERY_ALBUMS, GalleryImage } from "@/lib/gallery";
+import { INITIAL_GALLERY, INITIAL_GALLERY_ALBUMS, INITIAL_LEGACY_ALBUM_TITLE, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays, FolderOpen } from "lucide-react";
@@ -48,7 +48,7 @@ export default function GaleriePage() {
             .sort((a, b) => b.date.localeCompare(a.date))
             .map((album) => ({ ...album, photos: images.filter((photo) => photo.albumId === album.id) }));
         const previous = images.filter((photo) => !photo.albumId || !INITIAL_GALLERY_ALBUMS.some((album) => album.id === photo.albumId));
-        return previous.length ? [...dated, { id: "legacy", title: "Souvenirs précédents", date: "", createdAt: "", photos: previous }] : dated;
+        return previous.length ? [...dated, { id: "legacy", title: INITIAL_LEGACY_ALBUM_TITLE, date: "", createdAt: "", photos: previous }] : dated;
     }, [images]);
     const [adminMode, setAdminMode] = useState(false);
     const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(albumSections[0]?.id || null);

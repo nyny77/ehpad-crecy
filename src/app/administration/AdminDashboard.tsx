@@ -21,7 +21,7 @@ import { Newspaper, Users, Mail } from "lucide-react";
 
 type AccessState = "loading" | "guest" | "forbidden" | "admin";
 
-export default function AdminDashboard({ initialArticles, initialPhotos, initialAlbums }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[]; initialAlbums: GalleryAlbum[] }) {
+export default function AdminDashboard({ initialArticles, initialPhotos, initialAlbums, initialLegacyAlbumTitle }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[]; initialAlbums: GalleryAlbum[]; initialLegacyAlbumTitle: string }) {
     const [access, setAccess] = useState<AccessState>("loading");
     const [tab, setTab] = useState<"photos" | "blog" | "gazette" | "residents" | "courrier">("photos");
 
@@ -111,7 +111,7 @@ export default function AdminDashboard({ initialArticles, initialPhotos, initial
                 </nav>
 
                 <div id="admin-current-panel" role="region" aria-label={`Section ${tab}`}>
-                    {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} initialAlbums={initialAlbums} />}
+                    {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} initialAlbums={initialAlbums} initialLegacyAlbumTitle={initialLegacyAlbumTitle} />}
                     {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
                     {tab === "gazette" && <GazetteManager />}
                     {tab === "residents" && <ResidentManager />}

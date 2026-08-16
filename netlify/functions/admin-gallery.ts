@@ -48,8 +48,9 @@ export const handler: Handler = async (event, context) => {
 
     try {
         const body = JSON.parse(event.body || "{}");
-        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[]; albums?: GalleryAlbum[] };
+        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[]; albums?: GalleryAlbum[]; legacyAlbumTitle?: string };
         data.albums ||= [];
+        data.legacyAlbumTitle ||= "Photos précédentes";
         const action = body.action || "add";
         const changes: GitChange[] = [];
         let resultPhoto: GalleryPhoto | undefined;
@@ -98,6 +99,10 @@ export const handler: Handler = async (event, context) => {
             const album = data.albums.find((item) => item.id === albumId);
             if (!album) return json(404, { error: "Album introuvable" });
             album.title = title.slice(0, 120);
+        } else if (action === "updateLegacyAlbum") {
+            const title = String(body.title || "").trim();
+            if (!title) return json(400, { error: "Nom du dossier obligatoire" });
+            data.legacyAlbumTitle = title.slice(0, 120);
         } else if (action === "reorder") {
             const orderedIds = Array.isArray(body.ids) ? body.ids.map(String) : [];
             const byId = new Map(data.photos.map((photo) => [photo.id, photo]));
