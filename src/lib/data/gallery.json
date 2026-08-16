@@ -1,5 +1,12 @@
 {
-  "albums": [],
+  "albums": [
+    {
+      "id": "19c98979-29ed-43a6-b227-4e617ee9fc87",
+      "title": "Noel 2025",
+      "date": "2026-08-16",
+      "createdAt": "2026-08-16T18:28:45.299Z"
+    }
+  ],
   "legacyAlbumTitle": "En Espagne",
   "photos": [
     {
