@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Camera, LogIn, LogOut, ShieldCheck } from "lucide-react";
+import { BookOpen, Camera, LogIn, LogOut, Mail, Newspaper, ShieldCheck, Users } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
 import type { GalleryAlbum, GalleryImage } from "@/lib/gallery";
 import {
@@ -17,7 +17,6 @@ import BlogManager from "./BlogManager";
 import GazetteManager from "./GazetteManager";
 import ResidentManager from "./ResidentManager";
 import CourrierManager from "./CourrierManager";
-import { Newspaper, Users, Mail } from "lucide-react";
 
 type AccessState = "loading" | "guest" | "forbidden" | "admin";
 
@@ -92,22 +91,27 @@ export default function AdminDashboard({ initialArticles, initialPhotos, initial
                     </button>
                 </div>
 
-                <nav className="inline-flex flex-wrap gap-2 bg-white rounded-2xl border border-cream-200 p-1.5 shadow-sm mb-8" aria-label="Sections d’administration">
-                    <button aria-pressed={tab === "photos"} aria-controls="admin-current-panel" onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Camera size={19} /> <span className="hidden md:inline">Photos</span>
-                    </button>
-                    <button aria-pressed={tab === "blog"} aria-controls="admin-current-panel" onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <BookOpen size={19} /> <span className="hidden md:inline">Blog</span>
-                    </button>
-                    <button aria-pressed={tab === "gazette"} aria-controls="admin-current-panel" onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Newspaper size={19} /> <span className="hidden md:inline">Écho du Coeur</span>
-                    </button>
-                    <button aria-pressed={tab === "residents"} aria-controls="admin-current-panel" onClick={() => { setTab("residents"); window.history.replaceState(null, "", "#residents"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "residents" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Users size={19} /> <span className="hidden md:inline">Résidents</span>
-                    </button>
-                    <button aria-pressed={tab === "courrier"} aria-controls="admin-current-panel" onClick={() => { setTab("courrier"); window.history.replaceState(null, "", "#courrier"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "courrier" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
-                        <Mail size={19} /> <span className="hidden md:inline">Courrier</span>
-                    </button>
+                <nav className="mb-8 flex flex-wrap gap-3" aria-label="Sections d’administration">
+                    <div className="rounded-2xl border-2 border-terracotta-200 bg-white p-1.5 shadow-sm" role="group" aria-labelledby="postier-group-label">
+                        <p id="postier-group-label" className="px-3 pb-1 pt-1 text-xs font-bold uppercase tracking-[0.14em] text-terracotta-700">Postier numérique</p>
+                        <div className="flex flex-wrap gap-1">
+                            <button aria-pressed={tab === "courrier"} aria-controls="admin-current-panel" onClick={() => { setTab("courrier"); window.history.replaceState(null, "", "#courrier"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "courrier" ? "bg-terracotta-600 text-white" : "text-charcoal-700 hover:bg-terracotta-50"}`}>
+                                <Mail size={19} /> Courriers
+                            </button>
+                            <button aria-pressed={tab === "residents"} aria-controls="admin-current-panel" onClick={() => { setTab("residents"); window.history.replaceState(null, "", "#residents"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "residents" ? "bg-terracotta-600 text-white" : "text-charcoal-700 hover:bg-terracotta-50"}`}>
+                                <Users size={19} /> Résidents
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-cream-200 bg-white p-1.5 shadow-sm" role="group" aria-labelledby="content-group-label">
+                        <p id="content-group-label" className="px-3 pb-1 pt-1 text-xs font-bold uppercase tracking-[0.14em] text-charcoal-500">Contenus du site</p>
+                        <div className="flex flex-wrap gap-1">
+                            <button aria-pressed={tab === "photos"} aria-controls="admin-current-panel" onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><Camera size={19} /> Photos</button>
+                            <button aria-pressed={tab === "blog"} aria-controls="admin-current-panel" onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><BookOpen size={19} /> Blog</button>
+                            <button aria-pressed={tab === "gazette"} aria-controls="admin-current-panel" onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><Newspaper size={19} /> Écho du Cœur</button>
+                        </div>
+                    </div>
                 </nav>
 
                 <div id="admin-current-panel" role="region" aria-label={`Section ${tab}`}>
