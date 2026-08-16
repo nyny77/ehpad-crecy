@@ -59,6 +59,23 @@ export const handler: Handler = async (event, context) => {
             await commitChanges(`Message supprimé`, changes);
 
             return json(200, { success: true });
+        } else if (action === "bulkDelete") {
+            const messageIds = Array.isArray(body.ids) ? body.ids : [];
+            if (messageIds.length === 0) return json(400, { error: "Aucun message sélectionné" });
+
+            const messagesToDelete = data.messages.filter(m => messageIds.includes(m.id));
+            data.messages = data.messages.filter(m => !messageIds.includes(m.id));
+            
+            for (const message of messagesToDelete) {
+                if (message.photoUrl && message.status !== "distribue") {
+                    changes.push({ path: `public${message.photoUrl}`, content: null });
+                }
+            }
+
+            changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
+            await commitChanges(`${messagesToDelete.length} messages supprimés en masse`, changes);
+
+            return json(200, { success: true });
         } else {
             return json(400, { error: "Action inconnue" });
         }

@@ -57,6 +57,8 @@ export default function CourrierManager() {
         }
     };
 
+    const [selectedMessages, setSelectedMessages] = useState<string[]>([]);
+
     const handleDelete = async (id: string) => {
         if (!confirm("Voulez-vous vraiment supprimer ce message définitivement ?")) return;
         try {
@@ -65,11 +67,27 @@ export default function CourrierManager() {
                 body: JSON.stringify({ action: "delete", id })
             });
             setMessages(messages.filter(m => m.id !== id));
+            setSelectedMessages(prev => prev.filter(mId => mId !== id));
         } catch (err) {
             alert("Erreur lors de la suppression");
         }
     };
 
+    const handleDeleteSelected = async () => {
+        if (selectedMessages.length === 0) return;
+        if (!confirm(`Voulez-vous vraiment supprimer définitivement ces ${selectedMessages.length} messages ?`)) return;
+        
+        try {
+            await adminFetch("/.netlify/functions/admin-messages", {
+                method: "POST",
+                body: JSON.stringify({ action: "bulkDelete", ids: selectedMessages })
+            });
+            setMessages(messages.filter(m => !selectedMessages.includes(m.id)));
+            setSelectedMessages([]);
+        } catch (err) {
+            alert("Erreur lors de la suppression groupée");
+        }
+    };
     const handlePrint = (message: FamilyMessage) => {
         const residentName = getResidentName(message.residentId);
         const residentRoom = getResidentRoom(message.residentId);
@@ -366,11 +384,57 @@ export default function CourrierManager() {
                     </div>
                 ) : (
                     <div className="space-y-6">
+                        {/* Bulk Actions Header */}
+                        <div className="flex items-center justify-between bg-cream-50 p-3 rounded-xl border border-cream-200">
+                            <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-charcoal-700">
+                                <input 
+                                    type="checkbox" 
+                                    className="w-4 h-4 rounded border-cream-300 text-terracotta-600 focus:ring-terracotta-500"
+                                    checked={selectedMessages.length === messages.length && messages.length > 0}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setSelectedMessages(messages.map(m => m.id));
+                                        } else {
+                                            setSelectedMessages([]);
+                                        }
+                                    }}
+                                />
+                                Tout sélectionner
+                            </label>
+                            
+                            {selectedMessages.length > 0 && (
+                                <button 
+                                    onClick={handleDeleteSelected}
+                                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-100 text-red-700 text-sm font-semibold rounded-lg hover:bg-red-200 transition-colors"
+                                >
+                                    <Trash2 size={16} /> Supprimer la sélection ({selectedMessages.length})
+                                </button>
+                            )}
+                        </div>
+
                         {messages.map(msg => {
                             const isNew = msg.status === "nouveau";
+                            const isSelected = selectedMessages.includes(msg.id);
+                            
                             return (
-                                <div key={msg.id} className={`border rounded-2xl p-5 md:p-6 transition-colors ${isNew ? 'border-terracotta-200 bg-terracotta-50/30' : 'border-cream-200 bg-white opacity-70'}`}>
-                                    <div className="flex flex-col md:flex-row gap-6">
+                                <div key={msg.id} className={`border rounded-2xl p-5 md:p-6 transition-colors relative ${isNew ? 'border-terracotta-200 bg-terracotta-50/30' : 'border-cream-200 bg-white opacity-70'} ${isSelected ? 'ring-2 ring-terracotta-500' : ''}`}>
+                                    {/* Selection Checkbox */}
+                                    <div className="absolute top-4 right-4 z-10">
+                                        <input 
+                                            type="checkbox" 
+                                            className="w-5 h-5 rounded border-cream-300 text-terracotta-600 focus:ring-terracotta-500 cursor-pointer"
+                                            checked={isSelected}
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setSelectedMessages(prev => [...prev, msg.id]);
+                                                } else {
+                                                    setSelectedMessages(prev => prev.filter(id => id !== msg.id));
+                                                }
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-col md:flex-row gap-6 pr-8">
                                         
                                         {/* Image thumbnail if any */}
                                         <div className="md:w-1/4 flex-shrink-0">
