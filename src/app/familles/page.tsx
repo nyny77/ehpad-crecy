@@ -55,34 +55,40 @@ export default function FamillesPage() {
         }
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const img = new window.Image();
-            img.onload = () => {
-                const canvas = document.createElement("canvas");
-                let width = img.width;
-                let height = img.height;
-                
-                if (width > MAX_WIDTH) {
-                    height = Math.round((height * MAX_WIDTH) / width);
-                    width = MAX_WIDTH;
-                }
-                
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext("2d");
-                ctx?.drawImage(img, 0, 0, width, height);
-                
-                const webp = canvas.toDataURL("image/webp", QUALITY);
-                setImage(webp);
-            };
-            img.src = event.target?.result as string;
-        };
-        reader.readAsDataURL(file);
+        try {
+            // createImageBitmap automatically handles EXIF orientation
+            const bmp = await window.createImageBitmap(file);
+            const canvas = document.createElement("canvas");
+            let width = bmp.width;
+            let height = bmp.height;
+            
+            if (width > MAX_WIDTH) {
+                height = Math.round((height * MAX_WIDTH) / width);
+                width = MAX_WIDTH;
+            } else if (height > MAX_WIDTH) {
+                // Also handle very tall portrait images
+                width = Math.round((width * MAX_WIDTH) / height);
+                height = MAX_WIDTH;
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx?.drawImage(bmp, 0, 0, width, height);
+            
+            const webp = canvas.toDataURL("image/webp", QUALITY);
+            setImage(webp);
+            
+            // Clean up memory
+            bmp.close();
+        } catch (error) {
+            console.error("Error processing image:", error);
+            setError("Erreur lors du traitement de l'image. Veuillez essayer une autre photo.");
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {

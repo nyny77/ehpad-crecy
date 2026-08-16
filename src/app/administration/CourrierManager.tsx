@@ -120,7 +120,7 @@ export default function CourrierManager() {
                     .photo-half img {
                         width: 100%;
                         height: 100%;
-                        object-fit: cover;
+                        object-fit: contain; /* Prevent cropping of portrait images */
                         border-radius: 4px; /* Slight rounding for elegance */
                     }
                     .no-photo {
