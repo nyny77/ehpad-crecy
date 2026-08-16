@@ -26,6 +26,15 @@
       "photoUrl": "/images/messages/msg-1786862313395-08fd050f.webp",
       "date": "2026-08-16T06:38:33.396Z",
       "status": "nouveau"
+    },
+    {
+      "id": "a139cd92-6b26-4072-bff3-678cc39b7f1f",
+      "residentId": "mock-id-1234",
+      "senderName": "Sandrine",
+      "text": "Petit message de nice",
+      "photoUrl": "/images/messages/msg-1786862851612-7edf4cdf.webp",
+      "date": "2026-08-16T06:47:31.613Z",
+      "status": "nouveau"
     }
   ]
 }
