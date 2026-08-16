@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Mail, KeyRound, Upload, Send, CheckCircle2, Loader2, ArrowLeft, Camera } from "lucide-react";
+import { Mail, KeyRound, Upload, Send, CheckCircle2, Loader2, ArrowLeft, Camera, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -21,6 +21,7 @@ export default function FamillesPage() {
     const [residentName, setResidentName] = useState("");
     
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const cameraInputRef = useRef<HTMLInputElement>(null);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -198,13 +199,21 @@ export default function FamillesPage() {
                                 <label className="block text-sm font-medium text-charcoal-700 mb-2">Ajouter une photo (optionnel)</label>
                                 
                                 {!image ? (
-                                    <div 
-                                        onClick={() => fileInputRef.current?.click()}
-                                        className="border-2 border-dashed border-cream-300 rounded-2xl p-8 text-center cursor-pointer hover:bg-cream-50 hover:border-terracotta-300 transition-colors group"
-                                    >
-                                        <Camera className="mx-auto h-12 w-12 text-cream-400 group-hover:text-terracotta-500 transition-colors mb-3" />
-                                        <p className="text-sm font-medium text-charcoal-700">Cliquez pour ajouter une photo</p>
-                                        <p className="text-xs text-charcoal-500 mt-1">Sera imprimée avec votre message</p>
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <div 
+                                            onClick={() => cameraInputRef.current?.click()}
+                                            className="flex-1 border-2 border-dashed border-terracotta-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-terracotta-50 transition-colors group"
+                                        >
+                                            <Camera className="mx-auto h-10 w-10 text-terracotta-500 group-hover:scale-110 transition-transform mb-3" />
+                                            <p className="text-sm font-bold text-terracotta-700">Prendre une photo</p>
+                                        </div>
+                                        <div 
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="flex-1 border-2 border-dashed border-cream-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-cream-50 hover:border-terracotta-300 transition-colors group"
+                                        >
+                                            <ImageIcon className="mx-auto h-10 w-10 text-cream-400 group-hover:text-terracotta-500 transition-colors mb-3" />
+                                            <p className="text-sm font-medium text-charcoal-700">Choisir dans la galerie</p>
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className="relative rounded-2xl overflow-hidden group">
@@ -225,6 +234,14 @@ export default function FamillesPage() {
                                     ref={fileInputRef}
                                     onChange={handleImageChange}
                                     accept="image/*"
+                                    className="hidden"
+                                />
+                                <input
+                                    type="file"
+                                    ref={cameraInputRef}
+                                    onChange={handleImageChange}
+                                    accept="image/*"
+                                    capture="environment"
                                     className="hidden"
                                 />
                             </div>
