@@ -6,6 +6,7 @@ import gazetteData from "@/lib/data/gazette.json";
 import { Calendar } from "lucide-react";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
 import Link from "next/link";
+import PdfViewer from "@/components/ui/PdfViewer";
 
 export default function EchoDuCoeurPage() {
     // Support backward compatibility
@@ -46,10 +47,10 @@ export default function EchoDuCoeurPage() {
                                         </Link>
                                     </div>
                                 )}
-                                <iframe
+                                <PdfViewer
                                     src={selectedGazette.file}
-                                    className="w-full flex-1 rounded-2xl border-none bg-white"
-                                    title={`Le Petit Écho du Cœur — ${selectedGazette.title} — version PDF`}
+                                    className="w-full flex-1"
+                                    title={`Le Petit Écho du Cœur — ${selectedGazette.title}`}
                                 />
                             </div>
                         )

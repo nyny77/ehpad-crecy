@@ -98,6 +98,11 @@ test("les fondations d’accessibilité restent présentes", () => {
   assert.match(source("src/app/accessibilite/page.tsx"), /totalement conforme au RGAA 4\.1\.2/);
   assert.match(source("src/app/accessibilite/page.tsx"), /100 %/);
   assert.ok(existsSync(join(ROOT, "src/app/accessibilite/rapport-audit-2026/page.tsx")));
+  assert.match(source("src/components/ui/PdfViewer.tsx"), /iPad\|iPhone\|iPod/);
+  assert.match(source("src/components/ui/PdfViewer.tsx"), /navigator\.maxTouchPoints > 1/);
+  assert.match(source("src/components/ui/PdfViewer.tsx"), /Ouvrir le PDF complet/);
+  assert.match(source("src/app/livret-accueil/page.tsx"), /<PdfViewer/);
+  assert.match(source("src/app/echo-du-coeur/page.tsx"), /<PdfViewer/);
   assert.ok(existsSync(join(ROOT, "src/app/accessibilite/schema-pluriannuel/page.tsx")));
   assert.ok(existsSync(join(ROOT, "src/app/accessibilite/plan-annuel-2026/page.tsx")));
 });

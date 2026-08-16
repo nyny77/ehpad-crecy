@@ -1,7 +1,7 @@
 "use client";
 
-import { Download } from "lucide-react";
 import { motion } from "framer-motion";
+import PdfViewer from "@/components/ui/PdfViewer";
 
 export default function LivretAccueilPage() {
   return (
@@ -15,10 +15,10 @@ export default function LivretAccueilPage() {
             transition={{ delay: 0.2 }}
             className="bg-charcoal-900 rounded-3xl p-2 md:p-3 shadow-2xl border border-charcoal-700 h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)]"
         >
-            <iframe 
-                src="/documents/livret-accueil.pdf?v=2" 
-                className="w-full h-full rounded-2xl border-none bg-white"
-                title="Livret d'Accueil PDF"
+            <PdfViewer
+                src="/documents/livret-accueil.pdf?v=2"
+                title="Livret d’accueil — version PDF"
+                className="h-full w-full"
             />
         </motion.div>
       </div>
