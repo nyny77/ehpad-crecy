@@ -3,6 +3,7 @@ import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 
 const MODEL = "@cf/black-forest-labs/flux-1-schnell";
+const TRANSLATION_MODEL = "@cf/meta/llama-3.2-1b-instruct";
 const MAX_PROMPT_LENGTH = 500;
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
@@ -12,14 +13,56 @@ type CloudflareResponse = {
     errors?: Array<{ code?: number; message?: string }>;
 };
 
+type CloudflareTextResponse = {
+    success?: boolean;
+    result?: { response?: string };
+};
+
 function cloudflareError(status: number, payload: CloudflareResponse): string {
     const code = payload.errors?.[0]?.code;
+    const detail = payload.errors?.[0]?.message || "";
     if (status === 401) return "Le jeton Cloudflare est invalide ou expiré.";
     if (status === 403 && code === 5035) return "Ce modèle nécessite une offre Cloudflare payante.";
     if (status === 403) return "Le compte Cloudflare n'autorise pas cette génération.";
     if (status === 429 && code === 3036) return "Le quota gratuit Cloudflare du jour est épuisé.";
     if (status === 429) return "Cloudflare est momentanément saturé. Réessayez dans quelques minutes.";
-    return payload.errors?.[0]?.message || `Cloudflare a répondu avec l'erreur ${status}.`;
+    if (code === 8007 || /NSFW/i.test(detail)) {
+        return "Cloudflare a refusé cette description par prudence. Reformulez-la simplement, sans information personnelle.";
+    }
+    return detail || `Cloudflare a répondu avec l'erreur ${status}.`;
+}
+
+async function translatePrompt(prompt: string, accountId: string, apiToken: string, signal: AbortSignal): Promise<string> {
+    try {
+        const response = await fetch(
+            `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${TRANSLATION_MODEL}`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${apiToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    messages: [
+                        {
+                            role: "system",
+                            content: "Translate the user's French image description into concise English. Output only the translation. Preserve the literal meaning and do not add commentary.",
+                        },
+                        { role: "user", content: prompt },
+                    ],
+                    max_tokens: 180,
+                    temperature: 0,
+                }),
+                signal,
+            },
+        );
+        const payload = await response.json() as CloudflareTextResponse;
+        const translated = payload.result?.response?.trim();
+        return response.ok && payload.success && translated ? translated.slice(0, 1000) : prompt;
+    } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") throw error;
+        return prompt;
+    }
 }
 
 export const handler: Handler = async (event, context) => {
@@ -43,6 +86,7 @@ export const handler: Handler = async (event, context) => {
         const timeoutId = setTimeout(() => controller.abort(), 45_000);
         let response: Response;
         try {
+            const translatedPrompt = await translatePrompt(prompt, accountId, apiToken, controller.signal);
             response = await fetch(
                 `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${MODEL}`,
                 {
@@ -52,7 +96,7 @@ export const handler: Handler = async (event, context) => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        prompt: `Illustration chaleureuse et digne pour la gazette d'un EHPAD en France. ${prompt}. Sans texte, sans logo, sans marque.`,
+                        prompt: `Safe family-friendly editorial illustration for a senior care home newsletter. ${translatedPrompt}. No text, no logo, no brand.`,
                         steps: 4,
                     }),
                     signal: controller.signal,
