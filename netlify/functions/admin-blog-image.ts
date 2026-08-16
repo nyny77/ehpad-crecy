@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges } from "./_shared/github";
 
@@ -35,7 +36,7 @@ export const handler: Handler = async (event, context) => {
         }]);
         return json(200, { success: true, path: publicPath });
     } catch (error) {
-        console.error("blog image upload failed", error);
+        logFunctionError("admin-blog-image", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Envoi de l'image impossible" });
     }
 };

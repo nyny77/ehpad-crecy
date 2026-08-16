@@ -1,10 +1,15 @@
 import type { Handler } from "@netlify/functions";
 
 export const handler: Handler = async (event) => {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+  };
+
   if (event.httpMethod !== "GET" && event.httpMethod !== "HEAD") {
     return {
       statusCode: 405,
-      headers: { Allow: "GET, HEAD", "Cache-Control": "no-store" },
+      headers: { ...headers, Allow: "GET, HEAD" },
       body: "",
     };
   }
@@ -17,10 +22,7 @@ export const handler: Handler = async (event) => {
 
   return {
     statusCode: 200,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store",
-    },
+    headers,
     body: event.httpMethod === "HEAD" ? "" : body,
   };
 };

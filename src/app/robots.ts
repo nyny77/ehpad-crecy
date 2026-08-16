@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/administration", "/admin-users"],
     },
-    sitemap: "https://ehpad-crecy.netlify.app/sitemap.xml",
+    sitemap: "https://ehpadcrecy.netlify.app/sitemap.xml",
   };
 }

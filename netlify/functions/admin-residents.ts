@@ -1,6 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { randomBytes } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
+import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 
 export interface Resident {
@@ -70,7 +71,7 @@ export const handler: Handler = async (event, context) => {
         await commitChanges(`Résidents : ${action}`, changes);
         return json(200, { success: true, residents: data.residents });
     } catch (error) {
-        console.error("residents administration failed", error);
+        logFunctionError("admin-residents", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Erreur lors de la sauvegarde" });
     }
 };

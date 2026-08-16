@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import nodemailer from "nodemailer";
 
 export const handler: Handler = async (event, context) => {
@@ -55,7 +56,7 @@ export const handler: Handler = async (event, context) => {
         }
 
     } catch (error: any) {
-        console.error("Identity API Error:", error);
+        logFunctionError("admin-approve-user:identity", error, context.awsRequestId);
         return { statusCode: 500, body: JSON.stringify({ error: "Failed to update user role" }) };
     }
 
@@ -123,7 +124,7 @@ export const handler: Handler = async (event, context) => {
             body: JSON.stringify({ message: "User approved and email sent" }),
         };
     } catch (error: any) {
-        console.error("Email Error:", error);
+        logFunctionError("admin-approve-user:email", error, context.awsRequestId);
         // We still return 200 because the user WAS updated, just email failed.
         // But we warn in the body.
         return {

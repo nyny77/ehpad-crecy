@@ -2,6 +2,7 @@
 // Force rebuild 2
 import type { Handler } from "@netlify/functions";
 import nodemailer from "nodemailer";
+import { logFunctionError } from "./_shared/technical-log";
 
 const handler: Handler = async (event, context) => {
     // Vérifier les variables
@@ -43,7 +44,7 @@ const handler: Handler = async (event, context) => {
             body: JSON.stringify({ message: "Email envoyé avec succès ! Vérifiez votre boîte mail." }),
         };
     } catch (error: any) {
-        console.error("Test email failed:", error);
+        logFunctionError("test-email", error, context.awsRequestId);
         return {
             statusCode: 500,
             body: JSON.stringify({

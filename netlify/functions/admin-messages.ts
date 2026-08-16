@@ -1,5 +1,6 @@
 import type { Handler } from "@netlify/functions";
 import { isAdminRequest, json } from "./_shared/admin-auth";
+import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 import type { FamilyMessage } from "./famille-send-message";
 
@@ -109,7 +110,7 @@ export const handler: Handler = async (event, context) => {
             return json(400, { error: "Action inconnue" });
         }
     } catch (error) {
-        console.error("admin messages failed", error);
+        logFunctionError("admin-messages", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Erreur lors de la gestion du courrier" });
     }
 };

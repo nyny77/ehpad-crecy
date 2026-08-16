@@ -65,6 +65,16 @@ test("les anciens liens et coordonnées erronés ne réapparaissent pas", () => 
   assert.ok(!combined.includes('url: "/tarifs"'), "Le lien /tarifs doit cibler /admissions#tarifs");
   assert.ok(!combined.includes("/vie-sociale"), "La route /vie-sociale n’existe plus");
   assert.ok(!combined.includes("01.64.63.80.80"), "Un ancien numéro de téléphone subsiste");
+  const publicConfiguration = [
+    "src/app/layout.tsx",
+    "src/app/robots.ts",
+    "src/app/sitemap.ts",
+    "src/app/accessibilite/page.tsx",
+    "netlify/functions/send-notification.ts",
+    "scripts/monitor-production.mjs",
+  ].map(source).join("\n");
+  assert.doesNotMatch(publicConfiguration, /ehpad-crecy\.netlify\.app/);
+  assert.match(publicConfiguration, /ehpadcrecy\.netlify\.app/);
 });
 
 test("les fondations d’accessibilité restent présentes", () => {
@@ -117,6 +127,17 @@ test("les appels à l’action ne contiennent pas d’éléments interactifs imb
 
 test("la date tarifaire publique correspond à avril 2026", () => {
   assert.match(source("src/lib/pricing-data.ts"), /PRICING_DATE = "Avril 2026"/);
+  assert.doesNotMatch(source("src/lib/constants.ts"), /lastUpdate:\s*"2025"/);
+  assert.doesNotMatch(source("src/lib/constants.ts"), /pricing:\s*\{/);
+  assert.match(source("src/lib/chatbot-data.ts"), /PRICING_DATA\.simple\.hebergementParJour/);
+});
+
+test("la maintenance et la supervision restent configurées", () => {
+  assert.ok(existsSync(join(ROOT, "SAUVEGARDE_RESTAURATION_ET_SUPERVISION.md")));
+  assert.ok(existsSync(join(ROOT, ".github/workflows/production-monitor.yml")));
+  assert.ok(existsSync(join(ROOT, "scripts/monitor-production.mjs")));
+  assert.match(source("netlify/functions/_shared/technical-log.ts"), /requestId/);
+  assert.match(source(".github/workflows/quality.yml"), /npm run test:e2e/);
 });
 
 test("les protections discrètes du Postier restent actives", () => {

@@ -1,6 +1,7 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 
-export const handler: Handler = async (event) => {
+export const handler: Handler = async (event, context) => {
     const prompt = event.queryStringParameters?.prompt;
     const seed = event.queryStringParameters?.seed;
     if (!prompt) {
@@ -35,7 +36,7 @@ export const handler: Handler = async (event) => {
             isBase64Encoded: true,
         };
     } catch (error) {
-        console.error("AI Generation proxy failed:", error);
+        logFunctionError("ai-image", error, context.awsRequestId);
         return { statusCode: 500, body: "Erreur lors de la génération de l'image" };
     }
 };

@@ -31,3 +31,9 @@ jobs:
 
       - name: Construire le site de production
         run: npm run build
+
+      - name: Installer Chromium pour les parcours automatiques
+        run: npx playwright install --with-deps chromium
+
+      - name: Tester Contact, Admission, Administration et Postier
+        run: npm run test:e2e

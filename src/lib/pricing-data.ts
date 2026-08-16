@@ -51,6 +51,37 @@ export const PRICING_DATA: Record<RoomType, PricingPlan> = {
     },
 };
 
+export interface MonthlyPricingEstimate {
+    dailyHebergement: number;
+    dailyDependance: number;
+    totalDaily: number;
+    estimatedMonthly: number;
+}
+
+export function calculateMonthlyPricing(
+    roomType: RoomType,
+    girIndex: number,
+    hasApa: boolean,
+    days = 31,
+): MonthlyPricingEstimate {
+    const pricing = PRICING_DATA[roomType];
+    const dependanceRate = pricing.dependanceRates[girIndex];
+
+    if (!dependanceRate) throw new RangeError("Niveau GIR invalide");
+    if (!Number.isInteger(days) || days <= 0 || days > 31) throw new RangeError("Nombre de jours invalide");
+
+    const dailyHebergement = pricing.hebergementParJour;
+    const dailyDependance = hasApa ? pricing.ticketModerateur : dependanceRate.dependance;
+    const totalDaily = dailyHebergement + dailyDependance;
+
+    return {
+        dailyHebergement,
+        dailyDependance,
+        totalDaily,
+        estimatedMonthly: totalDaily * days,
+    };
+}
+
 export const PRICING_INCLUDES = [
     "Les repas",
     "La fourniture et l'entretien du linge de literie et de toilette",

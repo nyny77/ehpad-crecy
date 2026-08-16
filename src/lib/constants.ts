@@ -26,40 +26,6 @@ export const EHPAD_INFO = {
     // Liens externes
     viaTrajectoireUrl: "https://trajectoire.sante-ra.fr/GrandAge/Pages/Public/AccesEtablissement.aspx?FINESS=770701050",
 
-    // Tarifs (mis à jour 2025)
-    pricing: {
-        accommodation: {
-            singleRoom: {
-                standard: 69.31,
-                socialAid: 60.63,
-                label: "Chambre simple",
-            },
-            doubleRoom: {
-                standard: 64.73,
-                socialAid: 56.43,
-                label: "Chambre double",
-            },
-        },
-        dependency: {
-            gir1_2: {
-                rate: 22.23,
-                label: "GIR 1-2",
-                description: "Dépendance forte",
-            },
-            gir3_4: {
-                rate: 14.15,
-                label: "GIR 3-4",
-                description: "Dépendance moyenne",
-            },
-            gir5_6: {
-                rate: 5.98,
-                label: "GIR 5-6",
-                description: "Dépendance faible",
-            },
-        },
-        lastUpdate: "2025",
-    },
-
     // Horaires administratifs
     officeHours: {
         main: "Lun, Mar, Mer, Ven : 9h00 - 12h30 / 13h30 - 17h00",

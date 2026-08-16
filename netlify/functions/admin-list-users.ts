@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 
 export const handler: Handler = async (event, context) => {
     // 1. Security Check: Only Admin
@@ -36,7 +37,7 @@ export const handler: Handler = async (event, context) => {
             body: JSON.stringify(data),
         };
     } catch (error: any) {
-        console.error("Error fetching users:", error);
+        logFunctionError("admin-list-users", error, context.awsRequestId);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),

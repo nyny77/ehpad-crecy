@@ -8,6 +8,7 @@ import {
     PRICING_EXCLUDES,
     PRICING_DATE,
     UNDER_60_PRICING,
+    calculateMonthlyPricing,
     RoomType
 } from "@/lib/pricing-data";
 
@@ -38,13 +39,8 @@ export default function PricingSection({
     const setRoomType = onExternalRoomChange || setInternalRoomType;
 
     const currentPricing = PRICING_DATA[roomType];
-    const dependanceRate = currentPricing.dependanceRates[selectedGir];
-    
-    // Calculation: 31 days month is standard for EHPAD monthly pricing display
-    const dailyHebergement = currentPricing.hebergementParJour;
-    const dailyDependance = hasApa ? currentPricing.ticketModerateur : dependanceRate.dependance;
-    const totalDaily = dailyHebergement + dailyDependance;
-    const estimatedMonthly = totalDaily * 31;
+    const { dailyHebergement, dailyDependance, totalDaily, estimatedMonthly } =
+        calculateMonthlyPricing(roomType, selectedGir, hasApa);
 
     return (
         <section className="py-24 bg-cream-100 relative overflow-hidden" id="tarifs">

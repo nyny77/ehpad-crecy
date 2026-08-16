@@ -49,15 +49,15 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 ## Fiabilité et maintenance
 
-- Centraliser les coordonnées, horaires et tarifs dans une seule source technique.
-- Supprimer l’ancienne copie tarifaire 2025 encore présente dans le code si elle est inutilisée.
-- Ajouter des tests unitaires du calculateur tarifaire.
-- Ajouter des tests d’intégration des fonctions Netlify importantes.
-- Ajouter des parcours automatiques pour Contact, Admission, Administration et Postier.
-- Ajouter un journal technique des erreurs.
-- Mettre en place des alertes en cas d’échec d’une fonction importante.
-- Documenter la sauvegarde et la restauration du site.
-- Tester régulièrement que les formulaires et le Postier fonctionnent après déploiement.
+- ~~Centraliser les coordonnées, horaires et tarifs dans une seule source technique.~~ — **Coordonnées et horaires dans `constants.ts`, tarifs 2026 dans `pricing-data.ts`, vérifiés le 16 août 2026.**
+- ~~Supprimer l’ancienne copie tarifaire 2025 encore présente dans le code si elle est inutilisée.~~ — **Copie et composant inutilisé supprimés le 16 août 2026.**
+- ~~Ajouter des tests unitaires du calculateur tarifaire.~~ — **Cas APA, sans APA et valeurs invalides couverts le 16 août 2026.**
+- ~~Ajouter des tests d’intégration des fonctions Netlify importantes.~~ — **Santé, protection administrative et Postier couverts le 16 août 2026.**
+- ~~Ajouter des parcours automatiques pour Contact, Admission, Administration et Postier.~~ — **Quatre parcours Playwright ajoutés et exécutés le 16 août 2026.**
+- ~~Ajouter un journal technique des erreurs.~~ — **Journal structuré et sans contenu personnel ajouté aux fonctions le 16 août 2026.**
+- ~~Mettre en place des alertes en cas d’échec d’une fonction importante.~~ — **Supervision toutes les six heures et alerte GitHub activées pour `ehpadcrecy.netlify.app` le 16 août 2026.**
+- ~~Documenter la sauvegarde et la restauration du site.~~ — **Procédure ajoutée le 16 août 2026.**
+- ~~Tester régulièrement que les formulaires et le Postier fonctionnent après déploiement.~~ — **Huit contrôles de production validés et programmés toutes les six heures le 16 août 2026.**
 
 ## Sécurité générale discrète
 

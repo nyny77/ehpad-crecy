@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ehpad-crecy.netlify.app"),
+  metadataBase: new URL("https://ehpadcrecy.netlify.app"),
   title: "EHPAD de Crécy | Bien plus qu'un EHPAD, un véritable lieu de vie",
   manifest: "/manifest.json",
   description:
@@ -105,10 +105,10 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "NursingHome",
               name: "EHPAD de Crécy-la-Chapelle",
-              url: "https://ehpad-crecy.netlify.app",
+              url: "https://ehpadcrecy.netlify.app",
               telephone: "+33164638262",
               email: "accueil@ehpad-crecy.fr",
-              image: "https://ehpad-crecy.netlify.app/images/global-hero.jpg",
+              image: "https://ehpadcrecy.netlify.app/images/global-hero.jpg",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "18, rue de la Chapelle",

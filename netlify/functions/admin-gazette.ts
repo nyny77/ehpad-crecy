@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText } from "./_shared/github";
 
@@ -67,7 +68,7 @@ export const handler: Handler = async (event, context) => {
         
         return json(200, { success: true, path: publicPath });
     } catch (error) {
-        console.error("gazette upload failed", error);
+        logFunctionError("admin-gazette", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Envoi du fichier impossible" });
     }
 };

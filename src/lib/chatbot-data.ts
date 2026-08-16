@@ -1,4 +1,5 @@
 import { EHPAD_INFO } from "@/lib/constants";
+import { PRICING_DATA, PRICING_DATE } from "@/lib/pricing-data";
 
 export type ChatRule = {
     id: string;
@@ -11,7 +12,7 @@ export const CHAT_RULES: ChatRule[] = [
     {
         id: "tarifs",
         keywords: ["prix", "tarif", "cout", "coût", "combien", "payer", "hébergement", "hebergement", "chambre"],
-        response: "Les tarifs d'hébergement sont d'environ 69€ par jour pour une chambre simple. Ce tarif comprend le logement, les repas et l'animation. Pour un devis précis selon votre dépendance (GIR), je vous invite à consulter notre page Tarifs.",
+        response: `Le tarif d'hébergement d'une chambre simple est de ${PRICING_DATA.simple.hebergementParJour.toFixed(2).replace(".", ",")} € par jour (${PRICING_DATE}). Il comprend notamment le logement, les repas et l'animation. Pour une estimation selon votre dépendance (GIR), consultez notre simulateur.`,
         relatedLinks: [{ label: "Voir les tarifs détaillés", url: "/admissions#tarifs" }]
     },
     {

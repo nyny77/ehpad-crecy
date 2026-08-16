@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SERVICES_EXTENDED } from "@/lib/services-data";
 
-const BASE_URL = "https://ehpad-crecy.netlify.app";
+const BASE_URL = "https://ehpadcrecy.netlify.app";
 
 export const dynamic = "force-static";
 

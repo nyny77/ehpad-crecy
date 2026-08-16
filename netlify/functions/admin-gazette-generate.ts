@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText } from "./_shared/github";
 
@@ -54,7 +55,7 @@ export const handler: Handler = async (event, context) => {
                             backgroundColor: block.backgroundColor
                         };
                     } catch (e) {
-                        console.error("Erreur de décodage d'image", e);
+                        logFunctionError("admin-gazette-generate:image-decode", e, context.awsRequestId);
                         return { ...block, base64: undefined, url: block.content };
                     }
                 } else {
@@ -105,7 +106,7 @@ export const handler: Handler = async (event, context) => {
         
         return json(200, { success: true, id: newGazetteData.id });
     } catch (error) {
-        console.error("gazette generation failed", error);
+        logFunctionError("admin-gazette-generate", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Création impossible" });
     }
 };

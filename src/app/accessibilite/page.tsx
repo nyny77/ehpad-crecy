@@ -16,7 +16,7 @@ export default function AccessibilitePage() {
 
           <section className="rounded-2xl bg-white p-8 shadow-soft">
             <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Déclaration d’accessibilité</h2>
-            <p className="text-charcoal-600">L’<strong>EHPAD de Crécy-la-Chapelle</strong> s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005. Cette déclaration s’applique au site <strong>ehpad-crecy.netlify.app</strong>.</p>
+            <p className="text-charcoal-600">L’<strong>EHPAD de Crécy-la-Chapelle</strong> s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005. Cette déclaration s’applique au site <strong>ehpadcrecy.netlify.app</strong>.</p>
           </section>
 
           <section className="rounded-2xl bg-white p-8 shadow-soft">

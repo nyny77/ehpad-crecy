@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 
 type BlogCategory = "activite" | "evenement" | "sortie" | "fete" | "autre";
@@ -117,7 +118,7 @@ export const handler: Handler = async (event, context) => {
         }
         return json(200, { success: true, id });
     } catch (error) {
-        console.error("blog administration failed", error);
+        logFunctionError("admin-blog", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Erreur de publication" });
     }
 };

@@ -1,4 +1,5 @@
 import type { Handler } from "@netlify/functions";
+import { logFunctionError } from "./_shared/technical-log";
 import { randomUUID } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
@@ -97,7 +98,7 @@ export const handler: Handler = async (event, context) => {
         await commitChanges(`Galerie : ${action}`, changes);
         return json(200, { success: true, photo: resultPhoto });
     } catch (error) {
-        console.error("gallery administration failed", error);
+        logFunctionError("admin-gallery", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Modification de la galerie impossible" });
     }
 };

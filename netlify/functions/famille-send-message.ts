@@ -1,6 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
 import { json } from "./_shared/admin-auth";
+import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 import type { Resident } from "./admin-residents";
 
@@ -26,7 +27,7 @@ function decodeImage(value: unknown): Buffer {
     return buffer;
 }
 
-export const handler: Handler = async (event) => {
+export const handler: Handler = async (event, context) => {
     // Note: Public endpoint, no admin-auth required. We authenticate via secretCode.
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
@@ -100,7 +101,7 @@ export const handler: Handler = async (event) => {
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {
-        console.error("family send message failed", error);
+        logFunctionError("famille-send-message", error, context.awsRequestId);
         return json(500, { error: error instanceof Error ? error.message : "Erreur lors de l'envoi du message" });
     }
 };
