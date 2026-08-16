@@ -28,15 +28,6 @@
       "status": "nouveau"
     },
     {
-      "id": "1770237e-5230-4bf9-9ffb-8ba9d8763642",
-      "residentId": "mock-id-1234",
-      "senderName": "Céline",
-      "text": "Bôjour a tous !!!",
-      "photoUrl": "/images/messages/msg-1786863208577-4bf79d66.webp",
-      "date": "2026-08-16T06:53:28.577Z",
-      "status": "distribue"
-    },
-    {
       "id": "4478a18a-f1f4-4b0d-ba48-1e07d0ee9896",
       "residentId": "mock-id-1234",
       "senderName": "Anissa",
