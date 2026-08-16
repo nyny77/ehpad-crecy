@@ -17,6 +17,15 @@
       "photoUrl": "/images/messages/msg-1786867680583-d4789643.webp",
       "date": "2026-08-16T08:08:00.584Z",
       "status": "nouveau"
+    },
+    {
+      "id": "313bdbb4-43c1-4990-a391-1052ba6af55d",
+      "residentId": "mock-id-1234",
+      "senderName": "Claude",
+      "text": "Djfjfdj",
+      "photoUrl": "/images/messages/msg-1786867763411-ae18cad1.webp",
+      "date": "2026-08-16T08:09:23.411Z",
+      "status": "nouveau"
     }
   ]
 }
