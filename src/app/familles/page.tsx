@@ -205,7 +205,17 @@ export default function FamillesPage() {
                                 <label className="block text-sm font-medium text-charcoal-700 mb-2">Ajouter une photo (optionnel)</label>
                                 
                                 {!image ? (
-                                    <div className="flex flex-col sm:flex-row gap-4">
+                                    <>
+                                        <div className="mb-4 bg-terracotta-50/50 border border-terracotta-100 rounded-xl p-3 flex items-start gap-3">
+                                            <div className="mt-0.5 text-terracotta-500">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/></svg>
+                                            </div>
+                                            <p className="text-xs text-charcoal-600 leading-relaxed">
+                                                <strong className="text-terracotta-700 font-semibold block mb-0.5">Conseil pour un plus beau rendu :</strong>
+                                                Privilégiez le format <b>paysage</b> (téléphone à l'horizontale) car la carte postale est imprimée dans ce sens !
+                                            </p>
+                                        </div>
+                                        <div className="flex flex-col sm:flex-row gap-4">
                                         <div 
                                             onClick={() => cameraInputRef.current?.click()}
                                             className="flex-1 border-2 border-dashed border-terracotta-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-terracotta-50 transition-colors group"
