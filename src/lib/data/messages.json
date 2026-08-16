@@ -28,15 +28,6 @@
       "status": "nouveau"
     },
     {
-      "id": "a139cd92-6b26-4072-bff3-678cc39b7f1f",
-      "residentId": "mock-id-1234",
-      "senderName": "Sandrine",
-      "text": "Petit message de nice",
-      "photoUrl": "/images/messages/msg-1786862851612-7edf4cdf.webp",
-      "date": "2026-08-16T06:47:31.613Z",
-      "status": "distribue"
-    },
-    {
       "id": "1770237e-5230-4bf9-9ffb-8ba9d8763642",
       "residentId": "mock-id-1234",
       "senderName": "Céline",
