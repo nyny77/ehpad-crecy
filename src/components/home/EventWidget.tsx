@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "@/components/ui/OptimizedImage";
-import { FileText, Paperclip } from "lucide-react";
+import { FileText, Paperclip, Pause, Play } from "lucide-react";
 import Link from "next/link";
 import { getOptimizedImageSrc } from "@/lib/optimized-image";
 
@@ -11,8 +12,34 @@ interface EventWidgetProps {
 }
 
 export default function EventWidget({ files }: EventWidgetProps) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const shouldReduceMotion = useReducedMotion();
+    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
     const filteredFiles = files.filter((file) => !file.toLowerCase().includes("ghef"));
     const remainingFile = filteredFiles[0];
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (shouldReduceMotion) {
+            video.pause();
+            return;
+        }
+
+        void video.play().catch(() => setIsVideoPlaying(false));
+    }, [shouldReduceMotion]);
+
+    const toggleVideoPlayback = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (video.paused) {
+            void video.play().catch(() => setIsVideoPlaying(false));
+        } else {
+            video.pause();
+        }
+    };
 
     return (
         <div className="relative z-20 mt-12 flex w-full snap-x snap-mandatory flex-row items-center gap-6 overflow-x-auto px-6 pb-16 pointer-events-auto xl:contents xl:pointer-events-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
@@ -68,6 +95,7 @@ export default function EventWidget({ files }: EventWidgetProps) {
 
                     <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-charcoal-900 group">
                         <video
+                            ref={videoRef}
                             src="/videos/balade-crecy.mp4"
                             aria-hidden="true"
                             tabIndex={-1}
@@ -76,9 +104,20 @@ export default function EventWidget({ files }: EventWidgetProps) {
                             loop
                             playsInline
                             preload="metadata"
+                            onPlay={() => setIsVideoPlaying(true)}
+                            onPause={() => setIsVideoPlaying(false)}
                         >
                             Votre navigateur ne supporte pas la vidéo.
                         </video>
+                        <button
+                            type="button"
+                            onClick={toggleVideoPlayback}
+                            className="absolute right-4 top-8 z-20 inline-flex items-center gap-1.5 rounded-full bg-charcoal-900/85 px-3 py-2 text-xs font-bold text-white shadow-lg backdrop-blur-sm hover:bg-charcoal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900"
+                            aria-label={isVideoPlaying ? "Mettre la vidéo en pause" : "Lire la vidéo"}
+                        >
+                            {isVideoPlaying ? <Pause aria-hidden="true" className="h-4 w-4" /> : <Play aria-hidden="true" className="h-4 w-4" />}
+                            <span>{isVideoPlaying ? "Pause" : "Lecture"}</span>
+                        </button>
                         <Link href="/histoire#videos" className="absolute inset-0 flex flex-col items-center justify-center bg-black/0 transition-colors group-hover:bg-black/20">
                             <span className="absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-charcoal-800 shadow-lg">
                                 Lire avec le son
