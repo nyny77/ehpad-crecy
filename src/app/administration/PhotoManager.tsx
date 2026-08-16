@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { CalendarDays, CheckSquare, Folder, FolderPlus, ImagePlus, LoaderCircle, Pencil, Save, Trash2, Upload, X } from "lucide-react";
 import type { GalleryAlbum, GalleryImage } from "@/lib/gallery";
 import { adminFetch } from "@/lib/admin-api";
@@ -26,6 +26,7 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
     const [albums, setAlbums] = useState<GalleryAlbum[]>(initialAlbums);
     const [legacyAlbumTitle, setLegacyAlbumTitle] = useState(initialLegacyAlbumTitle);
     const [pending, setPending] = useState<PendingPhoto[]>([]);
+    const [uploadPreviews, setUploadPreviews] = useState<Record<string, string>>({});
     const [targetAlbumId, setTargetAlbumId] = useState("new");
     const [albumTitle, setAlbumTitle] = useState("");
     const [albumDate, setAlbumDate] = useState(new Date().toISOString().slice(0, 10));
@@ -43,6 +44,32 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
         const legacyPhotos = photos.filter((photo) => !photo.albumId || !albums.some((album) => album.id === photo.albumId));
         return legacyPhotos.length ? [...dated, { id: LEGACY_ALBUM_ID, title: legacyAlbumTitle, date: "", createdAt: "", photos: legacyPhotos }] : dated;
     }, [albums, legacyAlbumTitle, photos]);
+
+    useEffect(() => {
+        const pendingIds = Object.keys(uploadPreviews);
+        if (!pendingIds.length) return;
+        const checkPublication = async () => {
+            for (const id of pendingIds) {
+                const photo = photos.find((item) => item.id === id);
+                const url = photo?.thumbSrc || photo?.src;
+                if (!url) continue;
+                try {
+                    const response = await fetch(url, { method: "HEAD", cache: "no-store" });
+                    if (!response.ok) continue;
+                    setUploadPreviews((current) => {
+                        if (!current[id]) return current;
+                        URL.revokeObjectURL(current[id]);
+                        const next = { ...current };
+                        delete next[id];
+                        return next;
+                    });
+                } catch { /* Le prochain contrôle réessaiera après le déploiement. */ }
+            }
+        };
+        void checkPublication();
+        const timer = window.setInterval(checkPublication, 15000);
+        return () => window.clearInterval(timer);
+    }, [photos, uploadPreviews]);
 
     const selectFiles = (event: ChangeEvent<HTMLInputElement>) => {
         const selected = Array.from(event.target.files || []);
@@ -84,7 +111,7 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
             if (albumId === "new") {
                 const result = await adminFetch<{ album: GalleryAlbum }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "createAlbum", title: albumTitle, date: albumDate }) });
                 albumId = result.album.id;
-                setAlbums((current) => [...current, result.album]);
+                setAlbums((current) => current.some((album) => album.id === result.album.id) ? current : [...current, result.album]);
                 setTargetAlbumId(albumId);
             }
             for (const item of pending) {
@@ -93,12 +120,12 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
                 const [imageBase64, thumbnailBase64] = await Promise.all([blobToBase64(processed.image), blobToBase64(processed.thumbnail)]);
                 const result = await adminFetch<{ photo: GalleryImage }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "add", albumId, fileName: item.file.name, title: item.title, imageBase64, thumbnailBase64 }) });
                 setPhotos((current) => [result.photo, ...current]);
+                setUploadPreviews((current) => ({ ...current, [result.photo.id]: item.preview }));
                 completed += 1;
             }
-            pending.forEach((item) => URL.revokeObjectURL(item.preview));
             setPending([]);
             setAlbumTitle("");
-            setMessage({ type: "success", text: `${completed} photo${completed > 1 ? "s" : ""} publiée${completed > 1 ? "s" : ""} dans l’album.` });
+            setMessage({ type: "success", text: `${completed} photo${completed > 1 ? "s sont enregistrées" : " est enregistrée"}. Mise en ligne Netlify en cours : comptez environ 2 minutes. L’aperçu reste visible pendant ce délai.` });
         } catch (error) {
             setMessage({ type: "error", text: `${completed} photo(s) enregistrée(s). ${error instanceof Error ? error.message : "Envoi interrompu"}` });
         } finally { setUploading(false); }
@@ -192,7 +219,7 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
                 const allSelected = ids.length > 0 && ids.every((id) => selectedIds.has(id));
                 const isLegacy = album.id === LEGACY_ALBUM_ID;
                 return <article key={album.id} className="rounded-3xl bg-white border border-cream-200 shadow-sm overflow-hidden"><header className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 md:p-6 bg-cream-50 border-b border-cream-200"><div className="flex items-center gap-4"><span className="w-12 h-12 rounded-2xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center"><Folder size={24} /></span><div>{editingAlbumId === album.id ? <div className="flex flex-wrap gap-2"><input value={albumNameDraft} onChange={(event) => setAlbumNameDraft(event.target.value)} maxLength={120} autoFocus className="px-3 py-2 rounded-xl border border-cream-300 bg-white font-semibold" aria-label="Nouveau nom de l’album" /><button onClick={() => saveAlbumName(album)} disabled={processingId === `album-${album.id}`} className="p-2 rounded-xl bg-green-50 text-green-700" aria-label="Enregistrer le nom de l’album">{processingId === `album-${album.id}` ? <LoaderCircle size={17} className="animate-spin" /> : <Save size={17} />}</button><button onClick={() => setEditingAlbumId(null)} className="p-2 rounded-xl bg-white text-charcoal-700" aria-label="Annuler le renommage"><X size={17} /></button></div> : <div className="flex flex-wrap items-center gap-2"><h3 className="font-serif text-2xl text-charcoal-900">{album.title}</h3><button onClick={() => { setEditingAlbumId(album.id); setAlbumNameDraft(album.title); }} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-white text-charcoal-700 border border-cream-300 text-sm font-semibold" aria-label={`Renommer l’album ${album.title}`}><Pencil size={15} /> Renommer</button></div>}<p className="text-sm text-charcoal-600 flex items-center gap-1.5 mt-1">{album.date && <><CalendarDays size={15} /> {formatDate(album.date)} · </>}{album.photos.length} photo(s)</p></div></div><div className="flex flex-wrap gap-2"><button onClick={() => toggleSelection(ids, !allSelected)} disabled={!ids.length} className="px-4 py-2 text-sm font-semibold rounded-full bg-white border border-cream-300 text-charcoal-700 disabled:opacity-40">{allSelected ? "Désélectionner" : "Tout sélectionner"}</button>{!isLegacy && <button onClick={() => deleteAlbum(album, album.photos.length)} disabled={processingId === `album-${album.id}`} className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full bg-red-50 text-red-700 border border-red-200 disabled:opacity-50">{processingId === `album-${album.id}` ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />} Supprimer l’album</button>}</div></header>
-                    {album.photos.length ? <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5 md:p-6">{album.photos.map((photo, index) => { const isSelected = selectedIds.has(photo.id); return <div key={photo.id} className={`relative rounded-2xl overflow-hidden border transition-colors ${isSelected ? "border-terracotta-500 ring-2 ring-terracotta-500 ring-offset-2" : "border-cream-200"}`}><input type="checkbox" checked={isSelected} onChange={(event) => toggleSelection([photo.id], event.target.checked)} className="absolute top-3 left-3 z-10 w-5 h-5 accent-terracotta-600 cursor-pointer shadow" aria-label={`Sélectionner ${photo.title || `la photo ${index + 1}`}`} /><img src={photo.thumbSrc || photo.src} alt="" className="w-full aspect-[4/3] object-cover" /><div className="p-4">{editingId === photo.id ? <div className="flex gap-2"><input value={editTitle} onChange={(event) => setEditTitle(event.target.value)} className="min-w-0 flex-1 px-3 py-2 rounded-xl border border-cream-300" aria-label="Titre" /><button onClick={() => saveEdit(photo)} className="p-2 rounded-xl bg-green-50 text-green-700" aria-label="Enregistrer"><Save size={17} /></button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100" aria-label="Annuler"><X size={17} /></button></div> : <div className="flex items-center gap-2"><h4 className="font-semibold text-charcoal-900 flex-1 truncate">{photo.title}</h4><button onClick={() => { setEditingId(photo.id); setEditTitle(photo.title || ""); }} className="p-2 rounded-xl bg-cream-100 text-charcoal-700" aria-label="Modifier le titre"><Pencil size={16} /></button><button onClick={() => deletePhotos([photo.id])} className="p-2 rounded-xl bg-red-50 text-red-700" aria-label="Supprimer la photo"><Trash2 size={16} /></button></div>}</div></div>; })}</div> : <p className="p-8 text-center text-charcoal-500">Cet album est vide. Vous pouvez y ajouter des photos avec le formulaire ci-dessus.</p>}
+                        {album.photos.length ? <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 p-5 md:p-6">{album.photos.map((photo, index) => { const isSelected = selectedIds.has(photo.id); const isPublishing = Boolean(uploadPreviews[photo.id]); return <div key={photo.id} className={`relative rounded-2xl overflow-hidden border transition-colors ${isSelected ? "border-terracotta-500 ring-2 ring-terracotta-500 ring-offset-2" : "border-cream-200"}`}><input type="checkbox" checked={isSelected} onChange={(event) => toggleSelection([photo.id], event.target.checked)} className="absolute top-3 left-3 z-10 w-5 h-5 accent-terracotta-600 cursor-pointer shadow" aria-label={`Sélectionner ${photo.title || `la photo ${index + 1}`}`} /><img src={uploadPreviews[photo.id] || photo.thumbSrc || photo.src} alt="" className="w-full aspect-[4/3] object-cover" />{isPublishing && <span className="absolute top-3 right-3 rounded-full bg-charcoal-900/85 px-3 py-1.5 text-xs font-semibold text-white">Mise en ligne…</span>}<div className="p-4">{editingId === photo.id ? <div className="flex gap-2"><input value={editTitle} onChange={(event) => setEditTitle(event.target.value)} className="min-w-0 flex-1 px-3 py-2 rounded-xl border border-cream-300" aria-label="Titre" /><button onClick={() => saveEdit(photo)} className="p-2 rounded-xl bg-green-50 text-green-700" aria-label="Enregistrer"><Save size={17} /></button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100" aria-label="Annuler"><X size={17} /></button></div> : <div className="flex items-center gap-2"><h4 className="font-semibold text-charcoal-900 flex-1 truncate">{photo.title}</h4><button onClick={() => { setEditingId(photo.id); setEditTitle(photo.title || ""); }} className="p-2 rounded-xl bg-cream-100 text-charcoal-700" aria-label="Modifier le titre"><Pencil size={16} /></button><button onClick={() => deletePhotos([photo.id])} className="p-2 rounded-xl bg-red-50 text-red-700" aria-label="Supprimer la photo"><Trash2 size={16} /></button></div>}</div></div>; })}</div> : <p className="p-8 text-center text-charcoal-500">Cet album est vide. Vous pouvez y ajouter des photos avec le formulaire ci-dessus.</p>}
                 </article>;
             })}
             {!albumSections.length && <div className="rounded-3xl bg-white border border-cream-200 p-10 text-center text-charcoal-500">Aucun album pour le moment.</div>}

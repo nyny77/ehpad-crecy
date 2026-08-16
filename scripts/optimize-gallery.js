@@ -37,8 +37,11 @@ async function optimizeGallery() {
         const fileName = path.basename(photo.src);
         const originalPath = path.join(PUBLIC_DIR, photo.src);
         
-        // The thumbnail will be stored in /images/thumbnails/{fileName}
-        const thumbRelativePath = `/images/thumbnails/${fileName}`;
+        // Les nouveaux albums possèdent déjà leur miniature dans leur propre
+        // dossier. Ne pas la remplacer par l'ancien chemin global au build.
+        const thumbRelativePath = photo.albumId
+            ? `/images/gallery/${photo.albumId}/thumbnails/${fileName}`
+            : (photo.thumbSrc || `/images/thumbnails/${fileName}`);
         const thumbAbsolutePath = path.join(PUBLIC_DIR, thumbRelativePath);
 
         // Add thumbSrc to JSON if it doesn't exist yet

@@ -76,6 +76,8 @@ export const handler: Handler = async (event, context) => {
             const title = String(body.title || "").trim();
             const date = String(body.date || "").trim();
             if (!title || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return json(400, { error: "Nom et date de l’album obligatoires" });
+            const existingAlbum = data.albums.find((album) => album.date === date && album.title.localeCompare(title, "fr", { sensitivity: "base" }) === 0);
+            if (existingAlbum) return json(200, { success: true, album: existingAlbum, alreadyExists: true });
             const album: GalleryAlbum = { id: randomUUID(), title: title.slice(0, 120), date, createdAt: new Date().toISOString() };
             data.albums.push(album);
             changes.push({ path: GALLERY_PATH, content: JSON.stringify(data, null, 2) + "\n" });
