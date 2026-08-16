@@ -17,6 +17,15 @@
       "photoUrl": "/images/messages/msg-1786861775062-c148070c.webp",
       "date": "2026-08-16T06:29:35.063Z",
       "status": "nouveau"
+    },
+    {
+      "id": "c3a37d71-e085-4002-aa11-9e49c4b09cd8",
+      "residentId": "mock-id-1234",
+      "senderName": "Dede",
+      "text": "Helloooo",
+      "photoUrl": "/images/messages/msg-1786862313395-08fd050f.webp",
+      "date": "2026-08-16T06:38:33.396Z",
+      "status": "nouveau"
     }
   ]
 }
