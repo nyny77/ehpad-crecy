@@ -1,3 +1,13 @@
 {
-  "messages": []
+  "messages": [
+    {
+      "id": "a4676f81-f821-42d8-b391-ccbc856a77a1",
+      "residentId": "mock-id-1234",
+      "senderName": "Coucou de Limoges",
+      "text": "Comment vas tu papy ?",
+      "photoUrl": "/images/messages/msg-1786860814448-6d705163.webp",
+      "date": "2026-08-16T06:13:34.449Z",
+      "status": "nouveau"
+    }
+  ]
 }
