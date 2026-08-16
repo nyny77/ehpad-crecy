@@ -809,6 +809,15 @@
       "category": "autre",
       "alt": "Nouvelle photo 20260624_160626.jpg",
       "thumbSrc": "/images/thumbnails/20260624_160626.jpg"
+    },
+    {
+      "id": "8683c422-e60c-4543-8ce2-0b33bb44d79a",
+      "src": "/images/gallery/19c98979-29ed-43a6-b227-4e617ee9fc87/1786904927566-v2.webp",
+      "thumbSrc": "/images/gallery/19c98979-29ed-43a6-b227-4e617ee9fc87/thumbnails/1786904927566-v2.webp",
+      "title": "v2",
+      "alt": "",
+      "category": "autre",
+      "albumId": "19c98979-29ed-43a6-b227-4e617ee9fc87"
     }
   ]
 }
