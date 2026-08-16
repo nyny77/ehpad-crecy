@@ -106,19 +106,23 @@ export default function CourrierManager() {
                         flex-direction: column;
                     }
                     .photo-half {
-                        width: 100%;
-                        height: 148.5mm; /* Exactly half A4 */
-                        display: block;
-                        border-bottom: 1px dashed #ccc;
-                        overflow: hidden;
+                        width: 100% !important;
+                        height: 148.5mm !important; /* Exactly half A4 */
+                        display: block !important;
+                        border-bottom: 1px dashed #ccc !important;
+                        overflow: hidden !important;
+                        background: #fff !important;
                     }
                     .photo-half img {
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover; /* Fill the entire half page */
-                        margin: 0;
-                        padding: 0;
+                        display: block !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                        max-width: none !important;
+                        max-height: none !important;
+                        object-fit: cover !important; /* Fill the entire half page */
+                        object-position: center !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
                     }
                     .no-photo {
                         text-align: center;
