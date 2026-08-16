@@ -44,10 +44,11 @@ export default function FamillesPage() {
                 body: JSON.stringify({ action: "verify", secretCode })
             });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.error || "Code incorrect");
+            if (!res.ok) throw new Error(data.error || "Code invalide");
             
             setResidentName(data.residentName);
             setStep("compose");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -108,6 +109,7 @@ export default function FamillesPage() {
             if (!res.ok) throw new Error(data.error || "Erreur lors de l'envoi");
             
             setStep("success");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err: any) {
             setError(err.message);
         } finally {
