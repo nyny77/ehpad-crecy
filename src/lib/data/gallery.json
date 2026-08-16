@@ -1,12 +1,6 @@
 {
   "albums": [
     {
-      "id": "19c98979-29ed-43a6-b227-4e617ee9fc87",
-      "title": "Noel 2025",
-      "date": "2026-08-16",
-      "createdAt": "2026-08-16T18:28:45.299Z"
-    },
-    {
       "id": "7799d741-0f1b-4927-b0b9-127c0042708a",
       "title": "Noel 2025",
       "date": "2026-08-16",
@@ -815,15 +809,6 @@
       "category": "autre",
       "alt": "Nouvelle photo 20260624_160626.jpg",
       "thumbSrc": "/images/thumbnails/20260624_160626.jpg"
-    },
-    {
-      "id": "8683c422-e60c-4543-8ce2-0b33bb44d79a",
-      "src": "/images/gallery/19c98979-29ed-43a6-b227-4e617ee9fc87/1786904927566-v2.webp",
-      "thumbSrc": "/images/gallery/19c98979-29ed-43a6-b227-4e617ee9fc87/thumbnails/1786904927566-v2.webp",
-      "title": "v2",
-      "alt": "",
-      "category": "autre",
-      "albumId": "19c98979-29ed-43a6-b227-4e617ee9fc87"
     },
     {
       "id": "59d87294-86b1-4b88-bfa4-eb6c00abda8f",
