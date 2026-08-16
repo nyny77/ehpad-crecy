@@ -1,5 +1,12 @@
 {
-  "albums": [],
+  "albums": [
+    {
+      "id": "c36124a4-6156-4edb-93fa-11862ddb5a16",
+      "title": "Printemps 2026",
+      "date": "2026-08-16",
+      "createdAt": "2026-08-16T18:47:32.692Z"
+    }
+  ],
   "legacyAlbumTitle": "En Espagne",
   "photos": [
     {
