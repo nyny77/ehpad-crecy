@@ -687,7 +687,7 @@ export default function GazetteManager() {
                                         </button>
                                     </div>
 
-                                    <div className="p-6 overflow-y-auto flex-grow space-y-5">
+                                    <div className="p-6 overflow-y-auto flex-grow min-h-0 space-y-5">
                                         <p id="ai-image-help" className="text-charcoal-600">
                                             Décrivez simplement l'illustration souhaitée. N'indiquez aucun nom de résident ni aucune information personnelle.
                                         </p>
@@ -743,21 +743,31 @@ export default function GazetteManager() {
                                         {!isGeneratingAi && aiImagePreview && (
                                             <div className="space-y-4">
                                                 <div className="rounded-xl overflow-hidden bg-cream-100 flex justify-center">
-                                                    <img src={aiImagePreview} alt="Aperçu de l’illustration générée" className="max-h-[420px] w-auto object-contain" />
+                                                    <img src={aiImagePreview} alt="Aperçu de l’illustration générée" className="max-h-[360px] w-auto object-contain" />
                                                 </div>
                                                 <p className="text-sm text-charcoal-600 text-center">Mention ajoutée automatiquement : « Illustration générée par IA »</p>
-                                                <div className="flex justify-end">
-                                                    <button
-                                                        type="button"
-                                                        onClick={selectAiImage}
-                                                        className="px-6 py-3 bg-sage-700 text-white font-semibold rounded-xl hover:bg-sage-800 transition-colors"
-                                                    >
-                                                        Utiliser cette image
-                                                    </button>
-                                                </div>
                                             </div>
                                         )}
                                     </div>
+
+                                    {!isGeneratingAi && aiImagePreview && (
+                                        <div className="flex-shrink-0 border-t border-cream-200 bg-white p-4 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 shadow-[0_-8px_24px_rgba(30,30,30,0.08)]">
+                                            <button
+                                                type="button"
+                                                onClick={() => setAiImagePreview("")}
+                                                className="px-6 py-3 border border-charcoal-300 bg-white text-charcoal-800 font-semibold rounded-xl hover:bg-cream-50 transition-colors"
+                                            >
+                                                Ne pas garder
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={selectAiImage}
+                                                className="px-6 py-3 bg-sage-700 text-white font-semibold rounded-xl hover:bg-sage-800 transition-colors"
+                                            >
+                                                Garder et importer dans l'éditeur
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
