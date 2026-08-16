@@ -44,6 +44,15 @@
       "photoUrl": "/images/messages/msg-1786863208577-4bf79d66.webp",
       "date": "2026-08-16T06:53:28.577Z",
       "status": "nouveau"
+    },
+    {
+      "id": "4478a18a-f1f4-4b0d-ba48-1e07d0ee9896",
+      "residentId": "mock-id-1234",
+      "senderName": "Anissa",
+      "text": "Bonsoir l equipe !!!",
+      "photoUrl": "/images/messages/msg-1786863980105-32efff8b.webp",
+      "date": "2026-08-16T07:06:20.105Z",
+      "status": "nouveau"
     }
   ]
 }
