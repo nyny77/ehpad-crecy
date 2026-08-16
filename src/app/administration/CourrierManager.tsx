@@ -105,12 +105,11 @@ export default function CourrierManager() {
                         display: flex;
                         flex-direction: column;
                     }
-                    /* Top half: Photo */
                     .photo-half {
                         width: 210mm;
                         height: 148.5mm; /* Exactly half A4 */
                         box-sizing: border-box;
-                        padding: ${message.photoUrl ? '0' : '15mm'};
+                        padding: 15mm; /* White border to prevent clipping */
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -122,6 +121,7 @@ export default function CourrierManager() {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
+                        border-radius: 4px; /* Slight rounding for elegance */
                     }
                     .no-photo {
                         text-align: center;
@@ -287,6 +287,7 @@ export default function CourrierManager() {
                     <div class="divider"></div>
                     
                     <div class="address-side">
+                        <img src="/images/logo.png" style="height: 45px; position: absolute; top: 0; left: 0; opacity: 0.9;" alt="Logo EHPAD" />
                         <div class="stamp">Timbre</div>
                         <div class="postmark">
                             EHPAD CRÉCY
