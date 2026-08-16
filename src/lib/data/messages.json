@@ -8,6 +8,15 @@
       "photoUrl": "/images/messages/msg-1786867261518-579c5a1e.webp",
       "date": "2026-08-16T08:01:01.518Z",
       "status": "nouveau"
+    },
+    {
+      "id": "bee5f8b4-efac-4d1d-8bdd-8d86a5305027",
+      "residentId": "mock-id-1234",
+      "senderName": "Claude",
+      "text": "Bonjour 👋 👋",
+      "photoUrl": "/images/messages/msg-1786867680583-d4789643.webp",
+      "date": "2026-08-16T08:08:00.584Z",
+      "status": "nouveau"
     }
   ]
 }
