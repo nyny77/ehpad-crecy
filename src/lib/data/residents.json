@@ -1,12 +1,6 @@
 {
   "residents": [
     {
-      "id": "mock-id-1234",
-      "name": "Jean Dupont",
-      "room": "12",
-      "secretCode": "JEAN-5555"
-    },
-    {
       "id": "35a4e5a57a36fd83",
       "name": "Jean Luc Martinez",
       "room": "104",
