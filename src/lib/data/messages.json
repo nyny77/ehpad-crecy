@@ -1,15 +1,6 @@
 {
   "messages": [
     {
-      "id": "2ca13748-7882-4a33-a45c-f47b7c2f0dc7",
-      "residentId": "mock-id-1234",
-      "senderName": "Polo",
-      "text": "Coucou de la Corse !",
-      "photoUrl": "/images/messages/msg-1786828050644-61d447d7.webp",
-      "date": "2026-08-15T21:07:30.645Z",
-      "status": "distribue"
-    },
-    {
       "id": "be90a658-954f-4de6-b4db-59b34945e42e",
       "residentId": "mock-id-1234",
       "senderName": "Jp",
