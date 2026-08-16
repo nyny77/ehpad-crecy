@@ -106,22 +106,19 @@ export default function CourrierManager() {
                         flex-direction: column;
                     }
                     .photo-half {
-                        width: 210mm;
+                        width: 100%;
                         height: 148.5mm; /* Exactly half A4 */
-                        box-sizing: border-box;
-                        padding: 5mm; /* Small safe border to prevent printer clipping */
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border-bottom: 1px dashed #ccc; /* Cut line */
-                        background-color: #fff;
+                        position: relative;
+                        border-bottom: 1px dashed #ccc;
                         overflow: hidden;
                     }
                     .photo-half img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
                         width: 100%;
                         height: 100%;
                         object-fit: cover; /* Fill the entire half page */
-                        border-radius: 4px;
                     }
                     .no-photo {
                         text-align: center;
