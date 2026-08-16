@@ -1,12 +1,5 @@
 {
-  "albums": [
-    {
-      "id": "c36124a4-6156-4edb-93fa-11862ddb5a16",
-      "title": "Printemps 2026",
-      "date": "2026-08-16",
-      "createdAt": "2026-08-16T18:47:32.692Z"
-    }
-  ],
+  "albums": [],
   "legacyAlbumTitle": "En Espagne",
   "photos": [
     {
@@ -809,15 +802,6 @@
       "category": "autre",
       "alt": "Nouvelle photo 20260624_160626.jpg",
       "thumbSrc": "/images/thumbnails/20260624_160626.jpg"
-    },
-    {
-      "id": "df68b0f5-5702-4512-92f4-32dbb8303cfc",
-      "src": "/images/gallery/c36124a4-6156-4edb-93fa-11862ddb5a16/1786906055266-v2.webp",
-      "thumbSrc": "/images/gallery/c36124a4-6156-4edb-93fa-11862ddb5a16/thumbnails/1786906055266-v2.webp",
-      "title": "v2",
-      "alt": "",
-      "category": "autre",
-      "albumId": "c36124a4-6156-4edb-93fa-11862ddb5a16"
     }
   ]
 }
