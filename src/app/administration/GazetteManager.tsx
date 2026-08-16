@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
-import { FileUp, LoaderCircle, Plus, Trash2, Image as ImageIcon, Type, Heading1, List, Search, X } from "lucide-react";
+import { FileUp, LoaderCircle, Plus, Trash2, Image as ImageIcon, Type, Heading1, List, Search, Sparkles, X } from "lucide-react";
 import { adminFetch } from "@/lib/admin-api";
 import gazetteData from "@/lib/data/gazette.json";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
@@ -53,6 +53,14 @@ export default function GazetteManager() {
     const [hasSearched, setHasSearched] = useState(false);
     const imageSearchOpenerRef = useRef<HTMLElement | null>(null);
 
+    // AI illustration state
+    const [aiImageBlockId, setAiImageBlockId] = useState<string | null>(null);
+    const [aiPrompt, setAiPrompt] = useState("");
+    const [aiImagePreview, setAiImagePreview] = useState("");
+    const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+    const [aiError, setAiError] = useState("");
+    const aiImageOpenerRef = useRef<HTMLElement | null>(null);
+
     const closeImageSearch = () => {
         setImageSearchBlockId(null);
         setSearchResults([]);
@@ -64,6 +72,43 @@ export default function GazetteManager() {
     const openImageSearch = (blockId: string) => {
         imageSearchOpenerRef.current = document.activeElement as HTMLElement | null;
         setImageSearchBlockId(blockId);
+    };
+
+    const closeAiImage = () => {
+        if (isGeneratingAi) return;
+        setAiImageBlockId(null);
+        setAiPrompt("");
+        setAiImagePreview("");
+        setAiError("");
+        window.setTimeout(() => aiImageOpenerRef.current?.focus(), 0);
+    };
+
+    const openAiImage = (blockId: string) => {
+        aiImageOpenerRef.current = document.activeElement as HTMLElement | null;
+        setAiImageBlockId(blockId);
+        setAiPrompt("");
+        setAiImagePreview("");
+        setAiError("");
+    };
+
+    const handleAiImageDialogKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeAiImage();
+            return;
+        }
+        if (event.key !== "Tab") return;
+        const focusable = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     };
 
     const handleImageSearchDialogKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -169,6 +214,36 @@ export default function GazetteManager() {
             updateBlock(imageSearchBlockId, "base64", ""); // clear base64 so backend treats it as URL
             closeImageSearch();
         }
+    };
+
+    const generateAiImage = async () => {
+        if (aiPrompt.trim().length < 3 || isGeneratingAi) return;
+        setIsGeneratingAi(true);
+        setAiError("");
+        setAiImagePreview("");
+
+        try {
+            const result = await adminFetch<{ imageBase64: string; label: string }>("/.netlify/functions/ai-image", {
+                method: "POST",
+                body: JSON.stringify({ prompt: aiPrompt.trim() }),
+            });
+            setAiImagePreview(result.imageBase64);
+        } catch (error) {
+            setAiError(error instanceof Error ? error.message : "La génération a échoué.");
+        } finally {
+            setIsGeneratingAi(false);
+        }
+    };
+
+    const selectAiImage = () => {
+        if (!aiImageBlockId || !aiImagePreview) return;
+        const block = blocks.find(item => item.id === aiImageBlockId);
+        updateBlock(aiImageBlockId, "content", aiImagePreview);
+        updateBlock(aiImageBlockId, "base64", aiImagePreview);
+        if (!block?.caption?.trim()) {
+            updateBlock(aiImageBlockId, "caption", "Illustration générée par IA");
+        }
+        closeAiImage();
     };
 
 
@@ -432,7 +507,7 @@ export default function GazetteManager() {
                                                     </button>
                                                 </div>
                                             ) : (
-                                                <div className="w-full flex flex-col md:flex-row gap-4 py-8 border-2 border-dashed border-cream-300 rounded-xl bg-cream-50">
+                                                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 py-8 border-2 border-dashed border-cream-300 rounded-xl bg-cream-50">
                                                     <div className="flex-1 flex flex-col items-center justify-center px-4 md:border-r border-cream-300">
                                                         <label className="cursor-pointer flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500">
                                                             <ImageIcon size={32} className="mb-2" />
@@ -449,6 +524,17 @@ export default function GazetteManager() {
                                                         >
                                                             <Search size={32} className="mb-2" />
                                                             <span className="font-medium text-center">Chercher image<br/><span className="text-sm font-normal">(Banque photo libre)</span></span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="flex-1 flex flex-col items-center justify-center px-4 md:border-l border-cream-300">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => openAiImage(block.id)}
+                                                            className="flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500"
+                                                        >
+                                                            <Sparkles size={32} className="mb-2" />
+                                                            <span className="font-medium text-center">Générer une image<br/><span className="text-sm font-normal">(Intelligence artificielle)</span></span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -567,6 +653,108 @@ export default function GazetteManager() {
                                                 <Search size={48} className="mb-4 text-cream-200" />
                                                 <p className="font-medium text-charcoal-600">Recherchez de belles photos libres de droits</p>
                                                 <p className="text-sm mt-1">Tapez des mots simples : "Chat", "Automne", "Anniversaire"...</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {aiImageBlockId && (
+                            <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                                <div
+                                    role="dialog"
+                                    aria-modal="true"
+                                    aria-labelledby="ai-image-title"
+                                    aria-describedby="ai-image-help"
+                                    aria-busy={isGeneratingAi}
+                                    onKeyDown={handleAiImageDialogKeyDown}
+                                    className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden"
+                                >
+                                    <div className="p-4 border-b border-cream-200 flex items-center justify-between bg-cream-50">
+                                        <h3 id="ai-image-title" className="font-serif text-xl text-charcoal-900 font-bold flex items-center gap-2">
+                                            <Sparkles size={20} className="text-terracotta-500" />
+                                            Créer une illustration avec l'IA
+                                        </h3>
+                                        <button
+                                            type="button"
+                                            aria-label="Fermer la génération d’image"
+                                            onClick={closeAiImage}
+                                            disabled={isGeneratingAi}
+                                            className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors disabled:opacity-40"
+                                        >
+                                            <X aria-hidden="true" size={20} />
+                                        </button>
+                                    </div>
+
+                                    <div className="p-6 overflow-y-auto flex-grow space-y-5">
+                                        <p id="ai-image-help" className="text-charcoal-600">
+                                            Décrivez simplement l'illustration souhaitée. N'indiquez aucun nom de résident ni aucune information personnelle.
+                                        </p>
+
+                                        <form
+                                            onSubmit={(event) => {
+                                                event.preventDefault();
+                                                generateAiImage();
+                                            }}
+                                            className="space-y-3"
+                                        >
+                                            <label htmlFor="ai-image-prompt" className="block font-semibold text-charcoal-800">
+                                                Description de l'image
+                                            </label>
+                                            <textarea
+                                                id="ai-image-prompt"
+                                                value={aiPrompt}
+                                                onChange={(event) => setAiPrompt(event.target.value)}
+                                                placeholder="Exemple : un bouquet de fleurs de printemps sur une table, ambiance chaleureuse"
+                                                minLength={3}
+                                                maxLength={500}
+                                                rows={3}
+                                                disabled={isGeneratingAi}
+                                                autoFocus
+                                                className="w-full px-4 py-3 rounded-xl border border-cream-300 focus:border-terracotta-500 focus:ring-1 focus:ring-terracotta-500 text-charcoal-900 resize-y disabled:bg-cream-50"
+                                            />
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                                <span className="text-sm text-charcoal-500">{aiPrompt.length}/500 caractères · une image par génération</span>
+                                                <button
+                                                    type="submit"
+                                                    disabled={isGeneratingAi || aiPrompt.trim().length < 3}
+                                                    className="px-6 py-3 bg-terracotta-600 text-white font-semibold rounded-xl hover:bg-terracotta-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    {isGeneratingAi ? <LoaderCircle size={20} className="animate-spin" /> : <Sparkles size={20} />}
+                                                    {isGeneratingAi ? "Création en cours…" : aiImagePreview ? "Générer une autre image" : "Générer l'image"}
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        {aiError && (
+                                            <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">
+                                                {aiError}
+                                            </div>
+                                        )}
+
+                                        {isGeneratingAi && (
+                                            <div role="status" className="rounded-xl bg-cream-50 p-8 text-center text-charcoal-600">
+                                                <LoaderCircle size={36} className="animate-spin mx-auto mb-3 text-terracotta-600" />
+                                                Cloudflare prépare votre illustration. Cela peut prendre quelques secondes.
+                                            </div>
+                                        )}
+
+                                        {!isGeneratingAi && aiImagePreview && (
+                                            <div className="space-y-4">
+                                                <div className="rounded-xl overflow-hidden bg-cream-100 flex justify-center">
+                                                    <img src={aiImagePreview} alt="Aperçu de l’illustration générée" className="max-h-[420px] w-auto object-contain" />
+                                                </div>
+                                                <p className="text-sm text-charcoal-600 text-center">Mention ajoutée automatiquement : « Illustration générée par IA »</p>
+                                                <div className="flex justify-end">
+                                                    <button
+                                                        type="button"
+                                                        onClick={selectAiImage}
+                                                        className="px-6 py-3 bg-sage-700 text-white font-semibold rounded-xl hover:bg-sage-800 transition-colors"
+                                                    >
+                                                        Utiliser cette image
+                                                    </button>
+                                                </div>
                                             </div>
                                         )}
                                     </div>

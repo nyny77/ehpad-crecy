@@ -3,6 +3,7 @@ import test from "node:test";
 import { handler as healthHandler } from "../netlify/functions/health";
 import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
 import { handler as familyMessageHandler } from "../netlify/functions/famille-send-message";
+import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 
 const event = (httpMethod: string, body?: object) => ({
     httpMethod,
@@ -51,3 +52,13 @@ test("le Postier refuse une mauvaise méthode et un code inconnu", async () => {
     assert.equal(unknownCode?.statusCode, 401);
 });
 
+test("la génération d'image IA reste réservée à l'administration", async () => {
+    const forbidden = await aiImageHandler(
+        event("POST", { prompt: "Un bouquet de fleurs" }) as never,
+        anonymousContext as never,
+    );
+    const wrongMethod = await aiImageHandler(event("GET") as never, adminContext as never);
+
+    assert.equal(forbidden?.statusCode, 403);
+    assert.equal(wrongMethod?.statusCode, 405);
+});

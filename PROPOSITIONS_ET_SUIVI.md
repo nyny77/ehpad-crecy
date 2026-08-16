@@ -137,6 +137,11 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 ### Gazette augmentée
 
+- ~~Intégrer dans l’administration de la Gazette un bouton utilisant l’API OpenAI et GPT Image 2.~~ — **Annulée : le responsable souhaite une solution sans abonnement ni facturation.**
+- ~~Intégrer dans l’administration de la Gazette un bouton « Générer une image avec l’IA » utilisant le quota gratuit de Cloudflare Workers AI et le modèle FLUX.~~ — **Mis en ligne le 16 août 2026 après une génération réelle réussie.**
+- ~~Protéger cette génération par le rôle administrateur et conserver les identifiants Cloudflare uniquement dans les variables secrètes Netlify.~~ — **Variables protégées dans Netlify et accès anonyme refusé en production le 16 août 2026.**
+- ~~Générer une seule proposition à la fois, avec validation humaine avant insertion, pour garder la maîtrise des coûts.~~ — **Aperçu et validation manuelle ajoutés le 16 août 2026.**
+- ~~Ajouter automatiquement la mention « Illustration générée par IA » lorsque l’image ne représente pas un événement réel de l’EHPAD.~~ — **Mention automatique ajoutée le 16 août 2026.**
 - Créer une version audio de la Gazette.
 - Ajouter une version grand contraste et adaptée aux écrans du hall.
 - Ajouter des QR codes vers des contenus accessibles lorsque cela apporte une vraie valeur.
