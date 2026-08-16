@@ -37,14 +37,15 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - ~~Correction des anciens liens et coordonnées.~~
 - ~~Tests automatiques, ESLint, TypeScript et build de production.~~
 - ~~CI GitHub et point de contrôle de santé.~~
+- ~~Alignement des informations de la barre inférieure du pied de page sur une seule ligne sur ordinateur.~~ — **Terminé le 16 août 2026.**
 
 ## Protections simples du Postier — sans modifier le parcours famille
 
-- Vérifier que toutes les commandes d’administration du courrier exigent réellement le rôle administrateur.
-- Éviter les noms de résidents, expéditeurs et messages personnels dans les titres de commits GitHub.
-- Conserver la suppression de la photo après distribution.
-- Définir une durée simple de conservation des courriers distribués.
-- Documenter une procédure manuelle de suppression en cas de demande d’une famille.
+- ~~Vérifier que toutes les commandes d’administration du courrier exigent réellement le rôle administrateur.~~ — **Vérifié et couvert par un test automatique le 16 août 2026.**
+- ~~Éviter les noms de résidents, expéditeurs et messages personnels dans les titres de commits GitHub.~~ — **Titres rendus génériques le 16 août 2026.**
+- ~~Conserver la suppression de la photo après distribution.~~ — **Vérifiée, complétée et couverte par un test automatique le 16 août 2026.**
+- ~~Définir une durée simple de conservation des courriers distribués.~~ — **Suppression automatique après 30 jours, pour les distributions enregistrées à partir du 16 août 2026.**
+- ~~Documenter une procédure manuelle de suppression en cas de demande d’une famille.~~ — **Procédure ajoutée le 16 août 2026.**
 
 ## Fiabilité et maintenance
 

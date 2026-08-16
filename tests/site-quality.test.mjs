@@ -118,3 +118,21 @@ test("les appels à l’action ne contiennent pas d’éléments interactifs imb
 test("la date tarifaire publique correspond à avril 2026", () => {
   assert.match(source("src/lib/pricing-data.ts"), /PRICING_DATE = "Avril 2026"/);
 });
+
+test("les protections discrètes du Postier restent actives", () => {
+  const adminMessages = source("netlify/functions/admin-messages.ts");
+  const familyMessages = source("netlify/functions/famille-send-message.ts");
+
+  assert.match(adminMessages, /if \(!isAdminRequest\(context\)\) return json\(403/);
+  assert.ok(
+    adminMessages.indexOf("isAdminRequest(context)") < adminMessages.indexOf("readRepositoryText(MESSAGES_PATH)"),
+    "Le rôle administrateur doit être vérifié avant la lecture du courrier"
+  );
+  assert.match(adminMessages, /DISTRIBUTED_MESSAGE_RETENTION_DAYS = 30/);
+  assert.match(adminMessages, /message\.distributedAt = new Date\(\)\.toISOString\(\)/);
+  assert.match(adminMessages, /message\.photoUrl = null/);
+  assert.match(adminMessages, /action === "purgeExpired"/);
+  assert.doesNotMatch(adminMessages, /commitChanges\(`[^`]*\$\{message\.(?:senderName|text|residentId)\}/);
+  assert.doesNotMatch(familyMessages, /commitChanges\(`[^`]*\$\{(?:senderName|text|resident\.name)\}/);
+  assert.ok(existsSync(join(ROOT, "PROCEDURE_SUPPRESSION_COURRIER_FAMILLE.md")));
+});

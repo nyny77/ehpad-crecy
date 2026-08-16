@@ -12,6 +12,7 @@ export interface FamilyMessage {
     photoUrl: string | null;
     date: string;
     status: "nouveau" | "distribue";
+    distributedAt?: string;
 }
 
 const RESIDENTS_PATH = "src/lib/data/residents.json";
@@ -95,7 +96,7 @@ export const handler: Handler = async (event) => {
 
         // 5. Commit
         changes.push({ path: MESSAGES_PATH, content: JSON.stringify(messagesData, null, 2) + "\n" });
-        await commitChanges(`Nouveau message de ${senderName} pour ${resident.name}`, changes);
+        await commitChanges("Postier : nouveau courrier familial", changes);
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {

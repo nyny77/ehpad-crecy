@@ -17,6 +17,12 @@ export default function CourrierManager() {
     const fetchData = async () => {
         setLoading(true);
         try {
+            // Nettoyage discret : uniquement les courriers distribués depuis plus de 30 jours.
+            await adminFetch("/.netlify/functions/admin-messages", {
+                method: "POST",
+                body: JSON.stringify({ action: "purgeExpired" })
+            });
+
             const [dataMsg, dataRes] = await Promise.all([
                 adminFetch<{ messages: FamilyMessage[] }>("/.netlify/functions/admin-messages"),
                 adminFetch<{ residents: Resident[] }>("/.netlify/functions/admin-residents")
@@ -47,11 +53,11 @@ export default function CourrierManager() {
 
     const handleMarkDistributed = async (id: string) => {
         try {
-            await adminFetch("/.netlify/functions/admin-messages", {
+            const data = await adminFetch<{ message: FamilyMessage }>("/.netlify/functions/admin-messages", {
                 method: "POST",
                 body: JSON.stringify({ action: "markDistributed", id })
             });
-            setMessages(messages.map(m => m.id === id ? { ...m, status: "distribue", photoUrl: null } : m));
+            setMessages(messages.map(m => m.id === id ? data.message : m));
         } catch (err: any) {
             alert(err.message || "Erreur réseau");
         }

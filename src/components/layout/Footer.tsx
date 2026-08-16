@@ -126,24 +126,24 @@ export default function Footer() {
 
             {/* Barre inférieure */}
             <div className="border-t border-charcoal-700">
-                <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-cream-400 text-sm">
+                <div className="container-custom py-4 flex flex-wrap lg:flex-nowrap justify-center lg:justify-between items-center gap-x-5 gap-y-3 text-xs">
+                    <p className="text-cream-400 whitespace-nowrap shrink-0">
                         © {currentYear} {EHPAD_INFO.fullName}. Tous droits réservés.
                     </p>
-                    <p className="text-cream-500 text-xs">
+                    <p className="text-cream-500 whitespace-nowrap shrink-0">
                         Site conçu par <span className="text-cream-300">TODARO Anthony</span>
                     </p>
-                    <div className="flex items-center gap-6 text-sm text-cream-400">
-                        <Link href="/mentions-legales" className="hover:text-terracotta-400 transition-colors">
+                    <div className="flex flex-wrap lg:flex-nowrap justify-center items-center gap-x-5 gap-y-3 text-cream-400">
+                        <Link href="/mentions-legales" className="hover:text-terracotta-400 transition-colors whitespace-nowrap shrink-0">
                             Mentions légales
                         </Link>
-                        <Link href="/politique-confidentialite" className="hover:text-terracotta-400 transition-colors">
+                        <Link href="/politique-confidentialite" className="hover:text-terracotta-400 transition-colors whitespace-nowrap shrink-0">
                             Confidentialité
                         </Link>
-                        <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors">
+                        <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors whitespace-nowrap shrink-0">
                             Accessibilité : totalement conforme — 100 %
                         </Link>
-                        <span className="flex items-center gap-2">
+                        <span className="flex items-center gap-2 whitespace-nowrap shrink-0">
                             <span className="w-2 h-2 bg-forest-500 rounded-full animate-pulse" />
                             Établissement public
                         </span>

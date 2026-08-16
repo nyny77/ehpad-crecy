@@ -4,6 +4,16 @@ import { commitChanges, readRepositoryText, type GitChange } from "./_shared/git
 import type { FamilyMessage } from "./famille-send-message";
 
 const MESSAGES_PATH = "src/lib/data/messages.json";
+const DISTRIBUTED_MESSAGE_RETENTION_DAYS = 30;
+
+function isExpiredDistributedMessage(message: FamilyMessage, now = Date.now()): boolean {
+    if (message.status !== "distribue" || !message.distributedAt) return false;
+
+    const distributedAt = Date.parse(message.distributedAt);
+    if (!Number.isFinite(distributedAt)) return false;
+
+    return distributedAt <= now - DISTRIBUTED_MESSAGE_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+}
 
 export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
@@ -34,14 +44,16 @@ export const handler: Handler = async (event, context) => {
             if (message.status === "distribue") return json(400, { error: "Message déjà distribué" });
 
             message.status = "distribue";
+            message.distributedAt = new Date().toISOString();
 
             // If there's a photo, we delete it from GitHub to save space
             if (message.photoUrl) {
                 changes.push({ path: `public${message.photoUrl}`, content: null });
+                message.photoUrl = null;
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges(`Message de ${message.senderName} distribué, photo nettoyée`, changes);
+            await commitChanges("Postier : courrier distribué et photo nettoyée", changes);
 
             return json(200, { success: true, message });
         } else if (action === "delete") {
@@ -56,7 +68,7 @@ export const handler: Handler = async (event, context) => {
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges(`Message supprimé`, changes);
+            await commitChanges("Postier : courrier supprimé", changes);
 
             return json(200, { success: true });
         } else if (action === "bulkDelete") {
@@ -73,9 +85,26 @@ export const handler: Handler = async (event, context) => {
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges(`${messagesToDelete.length} messages supprimés en masse`, changes);
+            await commitChanges("Postier : courriers supprimés", changes);
 
             return json(200, { success: true });
+        } else if (action === "purgeExpired") {
+            const expiredMessages = data.messages.filter(message => isExpiredDistributedMessage(message));
+            if (expiredMessages.length === 0) return json(200, { success: true, deletedCount: 0 });
+
+            const expiredIds = new Set(expiredMessages.map(message => message.id));
+            data.messages = data.messages.filter(message => !expiredIds.has(message.id));
+
+            for (const message of expiredMessages) {
+                if (message.photoUrl) {
+                    changes.push({ path: `public${message.photoUrl}`, content: null });
+                }
+            }
+
+            changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
+            await commitChanges("Postier : purge automatique des courriers expirés", changes);
+
+            return json(200, { success: true, deletedCount: expiredMessages.length });
         } else {
             return json(400, { error: "Action inconnue" });
         }
