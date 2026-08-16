@@ -762,7 +762,7 @@ export default function GazetteManager() {
                                             <button
                                                 type="button"
                                                 onClick={selectAiImage}
-                                                className="px-6 py-3 bg-sage-700 text-white font-semibold rounded-xl hover:bg-sage-800 transition-colors"
+                                                className="px-6 py-3 min-w-[250px] bg-terracotta-600 !text-white border border-terracotta-600 font-semibold rounded-xl hover:bg-terracotta-700 transition-colors shadow-sm"
                                             >
                                                 Garder et importer dans l'éditeur
                                             </button>
