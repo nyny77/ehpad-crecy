@@ -119,7 +119,7 @@ export default function CourrierManager() {
                         height: 100% !important;
                         max-width: none !important;
                         max-height: none !important;
-                        object-fit: cover !important; /* Fill the entire half page */
+                        object-fit: contain !important; /* Fit entirely without cropping */
                         object-position: center !important;
                         margin: 0 !important;
                         padding: 0 !important;
