@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "@/components/ui/OptimizedImage";
-import { INITIAL_GALLERY, GalleryImage } from "@/lib/gallery";
+import { INITIAL_GALLERY, INITIAL_GALLERY_ALBUMS, GalleryImage } from "@/lib/gallery";
 import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
 import { motion, AnimatePresence } from "framer-motion";
+import { CalendarDays, FolderOpen } from "lucide-react";
 
 import TiltCard from "@/components/ui/TiltCard";
 
@@ -42,8 +43,15 @@ function GalleryImageCard({ img, position, total, onClick }: { img: GalleryImage
 
 export default function GaleriePage() {
     const images: GalleryImage[] = [...INITIAL_GALLERY].filter((photo) => !photo.deletedAt).reverse();
+    const albumSections = useMemo(() => {
+        const dated = [...INITIAL_GALLERY_ALBUMS]
+            .sort((a, b) => b.date.localeCompare(a.date))
+            .map((album) => ({ ...album, photos: images.filter((photo) => photo.albumId === album.id) }));
+        const previous = images.filter((photo) => !photo.albumId || !INITIAL_GALLERY_ALBUMS.some((album) => album.id === photo.albumId));
+        return previous.length ? [...dated, { id: "legacy", title: "Souvenirs précédents", date: "", createdAt: "", photos: previous }] : dated;
+    }, [images]);
     const [adminMode, setAdminMode] = useState(false);
-    const [visibleCount, setVisibleCount] = useState(24);
+    const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(albumSections[0]?.id || null);
 
     // Lightbox State
     const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
@@ -91,35 +99,22 @@ export default function GaleriePage() {
 
             </section>
 
-            {/* Grid */}
+            {/* Albums */}
             <section className="container-custom px-4">
-                <motion.div
-                    layout
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                    <AnimatePresence>
-                        {images.slice(0, visibleCount).map((img, index) => (
-                            <GalleryImageCard
-                                key={img.id}
-                                img={img}
-                                position={index + 1}
-                                total={images.length}
-                                onClick={() => setSelectedImage(img)}
-                            />
-                        ))}
-                    </AnimatePresence>
-                </motion.div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10" role="list" aria-label="Albums photos">
+                    {albumSections.map((album) => <button key={album.id} type="button" onClick={() => setSelectedAlbumId(album.id)} aria-pressed={selectedAlbumId === album.id} className={`text-left rounded-2xl border p-5 transition-all ${selectedAlbumId === album.id ? "bg-terracotta-600 border-terracotta-600 text-white shadow-lg" : "bg-white border-cream-200 text-charcoal-800 hover:border-terracotta-300"}`}>
+                        <span className="flex items-center gap-3"><FolderOpen size={24} /><span className="font-serif text-xl font-bold">{album.title}</span></span>
+                        <span className={`mt-2 flex items-center gap-2 text-sm ${selectedAlbumId === album.id ? "text-cream-100" : "text-charcoal-500"}`}>{album.date && <><CalendarDays size={15} />{new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${album.date}T12:00:00`))}<span>·</span></>}{album.photos.length} photo(s)</span>
+                    </button>)}
+                </div>
 
-                {visibleCount < images.length && (
-                    <div className="flex justify-center mt-12">
-                        <button
-                            onClick={() => setVisibleCount(prev => prev + 24)}
-                            className="px-8 py-3 bg-white border-2 border-terracotta-200 text-terracotta-600 rounded-full font-medium hover:bg-terracotta-50 transition-colors shadow-sm hover:scale-105 duration-300"
-                        >
-                            Voir plus de photos
-                        </button>
-                    </div>
-                )}
+                {albumSections.filter((album) => album.id === selectedAlbumId).map((album) => <div key={album.id}>
+                    <div className="mb-6"><h2 className="font-serif text-3xl text-charcoal-900">{album.title}</h2>{album.date && <p className="mt-1 text-charcoal-600">{new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${album.date}T12:00:00`))}</p>}</div>
+                    <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <AnimatePresence>{album.photos.map((img, index) => <GalleryImageCard key={img.id} img={img} position={index + 1} total={album.photos.length} onClick={() => setSelectedImage(img)} />)}</AnimatePresence>
+                    </motion.div>
+                    {!album.photos.length && <p className="rounded-3xl bg-white border border-cream-200 p-10 text-center text-charcoal-500">Cet album est vide.</p>}
+                </div>)}
 
                 {images.length === 0 && (
                     <div className="text-center py-24 bg-white rounded-3xl border border-cream-200 shadow-sm mx-auto max-w-2xl">

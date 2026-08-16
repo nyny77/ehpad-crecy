@@ -7,8 +7,17 @@ export interface GalleryImage {
     alt: string;
     category: string; // Type enlarged for CMS flexibility
     title?: string;
+    albumId?: string;
     deletedAt?: string;
+}
+
+export interface GalleryAlbum {
+    id: string;
+    title: string;
+    date: string;
+    createdAt: string;
 }
 
 // Ensure type safety when importing JSON
 export const INITIAL_GALLERY: GalleryImage[] = (galleryData.photos as unknown) as GalleryImage[];
+export const INITIAL_GALLERY_ALBUMS: GalleryAlbum[] = ((galleryData as unknown as { albums?: GalleryAlbum[] }).albums || []);

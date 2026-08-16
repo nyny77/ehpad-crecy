@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Camera, LogIn, LogOut, ShieldCheck } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
-import type { GalleryImage } from "@/lib/gallery";
+import type { GalleryAlbum, GalleryImage } from "@/lib/gallery";
 import {
     getCurrentUser,
     initNetlifyIdentity,
@@ -21,7 +21,7 @@ import { Newspaper, Users, Mail } from "lucide-react";
 
 type AccessState = "loading" | "guest" | "forbidden" | "admin";
 
-export default function AdminDashboard({ initialArticles, initialPhotos }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[] }) {
+export default function AdminDashboard({ initialArticles, initialPhotos, initialAlbums }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[]; initialAlbums: GalleryAlbum[] }) {
     const [access, setAccess] = useState<AccessState>("loading");
     const [tab, setTab] = useState<"photos" | "blog" | "gazette" | "residents" | "courrier">("photos");
 
@@ -111,7 +111,7 @@ export default function AdminDashboard({ initialArticles, initialPhotos }: { ini
                 </nav>
 
                 <div id="admin-current-panel" role="region" aria-label={`Section ${tab}`}>
-                    {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} />}
+                    {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} initialAlbums={initialAlbums} />}
                     {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
                     {tab === "gazette" && <GazetteManager />}
                     {tab === "residents" && <ResidentManager />}

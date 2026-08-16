@@ -11,6 +11,14 @@ interface GalleryPhoto {
     alt: string;
     category: string;
     title?: string;
+    albumId?: string;
+}
+
+interface GalleryAlbum {
+    id: string;
+    title: string;
+    date: string;
+    createdAt: string;
 }
 
 const GALLERY_PATH = "src/lib/data/gallery.json";
@@ -40,7 +48,8 @@ export const handler: Handler = async (event, context) => {
 
     try {
         const body = JSON.parse(event.body || "{}");
-        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[] };
+        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[]; albums?: GalleryAlbum[] };
+        data.albums ||= [];
         const action = body.action || "add";
         const changes: GitChange[] = [];
         let resultPhoto: GalleryPhoto | undefined;
@@ -49,18 +58,46 @@ export const handler: Handler = async (event, context) => {
             const image = decodeImage(body.imageBase64);
             const thumbnail = decodeImage(body.thumbnailBase64);
             const title = String(body.title || "").trim();
-            const alt = String(body.alt || "").trim();
-            if (!title || !alt) return json(400, { error: "Titre et description obligatoires" });
+            const albumId = String(body.albumId || "").trim();
+            if (!title) return json(400, { error: "Titre obligatoire" });
+            if (!albumId || !data.albums.some((album) => album.id === albumId)) return json(400, { error: "Album introuvable" });
             const id = randomUUID();
             const name = `${Date.now()}-${safeBaseName(String(body.fileName || "photo"))}.webp`;
-            const src = `/images/uploads/${name}`;
-            const thumbSrc = `/images/thumbnails/${name}`;
-            resultPhoto = { id, src, thumbSrc, title: title.slice(0, 160), alt: alt.slice(0, 300), category: "autre" };
+            const src = `/images/gallery/${albumId}/${name}`;
+            const thumbSrc = `/images/gallery/${albumId}/thumbnails/${name}`;
+            resultPhoto = { id, src, thumbSrc, title: title.slice(0, 160), alt: "", category: "autre", albumId };
             data.photos.push(resultPhoto);
             changes.push(
                 { path: repositoryPath(src), content: image.toString("base64"), encoding: "base64" },
                 { path: repositoryPath(thumbSrc), content: thumbnail.toString("base64"), encoding: "base64" },
             );
+        } else if (action === "createAlbum") {
+            const title = String(body.title || "").trim();
+            const date = String(body.date || "").trim();
+            if (!title || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return json(400, { error: "Nom et date de l’album obligatoires" });
+            const album: GalleryAlbum = { id: randomUUID(), title: title.slice(0, 120), date, createdAt: new Date().toISOString() };
+            data.albums.push(album);
+            changes.push({ path: GALLERY_PATH, content: JSON.stringify(data, null, 2) + "\n" });
+            await commitChanges(`Galerie : création de l’album ${album.title}`, changes);
+            return json(200, { success: true, album });
+        } else if (action === "deleteAlbum") {
+            const albumId = String(body.albumId || "");
+            const album = data.albums.find((item) => item.id === albumId);
+            if (!album) return json(404, { error: "Album introuvable" });
+            const toDelete = data.photos.filter((photo) => photo.albumId === albumId);
+            data.photos = data.photos.filter((photo) => photo.albumId !== albumId);
+            data.albums = data.albums.filter((item) => item.id !== albumId);
+            for (const photo of toDelete) {
+                changes.push({ path: repositoryPath(photo.src), content: null });
+                if (photo.thumbSrc) changes.push({ path: repositoryPath(photo.thumbSrc), content: null });
+            }
+        } else if (action === "updateAlbum") {
+            const albumId = String(body.albumId || "");
+            const title = String(body.title || "").trim();
+            if (!title) return json(400, { error: "Nom de l’album obligatoire" });
+            const album = data.albums.find((item) => item.id === albumId);
+            if (!album) return json(404, { error: "Album introuvable" });
+            album.title = title.slice(0, 120);
         } else if (action === "reorder") {
             const orderedIds = Array.isArray(body.ids) ? body.ids.map(String) : [];
             const byId = new Map(data.photos.map((photo) => [photo.id, photo]));
@@ -85,10 +122,9 @@ export const handler: Handler = async (event, context) => {
             if (!photo) return json(404, { error: "Photo introuvable" });
             if (action === "update") {
                 const title = String(body.title || "").trim();
-                const alt = String(body.alt || "").trim();
-                if (!title || !alt) return json(400, { error: "Titre et description obligatoires" });
+                if (!title) return json(400, { error: "Titre obligatoire" });
                 photo.title = title.slice(0, 160);
-                photo.alt = alt.slice(0, 300);
+                photo.alt = "";
             } else {
                 return json(400, { error: "Action inconnue" });
             }
