@@ -219,29 +219,9 @@ export default function HistoirePage() {
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center justify-items-center">
-                        
-                        {/* Facebook Video (Landscape) */}
-                        <div className="w-full lg:col-span-2">
-                            <div className="relative rounded-[1.5rem] overflow-hidden shadow-2xl bg-white p-2 md:p-3 border-[6px] border-cream-200 aspect-video group transform transition-transform hover:scale-[1.01] duration-500">
-                                <LazyVideo 
-                                    type="iframe"
-                                    iframeSrc="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1969625513836414&show_text=false"
-                                    poster="/images/history/tour.jpg"
-                                    title="Reportage Facebook"
-                                    className="rounded-[1rem]"
-                                />
-                                {/* Titre sous la vidéo */}
-                                <div className="absolute bottom-4 left-0 right-0 z-20 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <span className="bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-bold text-charcoal-800 shadow-lg border border-white/50">
-                                        Reportage sur notre ville
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Local Video (Portrait - Mockup Smartphone) */}
-                        <div className="w-full max-w-[320px] lg:col-span-1 mx-auto">
+                    <div className="flex justify-center">
+                        {/* Vidéo locale (portrait) */}
+                        <div className="w-full max-w-[320px] mx-auto">
                             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl bg-white p-2 border-[6px] border-cream-200 aspect-[9/16] group transform transition-transform hover:scale-[1.02] duration-500">
                                 {/* Encoche "Notch" décorative */}
                                 <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-20">
@@ -266,7 +246,7 @@ export default function HistoirePage() {
 
                     </div>
 
-                    <details className="mt-8 rounded-2xl border border-cream-300 bg-white p-6 text-charcoal-700 shadow-soft">
+                    <details className="mx-auto mt-8 max-w-4xl rounded-2xl border border-charcoal-500 bg-white p-6 text-charcoal-700 shadow-soft">
                         <summary className="cursor-pointer font-bold text-charcoal-900">Lire la transcription de la balade au fil de l’eau</summary>
                         <div className="mt-5 space-y-4 leading-relaxed">
                             <p>Crécy-la-Chapelle est une petite ville de Seine-et-Marne nichée dans une boucle du Grand Morin. Avec un peu plus de 4 700 habitants, elle est traversée par l’eau et entourée de verdure, ce qui lui vaut le surnom de « Venise de la Brie ».</p>

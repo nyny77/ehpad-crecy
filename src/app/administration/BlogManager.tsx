@@ -147,7 +147,7 @@ export default function BlogManager({ initialArticles }: { initialArticles: Blog
                     <p><strong>Délai de mise à jour :</strong> L'ajout, la modification ou la suppression d'un article prend environ 2 à 3 minutes pour être visible publiquement sur le site, le temps que le serveur génère les pages.</p>
                 </div>
 
-                {message && <div className={`rounded-xl p-3 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
+                {message && <div role={message.type === "error" ? "alert" : "status"} aria-live="polite" className={`rounded-xl p-3 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
 
                 <label className="block text-sm font-semibold text-charcoal-700">Titre *
                     <input required value={form.title} onChange={(e) => patch({ title: e.target.value })} className="mt-1.5 w-full px-4 py-3 rounded-xl border border-cream-300" placeholder="Titre de l’article" />

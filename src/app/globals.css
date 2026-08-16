@@ -7,7 +7,7 @@
   --color-cream: #FDF7F0;
   --color-cream-dark: #EEDCC0;
   --color-terracotta: #C80040;
-  --color-terracotta-light: #F54D75;
+  --color-terracotta-light: #E00048;
   --color-terracotta-dark: #9E0033;
   --color-forest: #63967C;
   --color-forest-light: #82B098;
@@ -56,18 +56,21 @@ html.dark-mode {
   --color-cream-200: #F7EBD9;
   --color-cream-300: #EEDCC0;
 
-  --color-terracotta-400: #F54D75;
+  --color-terracotta-400: #E00048;
   --color-terracotta-500: #C80040;
   --color-terracotta-600: #9E0033;
 
-  --color-forest-400: #82B098;
-  --color-forest-500: #63967C;
-  --color-forest-600: #497A62;
+  --color-forest-400: #497A62;
+  --color-forest-500: #3F6C56;
+  --color-forest-600: #345C49;
 
   --color-wood-400: #BBA78C;
   --color-wood-500: #8B7355;
   --color-wood-600: #745F46;
 
+  --color-charcoal-400: #696978;
+  --color-charcoal-500: #595966;
+  --color-charcoal-600: #484853;
   --color-charcoal-700: #40404A;
   --color-charcoal-800: #2C2C33;
   --color-charcoal-900: #1A1A1F;
@@ -1515,3 +1518,18 @@ html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
 .rich-text-content font[size="5"], [contenteditable] font[size="5"] { font-size: 24px !important; }
 .rich-text-content font[size="6"], [contenteditable] font[size="6"] { font-size: 32px !important; line-height: 1.2 !important; }
 .rich-text-content font[size="7"], [contenteditable] font[size="7"] { font-size: 48px !important; line-height: 1.1 !important; }
+
+/* ===== CONTRASTES DES COMPOSANTS D’INTERFACE ===== */
+:where(input:not([type="hidden"]), select, textarea) {
+  border-color: #757585 !important;
+}
+
+html.dark-mode :where(input:not([type="hidden"]), select, textarea) {
+  border-color: #9696A6 !important;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #C80040 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px #FFFFFF !important;
+}

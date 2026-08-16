@@ -186,7 +186,7 @@ export default function AdminUsersPage() {
 
     if (!adminCheck && !loading) {
         return (
-            <div className="min-h-screen pt-32 text-center container-custom">
+            <main className="min-h-screen pt-32 text-center container-custom">
                 <h1 className="text-2xl font-bold text-charcoal-900 mb-4">Accès Restreint</h1>
                 <p className="mb-4">Cette page est réservée aux administrateurs.</p>
                 <button
@@ -195,7 +195,7 @@ export default function AdminUsersPage() {
                 >
                     Se connecter
                 </button>
-            </div>
+            </main>
         );
     }
 
@@ -203,14 +203,14 @@ export default function AdminUsersPage() {
     const approvedUsers = users.filter(u => u.app_metadata?.roles?.length);
 
     return (
-        <>
+        <main className="min-h-screen pt-32">
             
             <section className="py-12 bg-cream-50 min-h-[50vh]">
                 <div className="container-custom">
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-2xl font-serif font-bold text-charcoal-900">
+                        <h1 className="text-2xl font-serif font-bold text-charcoal-900">
                             Utilisateurs ({users.length})
-                        </h2>
+                        </h1>
                         <button
                             onClick={fetchUsers}
                             className="text-sm font-medium text-terracotta-600 hover:underline"
@@ -220,13 +220,13 @@ export default function AdminUsersPage() {
                     </div>
 
                     {error && (
-                        <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-8 border border-red-200">
+                        <div role="alert" className="bg-red-50 text-red-600 p-4 rounded-xl mb-8 border border-red-200">
                             {error}
                         </div>
                     )}
 
                     {loading ? (
-                        <div className="text-center py-20">
+                        <div role="status" className="text-center py-20">
                             <div className="w-12 h-12 border-4 border-terracotta-200 border-t-terracotta-500 rounded-full animate-spin mx-auto" />
                             <p className="mt-4 text-charcoal-500">Chargement...</p>
                         </div>
@@ -321,6 +321,6 @@ export default function AdminUsersPage() {
                 onConfirm={confirmApprove}
                 onCancel={() => setUserToApprove(null)}
             />
-        </>
+        </main>
     );
 }

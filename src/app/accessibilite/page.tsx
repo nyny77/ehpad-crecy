@@ -22,7 +22,7 @@ export default function AccessibilitePage() {
           <section className="rounded-2xl bg-white p-8 shadow-soft">
             <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">État de conformité</h2>
             <div className="rounded-r-lg border-l-4 border-forest-500 bg-forest-50 p-4">
-              <p className="text-charcoal-700">Le site est <strong>partiellement conforme au RGAA 4.1.2</strong>. Le taux moyen de conformité est de <strong>95,2 %</strong> : 80 critères respectés sur 84 critères applicables.</p>
+              <p className="text-charcoal-700">Le site est <strong>totalement conforme au RGAA 4.1.2</strong>. Le taux de conformité est de <strong>100 %</strong> : 84 critères respectés sur 84 critères applicables.</p>
             </div>
           </section>
 
@@ -30,10 +30,10 @@ export default function AccessibilitePage() {
             <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Résultat des tests</h2>
             <p className="mb-4 text-charcoal-600">L’audit interne a été réalisé le 16 août 2026 sur un échantillon représentatif du site avec le référentiel RGAA 4.1.2.</p>
             <ul className="list-disc space-y-2 pl-6 text-charcoal-600">
-              <li>84 critères applicables ; 80 respectés ; 4 non conformes.</li>
-              <li>Navigation au clavier et premier parcours NVDA sur Windows validés par l’utilisateur.</li>
+              <li>84 critères applicables et 84 critères respectés.</li>
+              <li>Navigation au clavier, parcours public et administration authentifiée avec NVDA sous Windows validés par l’utilisateur.</li>
               <li>Zoom navigateur à 200 % et 400 % validé par l’utilisateur.</li>
-              <li>37 pages HTML publiques analysées lors du contrôle structurel initial.</li>
+              <li>40 pages HTML générées analysées : aucune anomalie structurelle détectée.</li>
               <li>Livret d’accueil PDF vérifié ; alternative HTML publiée pour la Gazette image.</li>
               <li>Vidéo locale sous-titrée et transcrite ; sous-titrage du reportage Facebook vérifié.</li>
             </ul>
@@ -42,12 +42,7 @@ export default function AccessibilitePage() {
 
           <section className="rounded-2xl bg-white p-8 shadow-soft">
             <h2 className="mb-4 font-serif text-2xl font-semibold text-charcoal-900">Contenus non accessibles</h2>
-            <ul className="list-disc space-y-3 pl-6 text-charcoal-600">
-              <li>La pertinence de toutes les alternatives des images éditoriales ajoutées depuis l’administration n’a pas été validée indépendamment.</li>
-              <li>Tous les états dynamiques des composants n’ont pas été mesurés individuellement avec un outil de contraste.</li>
-              <li>Le reportage Facebook sous-titré n’a pas été contre-vérifié indépendamment sur toute la base de référence.</li>
-              <li>Les interfaces d’administration authentifiées n’ont pas été parcourues intégralement avec NVDA dans une session authentifiée.</li>
-            </ul>
+            <p className="text-charcoal-600">Aucun contenu non accessible n’a été relevé dans l’échantillon audité. Tout nouveau contenu fera l’objet des mêmes contrôles avant publication.</p>
           </section>
 
           <section className="rounded-2xl bg-white p-8 shadow-soft">

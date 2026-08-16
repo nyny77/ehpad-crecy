@@ -92,8 +92,9 @@ export default function ResidentManager() {
                 {/* Add Form */}
                 <form onSubmit={handleAdd} className="mb-8 flex flex-col md:flex-row gap-4 bg-cream-50 p-4 rounded-2xl border border-cream-200 items-end">
                     <div className="flex-grow">
-                        <label className="block text-sm font-medium text-charcoal-700 mb-1">Nom du résident</label>
+                        <label htmlFor="resident-name" className="block text-sm font-medium text-charcoal-700 mb-1">Nom du résident</label>
                         <input 
+                            id="resident-name"
                             type="text" 
                             value={newName} 
                             onChange={e => setNewName(e.target.value)}
@@ -102,8 +103,9 @@ export default function ResidentManager() {
                         />
                     </div>
                     <div className="w-full md:w-32">
-                        <label className="block text-sm font-medium text-charcoal-700 mb-1">Chambre</label>
+                        <label htmlFor="resident-room" className="block text-sm font-medium text-charcoal-700 mb-1">Chambre</label>
                         <input 
+                            id="resident-room"
                             type="text" 
                             value={newRoom} 
                             onChange={e => setNewRoom(e.target.value)}
@@ -120,11 +122,11 @@ export default function ResidentManager() {
                     </button>
                 </form>
 
-                {error && <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-xl">{error}</div>}
+                {error && <div role="alert" className="mb-6 p-4 bg-red-50 text-red-700 rounded-xl">{error}</div>}
 
                 {/* List */}
                 {loading ? (
-                    <div className="py-12 flex justify-center"><LoaderCircle className="animate-spin text-terracotta-500" size={32} /></div>
+                    <div role="status" className="py-12 flex justify-center"><LoaderCircle aria-hidden="true" className="animate-spin text-terracotta-500" size={32} /><span className="sr-only">Chargement des résidents…</span></div>
                 ) : residents.length === 0 ? (
                     <div className="text-center py-12 text-charcoal-500">
                         <Users size={48} className="mx-auto mb-4 opacity-50" />
@@ -135,10 +137,10 @@ export default function ResidentManager() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="border-b-2 border-cream-200">
-                                    <th className="py-3 px-4 text-charcoal-900 font-semibold">Résident</th>
-                                    <th className="py-3 px-4 text-charcoal-900 font-semibold">Chambre</th>
-                                    <th className="py-3 px-4 text-charcoal-900 font-semibold">Code Secret (à transmettre)</th>
-                                    <th className="py-3 px-4 text-charcoal-900 font-semibold text-right">Actions</th>
+                                    <th scope="col" className="py-3 px-4 text-charcoal-900 font-semibold">Résident</th>
+                                    <th scope="col" className="py-3 px-4 text-charcoal-900 font-semibold">Chambre</th>
+                                    <th scope="col" className="py-3 px-4 text-charcoal-900 font-semibold">Code Secret (à transmettre)</th>
+                                    <th scope="col" className="py-3 px-4 text-charcoal-900 font-semibold text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

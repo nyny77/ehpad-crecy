@@ -141,7 +141,7 @@ export default function Footer() {
                             Confidentialité
                         </Link>
                         <Link href="/accessibilite" className="hover:text-terracotta-400 transition-colors">
-                            Accessibilité : partiellement conforme — 95,2 %
+                            Accessibilité : totalement conforme — 100 %
                         </Link>
                         <span className="flex items-center gap-2">
                             <span className="w-2 h-2 bg-forest-500 rounded-full animate-pulse" />

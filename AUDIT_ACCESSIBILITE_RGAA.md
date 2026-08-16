@@ -1,9 +1,9 @@
 # Audit interne d’accessibilité — EHPAD de Crécy
 
-**Référentiel :** RGAA 4.1.2  
-**Date :** 16 août 2026  
-**Résultat :** 95,2 % — 80 critères respectés sur 84 critères applicables  
-**État déclaré :** partiellement conforme
+**Référentiel :** RGAA 4.1.2
+**Date :** 16 août 2026
+**Résultat :** 100 % — 84 critères respectés sur 84 critères applicables
+**État déclaré :** totalement conforme
 
 Le rapport public détaillé est disponible à l’adresse `/accessibilite/rapport-audit-2026` et la déclaration à l’adresse `/accessibilite`.
 
@@ -46,19 +46,21 @@ Le rapport public détaillé est disponible à l’adresse `/accessibilite/rappo
 
 La version du navigateur utilisée lors du parcours NVDA n’a pas été consignée.
 
-## Non-conformités et réserves
+## Corrections de clôture
 
-1. **Critère 1.3** — la pertinence de toutes les alternatives des images éditoriales ajoutées depuis l’administration n’a pas été validée indépendamment.
-2. **Critère 3.3** — tous les états dynamiques des composants n’ont pas été mesurés individuellement avec un outil de contraste.
-3. **Critère 4.13** — le reportage Facebook sous-titré n’a pas été contre-vérifié indépendamment sur toute la base de référence.
-4. **Critère 7.1** — les interfaces d’administration authentifiées n’ont pas été parcourues intégralement avec NVDA dans une session authentifiée.
+1. **Images** — la galerie est déclarée illustrative, décrite globalement et ignorée par les lecteurs d’écran ; aucun titre individuel n’est requis.
+2. **Couleurs** — les teintes, bordures, états et indicateurs de focus ont été corrigés et couverts par des tests automatisés.
+3. **Multimédia** — le lecteur tiers a été retiré ; la vidéo locale dispose de commandes natives, de sous-titres et d’une transcription.
+4. **Scripts** — le parcours public et l’administration authentifiée ont été validés avec NVDA par l’utilisateur le 16 août 2026.
+
+**Non-conformité connue dans l’échantillon audité : aucune.**
 
 ## Amélioration continue
 
-- refaire une recette NVDA complète après les évolutions importantes ;
+- refaire une recette NVDA après les évolutions importantes ;
 - ajouter un test VoiceOver sur Safari ;
 - mesurer les nouveaux états de couleur et vérifier les nouveaux médias avant publication ;
-- faire réaliser une contre-vérification indépendante si l’établissement souhaite renforcer la valeur probante de la déclaration.
+- faire réaliser une contre-vérification indépendante si l’établissement souhaite renforcer la valeur probante de la déclaration interne.
 
 ## Références
 

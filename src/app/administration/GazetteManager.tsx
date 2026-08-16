@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import { FileUp, LoaderCircle, Plus, Trash2, Image as ImageIcon, Type, Heading1, List, Search, X } from "lucide-react";
 import { adminFetch } from "@/lib/admin-api";
 import gazetteData from "@/lib/data/gazette.json";
@@ -51,6 +51,40 @@ export default function GazetteManager() {
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
+    const imageSearchOpenerRef = useRef<HTMLElement | null>(null);
+
+    const closeImageSearch = () => {
+        setImageSearchBlockId(null);
+        setSearchResults([]);
+        setSearchQuery("");
+        setHasSearched(false);
+        window.setTimeout(() => imageSearchOpenerRef.current?.focus(), 0);
+    };
+
+    const openImageSearch = (blockId: string) => {
+        imageSearchOpenerRef.current = document.activeElement as HTMLElement | null;
+        setImageSearchBlockId(blockId);
+    };
+
+    const handleImageSearchDialogKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeImageSearch();
+            return;
+        }
+        if (event.key !== "Tab") return;
+        const focusable = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    };
 
     const initialGazettes = (gazetteData as any).gazettes || ((gazetteData as any).file ? [{ title: "Dernière parution", file: (gazetteData as any).file }] : []);
     const [gazettes, setGazettes] = useState<any[]>(initialGazettes);
@@ -133,10 +167,7 @@ export default function GazetteManager() {
         if (imageSearchBlockId) {
             updateBlock(imageSearchBlockId, "content", url);
             updateBlock(imageSearchBlockId, "base64", ""); // clear base64 so backend treats it as URL
-            setImageSearchBlockId(null);
-            setSearchResults([]);
-            setSearchQuery("");
-            setHasSearched(false);
+            closeImageSearch();
         }
     };
 
@@ -214,7 +245,7 @@ export default function GazetteManager() {
     return (
         <section className="space-y-8">
             <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 md:p-8">
-                {message && <div className={`rounded-xl p-4 border mb-6 ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
+                {message && <div role={message.type === "error" ? "alert" : "status"} aria-live="polite" className={`rounded-xl p-4 border mb-6 ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
 
                 {mode === "list" && (
                     <>
@@ -413,7 +444,7 @@ export default function GazetteManager() {
                                                     <div className="flex-1 flex flex-col items-center justify-center px-4">
                                                         <button 
                                                             type="button"
-                                                            onClick={() => setImageSearchBlockId(block.id)}
+                                                            onClick={() => openImageSearch(block.id)}
                                                             className="flex flex-col items-center hover:text-terracotta-600 transition-colors text-charcoal-500"
                                                         >
                                                             <Search size={32} className="mb-2" />
@@ -474,20 +505,21 @@ export default function GazetteManager() {
                         {/* Image Search Modal Modal/Overlay */}
                         {imageSearchBlockId && (
                             <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-                                <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+                                <div role="dialog" aria-modal="true" aria-labelledby="image-search-title" onKeyDown={handleImageSearchDialogKeyDown} className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
                                     <div className="p-4 border-b border-cream-200 flex items-center justify-between bg-cream-50">
-                                        <h3 className="font-serif text-xl text-charcoal-900 font-bold flex items-center gap-2">
+                                        <h3 id="image-search-title" className="font-serif text-xl text-charcoal-900 font-bold flex items-center gap-2">
                                             <Search size={20} className="text-terracotta-500" />
                                             Recherche d'illustrations libres de droits
                                         </h3>
-                                        <button onClick={() => { setImageSearchBlockId(null); setSearchResults([]); setSearchQuery(""); setHasSearched(false); }} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
-                                            <X size={20} />
+                                        <button aria-label="Fermer la recherche d’illustrations" onClick={closeImageSearch} className="p-2 hover:bg-cream-200 rounded-full text-charcoal-500 transition-colors">
+                                            <X aria-hidden="true" size={20} />
                                         </button>
                                     </div>
                                     <div className="p-6 overflow-y-auto flex-grow bg-white">
                                         <div className="flex gap-2 mb-6">
                                             <input 
                                                 type="text" 
+                                                aria-label="Rechercher une illustration"
                                                 placeholder="Que cherchez-vous ? (ex: Sapin de Noël enneigé, Gâteau d'anniversaire...)" 
                                                 value={searchQuery}
                                                 onChange={e => setSearchQuery(e.target.value)}

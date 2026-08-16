@@ -19,8 +19,9 @@ const actions = [
   ["Alternative HTML de la Gazette janvier 2026", "Publiée"],
   ["Premier parcours utilisateur avec NVDA", "Réussi le 16 août 2026"],
   ["Contrôles utilisateur du zoom à 200 % et 400 %", "Réussis le 16 août 2026"],
-  ["Recette NVDA complémentaire et test VoiceOver", "Amélioration continue"],
-  ["Calcul du taux RGAA et publication du rapport", "Terminé — 95,2 %"],
+  ["Recette NVDA publique et administration authentifiée", "Terminée le 16 août 2026"],
+  ["Test VoiceOver sur Safari", "Amélioration continue"],
+  ["Calcul du taux RGAA et publication du rapport", "Terminé — 100 %"],
 ] as const;
 
 export default function PlanAnnuelPage() {

@@ -373,10 +373,10 @@ export default function CourrierManager() {
             </div>
 
             <div className="p-6 md:p-8">
-                {error && <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-xl">{error}</div>}
+                {error && <div role="alert" className="mb-6 p-4 bg-red-50 text-red-700 rounded-xl">{error}</div>}
 
                 {loading ? (
-                    <div className="py-12 flex justify-center"><LoaderCircle className="animate-spin text-terracotta-500" size={32} /></div>
+                    <div role="status" className="py-12 flex justify-center"><LoaderCircle aria-hidden="true" className="animate-spin text-terracotta-500" size={32} /><span className="sr-only">Chargement du courrier…</span></div>
                 ) : messages.length === 0 ? (
                     <div className="text-center py-12 text-charcoal-500">
                         <Mail size={48} className="mx-auto mb-4 opacity-50" />
@@ -422,6 +422,7 @@ export default function CourrierManager() {
                                     <div className="absolute top-4 right-4 z-10">
                                         <input 
                                             type="checkbox" 
+                                            aria-label={`Sélectionner le message pour ${getResidentName(msg.residentId)}`}
                                             className="w-5 h-5 rounded border-cream-300 text-terracotta-600 focus:ring-terracotta-500 cursor-pointer"
                                             checked={isSelected}
                                             onChange={(e) => {
@@ -442,7 +443,7 @@ export default function CourrierManager() {
                                                 <div className="aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 shadow-sm relative">
                                                     <img
                                                         src={msg.photoUrl} 
-                                                        alt="Photo" 
+                                                        alt={`Photo jointe au message de ${msg.senderName}`}
                                                         className="w-full h-full object-cover" 
                                                         onError={(e) => {
                                                             const target = e.target as HTMLImageElement;
@@ -513,6 +514,7 @@ export default function CourrierManager() {
                                                 </div>
                                                 <button 
                                                     onClick={() => handleDelete(msg.id)}
+                                                    aria-label={`Supprimer le message de ${msg.senderName}`}
                                                     className="inline-flex items-center gap-2 px-3 py-2 text-charcoal-400 hover:text-red-600 hover:bg-red-50 text-sm font-medium rounded-lg transition-colors"
                                                 >
                                                     <Trash2 size={16} />

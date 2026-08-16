@@ -93,28 +93,30 @@ export default function AdminDashboard({ initialArticles, initialPhotos }: { ini
                 </div>
 
                 <nav className="inline-flex flex-wrap gap-2 bg-white rounded-2xl border border-cream-200 p-1.5 shadow-sm mb-8" aria-label="Sections d’administration">
-                    <button onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                    <button aria-pressed={tab === "photos"} aria-controls="admin-current-panel" onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
                         <Camera size={19} /> <span className="hidden md:inline">Photos</span>
                     </button>
-                    <button onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                    <button aria-pressed={tab === "blog"} aria-controls="admin-current-panel" onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
                         <BookOpen size={19} /> <span className="hidden md:inline">Blog</span>
                     </button>
-                    <button onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                    <button aria-pressed={tab === "gazette"} aria-controls="admin-current-panel" onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
                         <Newspaper size={19} /> <span className="hidden md:inline">Écho du Coeur</span>
                     </button>
-                    <button onClick={() => { setTab("residents"); window.history.replaceState(null, "", "#residents"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "residents" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                    <button aria-pressed={tab === "residents"} aria-controls="admin-current-panel" onClick={() => { setTab("residents"); window.history.replaceState(null, "", "#residents"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "residents" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
                         <Users size={19} /> <span className="hidden md:inline">Résidents</span>
                     </button>
-                    <button onClick={() => { setTab("courrier"); window.history.replaceState(null, "", "#courrier"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "courrier" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
+                    <button aria-pressed={tab === "courrier"} aria-controls="admin-current-panel" onClick={() => { setTab("courrier"); window.history.replaceState(null, "", "#courrier"); }} className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold transition-colors ${tab === "courrier" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}>
                         <Mail size={19} /> <span className="hidden md:inline">Courrier</span>
                     </button>
                 </nav>
 
-                {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} />}
-                {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
-                {tab === "gazette" && <GazetteManager />}
-                {tab === "residents" && <ResidentManager />}
-                {tab === "courrier" && <CourrierManager />}
+                <div id="admin-current-panel" role="region" aria-label={`Section ${tab}`}>
+                    {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} />}
+                    {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
+                    {tab === "gazette" && <GazetteManager />}
+                    {tab === "residents" && <ResidentManager />}
+                    {tab === "courrier" && <CourrierManager />}
+                </div>
             </div>
         </main>
     );

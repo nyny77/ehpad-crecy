@@ -11,17 +11,9 @@ interface PendingPhoto {
     file: File;
     preview: string;
     title: string;
-    alt: string;
 }
 
 const bytesToMb = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} Mo`;
-const isUsefulAlt = (value: string) => {
-    const normalized = value.trim();
-    return normalized.length >= 12
-        && !/^(photo|image|illustration|aperçu)(?:\s|[-_:]|\d|$)/i.test(normalized)
-        && !/^(?:img|dsc|pxl|1000)\w*$/i.test(normalized.replace(/\s+/g, ""));
-};
-const isAcceptableAlt = (value: string) => !value.trim() || isUsefulAlt(value);
 
 function blobToBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -39,7 +31,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     const [editingId, setEditingId] = useState<string | null>(null);
     const [processingId, setProcessingId] = useState<string | null>(null);
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-    const [editValues, setEditValues] = useState({ title: "", alt: "" });
+    const [editValues, setEditValues] = useState({ title: "" });
     const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
 
     const selectFiles = (event: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +41,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
             for (const file of selected) {
                 validateSourceImage(file);
                 const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
-                next.push({ id: `${file.name}-${file.lastModified}-${Math.random()}`, file, preview: URL.createObjectURL(file), title: baseName, alt: "" });
+                next.push({ id: `${file.name}-${file.lastModified}-${Math.random()}`, file, preview: URL.createObjectURL(file), title: baseName });
             }
             setPending((current) => [...current, ...next]);
             setMessage(null);
@@ -69,8 +61,8 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     };
 
     const uploadAll = async () => {
-        if (pending.some((item) => !item.title.trim() || !isAcceptableAlt(item.alt))) {
-            setMessage({ type: "error", text: "Chaque photo doit avoir un titre. La description peut rester vide si l’image est purement illustrative ; sinon, elle doit être précise et comporter au moins 12 caractères." });
+        if (pending.some((item) => !item.title.trim())) {
+            setMessage({ type: "error", text: "Chaque photo doit conserver un titre de gestion. Il est créé automatiquement à partir du nom du fichier." });
             return;
         }
         setUploading(true);
@@ -83,7 +75,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                 const [imageBase64, thumbnailBase64] = await Promise.all([blobToBase64(processed.image), blobToBase64(processed.thumbnail)]);
                 const result = await adminFetch<{ photo: GalleryImage }>("/.netlify/functions/admin-gallery", {
                     method: "POST",
-                    body: JSON.stringify({ action: "add", fileName: item.file.name, title: item.title, alt: item.alt, imageBase64, thumbnailBase64 }),
+                    body: JSON.stringify({ action: "add", fileName: item.file.name, title: item.title, alt: "", imageBase64, thumbnailBase64 }),
                 });
                 setPhotos((current) => [result.photo, ...current]);
                 completed += 1;
@@ -114,14 +106,14 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
     };
 
     const saveEdit = async (photo: GalleryImage) => {
-        if (!editValues.title.trim() || !isAcceptableAlt(editValues.alt)) {
-            setMessage({ type: "error", text: "Saisissez un titre. Laissez la description vide pour une image illustrative ou rédigez une description précise d’au moins 12 caractères." });
+        if (!editValues.title.trim()) {
+            setMessage({ type: "error", text: "Saisissez un titre de gestion." });
             return;
         }
         setProcessingId(photo.id);
         try {
-            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "update", id: photo.id, ...editValues }) });
-            setPhotos((current) => current.map((item) => item.id === photo.id ? { ...item, ...editValues } : item));
+            await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "update", id: photo.id, ...editValues, alt: "" }) });
+            setPhotos((current) => current.map((item) => item.id === photo.id ? { ...item, ...editValues, alt: "" } : item));
             setEditingId(null);
         } catch (error) {
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Modification impossible" });
@@ -162,10 +154,10 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                         {pending.map((item) => (
                             <article key={item.id} className="grid md:grid-cols-[160px_1fr_auto] gap-4 p-4 rounded-2xl bg-cream-50 border border-cream-200">
                                 <img src={item.preview} alt="Aperçu avant publication" className="w-full h-32 object-cover rounded-xl" />
-                                <div className="grid sm:grid-cols-2 gap-3">
+                                <div className="grid gap-3">
                                     <label className="text-sm font-medium text-charcoal-700">Titre<input value={item.title} onChange={(e) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, title: e.target.value } : entry))} className="mt-1 w-full px-3 py-2.5 rounded-xl border border-cream-300 bg-white" /></label>
-                                    <label className="text-sm font-medium text-charcoal-700">Description accessible (facultative)<input value={item.alt} onChange={(e) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, alt: e.target.value } : entry))} className="mt-1 w-full px-3 py-2.5 rounded-xl border border-cream-300 bg-white" /><span className="mt-1 block text-xs text-charcoal-500">Laisser vide si la photo est uniquement illustrative.</span></label>
-                                    <p className="text-xs text-charcoal-500 sm:col-span-2">Original : {bytesToMb(item.file.size)}</p>
+                                    <p className="text-xs text-charcoal-500">Les photos de cette galerie de souvenirs sont traitées comme illustratives et ignorées par les lecteurs d’écran. Aucun titre accessible individuel n’est demandé.</p>
+                                    <p className="text-xs text-charcoal-500">Original : {bytesToMb(item.file.size)}</p>
                                 </div>
                                 <button onClick={() => removePending(item.id)} className="self-start p-2 rounded-full text-charcoal-500 hover:bg-red-50 hover:text-red-600" aria-label="Retirer"><Trash2 size={19} /></button>
                             </article>
@@ -203,17 +195,16 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Gallery
                                     if (e.target.checked) next.add(photo.id);
                                     else next.delete(photo.id);
                                     setSelectedIds(next);
-                                }} className="w-5 h-5 accent-terracotta-600 cursor-pointer shadow-sm" />
+                                }} className="w-5 h-5 accent-terracotta-600 cursor-pointer shadow-sm" aria-label={`Sélectionner ${photo.title || `la photo ${index + 1}`}`} />
                             </div>
                             <img src={photo.thumbSrc || photo.src} alt={photo.alt} className="w-full aspect-[4/3] object-cover" />
                             <div className="p-4">
                                 {editingId === photo.id ? <div className="space-y-2">
                                     <input value={editValues.title} onChange={(e) => setEditValues((current) => ({ ...current, title: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-cream-300" aria-label="Titre" />
-                                    <input value={editValues.alt} onChange={(e) => setEditValues((current) => ({ ...current, alt: e.target.value }))} className="w-full px-3 py-2 rounded-xl border border-cream-300" aria-label="Description" />
-                                    <div className="flex gap-2"><button onClick={() => saveEdit(photo)} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700"><Save size={16} /> Enregistrer</button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100 text-charcoal-600"><X size={17} /></button></div>
+                                    <div className="flex gap-2"><button onClick={() => saveEdit(photo)} className="flex-1 inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-green-50 text-green-700"><Save size={16} /> Enregistrer</button><button onClick={() => setEditingId(null)} className="p-2 rounded-xl bg-cream-100 text-charcoal-600" aria-label="Annuler la modification"><X aria-hidden="true" size={17} /></button></div>
                                 </div> : <>
                                     <h3 className="font-semibold text-charcoal-900">{photo.title}</h3>
-                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={index === 0 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowUp size={16} />}</button><button disabled={index === photos.length - 1 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowDown size={16} />}</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "", alt: photo.alt }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-50"><Pencil size={16} /> Modifier</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => deletePhotos([photo.id])} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Supprimer définitivement">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />}</button></div>
+                                    <div className="grid grid-cols-[auto_auto_1fr_auto] gap-2 mt-4"><button disabled={index === 0 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, -1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Monter">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowUp size={16} />}</button><button disabled={index === photos.length - 1 || processingId === photo.id || processingId === "bulk"} onClick={() => movePhoto(photo, 1)} className="p-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-30" title="Descendre">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowDown size={16} />}</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => { setEditingId(photo.id); setEditValues({ title: photo.title || "" }); }} className="inline-flex justify-center items-center gap-1.5 py-2 rounded-xl bg-cream-100 text-charcoal-700 disabled:opacity-50"><Pencil size={16} /> Modifier</button><button disabled={processingId === photo.id || processingId === "bulk"} onClick={() => deletePhotos([photo.id])} className="p-2 rounded-xl bg-red-50 text-red-700 disabled:opacity-50" title="Supprimer définitivement">{processingId === photo.id ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />}</button></div>
                                 </>}
                             </div>
                         </article>;

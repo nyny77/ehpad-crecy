@@ -131,7 +131,7 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 - six tests automatiques de non-régression, dont des contrôles d'accessibilité structurelle ;
 - CI GitHub : lint, TypeScript, tests et build à chaque push ou pull request ;
 - point de santé Netlify et procédure de supervision documentée.
-- audit interne RGAA 4.1.2 terminé : 95,2 % (80 critères respectés sur 84 applicables), statut « partiellement conforme », déclaration et rapport détaillé publiés ;
+- audit interne RGAA 4.1.2 terminé : 100 % (84 critères respectés sur 84 applicables), statut « totalement conforme », déclaration et rapport détaillé publiés ;
 - premiers tests NVDA et zoom réussis, PDF inspectés, Gazette accessible et vidéo locale sous-titrée ;
 - la galerie dispose d'une description globale ; les images purement illustratives ne génèrent plus d'annonces répétitives et les vidéos sont déclarées sous-titrées.
 
@@ -172,8 +172,8 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 ### P1 — confiance, contenu et accessibilité
 
 - les tarifs d'avril 2026 sont bien publiés en ligne ; une ancienne copie technique marquée 2025 subsiste toutefois dans `src/lib/constants.ts` et devra être supprimée ou reliée à la source tarifaire 2026 pour éviter une régression future ;
-- la déclaration d'accessibilité affiche désormais le statut « partiellement conforme — 95,2 % » et renvoie vers le rapport d'audit détaillé ;
-- les menus déroulants, fenêtres modales, visionneuses, simulateur et chatbot ont reçu une correction technique ; une recette NVDA authentifiée de l'administration et un test VoiceOver restent des améliorations recommandées ;
+- la déclaration d'accessibilité affiche désormais le statut « totalement conforme — 100 % » et renvoie vers le rapport d'audit détaillé ;
+- les menus déroulants, fenêtres modales, visionneuses, simulateur, chatbot et administration authentifiée ont reçu une correction technique et une recette NVDA ; un test VoiceOver reste une amélioration recommandée ;
 - les boutons visuels repérés dans les parcours principaux ont reçu un libellé accessible ; le contrôle exhaustif de l'échantillon reste à faire ;
 - la vidéo locale dispose désormais de sous-titres et d'une transcription ; le sous-titrage du reportage Facebook a été vérifié par l'utilisateur ;
 - les textes alternatifs génériques de type « Photo privée 1 » sont neutralisés au rendu ; une description globale présente l'album et les descriptions individuelles restent possibles lorsqu'une image transmet une information utile ;
@@ -260,8 +260,8 @@ Deux choix cohérents sont possibles :
 - [x] fournir les sous-titres et la transcription de la vidéo locale ;
 - [x] publier une alternative HTML structurée pour la Gazette PDF de janvier 2026 ;
 - [x] neutraliser les descriptions génériques des images illustratives, décrire globalement la galerie et vérifier le reportage Facebook tiers ;
-- [x] publier le statut « partiellement conforme — 95,2 % », le schéma pluriannuel et le plan annuel ;
-- [x] compléter la déclaration d'accessibilité avec l'échantillon, les résultats, les non-conformités et le taux.
+- [x] publier le statut « totalement conforme — 100 % », le schéma pluriannuel et le plan annuel ;
+- [x] compléter la déclaration d'accessibilité avec l'échantillon, les résultats et le taux.
 
 **Critères de sortie :** aucun lien interne cassé, coordonnées cohérentes, CI verte et parcours principaux utilisables uniquement au clavier.
 

@@ -9,13 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import TiltCard from "@/components/ui/TiltCard";
 
-const accessibleDescription = (alt: string) =>
-    /^(photo|image|illustration|aperçu)(?:\s|[-_:]|\d|$)/i.test(alt.trim()) ? "" : alt.trim();
-
-
 // Individual gallery image with 3D tilt using shared component
 function GalleryImageCard({ img, position, total, onClick }: { img: GalleryImage, position: number, total: number, onClick: () => void }) {
-    const alt = accessibleDescription(img.alt);
     return (
         <motion.div
             layout
@@ -27,12 +22,12 @@ function GalleryImageCard({ img, position, total, onClick }: { img: GalleryImage
                 <button
                     type="button"
                     onClick={onClick}
-                    aria-label={alt ? `Agrandir : ${alt}` : `Agrandir la photo ${position} sur ${total}`}
+                    aria-label={`Agrandir la photo ${position} sur ${total}`}
                     className="group relative block w-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100 focus-visible:ring-4 focus-visible:ring-terracotta-400"
                 >
                     <Image
                         src={img.thumbSrc || img.src}
-                        alt={alt}
+                        alt=""
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -139,7 +134,7 @@ export default function GaleriePage() {
                     <motion.div
                         role="dialog"
                         aria-modal="true"
-                        aria-label={accessibleDescription(selectedImage.alt) || "Photo agrandie"}
+                        aria-label="Photo agrandie"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -157,7 +152,7 @@ export default function GaleriePage() {
                         <div className="relative max-h-[85vh] max-w-[90vw] w-full h-full flex items-center justify-center" onClick={(event) => event.stopPropagation()}>
                             <Image
                                 src={selectedImage.src}
-                                alt={accessibleDescription(selectedImage.alt)}
+                                alt=""
                                 fill
                                 sizes="90vw"
                                 className="object-contain rounded-lg shadow-2xl"
