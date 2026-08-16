@@ -85,7 +85,7 @@ export const handler: Handler = async (event, context) => {
             from: `"EHPAD de Crécy" <${process.env.EMAIL_USER}>`,
             to: userEmail,
             subject: "🎉 Votre compte EHPAD a été validé !",
-            text: `Bonjour,\n\nBonne nouvelle ! Votre compte a été validé par l'administration.\n\nVous pouvez désormais accéder à l'espace "Vie Sociale" et consulter les actualités et la galerie photos.\n\nConnectez-vous ici : ${loginUrl}/vie-sociale\n\nÀ très bientôt,\nL'équipe de l'EHPAD`,
+            text: `Bonjour,\n\nBonne nouvelle ! Votre compte a été validé par l'administration.\n\nVous pouvez désormais consulter les actualités et la galerie photos.\n\nConnectez-vous ici : ${loginUrl}/galerie\n\nÀ très bientôt,\nL'équipe de l'EHPAD`,
             html: `
                 <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9fafb; border-radius: 10px;">
                     <div style="background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
@@ -101,14 +101,14 @@ export const handler: Handler = async (event, context) => {
                             Vous avez désormais un accès complet à l'espace <strong>"Vie Sociale"</strong>. Retrouvez dès maintenant les photos et actualités de l'EHPAD de Crécy.
                         </p>
                         <div style="text-align: center; margin: 30px 0;">
-                            <a href="${loginUrl}/vie-sociale" 
+                            <a href="${loginUrl}/galerie"
                                style="background-color: #C80040; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
                                Accéder à l'Espace Famille
                             </a>
                         </div>
                         <p style="color: #718096; font-size: 14px; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
                             Si le bouton ne fonctionne pas, copiez ce lien : <br>
-                            <a href="${loginUrl}/vie-sociale" style="color: #C80040;">${loginUrl}/vie-sociale</a>
+                            <a href="${loginUrl}/galerie" style="color: #C80040;">${loginUrl}/galerie</a>
                         </p>
                     </div>
                     <p style="text-align: center; color: #a0aec0; font-size: 12px; margin-top: 20px;">

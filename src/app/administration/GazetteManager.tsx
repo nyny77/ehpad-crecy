@@ -395,7 +395,6 @@ export default function GazetteManager() {
                                         <div className="space-y-3">
                                             {block.content ? (
                                                 <div className="relative rounded-xl overflow-hidden bg-cream-100 aspect-video flex items-center justify-center">
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                                     <img src={block.content} alt="Aperçu" className="max-w-full max-h-[300px] object-contain" />
                                                     <button onClick={() => updateBlock(block.id, "content", "")} className="absolute top-2 right-2 p-1.5 bg-white/80 hover:bg-white text-charcoal-700 rounded-full backdrop-blur shadow-sm transition-colors" title="Changer d'image">
                                                         <X size={16} />
@@ -514,7 +513,6 @@ export default function GazetteManager() {
                                                         className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 border-2 border-transparent hover:border-terracotta-500 transition-all focus:outline-none focus:ring-4 focus:ring-terracotta-200 shadow-sm"
                                                         title={res.title}
                                                     >
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img src={res.url} alt={res.title || "Illustration"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                                                         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
                                                             <span className="text-white text-xs font-medium text-center px-2 py-1 bg-charcoal-900/50 rounded-full backdrop-blur-sm shadow-sm transform translate-y-2 group-hover:translate-y-0 transition-all">Choisir image</span>

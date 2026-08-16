@@ -1,6 +1,7 @@
 import { SERVICES_EXTENDED } from "@/lib/services-data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
     return SERVICES_EXTENDED.map((service) => ({
@@ -10,6 +11,22 @@ export async function generateStaticParams() {
 
 interface PageProps {
     params: Promise<{ service: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { service: serviceId } = await params;
+    const service = SERVICES_EXTENDED.find((item) => item.id === serviceId);
+    if (!service) return {};
+
+    return {
+        title: `${service.title} | Équipe de l’EHPAD de Crécy`,
+        description: service.shortDescription,
+        openGraph: {
+            title: `${service.title} | EHPAD de Crécy`,
+            description: service.shortDescription,
+            images: [service.image],
+        },
+    };
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {

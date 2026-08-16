@@ -26,6 +26,8 @@ export default function ChatBot() {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const toggleRef = useRef<HTMLButtonElement>(null);
 
     // Auto-scroll to bottom
     const scrollToBottom = () => {
@@ -35,6 +37,19 @@ export default function ChatBot() {
     useEffect(() => {
         scrollToBottom();
     }, [messages, isOpen, isTyping]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        inputRef.current?.focus();
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsOpen(false);
+                toggleRef.current?.focus();
+            }
+        };
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
+    }, [isOpen]);
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -79,6 +94,10 @@ export default function ChatBot() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id="assistant-ehpad"
+                        role="dialog"
+                        aria-modal="false"
+                        aria-labelledby="assistant-ehpad-title"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -91,13 +110,15 @@ export default function ChatBot() {
                                     🤖
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-sm text-white">Assistant EHPAD</h3>
+                                    <h3 id="assistant-ehpad-title" className="font-bold text-sm text-white">Assistant EHPAD</h3>
                                     <p className="text-xs text-terracotta-100">En ligne</p>
                                 </div>
                             </div>
                             <button
+                                type="button"
                                 onClick={() => setIsOpen(false)}
                                 className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                                aria-label="Fermer l’assistant"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -106,7 +127,7 @@ export default function ChatBot() {
                         </div>
 
                         {/* Messages Area */}
-                        <div className="chatbot-messages-area flex-1 overflow-y-auto p-4 space-y-4 min-h-[300px] bg-gray-50">
+                        <div className="chatbot-messages-area flex-1 overflow-y-auto p-4 space-y-4 min-h-[300px] bg-gray-50" aria-live="polite" aria-relevant="additions">
                             {messages.map((msg) => (
                                 <div
                                     key={msg.id}
@@ -157,7 +178,10 @@ export default function ChatBot() {
                         {/* Input Area */}
                         <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-charcoal-100">
                             <div className="flex gap-2">
+                                <label htmlFor="assistant-question" className="sr-only">Votre question</label>
                                 <input
+                                    id="assistant-question"
+                                    ref={inputRef}
                                     type="text"
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
@@ -168,6 +192,7 @@ export default function ChatBot() {
                                     type="submit"
                                     disabled={!inputValue.trim() || isTyping}
                                     className="p-2 bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white rounded-full hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                    aria-label="Envoyer la question"
                                 >
                                     <svg className="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
@@ -181,11 +206,16 @@ export default function ChatBot() {
 
             {/* Toggle Button (FAB) */}
             <motion.button
+                ref={toggleRef}
+                type="button"
                 onClick={() => setIsOpen(!isOpen)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={`w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors relative z-50 ${isOpen ? "bg-charcoal-800 text-white" : "bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white hover:scale-105 hover:brightness-110"
                     }`}
+                aria-expanded={isOpen}
+                aria-controls="assistant-ehpad"
+                aria-label={isOpen ? "Fermer l’assistant" : "Ouvrir l’assistant"}
             >
                 {isOpen ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +229,7 @@ export default function ChatBot() {
 
                 {/* Notification Badge if closed and not interacted ? Optional */}
                 {!isOpen && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-forest-500 rounded-full border-2 border-white"></span>
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-forest-500 rounded-full border-2 border-white" aria-hidden="true"></span>
                 )}
             </motion.button>
         </div>

@@ -440,8 +440,7 @@ export default function CourrierManager() {
                                         <div className="md:w-1/4 flex-shrink-0">
                                             {msg.photoUrl ? (
                                                 <div className="aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 shadow-sm relative">
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img 
+                                                    <img
                                                         src={msg.photoUrl} 
                                                         alt="Photo" 
                                                         className="w-full h-full object-cover" 

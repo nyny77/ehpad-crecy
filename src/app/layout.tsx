@@ -31,6 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ehpad-crecy.netlify.app"),
   title: "EHPAD de Crécy | Bien plus qu'un EHPAD, un véritable lieu de vie",
   manifest: "/manifest.json",
   description:
@@ -51,6 +52,22 @@ export const metadata: Metadata = {
       "EHPAD public de Crécy-la-Chapelle - Un lieu de vie chaleureux en Seine-et-Marne.",
     locale: "fr_FR",
     type: "website",
+    url: "/",
+    siteName: "EHPAD de Crécy",
+    images: [
+      {
+        url: "/images/global-hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "EHPAD de Crécy-la-Chapelle",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EHPAD de Crécy-la-Chapelle",
+    description: "Un établissement public chaleureux au cœur de Crécy-la-Chapelle.",
+    images: ["/images/global-hero.jpg"],
   },
   appleWebApp: {
     capable: true,
@@ -75,15 +92,43 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
+        <a
+          href="#contenu-principal"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-charcoal-900 px-4 py-3 font-semibold text-white shadow-xl transition-transform focus:translate-y-0"
+        >
+          Aller au contenu principal
+        </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NursingHome",
+              name: "EHPAD de Crécy-la-Chapelle",
+              url: "https://ehpad-crecy.netlify.app",
+              telephone: "+33164638262",
+              email: "accueil@ehpad-crecy.fr",
+              image: "https://ehpad-crecy.netlify.app/images/global-hero.jpg",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "18, rue de la Chapelle",
+                postalCode: "77580",
+                addressLocality: "Crécy-la-Chapelle",
+                addressRegion: "Seine-et-Marne",
+                addressCountry: "FR",
+              },
+            }),
+          }}
+        />
         <PerformanceMotionProvider>
           <SplashScreen />
           <NetlifyIdentityRedirect />
           <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
             <ErrorBoundary>
               <Header />
-              <main className="flex-grow">
+              <div id="contenu-principal" tabIndex={-1} className="flex-grow outline-none">
                 {children}
-              </main>
+              </div>
               <Footer />
               <AccessibilityToggle />
               <ChatBot />

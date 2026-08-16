@@ -90,7 +90,7 @@ export default function Header() {
             </div>
 
             <div className="container-custom">
-                <nav className="flex items-center justify-between lg:justify-center gap-2 lg:gap-4">
+                <nav className="flex items-center justify-between lg:justify-center gap-2 lg:gap-4" aria-label="Navigation principale">
                     {/* Logo with enhanced shadow */}
                     <Link href="/" className="group flex items-center gap-3">
                         <motion.div
@@ -150,7 +150,8 @@ export default function Header() {
                                             </motion.div>
                                         </Link>
                                     ) : (
-                                        <div className="relative group/btn cursor-default py-2">
+                                        <div className="relative group/btn py-2">
+                                            <button type="button" aria-haspopup="true" className="block">
                                             <motion.div
                                                 className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
                                                     ? "text-white"
@@ -182,10 +183,11 @@ export default function Header() {
                                                     />
                                                 )}
                                             </motion.div>
+                                            </button>
 
                                             {/* Dropdown Menu */}
                                             {item.subLinks && (
-                                                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 z-50 min-w-[220px]">
+                                                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-all duration-300 z-50 min-w-[220px]">
                                                     <div className="bg-white/98 backdrop-blur-md rounded-xl shadow-xl border border-cream-100 overflow-hidden py-2 flex flex-col">
                                                         {item.subLinks.map(sub => (
                                                             <Link key={sub.href} href={sub.href} className={`px-4 py-2.5 text-[13px] xl:text-sm transition-colors hover:bg-cream-50 ${isActiveLink(sub.href) ? 'text-terracotta-600 bg-cream-50 font-bold' : 'text-charcoal-700'}`}>
@@ -232,6 +234,8 @@ export default function Header() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         aria-label="Menu"
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="navigation-mobile"
                     >
                         <motion.span
                             animate={{
@@ -264,6 +268,7 @@ export default function Header() {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
+                        id="navigation-mobile"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}

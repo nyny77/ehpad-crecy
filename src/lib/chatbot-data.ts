@@ -1,3 +1,5 @@
+import { EHPAD_INFO } from "@/lib/constants";
+
 export type ChatRule = {
     id: string;
     keywords: string[];
@@ -10,7 +12,7 @@ export const CHAT_RULES: ChatRule[] = [
         id: "tarifs",
         keywords: ["prix", "tarif", "cout", "coût", "combien", "payer", "hébergement", "hebergement", "chambre"],
         response: "Les tarifs d'hébergement sont d'environ 69€ par jour pour une chambre simple. Ce tarif comprend le logement, les repas et l'animation. Pour un devis précis selon votre dépendance (GIR), je vous invite à consulter notre page Tarifs.",
-        relatedLinks: [{ label: "Voir les Tarifs détaillés", url: "/tarifs" }]
+        relatedLinks: [{ label: "Voir les tarifs détaillés", url: "/admissions#tarifs" }]
     },
     {
         id: "visite",
@@ -44,7 +46,7 @@ export const CHAT_RULES: ChatRule[] = [
     {
         id: "contact",
         keywords: ["téléphone", "mail", "email", "adresse", "contact", "joindre", "appel"],
-        response: "Vous pouvez nous joindre au 01.64.63.80.80 ou via notre formulaire de contact. L'accueil est ouvert du lundi au vendredi de 9h à 17h.",
+        response: `Vous pouvez nous joindre au ${EHPAD_INFO.phone} ou via notre formulaire de contact. Les horaires détaillés sont disponibles sur la page Contact.`,
         relatedLinks: [{ label: "Nous contacter", url: "/contact" }]
     },
     {

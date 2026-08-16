@@ -41,13 +41,13 @@ const handler: Handler = async (event, context) => {
             from: `"EHPAD Crécy" <${process.env.EMAIL_USER}>`,
             bcc: targets, // Envoi caché à la liste
             subject: subject,
-            text: `${message}\n\nAccédez à l'espace ici : ${process.env.URL || "https://ehpad-crecy.netlify.app"}/vie-sociale`,
+            text: `${message}\n\nAccédez à l'espace ici : ${process.env.URL || "https://ehpad-crecy.netlify.app"}/galerie`,
             html: `
                 <div style="font-family: sans-serif; color: #333;">
                     <h2 style="color: #c05621;">${subject}</h2>
                     <p>${message}</p>
                     <p>
-                        <a href="${process.env.URL || "https://ehpad-crecy.netlify.app"}/vie-sociale" 
+                        <a href="${process.env.URL || "https://ehpad-crecy.netlify.app"}/galerie"
                            style="background-color: #c05621; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
                            Voir les nouveautés
                         </a>

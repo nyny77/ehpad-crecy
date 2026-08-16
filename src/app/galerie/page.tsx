@@ -21,9 +21,11 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
             exit={{ opacity: 0, scale: 0.95 }}
         >
             <TiltCard className="cursor-pointer" interactive={true}>
-                <div
+                <button
+                    type="button"
                     onClick={onClick}
-                    className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100"
+                    aria-label={`Agrandir ${img.title || img.alt}`}
+                    className="group relative block w-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 aspect-[4/3] border border-cream-100 focus-visible:ring-4 focus-visible:ring-terracotta-400"
                 >
                     <Image
                         src={img.thumbSrc || img.src}
@@ -34,7 +36,7 @@ function GalleryImageCard({ img, onClick }: { img: GalleryImage, onClick: () => 
                         loading="lazy"
                     />
 
-                </div>
+                </button>
             </TiltCard>
         </motion.div>
     );
@@ -58,6 +60,15 @@ export default function GaleriePage() {
         return () => unsubscribe();
     }, []);
 
+    useEffect(() => {
+        if (!selectedImage) return;
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setSelectedImage(null);
+        };
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
+    }, [selectedImage]);
+
     return (
         <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
             {/* Hero */}
@@ -66,7 +77,7 @@ export default function GaleriePage() {
             {/* Categories - EN DEHORS du PageHeader pour garder l'encadré propre */}
             <section className="container-custom px-4" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
                 <div className="text-center mb-6 mt-4">
-                    <h2 className="font-serif text-3xl md:text-5xl font-bold text-terracotta-600 inline-block relative">
+                    <h1 className="font-serif text-3xl md:text-5xl font-bold text-terracotta-600 inline-block relative">
                         ✨ Plongez dans nos souvenirs ! ✨
                         <motion.div
                             className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-1 bg-terracotta-400 rounded-full"
@@ -74,7 +85,7 @@ export default function GaleriePage() {
                             animate={{ width: 96 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
                         />
-                    </h2>
+                    </h1>
                 </div>
 
             </section>
@@ -118,13 +129,24 @@ export default function GaleriePage() {
             <AnimatePresence>
                 {selectedImage && (
                     <motion.div
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={selectedImage.title || "Photo agrandie"}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-50 bg-charcoal-900/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
                         onClick={() => setSelectedImage(null)}
                     >
-                        <div className="relative max-h-[85vh] max-w-[90vw] w-full h-full flex items-center justify-center">
+                        <button
+                            type="button"
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute right-5 top-5 z-10 rounded-full bg-white/90 p-3 text-charcoal-900 shadow-lg"
+                            aria-label="Fermer la photo agrandie"
+                        >
+                            <span aria-hidden="true">✕</span>
+                        </button>
+                        <div className="relative max-h-[85vh] max-w-[90vw] w-full h-full flex items-center justify-center" onClick={(event) => event.stopPropagation()}>
                             <Image
                                 src={selectedImage.src}
                                 alt={selectedImage.alt}

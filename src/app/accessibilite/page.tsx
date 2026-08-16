@@ -13,6 +13,11 @@ export default function AccessibilitePage() {
             <section className="section-padding">
                 <div className="container-custom max-w-4xl">
                     <div className="space-y-12">
+                        <div>
+                            <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900">
+                                Accessibilité du site
+                            </h1>
+                        </div>
                         {/* Introduction */}
                         <div className="bg-white rounded-2xl p-8 shadow-soft">
                             <h2 className="font-serif text-2xl font-semibold text-charcoal-900 mb-4">
