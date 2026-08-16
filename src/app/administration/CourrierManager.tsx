@@ -108,17 +108,17 @@ export default function CourrierManager() {
                     .photo-half {
                         width: 100%;
                         height: 148.5mm; /* Exactly half A4 */
-                        position: relative;
+                        display: block;
                         border-bottom: 1px dashed #ccc;
                         overflow: hidden;
                     }
                     .photo-half img {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
+                        display: block;
                         width: 100%;
                         height: 100%;
                         object-fit: cover; /* Fill the entire half page */
+                        margin: 0;
+                        padding: 0;
                     }
                     .no-photo {
                         text-align: center;
