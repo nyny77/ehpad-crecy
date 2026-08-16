@@ -109,30 +109,19 @@ export default function CourrierManager() {
                         width: 210mm;
                         height: 148.5mm; /* Exactly half A4 */
                         box-sizing: border-box;
+                        padding: 5mm; /* Small safe border to prevent printer clipping */
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         border-bottom: 1px dashed #ccc; /* Cut line */
-                        background-color: ${message.photoUrl ? '#fff' : '#fdfbf7'};
-                        position: relative;
+                        background-color: #fff;
                         overflow: hidden;
                     }
-                    .photo-bg {
-                        position: absolute;
-                        top: -5%; left: -5%; width: 110%; height: 110%;
-                        object-fit: cover;
-                        filter: blur(20px);
-                        opacity: 0.4;
-                        z-index: 0;
-                    }
-                    .photo-fg {
-                        position: relative;
-                        z-index: 1;
-                        width: calc(100% - 30mm);
-                        height: calc(100% - 30mm);
-                        object-fit: contain; /* Prevent cropping of portrait images */
-                        border-radius: 4px; /* Slight rounding for elegance */
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                    .photo-half img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain; /* Maximize size without cropping */
+                        border-radius: 4px;
                     }
                     .no-photo {
                         text-align: center;
@@ -277,8 +266,7 @@ export default function CourrierManager() {
             <body>
                 <div class="photo-half">
                     ${message.photoUrl ? `
-                        <img class="photo-bg" src="${message.photoUrl}" alt="" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${message.photoUrl}'"/>
-                        <img class="photo-fg" src="${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${message.photoUrl}'"/>
+                        <img src="${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${message.photoUrl}'"/>
                     ` : `
                         <div class="no-photo">
                             <h2>Le Postier Numérique</h2>
