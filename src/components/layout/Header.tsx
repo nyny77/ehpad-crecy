@@ -11,7 +11,13 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
     const pathname = usePathname();
+
+    useEffect(() => {
+        setOpenDesktopMenu(null);
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -113,14 +119,33 @@ export default function Header() {
 
                     {/* Desktop Navigation - Modern dropdown style */}
                     <div className="hidden lg:flex items-center gap-0.5 xl:gap-1">
-                        {NAV_LINKS.map((item) => {
+                        {NAV_LINKS.map((item, index) => {
                             const isActive = item.href ? isActiveLink(item.href) : item.subLinks?.some(sub => isActiveLink(sub.href));
+                            const menuId = `desktop-menu-${index}`;
+                            const isMenuOpen = openDesktopMenu === item.label;
                             return (
-                                <div key={item.label} className="relative group">
+                                <div
+                                    key={item.label}
+                                    className="relative"
+                                    onMouseEnter={item.href ? undefined : () => setOpenDesktopMenu(item.label)}
+                                    onMouseLeave={item.href ? undefined : () => setOpenDesktopMenu(null)}
+                                    onFocusCapture={item.href ? undefined : () => setOpenDesktopMenu(item.label)}
+                                    onBlurCapture={item.href ? undefined : (event) => {
+                                        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                                            setOpenDesktopMenu(null);
+                                        }
+                                    }}
+                                    onKeyDown={item.href ? undefined : (event) => {
+                                        if (event.key === "Escape") {
+                                            setOpenDesktopMenu(null);
+                                            event.currentTarget.querySelector("button")?.focus();
+                                        }
+                                    }}
+                                >
                                     {item.href ? (
                                         <Link href={item.href} className="relative group">
                                             <motion.div
-                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
+                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive || isMenuOpen
                                                     ? "text-white"
                                                     : "text-charcoal-700 hover:text-white"
                                                     }`}
@@ -151,18 +176,25 @@ export default function Header() {
                                         </Link>
                                     ) : (
                                         <div className="relative group/btn py-2">
-                                            <button type="button" aria-haspopup="true" className="block">
+                                            <button
+                                                type="button"
+                                                aria-haspopup="true"
+                                                aria-expanded={isMenuOpen}
+                                                aria-controls={menuId}
+                                                className="block"
+                                                onClick={() => setOpenDesktopMenu(isMenuOpen ? null : item.label)}
+                                            >
                                             <motion.div
-                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive
+                                                className={`relative px-2 xl:px-3 py-1.5 rounded-full text-[12px] xl:text-[13px] font-medium transition-all duration-300 ${isActive || isMenuOpen
                                                     ? "text-white"
                                                     : "text-charcoal-700 hover:text-white"
                                                     }`}
                                                 whileHover={{ y: -2 }}
                                             >
                                                 <span
-                                                    className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive
+                                                    className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive || isMenuOpen
                                                         ? ""
-                                                        : "opacity-0 group-hover:opacity-100"
+                                                        : "opacity-0 group-hover/btn:opacity-100"
                                                         }`}
                                                     style={{
                                                         background: 'linear-gradient(135deg, #C80040 0%, #E91E63 50%, #F54D75 100%)'
@@ -170,7 +202,7 @@ export default function Header() {
                                                 />
                                                 <span className="relative z-10 whitespace-nowrap flex items-center gap-1">
                                                     {item.label}
-                                                    <svg className="w-3 h-3 transition-transform duration-300 group-hover/btn:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg className={`w-3 h-3 transition-transform duration-300 ${isMenuOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                                     </svg>
                                                 </span>
@@ -187,7 +219,10 @@ export default function Header() {
 
                                             {/* Dropdown Menu */}
                                             {item.subLinks && (
-                                                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-all duration-300 z-50 min-w-[220px]">
+                                                <div
+                                                    id={menuId}
+                                                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 z-50 min-w-[220px] ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                                                >
                                                     <div className="bg-white/98 backdrop-blur-md rounded-xl shadow-xl border border-cream-100 overflow-hidden py-2 flex flex-col">
                                                         {item.subLinks.map(sub => (
                                                             <Link key={sub.href} href={sub.href} className={`px-4 py-2.5 text-[13px] xl:text-sm transition-colors hover:bg-cream-50 ${isActiveLink(sub.href) ? 'text-terracotta-600 bg-cream-50 font-bold' : 'text-charcoal-700'}`}>
