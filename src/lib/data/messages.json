@@ -53,6 +53,15 @@
       "photoUrl": "/images/messages/msg-1786863980105-32efff8b.webp",
       "date": "2026-08-16T07:06:20.105Z",
       "status": "nouveau"
+    },
+    {
+      "id": "8c770a0d-248d-4b85-8a4f-1c0eac39f1fa",
+      "residentId": "mock-id-1234",
+      "senderName": "Cîndy",
+      "text": "Didi",
+      "photoUrl": "/images/messages/msg-1786864381321-4035e54a.webp",
+      "date": "2026-08-16T07:13:01.322Z",
+      "status": "nouveau"
     }
   ]
 }
