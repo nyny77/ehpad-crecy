@@ -15,7 +15,7 @@ export default function EchoDuCoeurPage() {
     const [selectedGazette, setSelectedGazette] = useState<any>(allGazettes[0] || null);
 
     return (
-        <main className="min-h-screen bg-cream-100 px-2 pb-2 pt-36 md:px-4 md:pb-3 md:pt-44 lg:h-[100dvh] lg:overflow-hidden print:h-auto print:overflow-visible print:bg-white print:pt-0 print:pb-0">
+        <main className="mb-12 min-h-screen bg-cream-100 px-2 pb-2 pt-36 sm:mb-16 md:mb-20 md:px-4 md:pb-3 md:pt-44 lg:h-[100dvh] lg:overflow-hidden print:mb-0 print:h-auto print:overflow-visible print:bg-white print:pt-0 print:pb-0">
             <h1 className="sr-only">Le Petit Écho du Cœur</h1>
             <div className="mx-auto flex h-full w-full max-w-[1600px] flex-col gap-3 lg:flex-row print:gap-0 print:px-0">
                 {/* Main View */}
