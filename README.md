@@ -55,3 +55,5 @@ const variants: Variants = {
 ```
 
 Cette modification a été appliquée le 28/01/2026 pour corriger l'erreur de build exit code 2.
+
+<!-- Modification bénigne pour forcer un commit de synchronisation -->
