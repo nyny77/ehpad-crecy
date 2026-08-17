@@ -8,5 +8,15 @@
     }
   ],
   "legacyAlbumTitle": "Divers 2025-2026",
-  "photos": []
+  "photos": [
+    {
+      "id": "051ef970-ca4a-4db1-99d5-0cb52b606f1a",
+      "src": "/images/gallery/9e0e0245-0dfa-48cb-98cf-192bd8ee3f0f/1786944624502-250611-repas-espagne.webp",
+      "thumbSrc": "/images/gallery/9e0e0245-0dfa-48cb-98cf-192bd8ee3f0f/thumbnails/1786944624502-250611-repas-espagne.webp",
+      "title": "250611 REPAS ESPAGNE",
+      "alt": "",
+      "category": "autre",
+      "albumId": "9e0e0245-0dfa-48cb-98cf-192bd8ee3f0f"
+    }
+  ]
 }
