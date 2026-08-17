@@ -1,5 +1,12 @@
 {
-  "albums": [],
+  "albums": [
+    {
+      "id": "9e0e0245-0dfa-48cb-98cf-192bd8ee3f0f",
+      "title": "Divers 2025-2026",
+      "date": "2026-08-17",
+      "createdAt": "2026-08-17T05:30:21.972Z"
+    }
+  ],
   "legacyAlbumTitle": "Divers 2025-2026",
   "photos": []
 }
