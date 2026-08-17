@@ -5,6 +5,7 @@ import Image from "@/components/ui/OptimizedImage";
 interface LazyVideoProps {
     type: "iframe" | "local";
     src?: string;
+    mobileSrc?: string;
     iframeSrc?: string;
     poster: string;
     title: string;
@@ -12,7 +13,7 @@ interface LazyVideoProps {
     className?: string;
 }
 
-export default function LazyVideo({ type, src, iframeSrc, poster, title, captionsSrc, className = "" }: LazyVideoProps) {
+export default function LazyVideo({ type, src, mobileSrc, iframeSrc, poster, title, captionsSrc, className = "" }: LazyVideoProps) {
     const [isLoaded, setIsLoaded] = useState(false);
 
     return (
@@ -53,14 +54,17 @@ export default function LazyVideo({ type, src, iframeSrc, poster, title, caption
                         ></iframe>
                     )}
                     {type === "local" && src && (
-                        <video 
-                            src={src}
+                        <video
                             aria-label={title}
                             className="w-full h-full object-cover absolute inset-0 z-10"
                             controls
                             autoPlay
                             playsInline
                         >
+                            {mobileSrc && (
+                                <source src={mobileSrc} type="video/mp4" media="(max-width: 767px)" />
+                            )}
+                            <source src={src} type="video/mp4" />
                             {captionsSrc && (
                                 <track kind="captions" src={captionsSrc} srcLang="fr" label="Français" default />
                             )}

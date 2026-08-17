@@ -270,11 +270,12 @@ Deux choix cohérents sont possibles :
 **Objectif : être excellent sur téléphone et connexion moyenne.**
 
 - [x] ne plus copier les originaux inutilisés dans `out` ;
-- [ ] dédupliquer les médias et appliquer une politique de nommage par empreinte ;
+- [x] dédupliquer strictement les médias dans l’export par empreinte SHA-256 ;
+- [ ] appliquer une politique de nommage par empreinte aux futurs médias ;
 - [ ] déplacer les médias lourds vers un stockage/CDN avec transformations à la demande ;
 - [ ] produire AVIF/WebP responsifs et conserver JPEG seulement lorsque nécessaire ;
 - [ ] découper le panorama 360° en tuiles multi-résolution ;
-- [ ] proposer vidéo adaptative ou version mobile plus légère ;
+- [x] proposer une version mobile plus légère de la vidéo ;
 - [ ] charger le chatbot seulement après interaction ;
 - [ ] charger Netlify Identity uniquement sur les routes concernées ;
 - [ ] remplacer les micro-animations simples par CSS et réduire Framer Motion ;

@@ -230,6 +230,7 @@ export default function HistoirePage() {
                                 <LazyVideo 
                                     type="local"
                                     src="/videos/balade-crecy.mp4"
+                                    mobileSrc="/videos/balade-crecy-mobile.mp4"
                                     poster="/images/history/canal.jpg"
                                     title="Balade au fil de l'eau"
                                     captionsSrc="/videos/balade-crecy.fr.vtt"

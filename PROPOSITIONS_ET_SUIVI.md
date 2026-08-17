@@ -72,9 +72,9 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 - ~~Regrouper les déploiements Netlify lors du chargement de plusieurs photos.~~ — **Les commits intermédiaires sont ignorés par Netlify et un seul déploiement est lancé à la fin du lot, avec publication de secours en cas d’interruption, le 17 août 2026. Tests, build, fonctions Netlify, parcours navigateur et contrôle de production validés.**
 - ~~Ne plus inclure dans le déploiement les originaux d’images qui ne sont jamais affichés.~~ — **Élagage automatique et prudent ajouté au build le 17 août 2026 : seuls les originaux disposant d’une variante WebP et sans aucune référence dans l’export sont retirés de `out`, sans supprimer les sources. Le build validé retire 50 fichiers et 85,2 Mo.**
-- Supprimer les doublons stricts de médias.
+- ~~Supprimer les doublons stricts de médias.~~ — **Déduplication automatique par empreinte SHA-256 ajoutée au build le 17 août 2026, avec réécriture des références et redirections de compatibilité sans supprimer les sources. Le build validé élimine 15 copies réparties dans 12 groupes, soit 4,1 Mo supplémentaires.**
 - Produire automatiquement plusieurs tailles WebP et AVIF.
-- Préparer une version plus légère de la vidéo pour les téléphones.
+- ~~Préparer une version plus légère de la vidéo pour les téléphones.~~ — **Version MP4 mobile compatible créée et utilisée sur l’accueil ainsi que sur la page Histoire le 17 août 2026, avec une réduction de 41 %.**
 - Transformer le panorama 360° en tuiles progressives.
 - Charger le chatbot seulement après interaction.
 - Charger Netlify Identity uniquement sur les pages concernées.
