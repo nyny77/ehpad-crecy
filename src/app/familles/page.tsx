@@ -282,7 +282,7 @@ export default function FamillesPage() {
                                     id="is-human"
                                     checked={isHuman}
                                     onChange={(e) => setIsHuman(e.target.checked)}
-                                    className="w-5 h-5 rounded border-cream-300 text-terracotta-600 focus:ring-terracotta-500 cursor-pointer"
+                                    className="w-5 h-5 rounded border-2 border-cream-300 accent-terracotta-600 cursor-pointer appearance-auto"
                                 />
                                 <label htmlFor="is-human" className="text-sm font-medium text-charcoal-700 cursor-pointer select-none flex-grow">
                                     Je confirme être un humain (Protection anti-spam)

@@ -225,7 +225,7 @@ Deux choix cohérents sont possibles :
 - [x] protéger ou retirer `test-email` ;
 - [x] imposer rôle administrateur, méthode POST et validation stricte dans `send-notification` ;
 - [x] protéger `ai-image`, limiter sa fréquence et filtrer les usages ;
-- [ ] ajouter des limites de taille, type MIME réel, dimensions et décodage d'image côté serveur ;
+- [x] ajouter des limites de taille, type MIME réel, dimensions et décodage d'image côté serveur ;
 - [x] ajouter limitation par IP/code, délai progressif et CAPTCHA adaptatif au Postier ;
 - [x] remplacer les codes lisibles par des secrets aléatoires plus robustes et ne stocker que leur empreinte ;
 - [x] retirer noms, expéditeurs et résidents des messages de commits ;
