@@ -41,24 +41,26 @@ export const handler: Handler = async (event, context) => {
         }
 
         // --- 1. Validation du CAPTCHA ---
-        if (process.env.CF_TURNSTILE_SECRET) {
-            const formData = new FormData();
-            formData.append("secret", process.env.CF_TURNSTILE_SECRET);
-            formData.append("response", turnstileToken);
-            formData.append("remoteip", event.headers["client-ip"] || "");
+        if (action === "send") {
+            if (process.env.CF_TURNSTILE_SECRET) {
+                const formData = new FormData();
+                formData.append("secret", process.env.CF_TURNSTILE_SECRET);
+                formData.append("response", turnstileToken);
+                formData.append("remoteip", event.headers["client-ip"] || "");
 
-            const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-                body: formData,
-                method: "POST",
-            });
-            const outcome = await result.json();
-            if (!outcome.success) {
-                return json(403, { error: "Échec de la validation du CAPTCHA (humain)." });
-            }
-        } else {
-            // Mode fallback si pas configuré
-            if (!turnstileToken) {
-                return json(400, { error: "Veuillez cocher la case 'Je suis un humain'." });
+                const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+                    body: formData,
+                    method: "POST",
+                });
+                const outcome = await result.json();
+                if (!outcome.success) {
+                    return json(403, { error: "Échec de la validation du CAPTCHA (humain)." });
+                }
+            } else {
+                // Mode fallback si pas configuré
+                if (!turnstileToken) {
+                    return json(400, { error: "Veuillez cocher la case 'Je suis un humain'." });
+                }
             }
         }
 
