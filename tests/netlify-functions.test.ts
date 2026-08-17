@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { handler as healthHandler } from "../netlify/functions/health";
-import adminMessagesHandler from "../netlify/functions/admin-messages";
-import familyMessageHandler from "../netlify/functions/famille-send-message";
+import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
+import { handler as familyMessageHandler } from "../netlify/functions/famille-send-message";
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 import { handler as testEmailHandler } from "../netlify/functions/test-email";
 import { handler as sendNotificationHandler } from "../netlify/functions/send-notification";
@@ -43,37 +43,23 @@ test("la fonction de santé répond et refuse les autres méthodes", async () =>
 });
 
 test("la gestion du courrier refuse un visiteur et accepte un administrateur", async () => {
-    // Netlify V2 utilise l'objet Request. Pour l'admin, on vérifie un entête Authorization simulé ou on rejette.
-    // L'implémentation isAdminRequestV2 extrait le JWT (partie 2).
-    const generateFakeJWT = () => {
-        const payload = Buffer.from(JSON.stringify({ app_metadata: { roles: ["admin"] } })).toString("base64");
-        return `header.${payload}.signature`;
-    };
-    
-    const forbiddenReq = new Request("http://localhost/", { method: "GET" });
-    const allowedReq = new Request("http://localhost/", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${generateFakeJWT()}` }
-    });
+    const forbidden = await adminMessagesHandler(event("GET") as never, anonymousContext as never);
+    const allowed = await adminMessagesHandler(event("GET") as never, adminContext as never);
 
-    const forbidden = await adminMessagesHandler(forbiddenReq, anonymousContext as never) as Response;
-    const allowed = await adminMessagesHandler(allowedReq, anonymousContext as never) as Response;
-
-    assert.equal(forbidden?.status, 403);
-    assert.equal(allowed?.status, 200);
-    const allowedData = await allowed.json() as any;
-    assert.ok(Array.isArray(allowedData.messages));
+    assert.equal(forbidden?.statusCode, 403);
+    assert.equal(allowed?.statusCode, 200);
+    assert.ok(Array.isArray(JSON.parse(allowed?.body || "{}").messages));
 });
 
 test("le Postier refuse une mauvaise méthode et un code inconnu", async () => {
-    const wrongMethod = await familyMessageHandler(new Request("http://localhost/", { method: "GET" }), anonymousContext as never);
+    const wrongMethod = await familyMessageHandler(event("GET") as never, anonymousContext as never);
     const unknownCode = await familyMessageHandler(
-        new Request("http://localhost/", { method: "POST", body: JSON.stringify({ action: "verify", secretCode: "CODE-TEST-INEXISTANT" }) }),
+        event("POST", { action: "verify", secretCode: "CODE-TEST-INEXISTANT" }) as never,
         anonymousContext as never,
     );
 
-    assert.equal(wrongMethod?.status, 405);
-    assert.equal(unknownCode?.status, 401);
+    assert.equal(wrongMethod?.statusCode, 405);
+    assert.equal(unknownCode?.statusCode, 401);
 });
 
 test("la génération d'image IA reste réservée à l'administration", async () => {

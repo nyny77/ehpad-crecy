@@ -65,5 +65,5 @@ export default function AdminImage({ photoUrl, onUrlLoaded, ...props }: AdminIma
         );
     }
 
-    return <img src={objectUrl} {...props} />;
+    return <img src={objectUrl} alt={props.alt || ""} {...props} />;
 }

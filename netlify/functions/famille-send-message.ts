@@ -19,15 +19,21 @@ export interface FamilyMessage {
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-const json = (status: number, body: unknown) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
+const json = (statusCode: number, body: unknown) => ({
+    statusCode,
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-store",
+    },
+    body: JSON.stringify(body),
+});
 
-export default async (req: Request, context: Context) => {
+export const handler: Handler = async (event, context) => {
     // Endpoint public
-    if (req.method !== "POST") return json(405, { error: "Méthode non autorisée" });
+    if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const bodyText = await req.text();
-        const body = parseJsonObject(bodyText, 8 * 1024 * 1024);
+        const body = parseJsonObject(event.body, 8 * 1024 * 1024);
         const action = String(body.action || "send").trim();
         const secretCode = String(body.secretCode || "").trim().toUpperCase();
         const senderName = String(body.senderName || "").trim();
@@ -45,14 +51,15 @@ export default async (req: Request, context: Context) => {
         // --- 1. Validation du CAPTCHA ---
         if (action === "send") {
             if (process.env.CF_TURNSTILE_SECRET) {
-                const formData = new FormData();
+                const formData = new URLSearchParams();
                 formData.append("secret", process.env.CF_TURNSTILE_SECRET);
                 formData.append("response", turnstileToken);
-                formData.append("remoteip", req.headers.get("client-ip") || req.headers.get("x-forwarded-for") || "");
+                formData.append("remoteip", event.headers["client-ip"] || event.headers["x-forwarded-for"] || "");
 
                 const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
                     body: formData,
                     method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" }
                 });
                 const outcome = await result.json();
                 if (!outcome.success) {
@@ -118,7 +125,7 @@ export default async (req: Request, context: Context) => {
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {
-        logFunctionError("famille-send-message", error, context.requestId || "unknown");
+        logFunctionError("famille-send-message", error, context.awsRequestId || "unknown");
         return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de l'envoi du message" });
     }
 };
