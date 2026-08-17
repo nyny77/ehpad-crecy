@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, DragEvent, useEffect, useMemo, useState } from "react";
 import { CalendarDays, CheckSquare, Folder, FolderPlus, ImagePlus, LoaderCircle, Pencil, Save, Trash2, Upload, X } from "lucide-react";
 import type { GalleryAlbum, GalleryImage } from "@/lib/gallery";
 import { adminFetch } from "@/lib/admin-api";
@@ -31,6 +31,8 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
     const [albumTitle, setAlbumTitle] = useState("");
     const [albumDate, setAlbumDate] = useState(new Date().toISOString().slice(0, 10));
     const [uploading, setUploading] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<{ current: number; total: number; fileName: string } | null>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editingAlbumId, setEditingAlbumId] = useState<string | null>(null);
     const [albumNameDraft, setAlbumNameDraft] = useState("");
@@ -71,8 +73,7 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
         return () => window.clearInterval(timer);
     }, [photos, uploadPreviews]);
 
-    const selectFiles = (event: ChangeEvent<HTMLInputElement>) => {
-        const selected = Array.from(event.target.files || []);
+    const prepareFiles = (selected: File[]) => {
         const next: PendingPhoto[] = [];
         try {
             for (const file of selected) {
@@ -80,13 +81,12 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
                 const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
                 next.push({ id: `${file.name}-${file.lastModified}-${Math.random()}`, file, preview: URL.createObjectURL(file), title: baseName });
             }
-            setPending((current) => [...current, ...next]);
-            setMessage(null);
+            return next;
         } catch (error) {
             next.forEach((item) => URL.revokeObjectURL(item.preview));
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Fichier invalide" });
+            return [];
         }
-        event.target.value = "";
     };
 
     const removePending = (id: string) => {
@@ -97,10 +97,10 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
         });
     };
 
-    const uploadAll = async () => {
-        if (!pending.length) return;
+    const uploadPhotos = async (items: PendingPhoto[]) => {
+        if (!items.length || uploading) return;
         if (targetAlbumId === "new" && (!albumTitle.trim() || !albumDate)) {
-            setMessage({ type: "error", text: "Donnez un nom et une date au nouvel album." });
+            setMessage({ type: "error", text: "Donnez un nom et une date au nouvel album avant de déposer les photos." });
             return;
         }
         setUploading(true);
@@ -114,21 +114,54 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
                 setAlbums((current) => current.some((album) => album.id === result.album.id) ? current : [...current, result.album]);
                 setTargetAlbumId(albumId);
             }
-            for (const item of pending) {
+            for (const [index, item] of items.entries()) {
+                setUploadProgress({ current: index + 1, total: items.length, fileName: item.file.name });
                 const processed = await processImage(item.file);
                 if (processed.image.size + processed.thumbnail.size > 3.8 * 1024 * 1024) throw new Error(`${item.file.name} reste trop lourde après compression.`);
                 const [imageBase64, thumbnailBase64] = await Promise.all([blobToBase64(processed.image), blobToBase64(processed.thumbnail)]);
                 const result = await adminFetch<{ photo: GalleryImage }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "add", albumId, fileName: item.file.name, title: item.title, imageBase64, thumbnailBase64 }) });
                 setPhotos((current) => [result.photo, ...current]);
                 setUploadPreviews((current) => ({ ...current, [result.photo.id]: item.preview }));
+                setPending((current) => current.filter((candidate) => candidate.id !== item.id));
                 completed += 1;
             }
-            setPending([]);
             setAlbumTitle("");
             setMessage({ type: "success", text: `${completed} photo${completed > 1 ? "s sont enregistrées" : " est enregistrée"}. Mise en ligne Netlify en cours : comptez environ 2 minutes. L’aperçu reste visible pendant ce délai.` });
         } catch (error) {
             setMessage({ type: "error", text: `${completed} photo(s) enregistrée(s). ${error instanceof Error ? error.message : "Envoi interrompu"}` });
-        } finally { setUploading(false); }
+        } finally {
+            setUploading(false);
+            setUploadProgress(null);
+        }
+    };
+
+    const addAndUploadFiles = async (files: File[]) => {
+        if (!files.length || uploading) return;
+        if (targetAlbumId === "new" && (!albumTitle.trim() || !albumDate)) {
+            setMessage({ type: "error", text: "Renseignez d’abord le nom et la date du nouvel album, puis déposez les photos." });
+            return;
+        }
+        const next = prepareFiles(files);
+        if (!next.length) return;
+        setPending((current) => [...current, ...next]);
+        await uploadPhotos(next);
+    };
+
+    const selectFiles = (event: ChangeEvent<HTMLInputElement>) => {
+        const selected = Array.from(event.target.files || []);
+        event.target.value = "";
+        void addAndUploadFiles(selected);
+    };
+
+    const dropFiles = (event: DragEvent<HTMLLabelElement>) => {
+        event.preventDefault();
+        setIsDragging(false);
+        if (uploading) return;
+        void addAndUploadFiles(Array.from(event.dataTransfer.files));
+    };
+
+    const uploadAll = async () => {
+        await uploadPhotos([...pending]);
     };
 
     const deletePhotos = async (ids: string[]) => {
@@ -203,13 +236,26 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
         <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 md:p-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div><h2 className="font-serif text-3xl text-charcoal-900">Ajouter un groupe de photos</h2><p className="text-charcoal-600 mt-1">Créez un album daté, par exemple « Noël 2026 », puis ajoutez toutes ses photos.</p></div>
-                <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-terracotta-600 text-white font-semibold"><ImagePlus size={20} /> Choisir des photos<input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={selectFiles} className="sr-only" /></label>
+                <label className={`inline-flex items-center justify-center gap-2 rounded-full bg-terracotta-600 px-5 py-3 font-semibold text-white ${uploading ? "cursor-wait opacity-60" : "cursor-pointer"}`}><ImagePlus size={20} /> Ajouter des photos<input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={selectFiles} disabled={uploading} className="sr-only" /></label>
             </div>
             <div className="grid md:grid-cols-3 gap-4 mb-6 p-4 rounded-2xl bg-cream-50 border border-cream-200">
                 <label className="text-sm font-semibold text-charcoal-700">Destination<select value={targetAlbumId} onChange={(event) => setTargetAlbumId(event.target.value)} className="mt-1.5 w-full px-3 py-3 rounded-xl border border-cream-300 bg-white"><option value="new">+ Créer un nouvel album</option>{[...albums].sort((a, b) => b.date.localeCompare(a.date)).map((album) => <option key={album.id} value={album.id}>{album.title} — {formatDate(album.date)}</option>)}</select></label>
                 {targetAlbumId === "new" && <><label className="text-sm font-semibold text-charcoal-700">Nom de l’album<input value={albumTitle} onChange={(event) => setAlbumTitle(event.target.value)} placeholder="Ex. Noël 2026" maxLength={120} className="mt-1.5 w-full px-3 py-3 rounded-xl border border-cream-300 bg-white" /></label><label className="text-sm font-semibold text-charcoal-700">Date de l’événement<input type="date" value={albumDate} onChange={(event) => setAlbumDate(event.target.value)} className="mt-1.5 w-full px-3 py-3 rounded-xl border border-cream-300 bg-white" /></label></>}
             </div>
-                {pending.length === 0 ? <label className="cursor-pointer min-h-48 rounded-2xl border-2 border-dashed border-cream-300 hover:border-terracotta-300 bg-cream-50 flex flex-col items-center justify-center text-center p-8"><Upload size={36} className="text-terracotta-500 mb-3" /><span className="font-semibold text-charcoal-800">Sélectionner plusieurs photos</span><span className="text-sm text-charcoal-500 mt-1">JPEG, PNG ou WebP · 15 Mo maximum par photo</span><input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={selectFiles} className="sr-only" /></label> : <div className="space-y-4"><div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">{pending.map((item) => <article key={item.id} className="relative rounded-2xl overflow-hidden bg-cream-50 border border-cream-200"><img src={item.preview} alt="Aperçu avant publication" className="w-full aspect-square object-cover" /><button onClick={() => removePending(item.id)} className="absolute top-2 right-2 p-2 rounded-full bg-white/90 text-red-700 shadow" aria-label="Retirer cette photo"><X size={17} /></button><div className="p-3"><input value={item.title} onChange={(event) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, title: event.target.value } : entry))} aria-label="Titre de la photo" className="w-full px-2 py-2 text-sm rounded-lg border border-cream-300 bg-white" /><p className="text-xs text-charcoal-500 mt-1">{bytesToMb(item.file.size)}</p></div></article>)}</div><p className="text-xs text-charcoal-500">Ces photos sont illustratives dans la galerie publique. Aucun titre accessible individuel n’est demandé.</p><div className="flex justify-end"><button onClick={uploadAll} disabled={uploading} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-terracotta-600 text-white font-bold disabled:opacity-60">{uploading ? <LoaderCircle size={20} className="animate-spin" /> : <FolderPlus size={20} />}{uploading ? "Traitement et envoi…" : `Publier ${pending.length} photo${pending.length > 1 ? "s" : ""}`}</button></div></div>}
+                {pending.length === 0 ? <label
+                    onDragEnter={(event) => { event.preventDefault(); if (!uploading) setIsDragging(true); }}
+                    onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; if (!uploading) setIsDragging(true); }}
+                    onDragLeave={() => setIsDragging(false)}
+                    onDrop={dropFiles}
+                    aria-busy={uploading}
+                    className={`flex min-h-52 flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all ${uploading ? "cursor-wait border-terracotta-300 bg-terracotta-50" : isDragging ? "scale-[1.01] cursor-copy border-terracotta-600 bg-terracotta-100 shadow-lg" : "cursor-pointer border-cream-300 bg-cream-50 hover:border-terracotta-400 hover:bg-terracotta-50"}`}
+                >
+                    {uploading ? <LoaderCircle size={40} className="mb-3 animate-spin text-terracotta-600" /> : <Upload size={40} className={`mb-3 ${isDragging ? "text-terracotta-700" : "text-terracotta-500"}`} />}
+                    <span className="font-bold text-charcoal-900">{uploading ? `Envoi ${uploadProgress?.current || 1}/${uploadProgress?.total || 1}` : isDragging ? "Déposez les photos ici" : "Glissez-déposez vos photos ici"}</span>
+                    <span className="mt-1 text-sm text-charcoal-500">{uploading ? uploadProgress?.fileName : "Le chargement démarre automatiquement · ou cliquez pour parcourir"}</span>
+                    <span className="mt-2 text-xs text-charcoal-400">JPEG, PNG ou WebP · 15 Mo maximum par photo</span>
+                    <input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={selectFiles} disabled={uploading} className="sr-only" />
+                </label> : <div className="space-y-4"><div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">{pending.map((item) => <article key={item.id} className="relative rounded-2xl overflow-hidden bg-cream-50 border border-cream-200"><img src={item.preview} alt="Aperçu avant publication" className="w-full aspect-square object-cover" />{uploading && uploadProgress?.fileName === item.file.name ? <span className="absolute left-2 top-2 inline-flex items-center gap-1.5 rounded-full bg-charcoal-900/85 px-2.5 py-1.5 text-xs font-semibold text-white"><LoaderCircle size={13} className="animate-spin" /> Envoi…</span> : null}<button onClick={() => removePending(item.id)} disabled={uploading} className="absolute top-2 right-2 p-2 rounded-full bg-white/90 text-red-700 shadow disabled:opacity-40" aria-label="Retirer cette photo"><X size={17} /></button><div className="p-3"><input value={item.title} onChange={(event) => setPending((current) => current.map((entry) => entry.id === item.id ? { ...entry, title: event.target.value } : entry))} disabled={uploading} aria-label="Titre de la photo" className="w-full px-2 py-2 text-sm rounded-lg border border-cream-300 bg-white disabled:opacity-60" /><p className="text-xs text-charcoal-500 mt-1">{bytesToMb(item.file.size)}</p></div></article>)}</div><p className="text-xs text-charcoal-500">Les photos sont compressées puis envoyées une par une. En cas d’interruption, seules celles restant à l’écran seront à relancer. Aucun titre accessible individuel n’est demandé.</p><div className="flex justify-end"><button onClick={uploadAll} disabled={uploading} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-terracotta-600 text-white font-bold disabled:opacity-60">{uploading ? <LoaderCircle size={20} className="animate-spin" /> : <FolderPlus size={20} />}{uploading ? `Envoi ${uploadProgress?.current || 1}/${uploadProgress?.total || pending.length}…` : `Relancer ${pending.length} photo${pending.length > 1 ? "s" : ""}`}</button></div></div>}
         </div>
         {message && <div role={message.type === "error" ? "alert" : "status"} aria-live="polite" className={`rounded-2xl p-4 border ${message.type === "error" ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`}>{message.text}</div>}
         <div className="bg-white rounded-2xl p-4 border border-cream-200 flex flex-wrap items-center justify-between gap-4 sticky top-4 z-20 shadow-sm"><span className="font-semibold text-charcoal-900">{selectedIds.size ? `${selectedIds.size} photo(s) sélectionnée(s)` : `${photos.length} photo(s) dans la photothèque`}</span><div className="flex flex-wrap gap-2"><button onClick={() => toggleSelection(photos.map((photo) => photo.id), selectedIds.size !== photos.length)} className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-terracotta-700 bg-terracotta-50 rounded-full border border-terracotta-200"><CheckSquare size={16} />{selectedIds.size === photos.length && photos.length ? "Tout désélectionner" : "Tout sélectionner"}</button>{selectedIds.size > 0 && <button disabled={processingId === "bulk"} onClick={() => deletePhotos([...selectedIds])} className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-full disabled:opacity-50">{processingId === "bulk" ? <LoaderCircle size={16} className="animate-spin" /> : <Trash2 size={16} />} Supprimer la sélection</button>}</div></div>
