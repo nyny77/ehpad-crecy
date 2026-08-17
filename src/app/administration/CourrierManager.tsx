@@ -4,6 +4,45 @@ import type { FamilyMessage } from "../../../netlify/functions/famille-send-mess
 import type { Resident } from "../../../netlify/functions/admin-residents";
 import { adminFetch } from "@/lib/admin-api";
 
+const POSTCARD_THEMES = [
+    { name: "Aurore", primary: "#D64C63", secondary: "#F4B860", accent: "#4F8A75", paper: "#FFF8F1", ink: "#26333D" },
+    { name: "Riviera", primary: "#19647E", secondary: "#F4D35E", accent: "#EE6C4D", paper: "#F5FBFA", ink: "#17324D" },
+    { name: "Jardin", primary: "#557A46", secondary: "#E8B86D", accent: "#A44A5B", paper: "#FAF8EF", ink: "#28372B" },
+    { name: "Lavande", primary: "#765D9A", secondary: "#E9A6A6", accent: "#D7903C", paper: "#FBF8FF", ink: "#332C45" },
+    { name: "Océan", primary: "#176B87", secondary: "#64CCC5", accent: "#FF9B50", paper: "#F4FBFC", ink: "#193A4A" },
+    { name: "Coquelicot", primary: "#B83A3A", secondary: "#F2C14E", accent: "#3D7A6A", paper: "#FFF9F4", ink: "#3A2929" },
+] as const;
+
+const POSTCARD_MOTIFS = ["orbits", "confetti", "arches", "sunrise"] as const;
+let previousPostcardTheme = -1;
+
+function nextPostcardDesign() {
+    const randomValues = new Uint32Array(5);
+    window.crypto.getRandomValues(randomValues);
+    const offset = 1 + (randomValues[0] % (POSTCARD_THEMES.length - 1));
+    const themeIndex = previousPostcardTheme < 0
+        ? randomValues[0] % POSTCARD_THEMES.length
+        : (previousPostcardTheme + offset) % POSTCARD_THEMES.length;
+    previousPostcardTheme = themeIndex;
+
+    return {
+        theme: POSTCARD_THEMES[themeIndex],
+        motif: POSTCARD_MOTIFS[randomValues[1] % POSTCARD_MOTIFS.length],
+        layout: ["balanced", "message-wide", "address-wide"][randomValues[2] % 3],
+        tilt: (randomValues[3] % 9) - 4,
+        shapeShift: randomValues[4] % 18,
+    };
+}
+
+function escapePostcardText(value: string) {
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
 export default function CourrierManager() {
     const [messages, setMessages] = useState<FamilyMessage[]>([]);
     const [residents, setResidents] = useState<Resident[]>([]);
@@ -97,6 +136,17 @@ export default function CourrierManager() {
     const handlePrint = (message: FamilyMessage) => {
         const residentName = getResidentName(message.residentId);
         const residentRoom = getResidentRoom(message.residentId);
+        const design = nextPostcardDesign();
+        const safeResidentName = escapePostcardText(residentName);
+        const safeResidentRoom = escapePostcardText(residentRoom || "EHPAD de Crécy-la-Chapelle");
+        const safeMessage = escapePostcardText(message.text);
+        const safeSenderName = escapePostcardText(message.senderName);
+        const safePhotoUrl = message.photoUrl ? escapePostcardText(message.photoUrl) : "";
+        const formattedDate = new Date(message.date).toLocaleDateString("fr-FR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        });
         
         // Create a hidden iframe, write HTML, and print it
         const iframe = document.createElement("iframe");
@@ -111,8 +161,8 @@ export default function CourrierManager() {
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Carte Postale pour ${residentName}</title>
-                <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+                <title>Carte postale pour ${safeResidentName}</title>
+                <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
                 <style>
                     @page {
                         size: A4;
@@ -283,6 +333,327 @@ export default function CourrierManager() {
                         margin-top: 4px;
                     }
                     
+                    /* Modern 2026 postcard — generated palette, motif and proportions */
+                    body {
+                        --primary: ${design.theme.primary};
+                        --secondary: ${design.theme.secondary};
+                        --accent: ${design.theme.accent};
+                        --paper: ${design.theme.paper};
+                        --ink: ${design.theme.ink};
+                        --tilt: ${design.tilt}deg;
+                        --shape-shift: ${design.shapeShift}mm;
+                        font-family: 'DM Sans', sans-serif;
+                        color: var(--ink);
+                        print-color-adjust: exact;
+                        -webkit-print-color-adjust: exact;
+                    }
+                    .photo-half {
+                        position: relative;
+                        isolation: isolate;
+                        border: 0 !important;
+                        background: var(--ink) !important;
+                    }
+                    .photo-half .photo-backdrop,
+                    .photo-half .photo-main {
+                        position: absolute;
+                        inset: 0;
+                        width: 100% !important;
+                        height: 100% !important;
+                    }
+                    .photo-half .photo-backdrop {
+                        z-index: -2;
+                        object-fit: cover !important;
+                        filter: blur(18px) saturate(1.15);
+                        opacity: 0.72;
+                        transform: scale(1.08);
+                    }
+                    .photo-half .photo-main {
+                        z-index: -1;
+                        object-fit: contain !important;
+                        filter: drop-shadow(0 6px 18px rgba(0,0,0,.22));
+                    }
+                    .photo-shade {
+                        position: absolute;
+                        inset: 0;
+                        background: linear-gradient(180deg, rgba(17,24,39,.05) 55%, rgba(17,24,39,.72) 100%);
+                    }
+                    .photo-label {
+                        position: absolute;
+                        right: 10mm;
+                        bottom: 8mm;
+                        display: flex;
+                        align-items: center;
+                        gap: 3mm;
+                        padding: 3mm 5mm;
+                        border: 1px solid rgba(255,255,255,.35);
+                        border-radius: 999px;
+                        color: white;
+                        background: rgba(17,24,39,.42);
+                        backdrop-filter: blur(10px);
+                        font-size: 11px;
+                        font-weight: 600;
+                        letter-spacing: .08em;
+                        text-transform: uppercase;
+                    }
+                    .photo-label img {
+                        position: static !important;
+                        width: 8mm !important;
+                        height: 8mm !important;
+                        object-fit: contain !important;
+                        filter: none !important;
+                    }
+                    .no-photo {
+                        position: absolute;
+                        inset: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        background: linear-gradient(135deg, var(--primary), var(--accent));
+                    }
+                    .no-photo h2 { margin: 0; font-size: 34px; }
+                    .no-photo p { margin: 3mm 0 0; color: rgba(255,255,255,.85); }
+
+                    .text-half {
+                        position: relative;
+                        isolation: isolate;
+                        display: block;
+                        overflow: hidden;
+                        padding: 10mm 11mm 11mm;
+                        color: var(--ink);
+                        background-color: var(--paper);
+                    }
+                    .text-half[data-motif="orbits"] {
+                        background-image: radial-gradient(circle at 8% 88%, transparent 0 17mm, color-mix(in srgb, var(--primary) 28%, transparent) 17.4mm 18mm, transparent 18.4mm), radial-gradient(circle at 95% 12%, color-mix(in srgb, var(--secondary) 28%, transparent) 0 23mm, transparent 23.4mm);
+                    }
+                    .text-half[data-motif="confetti"] {
+                        background-image: radial-gradient(circle, color-mix(in srgb, var(--primary) 22%, transparent) 1.1mm, transparent 1.2mm), radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 1mm, transparent 1.1mm);
+                        background-position: 0 0, 7mm 7mm;
+                        background-size: 18mm 18mm;
+                    }
+                    .text-half[data-motif="arches"] {
+                        background-image: repeating-radial-gradient(ellipse at 100% 100%, transparent 0 12mm, color-mix(in srgb, var(--primary) 15%, transparent) 12.5mm 13mm, transparent 13.5mm 22mm);
+                    }
+                    .text-half[data-motif="sunrise"] {
+                        background-image: linear-gradient(155deg, transparent 0 68%, color-mix(in srgb, var(--secondary) 22%, transparent) 68.2% 69%, transparent 69.2%), radial-gradient(circle at 90% 95%, color-mix(in srgb, var(--primary) 22%, transparent) 0 25mm, transparent 25.5mm);
+                    }
+                    .shape {
+                        position: absolute;
+                        z-index: -1;
+                        border-radius: 999px;
+                        pointer-events: none;
+                    }
+                    .shape-one {
+                        top: calc(-18mm + var(--shape-shift));
+                        left: -16mm;
+                        width: 55mm;
+                        height: 55mm;
+                        background: color-mix(in srgb, var(--secondary) 28%, transparent);
+                    }
+                    .shape-two {
+                        right: -18mm;
+                        bottom: calc(-22mm + var(--shape-shift));
+                        width: 62mm;
+                        height: 62mm;
+                        border: 7mm solid color-mix(in srgb, var(--accent) 20%, transparent);
+                    }
+                    .postcard-heading {
+                        height: 14mm;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 5mm;
+                    }
+                    .eyebrow {
+                        display: flex;
+                        align-items: center;
+                        gap: 3mm;
+                        color: var(--primary);
+                        font-size: 12px;
+                        font-weight: 700;
+                        letter-spacing: .12em;
+                        text-transform: uppercase;
+                    }
+                    .eyebrow::before {
+                        content: '';
+                        width: 10mm;
+                        height: 2px;
+                        border-radius: 99px;
+                        background: var(--primary);
+                    }
+                    .date-pill {
+                        padding: 2.2mm 4mm;
+                        border-radius: 999px;
+                        background: color-mix(in srgb, var(--primary) 11%, white);
+                        color: var(--primary);
+                        font-size: 10px;
+                        font-weight: 700;
+                    }
+                    .postcard-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 7mm;
+                        height: 109mm;
+                    }
+                    .postcard-grid.message-wide { grid-template-columns: 1.12fr .88fr; }
+                    .postcard-grid.address-wide { grid-template-columns: .9fr 1.1fr; }
+                    .message-card,
+                    .address-card {
+                        position: relative;
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        border: 1px solid rgba(255,255,255,.75);
+                        border-radius: 7mm;
+                        background: rgba(255,255,255,.82);
+                        box-shadow: 0 5mm 12mm rgba(38,51,61,.10);
+                    }
+                    .message-card {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 8mm 8mm 6mm;
+                        transform: rotate(calc(var(--tilt) * .18));
+                    }
+                    .quote-mark {
+                        height: 12mm;
+                        color: var(--secondary);
+                        font-family: 'Playfair Display', serif;
+                        font-size: 54px;
+                        font-weight: 600;
+                        line-height: .75;
+                    }
+                    .message-content {
+                        display: flex;
+                        align-items: center;
+                        flex: 1;
+                        font-family: 'Caveat', cursive;
+                        font-size: 25px;
+                        font-weight: 600;
+                        line-height: 1.25;
+                        color: var(--ink);
+                    }
+                    .message-signature {
+                        align-self: flex-end;
+                        margin-top: 3mm;
+                        padding: 2mm 4mm;
+                        border-radius: 999px;
+                        color: white;
+                        background: var(--primary);
+                        font-size: 21px;
+                        line-height: 1;
+                        transform: rotate(var(--tilt));
+                    }
+                    .address-card {
+                        padding: 7mm;
+                    }
+                    .address-top {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        min-height: 31mm;
+                    }
+                    .brand-mark {
+                        display: flex;
+                        align-items: center;
+                        gap: 3mm;
+                        max-width: 44mm;
+                        color: var(--ink);
+                        font-size: 10px;
+                        font-weight: 700;
+                        line-height: 1.25;
+                    }
+                    .brand-mark img {
+                        width: 12mm;
+                        height: 12mm;
+                        object-fit: contain;
+                    }
+                    .stamp-modern {
+                        position: relative;
+                        width: 24mm;
+                        height: 29mm;
+                        display: grid;
+                        place-items: center;
+                        border: 1.5px dashed var(--primary);
+                        border-radius: 4mm;
+                        color: var(--primary);
+                        background: color-mix(in srgb, var(--primary) 7%, white);
+                        font-size: 8px;
+                        font-weight: 700;
+                        letter-spacing: .1em;
+                        text-transform: uppercase;
+                    }
+                    .stamp-modern::before {
+                        content: '♥';
+                        display: block;
+                        color: var(--primary);
+                        font-size: 17px;
+                    }
+                    .postmark-modern {
+                        position: absolute;
+                        top: 12mm;
+                        right: 19mm;
+                        width: 31mm;
+                        height: 31mm;
+                        display: grid;
+                        place-items: center;
+                        border: 1.5px solid color-mix(in srgb, var(--primary) 55%, transparent);
+                        border-radius: 50%;
+                        color: color-mix(in srgb, var(--primary) 72%, transparent);
+                        font-size: 7px;
+                        font-weight: 700;
+                        line-height: 1.15;
+                        text-align: center;
+                        text-transform: uppercase;
+                        transform: rotate(-13deg);
+                    }
+                    .recipient-label {
+                        margin: 3mm 0 1.5mm;
+                        color: var(--primary);
+                        font-size: 9px;
+                        font-weight: 700;
+                        letter-spacing: .14em;
+                        text-transform: uppercase;
+                    }
+                    .recipient-name {
+                        margin: 0 0 4mm;
+                        font-family: 'Playfair Display', serif;
+                        font-size: 20px;
+                        font-weight: 600;
+                        line-height: 1.1;
+                    }
+                    .address-details {
+                        display: grid;
+                        gap: 2.5mm;
+                    }
+                    .address-row {
+                        padding-bottom: 2mm;
+                        border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+                    }
+                    .address-row small {
+                        display: block;
+                        margin-bottom: .8mm;
+                        color: color-mix(in srgb, var(--ink) 58%, transparent);
+                        font-size: 7px;
+                        font-weight: 700;
+                        letter-spacing: .1em;
+                        text-transform: uppercase;
+                    }
+                    .address-row strong {
+                        font-family: 'Playfair Display', serif;
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                    .design-name {
+                        position: absolute;
+                        right: 7mm;
+                        bottom: 4mm;
+                        color: color-mix(in srgb, var(--ink) 38%, transparent);
+                        font-size: 6px;
+                        font-weight: 700;
+                        letter-spacing: .12em;
+                        text-transform: uppercase;
+                    }
+
                     @media print {
                         .no-print { display: none !important; }
                     }
@@ -291,56 +662,77 @@ export default function CourrierManager() {
             <body>
                 <div class="photo-half">
                     ${message.photoUrl ? `
-                        <img src="${message.photoUrl}" alt="Photo de la famille" onerror="this.src='https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${message.photoUrl}'"/>
+                        <img class="photo-backdrop" src="${safePhotoUrl}" alt="" aria-hidden="true" />
+                        <img class="photo-main" src="${safePhotoUrl}" alt="Photo envoyée par la famille" />
+                        <div class="photo-shade"></div>
+                        <div class="photo-label">
+                            <img src="/images/logo.png" alt="" />
+                            Une pensée de ${safeSenderName}
+                        </div>
                     ` : `
                         <div class="no-photo">
-                            <h2>Le Postier Numérique</h2>
-                            <p>EHPAD de Crécy-la-Chapelle</p>
-                            <div style="margin-top: 20px;">
-                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#B4533A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            </div>
+                            <svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <h2>Une pensée pour vous</h2>
+                            <p>Le Postier numérique de l’EHPAD de Crécy</p>
                         </div>
                     `}
                 </div>
                 
-                <div class="text-half">
-                    <div class="message-side">
-                        <div class="message-content">${message.text}</div>
-                        <div class="message-signature">${message.senderName}</div>
+                <div class="text-half" data-motif="${design.motif}">
+                    <div class="shape shape-one"></div>
+                    <div class="shape shape-two"></div>
+                    <div class="postcard-heading">
+                        <div class="eyebrow">Une carte rien que pour vous</div>
+                        <div class="date-pill">${formattedDate}</div>
                     </div>
-                    
-                    <div class="divider"></div>
-                    
-                    <div class="address-side">
-                        <img src="/images/logo.png" style="height: 45px; position: absolute; top: 0; left: 0; opacity: 0.9;" alt="Logo EHPAD" />
-                        <div class="stamp">Timbre</div>
-                        <div class="postmark">
-                            EHPAD CRÉCY
-                            <span>${new Date(message.date).toLocaleDateString("fr-FR")}</span>
-                        </div>
-                        
-                        <div class="address-lines">
-                            <div class="line">
-                                <span class="line-content">${residentName}</span>
-                                <span class="line-subtitle">Résident</span>
+                    <div class="postcard-grid ${design.layout}">
+                        <section class="message-card">
+                            <div class="quote-mark">“</div>
+                            <div class="message-content">${safeMessage}</div>
+                            <div class="message-signature">${safeSenderName}</div>
+                        </section>
+                        <section class="address-card">
+                            <div class="address-top">
+                                <div class="brand-mark">
+                                    <img src="/images/logo.png" alt="Logo de l’EHPAD de Crécy" />
+                                    <span>EHPAD public<br />de Crécy-la-Chapelle</span>
+                                </div>
+                                <div class="stamp-modern">Timbre</div>
                             </div>
-                            <div class="line">
-                                <span class="line-content">${residentRoom || "EHPAD de Crécy-la-Chapelle"}</span>
-                                <span class="line-subtitle">${residentRoom ? 'Chambre' : 'Établissement'}</span>
+                            <div class="postmark-modern">
+                                EHPAD Crécy<br />${new Date(message.date).toLocaleDateString("fr-FR")}
                             </div>
-                            <div class="line">
-                                <span class="line-content">18, rue de la Chapelle</span>
+                            <div class="recipient-label">Pour</div>
+                            <h1 class="recipient-name">${safeResidentName}</h1>
+                            <div class="address-details">
+                                <div class="address-row">
+                                    <small>${residentRoom ? "Chambre" : "Établissement"}</small>
+                                    <strong>${safeResidentRoom}</strong>
+                                </div>
+                                <div class="address-row">
+                                    <small>Adresse</small>
+                                    <strong>18, rue de la Chapelle</strong>
+                                </div>
+                                <div class="address-row">
+                                    <small>Ville</small>
+                                    <strong>77580 Crécy-la-Chapelle</strong>
+                                </div>
                             </div>
-                            <div class="line">
-                                <span class="line-content">77580 Crécy-la-Chapelle</span>
-                            </div>
-                        </div>
+                            <div class="design-name">Collection ${design.theme.name} · 2026</div>
+                        </section>
                     </div>
                 </div>
                 
                 <script>
-                    document.fonts.ready.then(function() {
-                        setTimeout(() => { window.print(); }, 500);
+                    const imagePromises = Array.from(document.images).map(function(image) {
+                        if (image.complete) return Promise.resolve();
+                        return new Promise(function(resolve) {
+                            image.addEventListener('load', resolve, { once: true });
+                            image.addEventListener('error', resolve, { once: true });
+                        });
+                    });
+                    Promise.all([document.fonts.ready].concat(imagePromises)).then(function() {
+                        setTimeout(function() { window.print(); }, 350);
                     });
                 </script>
             </body>
@@ -351,10 +743,14 @@ export default function CourrierManager() {
         contentWindow.document.write(html);
         contentWindow.document.close();
         
-        // Remove iframe after print dialog closes
+        const removePrintFrame = () => {
+            if (iframe.isConnected) iframe.remove();
+        };
+        contentWindow.addEventListener("afterprint", removePrintFrame, { once: true });
+        // Filet de sécurité si le navigateur ne déclenche pas afterprint.
         setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 5000);
+            removePrintFrame();
+        }, 60_000);
     };
 
     const unreadCount = messages.filter(m => m.status === "nouveau").length;
