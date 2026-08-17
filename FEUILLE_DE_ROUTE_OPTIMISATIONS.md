@@ -269,7 +269,7 @@ Deux choix cohérents sont possibles :
 
 **Objectif : être excellent sur téléphone et connexion moyenne.**
 
-- [ ] ne plus copier les originaux inutilisés dans `out` ;
+- [x] ne plus copier les originaux inutilisés dans `out` ;
 - [ ] dédupliquer les médias et appliquer une politique de nommage par empreinte ;
 - [ ] déplacer les médias lourds vers un stockage/CDN avec transformations à la demande ;
 - [ ] produire AVIF/WebP responsifs et conserver JPEG seulement lorsque nécessaire ;
@@ -304,7 +304,9 @@ Une page vivante, très lisible sur téléphone, écran d'accueil et borne :
 
 **Effet attendu :** donner une raison concrète de revenir chaque jour.
 
-#### B. « Préparer mon entrée » — priorité produit n°2
+#### B. « Préparer mon entrée » — déjà livré, améliorations en pause
+
+Le service existe déjà sur `/admissions` avec un guide complet, les aides financières, les étapes du parcours, l’accès à ViaTrajectoire, les listes de préparation et une FAQ. Les points suivants décrivent seulement des extensions possibles :
 
 - parcours guidé selon la situation ;
 - simulateur pédagogique hébergement + GIR + aides, avec avertissement non contractuel ;
@@ -397,7 +399,7 @@ Remplacer progressivement le chatbot à mots-clés par un guide strictement fond
 | Allègement des médias et du JavaScript | Forte | Moyen/fort | Faible | Phase 2 |
 | SEO local et données structurées | Forte | Faible/moyen | Faible | Phase 2 |
 | Aujourd'hui à Crécy | Très forte | Moyen | Faible | Premier nouveau service |
-| Préparer mon entrée | Très forte | Moyen | Faible | Deuxième nouveau service |
+| Préparer mon entrée | Très forte | Déjà livré | Faible | Conserver l’existant ; améliorations en pause |
 | Postier vivant | Très forte | Moyen/fort | Vie privée | Après sécurisation |
 | Mémoire vivante de Crécy | Forte | Fort | Consentement | Projet signature |
 

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/optimize-site-assets.js && node scripts/optimize-gallery.js && next dev --webpack",
-    "build": "node scripts/optimize-site-assets.js && node scripts/optimize-gallery.js && next build --webpack",
+    "build": "node scripts/optimize-site-assets.js && node scripts/optimize-gallery.js && next build --webpack && node scripts/prune-unused-image-originals.js",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

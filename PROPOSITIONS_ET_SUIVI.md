@@ -71,7 +71,7 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 ## Performance et sobriété
 
 - ~~Regrouper les déploiements Netlify lors du chargement de plusieurs photos.~~ — **Les commits intermédiaires sont ignorés par Netlify et un seul déploiement est lancé à la fin du lot, avec publication de secours en cas d’interruption, le 17 août 2026. Tests, build, fonctions Netlify, parcours navigateur et contrôle de production validés.**
-- Ne plus inclure dans le déploiement les originaux d’images qui ne sont jamais affichés.
+- ~~Ne plus inclure dans le déploiement les originaux d’images qui ne sont jamais affichés.~~ — **Élagage automatique et prudent ajouté au build le 17 août 2026 : seuls les originaux disposant d’une variante WebP et sans aucune référence dans l’export sont retirés de `out`, sans supprimer les sources. Le build validé retire 50 fichiers et 85,2 Mo.**
 - Supprimer les doublons stricts de médias.
 - Produire automatiquement plusieurs tailles WebP et AVIF.
 - Préparer une version plus légère de la vidéo pour les téléphones.
@@ -103,7 +103,9 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - Ajouter les accès rapides Appeler, Gazette et Envoyer une carte.
 - Prévoir un mode grand écran pour le hall.
 
-### Préparer mon entrée
+### Préparer mon entrée — service déjà en place, améliorations en pause
+
+La page `/admissions` propose déjà le guide pas-à-pas, les aides financières, les quatre étapes du parcours, l’accès à ViaTrajectoire, les listes de documents et de trousseau ainsi qu’une FAQ. Les éléments ci-dessous sont uniquement des améliorations facultatives et ne constituent plus un nouveau service à créer.
 
 - Créer un parcours guidé selon la situation de la famille.
 - Proposer une checklist imprimable des documents et affaires à préparer.
@@ -170,7 +172,7 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 3. Performance des médias et du JavaScript.
 4. SEO local et parcours d’admission.
 5. « Aujourd’hui à Crécy ».
-6. « Préparer mon entrée ».
+6. ~~Créer « Préparer mon entrée ».~~ — **Service déjà présent sur `/admissions` ; améliorations complémentaires mises en pause le 17 août 2026.**
 7. Choisir ensuite un seul projet signature parmi Capsule de souvenirs, Mémoire vivante ou Gazette augmentée.
 
 ## Principe de mise à jour
