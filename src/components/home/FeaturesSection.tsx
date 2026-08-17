@@ -1,7 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { getOptimizedImageSrc } from "@/lib/optimized-image";
+import Image from "@/components/ui/OptimizedImage";
 import WaveSeparator from "@/components/ui/WaveSeparator";
 
 export default function FeaturesSection() {
@@ -10,13 +7,7 @@ export default function FeaturesSection() {
             <div className="container-custom relative z-10">
                 <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
                     {/* Texte Narratif */}
-                    <motion.div
-                        className="lg:col-span-5"
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                    >
+                    <div className="animate-content-in lg:col-span-5">
                         <span className="text-terracotta-500 font-bold uppercase tracking-wider text-sm">
                             Notre Établissement
                         </span>
@@ -60,27 +51,24 @@ export default function FeaturesSection() {
                                 </p>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Image Illustration */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30, rotate: 2 }}
-                        whileInView={{ opacity: 1, x: 0, rotate: -2 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative hidden lg:block lg:col-span-7 scale-[1.35] translate-x-16 -translate-y-12 z-20"
-                    >
+                    <div className="animate-content-in relative hidden lg:block lg:col-span-7 scale-[1.35] translate-x-16 -translate-y-12 z-20 -rotate-2">
                         {/* Blob Background for Image */}
                         <div className="absolute inset-0 bg-terracotta-100 rounded-[3rem] rotate-3 scale-95 opacity-50 blur-xl translate-y-4" />
 
                         <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/50">
-                            <img
-                                src={getOptimizedImageSrc("/images/Image1.png")}
+                            <Image
+                                src="/images/Image1.png"
                                 alt="Façade de l'EHPAD de Crécy"
+                                width={1600}
+                                height={900}
+                                sizes="58vw"
                                 className="w-full h-auto hover:scale-105 transition-transform duration-700 block"
                             />
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -73,15 +73,15 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - ~~Regrouper les déploiements Netlify lors du chargement de plusieurs photos.~~ — **Les commits intermédiaires sont ignorés par Netlify et un seul déploiement est lancé à la fin du lot, avec publication de secours en cas d’interruption, le 17 août 2026. Tests, build, fonctions Netlify, parcours navigateur et contrôle de production validés.**
 - ~~Ne plus inclure dans le déploiement les originaux d’images qui ne sont jamais affichés.~~ — **Élagage automatique et prudent ajouté au build le 17 août 2026 : seuls les originaux disposant d’une variante WebP et sans aucune référence dans l’export sont retirés de `out`, sans supprimer les sources. Le build validé retire 50 fichiers et 85,2 Mo.**
 - ~~Supprimer les doublons stricts de médias.~~ — **Déduplication automatique par empreinte SHA-256 ajoutée au build le 17 août 2026, avec réécriture des références et redirections de compatibilité sans supprimer les sources. Le build validé élimine 15 copies réparties dans 12 groupes, soit 4,1 Mo supplémentaires.**
-- Produire automatiquement plusieurs tailles WebP et AVIF.
+- ~~Produire automatiquement plusieurs tailles WebP et AVIF.~~ — **Trois largeurs AVIF et deux variantes WebP, complétées par le WebP optimisé existant, sont générées automatiquement et servies avec `srcset` le 17 août 2026.**
 - ~~Préparer une version plus légère de la vidéo pour les téléphones.~~ — **Version MP4 mobile compatible créée et utilisée sur l’accueil ainsi que sur la page Histoire le 17 août 2026, avec une réduction de 41 %.**
 - ~~Optimiser le chargement progressif du panorama 360°.~~ — **Le panorama déployé étant déjà passé de 13,5 Mo à 1,2 Mo, le découpage en dizaines de tuiles a été écarté comme disproportionné. Un aperçu de 63 Ko est désormais affiché et le panorama complet ainsi que son lecteur ne se chargent qu’après activation, le 17 août 2026.**
-- Charger le chatbot seulement après interaction.
-- Charger Netlify Identity uniquement sur les pages concernées.
-- Réduire les animations Framer Motion lorsque du CSS suffit.
-- Réduire le nombre de composants exécutés dans le navigateur.
-- Mesurer les Core Web Vitals réels en production.
-- Ajouter un budget de performance aux tests automatiques.
+- ~~Charger le chatbot seulement après interaction.~~ — **Le bouton léger reste visible partout ; le composant complet et Framer Motion ne sont importés qu’au premier clic depuis le 17 août 2026.**
+- ~~Charger Netlify Identity uniquement sur les pages concernées.~~ — **Chargement limité à Administration, Galerie, Recrutement et aux liens d’authentification spéciaux le 17 août 2026.**
+- ~~Réduire les animations Framer Motion lorsque du CSS suffit.~~ — **Premier lot converti en CSS sur l’accueil, le blog et le livret le 17 août 2026 ; les imports passent de 48 à 44 fichiers.**
+- ~~Réduire le nombre de composants exécutés dans le navigateur.~~ — **Trois composants purement informatifs sont redevenus des composants serveur le 17 août 2026.**
+- ~~Instrumenter les Core Web Vitals réels en production.~~ — **LCP, INP et CLS sont envoyés anonymement à GoatCounter par route et par niveau de qualité depuis le 17 août 2026 ; les premières données apparaîtront après publication.**
+- ~~Ajouter un budget de performance aux tests automatiques.~~ — **Seuils sur l’export, JavaScript, CSS, vidéo mobile et aperçu 360° ajoutés au build CI le 17 août 2026.**
 
 ## SEO et visibilité locale
 

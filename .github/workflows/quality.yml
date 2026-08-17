@@ -38,6 +38,9 @@ jobs:
       - name: Construire le site de production
         run: npm run build
 
+      - name: Contrôler le budget de performance
+        run: npm run performance:budget
+
       - name: Installer Chromium pour les parcours automatiques
         run: npx playwright install --with-deps chromium
 

@@ -11,6 +11,7 @@
     "test": "tsx --test tests/*.test.mjs tests/*.test.ts",
     "test:e2e": "playwright test",
     "monitor:production": "node scripts/monitor-production.mjs",
+    "performance:budget": "node scripts/check-performance-budget.js",
     "check": "npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {

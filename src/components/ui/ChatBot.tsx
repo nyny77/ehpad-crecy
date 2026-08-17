@@ -13,8 +13,8 @@ type Message = {
     timestamp: Date;
 };
 
-export default function ChatBot() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boolean }) {
+    const [isOpen, setIsOpen] = useState(initiallyOpen);
     const [messages, setMessages] = useState<Message[]>([
         {
             id: "welcome",

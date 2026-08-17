@@ -5,11 +5,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 import SplashScreen from "@/components/ui/SplashScreen";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
-import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedirect";
+import NetlifyIdentityLoader from "@/components/providers/NetlifyIdentityLoader";
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
 import ChatBot from "@/components/ui/ChatBotWrapper";
 import PerformanceMotionProvider from "@/components/providers/PerformanceMotionProvider";
+import WebVitals from "@/components/analytics/WebVitals";
 
 export const viewport: Viewport = {
   themeColor: "#962d3a",
@@ -70,10 +70,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        <Script
-          src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-          strategy="lazyOnload"
-        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="font-sans text-charcoal-800 bg-stone-200 antialiased selection:bg-terracotta-200 selection:text-charcoal-900">
@@ -107,7 +103,8 @@ export default function RootLayout({
         />
         <PerformanceMotionProvider>
           <SplashScreen />
-          <NetlifyIdentityRedirect />
+          <NetlifyIdentityLoader />
+          <WebVitals />
           <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
             <ErrorBoundary>
               <Header />
@@ -124,6 +121,7 @@ export default function RootLayout({
   data-goatcounter="https://ehpadcrecy.goatcounter.com/count"
   async
   src="https://gc.zgo.at/count.js"
+  strategy="afterInteractive"
 />
         <Script
           id="register-sw"

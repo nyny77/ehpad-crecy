@@ -57,13 +57,20 @@ export default function GaleriePage() {
     const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
     useEffect(() => {
-        initNetlifyIdentity();
-        setAdminMode(isAdmin());
+        let unsubscribe = () => {};
+        const setupIdentity = () => {
+            unsubscribe();
+            initNetlifyIdentity();
+            setAdminMode(isAdmin());
+            unsubscribe = onAuthChange((user) => setAdminMode(!!user && isAdmin()));
+        };
 
-        const unsubscribe = onAuthChange((user) => {
-            setAdminMode(!!user && isAdmin());
-        });
-        return () => unsubscribe();
+        setupIdentity();
+        window.addEventListener("netlify-identity-ready", setupIdentity);
+        return () => {
+            window.removeEventListener("netlify-identity-ready", setupIdentity);
+            unsubscribe();
+        };
     }, []);
 
     useEffect(() => {

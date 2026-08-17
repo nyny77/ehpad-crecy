@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import BlogGrid from "@/components/blog/BlogGrid";
 import { BlogPost } from "@/lib/blog";
 
@@ -15,13 +12,9 @@ export default function BlogClient({ initialArticles }: BlogClientProps) {
                 <h1 className="font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Actualités de l’EHPAD</h1>
                 <div className="relative mt-8">
                     {/* Contenu */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                    >
+                    <div className="animate-content-in">
                         <BlogGrid articles={initialArticles} />
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </main>

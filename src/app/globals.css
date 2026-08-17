@@ -1514,6 +1514,21 @@ html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
   }
 }
 
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-content-in {
+  animation: content-in 0.45s ease-out both;
+}
+
 /* ===== RICH TEXT EDITOR STYLES ===== */
 .rich-text-content font[size="1"], [contenteditable] font[size="1"] { font-size: 12px !important; }
 .rich-text-content font[size="2"], [contenteditable] font[size="2"] { font-size: 14px !important; }

@@ -49,10 +49,10 @@ Audit réalisé sur le dépôt et sur un build de production le 16 août 2026.
 - 100 miniatures déjà générées ;
 - au moins 27 Mo récupérables par suppression de doublons stricts ;
 - 58 composants client sur 86 fichiers TSX ;
-- Framer Motion importé dans 48 fichiers ;
+- Framer Motion importé dans 44 fichiers après un premier lot de conversion CSS ;
 - JavaScript exporté : environ 1,41 Mo au total, réparti par route.
 
-Ces chiffres mesurent surtout le poids du déploiement. Le poids réellement téléchargé par visite doit encore être mesuré en production avec les Core Web Vitals.
+Ces chiffres mesurent surtout le poids du déploiement. L’instrumentation LCP, INP et CLS est prête ; les premières mesures réelles seront disponibles après publication.
 
 ## 3. Travaux déjà réalisés
 
@@ -193,11 +193,11 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 - les originaux lourds sont encore copiés dans le déploiement en plus des variantes optimisées ;
 - le panorama source de 13,5 Mo est remplacé dans le déploiement par une version WebP de 1,2 Mo chargée à la demande ; la vidéo principale de 21,9 Mo dispose désormais d’une version mobile de 12,5 Mo ;
 - 27 Mo de doublons stricts ont été détectés ;
-- Netlify Identity, le chatbot, le défilement fluide et plusieurs animations sont chargés globalement ;
+- Netlify Identity et le chatbot ne sont plus chargés globalement ; le défilement et plusieurs animations restent à surveiller ;
 - 58 composants sur 86 sont hydratés côté navigateur ;
-- Framer Motion est utilisé dans 48 fichiers, parfois pour des effets simples réalisables en CSS ;
+- Framer Motion reste utilisé dans 44 fichiers après conversion d’un premier lot en CSS ;
 - l'export statique désactive l'optimisation dynamique de `next/image` ;
-- aucune mesure RUM des Core Web Vitals n'est encore collectée.
+- la collecte RUM anonymisée des Core Web Vitals est instrumentée et commencera après publication.
 
 ### P2 — référencement et acquisition
 
@@ -273,16 +273,16 @@ Deux choix cohérents sont possibles :
 - [x] dédupliquer strictement les médias dans l’export par empreinte SHA-256 ;
 - [ ] appliquer une politique de nommage par empreinte aux futurs médias ;
 - [ ] déplacer les médias lourds vers un stockage/CDN avec transformations à la demande ;
-- [ ] produire AVIF/WebP responsifs et conserver JPEG seulement lorsque nécessaire ;
+- [x] produire AVIF/WebP responsifs et conserver JPEG seulement lorsque nécessaire ;
 - [x] charger progressivement le panorama 360° après un aperçu léger ; le découpage multi-résolution est devenu disproportionné après réduction à 1,2 Mo ;
 - [x] proposer une version mobile plus légère de la vidéo ;
-- [ ] charger le chatbot seulement après interaction ;
-- [ ] charger Netlify Identity uniquement sur les routes concernées ;
-- [ ] remplacer les micro-animations simples par CSS et réduire Framer Motion ;
-- [ ] convertir davantage de composants informatifs en composants serveur ;
+- [x] charger le chatbot seulement après interaction ;
+- [x] charger Netlify Identity uniquement sur les routes concernées ;
+- [x] remplacer un premier lot de micro-animations simples par CSS et réduire Framer Motion ;
+- [x] convertir davantage de composants informatifs en composants serveur ;
 - [ ] réévaluer le défilement fluide global pour les appareils modestes ;
-- [ ] collecter LCP, INP et CLS anonymisés en production ;
-- [ ] ajouter budget de performance dans la CI ;
+- [x] instrumenter la collecte anonymisée de LCP, INP et CLS en production ;
+- [x] ajouter un budget de performance dans la CI ;
 - [x] créer sitemap, robots, carte sociale globale et données structurées de l'établissement ;
 - [ ] compléter les canoniques et données structurées propres aux articles, FAQ et fils d'Ariane ;
 - [ ] suivre les conversions utiles sans profilage publicitaire.

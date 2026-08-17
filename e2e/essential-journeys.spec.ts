@@ -55,6 +55,36 @@ test("Visite : le panorama complet se charge seulement après activation", async
     await expect(page.locator(".pnlm-container")).toBeVisible();
 });
 
+test("Performance : images responsives et chatbot différé fonctionnent", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.locator('source[type="image/avif"][srcset*="global-hero-480.avif"]')).toHaveCount(1);
+    await expect(page.getByRole("dialog", { name: /Assistant EHPAD/ })).toHaveCount(0);
+
+    await page.getByRole("button", { name: "Ouvrir l’assistant" }).click();
+    await expect(page.getByRole("dialog", { name: /Assistant EHPAD/ })).toBeVisible();
+});
+
+test("Performance : Netlify Identity reste absent des pages publiques ordinaires", async ({ page }) => {
+    const identityRequests: string[] = [];
+    await page.route("https://identity.netlify.com/**", async route => {
+        identityRequests.push(route.request().url());
+        await route.fulfill({
+            contentType: "application/javascript",
+            body: "window.netlifyIdentity={init(){},currentUser(){return null},on(){},off(){}};",
+        });
+    });
+
+    await page.goto("/");
+    await page.waitForTimeout(500);
+    expect(identityRequests).toHaveLength(0);
+
+    const identityRequest = page.waitForRequest(request => request.url().includes("identity.netlify.com"));
+    await page.goto("/galerie");
+    await identityRequest;
+    expect(identityRequests).toHaveLength(1);
+});
+
 test("Administration : un visiteur reste bloqué sur la connexion", async ({ page }) => {
     await page.addInitScript(() => {
         Object.defineProperty(window, "netlifyIdentity", {

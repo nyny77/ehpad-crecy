@@ -1,0 +1,8 @@
+{
+  "maxStaticExportBytes": 314572800,
+  "maxTotalJavaScriptBytes": 1782579,
+  "maxJavaScriptChunkBytes": 266240,
+  "maxTotalCssBytes": 307200,
+  "maxMobileVideoBytes": 14680064,
+  "maxPanoramaPreviewBytes": 102400
+}
