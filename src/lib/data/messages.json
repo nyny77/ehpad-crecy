@@ -1,3 +1,13 @@
 {
-  "messages": []
+  "messages": [
+    {
+      "id": "4e8a7517-e214-42b9-933f-88184c5825be",
+      "residentId": "76ac6808e80591e3",
+      "senderName": "Ta fille Celine",
+      "text": "Coucou papy, tout va bien ?",
+      "photoUrl": "/images/messages/msg-1786942127353-dc8c1982.webp",
+      "date": "2026-08-17T04:48:47.354Z",
+      "status": "nouveau"
+    }
+  ]
 }
