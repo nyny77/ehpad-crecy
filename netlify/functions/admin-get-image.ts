@@ -1,33 +1,30 @@
-import type { Handler } from "@netlify/functions";
-import { isAdminRequest, json } from "./_shared/admin-auth";
+import type { Context } from "@netlify/functions";
+import { isAdminRequestV2, jsonV2 } from "./_shared/admin-auth";
 import { getImagesStore } from "./_shared/blob-storage";
 import { logFunctionError } from "./_shared/technical-log";
 
-export const handler: Handler = async (event, context) => {
-    if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
-    if (event.httpMethod !== "GET") return json(405, { error: "Méthode non autorisée" });
+export default async (req: Request, context: Context) => {
+    if (!isAdminRequestV2(req)) return jsonV2(403, { error: "Accès administrateur requis" });
+    if (req.method !== "GET") return jsonV2(405, { error: "Méthode non autorisée" });
 
     try {
-        const key = event.queryStringParameters?.key;
-        if (!key) return json(400, { error: "Clé d'image manquante" });
+        const url = new URL(req.url);
+        const key = url.searchParams.get("key");
+        if (!key) return jsonV2(400, { error: "Clé d'image manquante" });
 
         const imagesStore = getImagesStore();
         const blob = await imagesStore.get(key, { type: "arrayBuffer" });
-        if (!blob) return json(404, { error: "Image introuvable" });
+        if (!blob) return jsonV2(404, { error: "Image introuvable" });
 
-        const base64 = Buffer.from(blob).toString("base64");
-
-        return {
-            statusCode: 200,
+        return new Response(blob, {
+            status: 200,
             headers: {
                 "Content-Type": "image/webp",
                 "Cache-Control": "public, max-age=3600"
-            },
-            body: base64,
-            isBase64Encoded: true
-        };
+            }
+        });
     } catch (error) {
-        logFunctionError("admin-get-image", error, context.awsRequestId);
-        return json(500, { error: "Erreur serveur" });
+        logFunctionError("admin-get-image", error, context.requestId || "unknown");
+        return jsonV2(500, { error: "Erreur serveur" });
     }
 };

@@ -144,9 +144,9 @@ test("les protections discrètes du Postier restent actives", () => {
   const adminMessages = source("netlify/functions/admin-messages.ts");
   const familyMessages = source("netlify/functions/famille-send-message.ts");
 
-  assert.match(adminMessages, /if \(!isAdminRequest\(context\)\) return json\(403/);
+  assert.match(adminMessages, /if \(!isAdminRequestV2\(req\)\) return jsonV2\(403/);
   assert.ok(
-    adminMessages.indexOf("isAdminRequest(context)") < adminMessages.indexOf("getMessagesStore()"),
+    adminMessages.indexOf("isAdminRequestV2(req)") < adminMessages.indexOf("getMessagesStore()"),
     "Le rôle administrateur doit être vérifié avant la lecture du courrier"
   );
   assert.match(adminMessages, /DISTRIBUTED_MESSAGE_RETENTION_DAYS = 0/);

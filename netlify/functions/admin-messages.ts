@@ -1,5 +1,5 @@
-import type { Handler } from "@netlify/functions";
-import { isAdminRequest, json } from "./_shared/admin-auth";
+import type { Context } from "@netlify/functions";
+import { isAdminRequestV2, jsonV2 } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { getMessagesStore, getImagesStore } from "./_shared/blob-storage";
 import type { FamilyMessage } from "./famille-send-message";
@@ -14,8 +14,8 @@ function isExpiredDistributedMessage(message: FamilyMessage, now = Date.now()): 
     return distributedAt <= now - DISTRIBUTED_MESSAGE_RETENTION_DAYS * 24 * 60 * 60 * 1000;
 }
 
-export const handler: Handler = async (event, context) => {
-    if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
+export default async (req: Request, context: Context) => {
+    if (!isAdminRequestV2(req)) return jsonV2(403, { error: "Accès administrateur requis" });
 
     try {
         const messagesStore = getMessagesStore();
@@ -28,13 +28,14 @@ export const handler: Handler = async (event, context) => {
             messages.push(await messagesStore.get(b.key, { type: "json" }) as FamilyMessage);
         }
 
-        if (event.httpMethod === "GET") {
-            return json(200, { messages });
+        if (req.method === "GET") {
+            return jsonV2(200, { messages });
         }
 
-        if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
+        if (req.method !== "POST") return jsonV2(405, { error: "Méthode non autorisée" });
 
-        const body = parseJsonObject(event.body, 64 * 1024);
+        const bodyText = await req.text();
+        const body = parseJsonObject(bodyText, 64 * 1024);
         const action = String(body.action || "markDistributed");
 
         const deletePhoto = async (photoUrl: string | null) => {
@@ -48,8 +49,8 @@ export const handler: Handler = async (event, context) => {
             const messageId = String(body.id || "");
             const message = messages.find(m => m.id === messageId);
             
-            if (!message) return json(404, { error: "Message introuvable" });
-            if (message.status === "distribue") return json(400, { error: "Message déjà distribué" });
+            if (!message) return jsonV2(404, { error: "Message introuvable" });
+            if (message.status === "distribue") return jsonV2(400, { error: "Message déjà distribué" });
 
             // User preference: effacement automatique direct
             await deletePhoto(message.photoUrl);
@@ -59,19 +60,19 @@ export const handler: Handler = async (event, context) => {
             message.distributedAt = new Date().toISOString();
             message.photoUrl = null;
 
-            return json(200, { success: true, message });
+            return jsonV2(200, { success: true, message });
         } else if (action === "delete") {
             const messageId = String(body.id || "");
             const message = messages.find(m => m.id === messageId);
-            if (!message) return json(404, { error: "Message introuvable" });
+            if (!message) return jsonV2(404, { error: "Message introuvable" });
 
             await deletePhoto(message.photoUrl);
             await messagesStore.delete(message.id);
 
-            return json(200, { success: true });
+            return jsonV2(200, { success: true });
         } else if (action === "bulkDelete") {
             const messageIds = Array.isArray(body.ids) ? body.ids.map(String).slice(0, 200) : [];
-            if (messageIds.length === 0) return json(400, { error: "Aucun message sélectionné" });
+            if (messageIds.length === 0) return jsonV2(400, { error: "Aucun message sélectionné" });
 
             const messagesToDelete = messages.filter(m => messageIds.includes(m.id));
             for (const message of messagesToDelete) {
@@ -79,22 +80,22 @@ export const handler: Handler = async (event, context) => {
                 await messagesStore.delete(message.id);
             }
 
-            return json(200, { success: true });
+            return jsonV2(200, { success: true });
         } else if (action === "purgeExpired") {
             const expiredMessages = messages.filter(message => isExpiredDistributedMessage(message));
-            if (expiredMessages.length === 0) return json(200, { success: true, deletedCount: 0 });
+            if (expiredMessages.length === 0) return jsonV2(200, { success: true, deletedCount: 0 });
 
             for (const message of expiredMessages) {
                 await deletePhoto(message.photoUrl);
                 await messagesStore.delete(message.id);
             }
 
-            return json(200, { success: true, deletedCount: expiredMessages.length });
+            return jsonV2(200, { success: true, deletedCount: expiredMessages.length });
         } else {
-            return json(400, { error: "Action inconnue" });
+            return jsonV2(400, { error: "Action inconnue" });
         }
     } catch (error) {
-        logFunctionError("admin-messages", error, context.awsRequestId);
-        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de la gestion du courrier" });
+        logFunctionError("admin-messages", error, context.requestId || "unknown");
+        return jsonV2(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de la gestion du courrier" });
     }
 };

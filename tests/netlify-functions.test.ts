@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { handler as healthHandler } from "../netlify/functions/health";
-import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
+import adminMessagesHandler from "../netlify/functions/admin-messages";
 import familyMessageHandler from "../netlify/functions/famille-send-message";
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 import { handler as testEmailHandler } from "../netlify/functions/test-email";
@@ -43,12 +43,26 @@ test("la fonction de santé répond et refuse les autres méthodes", async () =>
 });
 
 test("la gestion du courrier refuse un visiteur et accepte un administrateur", async () => {
-    const forbidden = await adminMessagesHandler(event("GET") as never, anonymousContext as never);
-    const allowed = await adminMessagesHandler(event("GET") as never, adminContext as never);
+    // Netlify V2 utilise l'objet Request. Pour l'admin, on vérifie un entête Authorization simulé ou on rejette.
+    // L'implémentation isAdminRequestV2 extrait le JWT (partie 2).
+    const generateFakeJWT = () => {
+        const payload = Buffer.from(JSON.stringify({ app_metadata: { roles: ["admin"] } })).toString("base64");
+        return `header.${payload}.signature`;
+    };
+    
+    const forbiddenReq = new Request("http://localhost/", { method: "GET" });
+    const allowedReq = new Request("http://localhost/", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${generateFakeJWT()}` }
+    });
 
-    assert.equal(forbidden?.statusCode, 403);
-    assert.equal(allowed?.statusCode, 200);
-    assert.ok(Array.isArray(JSON.parse(allowed?.body || "{}").messages));
+    const forbidden = await adminMessagesHandler(forbiddenReq, anonymousContext as never) as Response;
+    const allowed = await adminMessagesHandler(allowedReq, anonymousContext as never) as Response;
+
+    assert.equal(forbidden?.status, 403);
+    assert.equal(allowed?.status, 200);
+    const allowedData = await allowed.json() as any;
+    assert.ok(Array.isArray(allowedData.messages));
 });
 
 test("le Postier refuse une mauvaise méthode et un code inconnu", async () => {
