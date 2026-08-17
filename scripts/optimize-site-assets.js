@@ -7,6 +7,8 @@ const EVENTS_DIR = path.join(process.cwd(), "public", "evenements");
 const OUTPUT_DIR = path.join(SOURCE_DIR, "optimized");
 const EXCLUDED_DIRS = new Set(["optimized", "private", "thumbnails"]);
 const SUPPORTED_EXTENSIONS = new Set([".jpg", ".jpeg", ".png"]);
+const PANORAMA_SOURCE = path.join(SOURCE_DIR, "jardin-360.jpg");
+const PANORAMA_PREVIEW = path.join(OUTPUT_DIR, "jardin-360-preview.webp");
 
 function collectImages(directory) {
     return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -58,6 +60,25 @@ async function optimizeImage(sourcePath, relativePath = path.relative(SOURCE_DIR
     };
 }
 
+async function generatePanoramaPreview() {
+    if (!fs.existsSync(PANORAMA_SOURCE)) return "missing";
+
+    const sourceStats = fs.statSync(PANORAMA_SOURCE);
+    if (fs.existsSync(PANORAMA_PREVIEW)) {
+        const previewStats = fs.statSync(PANORAMA_PREVIEW);
+        if (previewStats.mtimeMs >= sourceStats.mtimeMs && previewStats.size > 0) {
+            return "skipped";
+        }
+    }
+
+    await sharp(PANORAMA_SOURCE)
+        .rotate()
+        .resize({ width: 1024, withoutEnlargement: true })
+        .webp({ quality: 65, effort: 4, smartSubsample: true })
+        .toFile(PANORAMA_PREVIEW);
+    return "created";
+}
+
 async function main() {
     if (!fs.existsSync(SOURCE_DIR)) return;
 
@@ -87,6 +108,8 @@ async function main() {
         }
     }
 
+    const panoramaPreviewStatus = await generatePanoramaPreview();
+
     const savedPercent = sourceBytes > 0
         ? Math.round((1 - outputBytes / sourceBytes) * 100)
         : 0;
@@ -95,6 +118,7 @@ async function main() {
     console.log(`- Created: ${created}`);
     console.log(`- Reused: ${skipped}`);
     console.log(`- Estimated size reduction: ${savedPercent}%`);
+    console.log(`- Panorama preview: ${panoramaPreviewStatus}`);
 }
 
 main().catch((error) => {

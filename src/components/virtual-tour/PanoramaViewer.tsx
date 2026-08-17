@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // On étend l'interface Window dans src/types/global.d.ts
 
@@ -20,8 +20,11 @@ export default function PanoramaViewer({
 }: PanoramaViewerProps & { initialYaw?: number }) {
     const viewerRef = useRef<HTMLDivElement>(null);
     const viewerInstance = useRef<any>(null);
+    const [isActivated, setIsActivated] = useState(autoLoad);
 
     useEffect(() => {
+        if (!isActivated) return;
+
         // Import dynamique pour éviter les erreurs SSR
         const initPannellum = async () => {
             // On s'assure que le composant est monté
@@ -42,7 +45,7 @@ export default function PanoramaViewer({
                     type: "equirectangular",
                     panorama: imagePath,
                     preview: previewPath,
-                    autoLoad: autoLoad,
+                    autoLoad: true,
                     autoRotate: -2,
                     compass: true,
                     title: title,
@@ -82,19 +85,39 @@ export default function PanoramaViewer({
             clearTimeout(timer);
             // Cleanup logique si nécessaire
         };
-    }, [imagePath, autoLoad, title, previewPath]);
+    }, [imagePath, initialYaw, isActivated, previewPath, title]);
 
     return (
         <div className="relative w-full h-full min-h-[500px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
             <div ref={viewerRef} className="w-full h-full absolute inset-0 bg-charcoal-100" />
 
+            {!isActivated && (
+                <button
+                    type="button"
+                    onClick={() => setIsActivated(true)}
+                    className="absolute inset-0 z-20 flex h-full w-full items-center justify-center overflow-hidden bg-charcoal-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-terracotta-400"
+                    aria-label={`Lancer la visite à 360 degrés : ${title}`}
+                >
+                    {previewPath && (
+                        <img
+                            src={previewPath}
+                            alt=""
+                            className="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-700 hover:scale-105"
+                        />
+                    )}
+                    <span className="relative rounded-full bg-white px-6 py-3 font-bold text-charcoal-900 shadow-xl">
+                        Lancer la visite à 360°
+                    </span>
+                </button>
+            )}
+
             {/* Overlay instruction */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none bg-black/50 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm z-10 flex items-center gap-2">
+            {isActivated && <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none bg-black/50 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm z-10 flex items-center gap-2">
                 <svg className="w-5 h-5 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                 </svg>
                 Glissez pour visiter
-            </div>
+            </div>}
         </div>
     );
 }

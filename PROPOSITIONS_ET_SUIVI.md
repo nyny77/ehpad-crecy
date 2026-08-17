@@ -75,7 +75,7 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - ~~Supprimer les doublons stricts de médias.~~ — **Déduplication automatique par empreinte SHA-256 ajoutée au build le 17 août 2026, avec réécriture des références et redirections de compatibilité sans supprimer les sources. Le build validé élimine 15 copies réparties dans 12 groupes, soit 4,1 Mo supplémentaires.**
 - Produire automatiquement plusieurs tailles WebP et AVIF.
 - ~~Préparer une version plus légère de la vidéo pour les téléphones.~~ — **Version MP4 mobile compatible créée et utilisée sur l’accueil ainsi que sur la page Histoire le 17 août 2026, avec une réduction de 41 %.**
-- Transformer le panorama 360° en tuiles progressives.
+- ~~Optimiser le chargement progressif du panorama 360°.~~ — **Le panorama déployé étant déjà passé de 13,5 Mo à 1,2 Mo, le découpage en dizaines de tuiles a été écarté comme disproportionné. Un aperçu de 63 Ko est désormais affiché et le panorama complet ainsi que son lecteur ne se chargent qu’après activation, le 17 août 2026.**
 - Charger le chatbot seulement après interaction.
 - Charger Netlify Identity uniquement sur les pages concernées.
 - Réduire les animations Framer Motion lorsque du CSS suffit.

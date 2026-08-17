@@ -37,6 +37,24 @@ test("Admission : le guide, ViaTrajectoire et le simulateur tarifaire réagissen
     await expect(page.getByText(/2.401/, { exact: true })).toBeVisible();
 });
 
+test("Visite : le panorama complet se charge seulement après activation", async ({ page }) => {
+    const panoramaUrl = "/images/optimized/jardin-360.webp";
+    const panoramaRequests: string[] = [];
+    page.on("request", request => {
+        if (request.url().endsWith(panoramaUrl)) panoramaRequests.push(request.url());
+    });
+
+    await page.goto("/visite");
+    const launchButton = page.getByRole("button", { name: /Lancer la visite à 360 degrés/ });
+    await expect(launchButton).toBeVisible();
+    expect(panoramaRequests).toHaveLength(0);
+
+    const panoramaRequest = page.waitForRequest(request => request.url().endsWith(panoramaUrl));
+    await launchButton.click();
+    await panoramaRequest;
+    await expect(page.locator(".pnlm-container")).toBeVisible();
+});
+
 test("Administration : un visiteur reste bloqué sur la connexion", async ({ page }) => {
     await page.addInitScript(() => {
         Object.defineProperty(window, "netlifyIdentity", {

@@ -191,7 +191,7 @@ Le Postier est donc **livré sur le plan fonctionnel**, mais doit encore passer 
 ### P2 — performance et éco-conception
 
 - les originaux lourds sont encore copiés dans le déploiement en plus des variantes optimisées ;
-- le panorama de 12,9 Mo et la vidéo de 21,9 Mo restent coûteux pour les connexions lentes ;
+- le panorama source de 13,5 Mo est remplacé dans le déploiement par une version WebP de 1,2 Mo chargée à la demande ; la vidéo principale de 21,9 Mo dispose désormais d’une version mobile de 12,5 Mo ;
 - 27 Mo de doublons stricts ont été détectés ;
 - Netlify Identity, le chatbot, le défilement fluide et plusieurs animations sont chargés globalement ;
 - 58 composants sur 86 sont hydratés côté navigateur ;
@@ -274,7 +274,7 @@ Deux choix cohérents sont possibles :
 - [ ] appliquer une politique de nommage par empreinte aux futurs médias ;
 - [ ] déplacer les médias lourds vers un stockage/CDN avec transformations à la demande ;
 - [ ] produire AVIF/WebP responsifs et conserver JPEG seulement lorsque nécessaire ;
-- [ ] découper le panorama 360° en tuiles multi-résolution ;
+- [x] charger progressivement le panorama 360° après un aperçu léger ; le découpage multi-résolution est devenu disproportionné après réduction à 1,2 Mo ;
 - [x] proposer une version mobile plus légère de la vidéo ;
 - [ ] charger le chatbot seulement après interaction ;
 - [ ] charger Netlify Identity uniquement sur les routes concernées ;

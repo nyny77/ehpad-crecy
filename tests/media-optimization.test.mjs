@@ -35,3 +35,29 @@ test("les lecteurs utilisent la version mobile adaptee", () => {
     assert.match(eventWidget, /balade-crecy-mobile\.mp4/);
     assert.match(historyPage, /mobileSrc="\/videos\/balade-crecy-mobile\.mp4"/);
 });
+
+test("le panorama complet attend une activation explicite", () => {
+    const preview = path.join(
+        projectRoot,
+        "public",
+        "images",
+        "optimized",
+        "jardin-360-preview.webp"
+    );
+    const panorama = path.join(
+        projectRoot,
+        "public",
+        "images",
+        "optimized",
+        "jardin-360.webp"
+    );
+    const visitPage = fs.readFileSync(
+        path.join(projectRoot, "src", "app", "visite", "page.tsx"),
+        "utf8"
+    );
+
+    assert.equal(fs.existsSync(preview), true);
+    assert.ok(fs.statSync(preview).size < fs.statSync(panorama).size * 0.15);
+    assert.match(visitPage, /previewPath="\/images\/optimized\/jardin-360-preview\.webp"/);
+    assert.match(visitPage, /autoLoad=\{false\}/);
+});

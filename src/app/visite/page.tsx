@@ -29,8 +29,10 @@ export default function VisitePage() {
                         <div className="h-[500px] w-full bg-cream-100 rounded-2xl border-4 border-white shadow-xl overflow-hidden mb-16">
                             <PanoramaViewer
                                 imagePath={getOptimizedImageSrc("/images/jardin-360.jpg")}
+                                previewPath="/images/optimized/jardin-360-preview.webp"
                                 title="Le petit jardin en hiver"
                                 initialYaw={0}
+                                autoLoad={false}
                             />
                         </div>
 
