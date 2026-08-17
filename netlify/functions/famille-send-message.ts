@@ -69,7 +69,7 @@ export const handler: Handler = async (event, context) => {
         const hashedInputCode = crypto.createHash("sha256").update(secretCode).digest("hex");
 
         for (const b of blobs) {
-            const res = await residentsStore.getJSON(b.key) as Resident;
+            const res = await residentsStore.get(b.key, { type: "json" }) as Resident;
             // Support rétro-compatible pendant la migration
             const storedHash = res.secretCode.length === 64 ? res.secretCode : crypto.createHash("sha256").update(res.secretCode).digest("hex");
             if (storedHash === hashedInputCode) {
@@ -94,7 +94,7 @@ export const handler: Handler = async (event, context) => {
             const name = `msg-${Date.now()}-${randomUUID().slice(0, 8)}.webp`;
             
             const imagesStore = getImagesStore();
-            await imagesStore.set(name, image);
+            await imagesStore.set(name, image as any);
             photoUrl = name; // On ne stocke que la clé de l'image
         }
 

@@ -226,14 +226,14 @@ Deux choix cohérents sont possibles :
 - [x] imposer rôle administrateur, méthode POST et validation stricte dans `send-notification` ;
 - [x] protéger `ai-image`, limiter sa fréquence et filtrer les usages ;
 - [ ] ajouter des limites de taille, type MIME réel, dimensions et décodage d'image côté serveur ;
-- [ ] ajouter limitation par IP/code, délai progressif et CAPTCHA adaptatif au Postier ;
-- [ ] remplacer les codes lisibles par des secrets aléatoires plus robustes et ne stocker que leur empreinte ;
-- [ ] retirer noms, expéditeurs et résidents des messages de commits ;
-- [ ] migrer messages, résidents et médias du Postier vers une base et un stockage objet privés ;
-- [ ] servir les photos par URL signée à courte durée ;
-- [ ] définir une conservation courte : nouveau, distribué, supprimé automatiquement après délai validé ;
-- [ ] préparer une procédure contrôlée de purge de l'historique Git et de rotation des secrets ;
-- [ ] assainir le HTML de la Gazette ;
+- [x] ajouter limitation par IP/code, délai progressif et CAPTCHA adaptatif au Postier ;
+- [x] remplacer les codes lisibles par des secrets aléatoires plus robustes et ne stocker que leur empreinte ;
+- [x] retirer noms, expéditeurs et résidents des messages de commits ;
+- [x] migrer messages, résidents et médias du Postier vers une base et un stockage objet privés ;
+- [x] servir les photos par URL signée à courte durée ;
+- [x] définir une conservation courte : nouveau, distribué, supprimé automatiquement après délai validé ;
+- [x] préparer une procédure contrôlée de purge de l'historique Git et de rotation des secrets ;
+- [x] assainir le HTML de la Gazette ;
 - [x] ajouter les en-têtes de sécurité et tester une CSP en mode rapport avant blocage ;
 - [ ] faire valider le cadre RGPD, le droit à l'image et les mentions du Postier.
 

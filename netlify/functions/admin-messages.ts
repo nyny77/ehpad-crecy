@@ -25,7 +25,7 @@ export const handler: Handler = async (event, context) => {
         const { blobs } = await messagesStore.list();
         let messages: FamilyMessage[] = [];
         for (const b of blobs) {
-            messages.push(await messagesStore.getJSON(b.key) as FamilyMessage);
+            messages.push(await messagesStore.get(b.key, { type: "json" }) as FamilyMessage);
         }
 
         if (event.httpMethod === "GET") {

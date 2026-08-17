@@ -30,6 +30,7 @@ export const handler: Handler = async (event, context) => {
         for (const resident of residentsData.residents) {
             // Hachage du code secret (s'il n'est pas déjà haché)
             // On le garde lisible en mémoire temporairement pour la migration si nécessaire
+
             const hashedCode = resident.secretCode.length === 64 ? resident.secretCode : hashSecret(resident.secretCode);
             
             const secureResident = {
