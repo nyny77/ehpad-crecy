@@ -5,6 +5,12 @@ on:
   push:
     branches: [main]
 
+# Lors de chargements successifs (par exemple plusieurs photos), seul le
+# contrôle correspondant au dernier état de la branche doit continuer.
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
