@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
 export interface Resident {
     id: string;
@@ -36,14 +37,14 @@ export const handler: Handler = async (event, context) => {
 
         if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
-        const body = JSON.parse(event.body || "{}");
-        const action = body.action || "add";
+        const body = parseJsonObject(event.body, 64 * 1024);
+        const action = String(body.action || "add");
         const changes: GitChange[] = [];
 
         if (action === "add") {
             const name = String(body.name || "").trim();
             const room = String(body.room || "").trim();
-            if (!name) return json(400, { error: "Le nom est obligatoire" });
+            if (!name || name.length > 120 || room.length > 40) return json(400, { error: "Le nom ou la chambre est invalide" });
             
             const resident: Resident = {
                 id: randomBytes(8).toString("hex"),
@@ -56,8 +57,8 @@ export const handler: Handler = async (event, context) => {
             const resident = data.residents.find(r => r.id === body.id);
             if (!resident) return json(404, { error: "Résident introuvable" });
             
-            if (body.name) resident.name = String(body.name).trim();
-            if (body.room !== undefined) resident.room = String(body.room).trim();
+            if (body.name) resident.name = String(body.name).trim().slice(0, 120);
+            if (body.room !== undefined) resident.room = String(body.room).trim().slice(0, 40);
             if (body.resetCode) resident.secretCode = generateSecretCode(resident.name);
         } else if (action === "delete") {
             const idsToDelete = Array.isArray(body.ids) ? body.ids : (body.id ? [body.id] : []);
@@ -72,6 +73,6 @@ export const handler: Handler = async (event, context) => {
         return json(200, { success: true, residents: data.residents });
     } catch (error) {
         logFunctionError("admin-residents", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Erreur lors de la sauvegarde" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de la sauvegarde" });
     }
 };

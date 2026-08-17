@@ -2,6 +2,14 @@ import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText } from "./_shared/github";
+import {
+    parseJsonObject,
+    safeColor,
+    safeExternalImageUrl,
+    sanitizeRichText,
+    validateImage,
+    validationStatus,
+} from "./_shared/request-security";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB max for image
 
@@ -11,36 +19,32 @@ function safeBaseName(value: string): string {
         .replace(/^-+|-+$/g, "").slice(0, 60) || "gazette";
 }
 
-function decodeImage(value: unknown): { buffer: Buffer; extension: "jpg" | "png" | "webp" } {
-    const input = String(value || "");
-    const mime = input.match(/^data:image\/(jpeg|jpg|png|webp);base64,/i)?.[1]?.toLowerCase();
-    if (!mime) throw new Error("Format d’image non pris en charge");
-    const encoded = input.replace(/^data:image\/[a-z0-9.+-]+;base64,/i, "");
-    const buffer = Buffer.from(encoded, "base64");
-    if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) {
-        throw new Error("Une image dépasse la limite de 5 Mo");
-    }
-    return { buffer, extension: mime === "jpeg" || mime === "jpg" ? "jpg" : mime };
-}
-
 export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const body = JSON.parse(event.body || "{}");
-        const title = body.title || "Nouvelle gazette";
-        const blocks = body.content || [];
-        const pageBackgroundColor = body.pageBackgroundColor;
+        const body = parseJsonObject(event.body, 30 * 1024 * 1024);
+        const title = sanitizeRichText(body.title || "Nouvelle gazette", 300);
+        const blocks = Array.isArray(body.content) ? body.content : [];
+        if (!title || blocks.length === 0 || blocks.length > 80) return json(400, { error: "Le titre ou le contenu de la gazette est invalide." });
+        const pageBackgroundColor = safeColor(body.pageBackgroundColor, "#FDF7F0");
         const filesToCommit: { path: string; content: string; encoding: "utf-8" | "base64" }[] = [];
 
-        // Traiter les images dans les blocs
-        const processedBlocks = blocks.map((block: any) => {
+        const processedBlocks = await Promise.all(blocks.map(async (rawBlock: unknown, index: number) => {
+            if (!rawBlock || typeof rawBlock !== "object" || Array.isArray(rawBlock)) throw new Error("Bloc de gazette invalide");
+            const block = rawBlock as Record<string, unknown>;
+            const type = String(block.type || "");
+            if (!["text", "title", "image", "toc"].includes(type)) throw new Error("Type de bloc invalide");
+            const id = String(block.id || `bloc-${index}`).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 80) || `bloc-${index}`;
+            const backgroundColor = safeColor(block.backgroundColor);
+
             if (block.type === "image") {
                 if (block.base64) {
                     try {
-                        const { buffer, extension } = decodeImage(block.base64);
-                        const imageName = `${Date.now()}-${safeBaseName(block.id || "img")}.${extension}`;
+                        const { buffer, format } = await validateImage(block.base64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000 });
+                        const extension = format === "jpeg" ? "jpg" : format;
+                        const imageName = `${Date.now()}-${safeBaseName(id)}.${extension}`;
                         const publicPath = `/images/gazette/${imageName}`;
                         
                         filesToCommit.push({
@@ -50,12 +54,12 @@ export const handler: Handler = async (event, context) => {
                         });
 
                         return {
-                            id: block.id,
+                            id,
                             type: "image",
                             url: publicPath,
-                            caption: block.caption || "",
-                            layout: block.layout || "center",
-                            backgroundColor: block.backgroundColor
+                            caption: sanitizeRichText(block.caption, 2_000),
+                            layout: ["left", "center", "right"].includes(String(block.layout)) ? String(block.layout) : "center",
+                            backgroundColor,
                         };
                     } catch (error) {
                         logFunctionError("admin-gazette-generate:image-decode", error, context.awsRequestId);
@@ -64,17 +68,22 @@ export const handler: Handler = async (event, context) => {
                 } else {
                     // External URL case (e.g., from image search)
                     return {
-                        id: block.id,
+                        id,
                         type: "image",
-                        url: block.content, // use content as URL
-                        caption: block.caption || "",
-                        layout: block.layout || "center",
-                        backgroundColor: block.backgroundColor
+                        url: safeExternalImageUrl(block.content),
+                        caption: sanitizeRichText(block.caption, 2_000),
+                        layout: ["left", "center", "right"].includes(String(block.layout)) ? String(block.layout) : "center",
+                        backgroundColor,
                     };
                 }
             }
-            return block;
-        });
+            return {
+                id,
+                type,
+                content: type === "toc" ? "" : sanitizeRichText(block.content, type === "title" ? 2_000 : 20_000),
+                backgroundColor,
+            };
+        }));
 
         // Lire le fichier existant
         let existingData = { gazettes: [] as any[] };
@@ -94,7 +103,7 @@ export const handler: Handler = async (event, context) => {
             type: "generated",
             date: new Date().toISOString(),
             content: processedBlocks,
-            backgroundColor: pageBackgroundColor || "#FDF7F0"
+            backgroundColor: pageBackgroundColor
         };
 
         existingData.gazettes.unshift(newGazetteData);
@@ -105,11 +114,11 @@ export const handler: Handler = async (event, context) => {
             encoding: "utf-8",
         });
 
-        await commitChanges(`Gazette : génération de "${title}"`, filesToCommit);
+        await commitChanges(`Gazette : génération de "${title.replace(/<[^>]*>/g, "").slice(0, 120)}"`, filesToCommit);
         
         return json(200, { success: true, id: newGazetteData.id });
     } catch (error) {
         logFunctionError("admin-gazette-generate", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Création impossible" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Création impossible" });
     }
 };

@@ -1,30 +1,25 @@
 import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import nodemailer from "nodemailer";
+import { isAdminRequest, json } from "./_shared/admin-auth";
+import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
 export const handler: Handler = async (event, context) => {
     // 1. Security Check
-    const { user, identity } = context.clientContext || {};
-    if (!user || !user.app_metadata?.roles?.includes("admin")) {
-        return { statusCode: 403, body: "Forbidden: Admin access required" };
-    }
+    if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
+    if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
+    const { identity } = context.clientContext || {};
+    if (!identity?.url || !identity.token) return json(503, { error: "Service d’identité indisponible" });
 
-    // 2. Parse Body
-    let body;
     try {
-        body = JSON.parse(event.body || "{}");
-    } catch (e) {
-        return { statusCode: 400, body: "Invalid JSON" };
-    }
-
-    const { userId, role = "famille" } = body;
-    if (!userId) {
-        return { statusCode: 400, body: "Missing userId" };
-    }
+        const body = parseJsonObject(event.body, 8 * 1024);
+        const userId = String(body.userId || "").trim();
+        const role = String(body.role || "famille").trim();
+        if (!/^[a-zA-Z0-9-]{6,100}$/.test(userId)) return json(400, { error: "Identifiant utilisateur invalide" });
+        if (!new Set(["famille", "admin"]).has(role)) return json(400, { error: "Rôle invalide" });
 
     // 3. Update User Role in Netlify Identity
-    let userEmail = "";
-    try {
+        let userEmail = "";
         // First get the user to know their email (for the notification)
         const getUserResponse = await fetch(`${identity.url}/admin/users/${userId}`, {
             headers: { Authorization: `Bearer ${identity.token}` },
@@ -55,18 +50,11 @@ export const handler: Handler = async (event, context) => {
             throw new Error(`Failed to update user role: ${updateResponse.statusText}`);
         }
 
-    } catch (error: any) {
-        logFunctionError("admin-approve-user:identity", error, context.awsRequestId);
-        return { statusCode: 500, body: JSON.stringify({ error: "Failed to update user role" }) };
-    }
 
     // 4. Send Email Notification
     // Skip email if no credentials (dev mode safety, though we want to test it)
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "User approved, but email skipped (no credentials)" }),
-        };
+        return json(200, { message: "Utilisateur approuvé ; notification non configurée" });
     }
 
     try {
@@ -119,17 +107,13 @@ export const handler: Handler = async (event, context) => {
             `
         });
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "User approved and email sent" }),
-        };
-    } catch (error: any) {
+        return json(200, { message: "Utilisateur approuvé et notification envoyée" });
+    } catch (error) {
         logFunctionError("admin-approve-user:email", error, context.awsRequestId);
-        // We still return 200 because the user WAS updated, just email failed.
-        // But we warn in the body.
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "User approved, but email failed", error: error.message }),
-        };
+        return json(200, { message: "Utilisateur approuvé ; notification non envoyée" });
+    }
+    } catch (error) {
+        logFunctionError("admin-approve-user:identity", error, context.awsRequestId);
+        return json(validationStatus(error), { error: "Approbation de l’utilisateur impossible" });
     }
 };

@@ -4,6 +4,15 @@ import { handler as healthHandler } from "../netlify/functions/health";
 import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
 import { handler as familyMessageHandler } from "../netlify/functions/famille-send-message";
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
+import { handler as testEmailHandler } from "../netlify/functions/test-email";
+import { handler as sendNotificationHandler } from "../netlify/functions/send-notification";
+import sharp from "sharp";
+import {
+    parseJsonObject,
+    sanitizeRichText,
+    validateImage,
+    validatePdf,
+} from "../netlify/functions/_shared/request-security";
 
 const event = (httpMethod: string, body?: object) => ({
     httpMethod,
@@ -61,4 +70,46 @@ test("la génération d'image IA reste réservée à l'administration", async ()
 
     assert.equal(forbidden?.statusCode, 403);
     assert.equal(wrongMethod?.statusCode, 405);
+});
+
+test("les fonctions de messagerie technique restent réservées à l’administration", async () => {
+    const testEmailForbidden = await testEmailHandler(event("POST") as never, anonymousContext as never);
+    const notificationForbidden = await sendNotificationHandler(event("POST") as never, anonymousContext as never);
+    const wrongMethod = await testEmailHandler(event("GET") as never, adminContext as never);
+
+    assert.equal(testEmailForbidden?.statusCode, 403);
+    assert.equal(notificationForbidden?.statusCode, 403);
+    assert.equal(wrongMethod?.statusCode, 405);
+});
+
+test("la validation commune refuse les requêtes et fichiers déguisés", async () => {
+    assert.throws(() => parseJsonObject("[]"), /requête est invalide/);
+    assert.throws(() => validatePdf(Buffer.from("<script>alert(1)</script>").toString("base64"), 10_000), /PDF valide/);
+    await assert.rejects(
+        validateImage(Buffer.from("faux fichier image").toString("base64"), { maxBytes: 10_000 }),
+        /image valide/,
+    );
+});
+
+test("la validation d’image contrôle le format réel et les dimensions", async () => {
+    const image = await sharp({ create: { width: 4, height: 3, channels: 3, background: "#c05621" } }).webp().toBuffer();
+    const checked = await validateImage(image.toString("base64"), {
+        maxBytes: 10_000,
+        maxWidth: 10,
+        maxHeight: 10,
+        formats: ["webp"],
+    });
+
+    assert.equal(checked.format, "webp");
+    assert.equal(checked.width, 4);
+    assert.equal(checked.height, 3);
+    await assert.rejects(validateImage(image.toString("base64"), { maxBytes: 10_000, maxWidth: 2 }), /dimensions/);
+});
+
+test("le HTML de la Gazette conserve la mise en forme sans code actif", () => {
+    const cleaned = sanitizeRichText('<p style="color:#c05621" onclick="alert(1)"><strong>Bonjour</strong><img src=x onerror=alert(1)><a href="javascript:alert(1)">lien</a><script>alert(1)</script></p>');
+
+    assert.match(cleaned, /<strong>Bonjour<\/strong>/);
+    assert.match(cleaned, /color:#c05621/);
+    assert.doesNotMatch(cleaned, /onclick|onerror|javascript:|script|<img/i);
 });

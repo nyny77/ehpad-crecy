@@ -1,5 +1,5 @@
 const QRCode = require('qrcode');
-const Jimp = require('jimp');
+const sharp = require('sharp');
 const fs = require('fs');
 
 async function generate() {
@@ -20,27 +20,26 @@ async function generate() {
             }
         });
 
-        // 2. Read images with Jimp
-        const qrImage = await Jimp.read(qrPath);
-        const logoImage = await Jimp.read(logoPath);
+        const qrWidth = (await sharp(qrPath).metadata()).width || 1000;
+        const logoSize = Math.floor(qrWidth * 0.25);
+        const { data: logo, info } = await sharp(logoPath)
+            .resize({ width: logoSize, height: logoSize, fit: 'inside' })
+            .png()
+            .toBuffer({ resolveWithObject: true });
+        const padding = 10;
+        const logoPanel = await sharp({
+            create: {
+                width: info.width + padding * 2,
+                height: info.height + padding * 2,
+                channels: 4,
+                background: '#FFFFFF',
+            },
+        }).composite([{ input: logo, left: padding, top: padding }]).png().toBuffer();
 
-        // 3. Resize logo (about 25% of the QR code)
-        const logoSize = Math.floor(qrImage.bitmap.width * 0.25);
-        logoImage.resize(logoSize, Jimp.AUTO);
-
-        // 4. Calculate position (center)
-        const x = Math.floor((qrImage.bitmap.width - logoImage.bitmap.width) / 2);
-        const y = Math.floor((qrImage.bitmap.height - logoImage.bitmap.height) / 2);
-
-        // 5. Create a white background for the logo to stand out
-        const bg = new Jimp(logoImage.bitmap.width + 20, logoImage.bitmap.height + 20, '#FFFFFF');
-        
-        // 6. Composite everything
-        qrImage.composite(bg, x - 10, y - 10);
-        qrImage.composite(logoImage, x, y);
-
-        // 7. Save and cleanup
-        await qrImage.writeAsync(outPath);
+        await sharp(qrPath)
+            .composite([{ input: logoPanel, gravity: 'centre' }])
+            .png()
+            .toFile(outPath);
         fs.unlinkSync(qrPath);
         
         console.log('Success! Saved to ' + outPath);

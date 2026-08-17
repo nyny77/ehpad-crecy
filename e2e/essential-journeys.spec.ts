@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
 
+test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => sessionStorage.setItem("ehpad-crecy-splash-seen", "true"));
+});
+
 test("Contact : le formulaire peut être parcouru et envoyé", async ({ page }) => {
     await page.goto("/contact");
     await page.getByRole("button", { name: "Demande d'information" }).click();

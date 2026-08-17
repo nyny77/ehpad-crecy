@@ -3,6 +3,7 @@ import { logFunctionError } from "./_shared/technical-log";
 import { randomUUID } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
 interface GalleryPhoto {
     id: string;
@@ -30,13 +31,6 @@ function safeBaseName(value: string): string {
         .replace(/^-+|-+$/g, "").slice(0, 60) || "photo";
 }
 
-function decodeImage(value: unknown): Buffer {
-    const encoded = String(value || "").replace(/^data:image\/[a-z0-9.+-]+;base64,/i, "");
-    const buffer = Buffer.from(encoded, "base64");
-    if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) throw new Error("L’image compressée dépasse la limite de 4 Mo");
-    return buffer;
-}
-
 function repositoryPath(publicPath: string): string {
     if (!publicPath.startsWith("/images/")) throw new Error("Chemin d’image invalide");
     return `public${publicPath}`;
@@ -47,7 +41,7 @@ export const handler: Handler = async (event, context) => {
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const body = JSON.parse(event.body || "{}");
+        const body = parseJsonObject(event.body, 12 * 1024 * 1024);
         const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[]; albums?: GalleryAlbum[]; legacyAlbumTitle?: string };
         data.albums ||= [];
         data.legacyAlbumTitle ||= "Photos précédentes";
@@ -56,8 +50,8 @@ export const handler: Handler = async (event, context) => {
         let resultPhoto: GalleryPhoto | undefined;
 
         if (action === "add") {
-            const image = decodeImage(body.imageBase64);
-            const thumbnail = decodeImage(body.thumbnailBase64);
+            const image = (await validateImage(body.imageBase64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000, formats: ["webp"] })).buffer;
+            const thumbnail = (await validateImage(body.thumbnailBase64, { maxBytes: 1 * 1024 * 1024, maxWidth: 700, maxHeight: 700, formats: ["webp"] })).buffer;
             const title = String(body.title || "").trim();
             const albumId = String(body.albumId || "").trim();
             if (!title) return json(400, { error: "Titre obligatoire" });
@@ -142,6 +136,6 @@ export const handler: Handler = async (event, context) => {
         return json(200, { success: true, photo: resultPhoto });
     } catch (error) {
         logFunctionError("admin-gallery", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Modification de la galerie impossible" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Modification de la galerie impossible" });
     }
 };

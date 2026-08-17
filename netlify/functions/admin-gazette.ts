@@ -2,6 +2,7 @@ import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { commitChanges, readRepositoryText } from "./_shared/github";
+import { parseJsonObject, sanitizeRichText, validatePdf, validationStatus } from "./_shared/request-security";
 
 const MAX_PDF_BYTES = 10 * 1024 * 1024; // 10MB max for PDF
 
@@ -11,23 +12,15 @@ function safeBaseName(value: string): string {
         .replace(/^-+|-+$/g, "").slice(0, 60) || "gazette";
 }
 
-function decodeFile(value: unknown): Buffer {
-    const encoded = String(value || "").replace(/^data:application\/pdf;base64,/i, "");
-    const buffer = Buffer.from(encoded, "base64");
-    if (!buffer.length || buffer.length > MAX_PDF_BYTES) {
-        throw new Error("Le fichier dépasse la limite de 10 Mo");
-    }
-    return buffer;
-}
-
 export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const body = JSON.parse(event.body || "{}");
-        const file = decodeFile(body.fileBase64);
-        const title = body.title || "Nouvelle gazette";
+        const body = parseJsonObject(event.body, 15 * 1024 * 1024);
+        const file = validatePdf(body.fileBase64, MAX_PDF_BYTES);
+        const title = sanitizeRichText(body.title || "Nouvelle gazette", 300);
+        if (!title) return json(400, { error: "Titre obligatoire" });
         
         // Ensure name is clean and ends with .pdf
         const name = `${Date.now()}-${safeBaseName(String(body.fileName || "gazette"))}.pdf`;
@@ -69,6 +62,6 @@ export const handler: Handler = async (event, context) => {
         return json(200, { success: true, path: publicPath });
     } catch (error) {
         logFunctionError("admin-gazette", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Envoi du fichier impossible" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Envoi du fichier impossible" });
     }
 };

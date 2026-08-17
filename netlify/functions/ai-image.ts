@@ -1,6 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
+import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
 const MODEL = "@cf/black-forest-labs/flux-1-schnell";
 const TRANSLATION_MODEL = "@cf/meta/llama-3.2-1b-instruct";
@@ -76,7 +77,7 @@ export const handler: Handler = async (event, context) => {
     }
 
     try {
-        const body = JSON.parse(event.body || "{}");
+        const body = parseJsonObject(event.body, 8 * 1024);
         const prompt = String(body.prompt || "").trim();
         if (prompt.length < 3 || prompt.length > MAX_PROMPT_LENGTH) {
             return json(400, { error: `La description doit contenir entre 3 et ${MAX_PROMPT_LENGTH} caractères.` });
@@ -111,15 +112,13 @@ export const handler: Handler = async (event, context) => {
             return json(response.status >= 500 ? 502 : response.status, { error: cloudflareError(response.status, payload) });
         }
 
-        const rawImage = payload.result?.image?.replace(/^data:image\/[a-z0-9.+-]+;base64,/i, "") || "";
-        const image = Buffer.from(rawImage, "base64");
-        if (!image.length || image.length > MAX_IMAGE_BYTES) {
-            throw new Error("L'image reçue de Cloudflare est vide ou trop volumineuse.");
-        }
+        const rawImage = payload.result?.image || "";
+        const { buffer: image, format } = await validateImage(rawImage, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 4_000, maxHeight: 4_000 });
+        const mime = format === "jpeg" ? "image/jpeg" : `image/${format}`;
 
         return json(200, {
             success: true,
-            imageBase64: `data:image/jpeg;base64,${image.toString("base64")}`,
+            imageBase64: `data:${mime};base64,${image.toString("base64")}`,
             label: "Illustration générée par IA",
         });
     } catch (error) {
@@ -127,6 +126,6 @@ export const handler: Handler = async (event, context) => {
         const message = error instanceof Error && error.name === "AbortError"
             ? "La génération a pris trop de temps. Réessayez dans quelques minutes."
             : "La génération de l'image a échoué.";
-        return json(500, { error: message });
+        return json(validationStatus(error), { error: message });
     }
 };

@@ -3,6 +3,7 @@ import { isAdminRequest, json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 import type { FamilyMessage } from "./famille-send-message";
+import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
 const MESSAGES_PATH = "src/lib/data/messages.json";
 const DISTRIBUTED_MESSAGE_RETENTION_DAYS = 30;
@@ -33,8 +34,8 @@ export const handler: Handler = async (event, context) => {
 
         if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
-        const body = JSON.parse(event.body || "{}");
-        const action = body.action || "markDistributed";
+        const body = parseJsonObject(event.body, 64 * 1024);
+        const action = String(body.action || "markDistributed");
         const changes: GitChange[] = [];
 
         if (action === "markDistributed") {
@@ -73,7 +74,7 @@ export const handler: Handler = async (event, context) => {
 
             return json(200, { success: true });
         } else if (action === "bulkDelete") {
-            const messageIds = Array.isArray(body.ids) ? body.ids : [];
+            const messageIds = Array.isArray(body.ids) ? body.ids.map(String).slice(0, 200) : [];
             if (messageIds.length === 0) return json(400, { error: "Aucun message sélectionné" });
 
             const messagesToDelete = data.messages.filter(m => messageIds.includes(m.id));
@@ -111,6 +112,6 @@ export const handler: Handler = async (event, context) => {
         }
     } catch (error) {
         logFunctionError("admin-messages", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Erreur lors de la gestion du courrier" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de la gestion du courrier" });
     }
 };

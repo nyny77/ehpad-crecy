@@ -4,6 +4,7 @@ import { json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 import type { Resident } from "./admin-residents";
+import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
 export interface FamilyMessage {
     id: string;
@@ -20,19 +21,12 @@ const RESIDENTS_PATH = "src/lib/data/residents.json";
 const MESSAGES_PATH = "src/lib/data/messages.json";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-function decodeImage(value: unknown): Buffer {
-    const encoded = String(value || "").replace(/^data:image\/[a-z0-9.+-]+;base64,/i, "");
-    const buffer = Buffer.from(encoded, "base64");
-    if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) throw new Error("L’image compressée dépasse la limite de 5 Mo");
-    return buffer;
-}
-
 export const handler: Handler = async (event, context) => {
     // Note: Public endpoint, no admin-auth required. We authenticate via secretCode.
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const body = JSON.parse(event.body || "{}");
+        const body = parseJsonObject(event.body, 8 * 1024 * 1024);
         const action = String(body.action || "send").trim();
         const secretCode = String(body.secretCode || "").trim().toUpperCase();
         const senderName = String(body.senderName || "").trim();
@@ -42,6 +36,8 @@ export const handler: Handler = async (event, context) => {
         if (!secretCode) {
             return json(400, { error: "Le code secret est obligatoire." });
         }
+        if (!new Set(["send", "verify"]).has(action)) return json(400, { error: "Action invalide." });
+        if (senderName.length > 100 || text.length > 2_000) return json(400, { error: "Le nom ou le message est trop long." });
         if (action === "send" && (!senderName || !text)) {
             return json(400, { error: "Le nom et le message sont obligatoires." });
         }
@@ -77,7 +73,7 @@ export const handler: Handler = async (event, context) => {
 
         // 3. Process Photo if present
         if (imageBase64) {
-            const image = decodeImage(imageBase64);
+            const image = (await validateImage(imageBase64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000, formats: ["webp"] })).buffer;
             const name = `msg-${Date.now()}-${randomUUID().slice(0, 8)}.webp`;
             photoUrl = `/images/messages/${name}`;
             changes.push({ path: `public${photoUrl}`, content: image.toString("base64"), encoding: "base64" });
@@ -102,6 +98,6 @@ export const handler: Handler = async (event, context) => {
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {
         logFunctionError("famille-send-message", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Erreur lors de l'envoi du message" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de l'envoi du message" });
     }
 };

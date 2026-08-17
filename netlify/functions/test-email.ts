@@ -3,20 +3,18 @@
 import type { Handler } from "@netlify/functions";
 import nodemailer from "nodemailer";
 import { logFunctionError } from "./_shared/technical-log";
+import { isAdminRequest, json } from "./_shared/admin-auth";
 
 const handler: Handler = async (event, context) => {
+    if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
+    if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
+
     // Vérifier les variables
     const requiredEnvVars = ["EMAIL_HOST", "EMAIL_PORT", "EMAIL_USER", "EMAIL_PASS", "ADMIN_EMAIL"];
     const missingEnvVars = requiredEnvVars.filter((v) => !process.env[v]);
 
     if (missingEnvVars.length > 0) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                error: "Configuration manquante",
-                detail: `Variables manquantes : ${missingEnvVars.join(", ")}`
-            }),
-        };
+        return json(503, { error: "Configuration de messagerie incomplète" });
     }
 
     // Configurer le transporteur
@@ -39,21 +37,10 @@ const handler: Handler = async (event, context) => {
             text: "Si vous recevez ceci, c'est que la configuration est PARFAITE ! 🎉",
         });
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "Email envoyé avec succès ! Vérifiez votre boîte mail." }),
-        };
+        return json(200, { message: "Email envoyé avec succès ! Vérifiez votre boîte mail." });
     } catch (error: any) {
         logFunctionError("test-email", error, context.awsRequestId);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                error: "Échec de l'envoi",
-                message: error.message,
-                code: error.code,
-                response: error.response
-            }),
-        };
+        return json(500, { error: "Échec de l’envoi du message de test" });
     }
 };
 

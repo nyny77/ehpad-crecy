@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Jimp = require('jimp');
+const sharp = require('sharp');
 
 const JSON_FILE_PATH = path.join(process.cwd(), 'src', 'lib', 'data', 'gallery.json');
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
@@ -55,12 +55,14 @@ async function optimizeGallery() {
             if (fs.existsSync(originalPath)) {
                 try {
                     console.log(`Processing ${fileName}...`);
-                    const image = await Jimp.read(originalPath);
-                    // Resize to 600px width (auto height) and 80% quality
-                    await image
-                        .resize(600, Jimp.AUTO)
-                        .quality(80)
-                        .writeAsync(thumbAbsolutePath);
+                    const extension = path.extname(thumbAbsolutePath).toLowerCase();
+                    let image = sharp(originalPath, { limitInputPixels: 40_000_000 })
+                        .rotate()
+                        .resize({ width: 600, withoutEnlargement: true });
+                    if (extension === '.webp') image = image.webp({ quality: 80 });
+                    else if (extension === '.png') image = image.png({ quality: 80 });
+                    else image = image.jpeg({ quality: 80, mozjpeg: true });
+                    await image.toFile(thumbAbsolutePath);
                     createdCount++;
                 } catch (error) {
                     console.error(`Error processing ${originalPath}:`, error);
@@ -73,7 +75,7 @@ async function optimizeGallery() {
     }
 
     // Save updated JSON
-    fs.writeFileSync(JSON_FILE_PATH, JSON.stringify(data, null, 2), 'utf8');
+    fs.writeFileSync(JSON_FILE_PATH, JSON.stringify(data, null, 2) + '\n', 'utf8');
 
     console.log("\nOptimization Summary:");
     console.log(`- Total Photos Processed: ${processedCount}`);

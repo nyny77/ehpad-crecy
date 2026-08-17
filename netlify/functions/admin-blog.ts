@@ -1,6 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
+import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
 type BlogCategory = "activite" | "evenement" | "sortie" | "fete" | "autre";
 
@@ -72,8 +73,9 @@ export const handler: Handler = async (event, context) => {
 
     try {
         const { owner, repo, branch } = githubConfig();
-        const body = JSON.parse(event.body || "{}");
-        const action = body.action || "save";
+        const body = parseJsonObject(event.body, 512 * 1024);
+        const action = String(body.action || "save");
+        if (!new Set(["save", "delete"]).has(action)) return json(400, { error: "Action invalide" });
 
         if (action === "delete") {
             const id = String(body.id || "");
@@ -90,12 +92,25 @@ export const handler: Handler = async (event, context) => {
             return json(200, { success: true });
         }
 
-        const article = body.article as ArticleInput;
-        if (!article?.title?.trim() || !article.content?.trim() || !article.date) {
+        if (!body.article || typeof body.article !== "object" || Array.isArray(body.article)) return json(400, { error: "Article invalide" });
+        const input = body.article as Record<string, unknown>;
+        const article: ArticleInput = {
+            id: input.id ? String(input.id) : undefined,
+            title: String(input.title || "").trim().slice(0, 180),
+            date: String(input.date || ""),
+            category: String(input.category || "") as BlogCategory,
+            excerpt: String(input.excerpt || "").trim().slice(0, 500),
+            image: input.image ? String(input.image) : null,
+            content: String(input.content || "").trim().slice(0, 100_000),
+            draft: input.draft === true,
+        };
+        if (!article.title || !article.content || !article.date || !/^\d{4}-\d{2}-\d{2}/.test(article.date) || !Number.isFinite(Date.parse(article.date))) {
             return json(400, { error: "Titre, date et contenu sont obligatoires" });
         }
         const categories = new Set(["activite", "evenement", "sortie", "fete", "autre"]);
         if (!categories.has(article.category)) return json(400, { error: "Catégorie invalide" });
+        if (article.image && !/^\/images\/[a-zA-Z0-9_./-]+$/.test(article.image)) return json(400, { error: "Chemin d’image invalide" });
+        if (article.id && !/^[a-zA-Z0-9_-]{1,120}$/.test(article.id)) return json(400, { error: "Identifiant d’article invalide" });
 
         const id = article.id || `${article.date.slice(0, 10)}-${slugify(article.title)}`;
         const filePath = `content/articles/${id}.md`;
@@ -119,6 +134,6 @@ export const handler: Handler = async (event, context) => {
         return json(200, { success: true, id });
     } catch (error) {
         logFunctionError("admin-blog", error, context.awsRequestId);
-        return json(500, { error: error instanceof Error ? error.message : "Erreur de publication" });
+        return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur de publication" });
     }
 };

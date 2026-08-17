@@ -157,3 +157,19 @@ test("les protections discrètes du Postier restent actives", () => {
   assert.doesNotMatch(familyMessages, /commitChanges\(`[^`]*\$\{(?:senderName|text|resident\.name)\}/);
   assert.ok(existsSync(join(ROOT, "PROCEDURE_SUPPRESSION_COURRIER_FAMILLE.md")));
 });
+
+test("les protections générales discrètes restent configurées", () => {
+  const headers = source("netlify.toml");
+  const requestSecurity = source("netlify/functions/_shared/request-security.ts");
+  const testEmail = source("netlify/functions/test-email.ts");
+  const notification = source("netlify/functions/send-notification.ts");
+
+  assert.match(headers, /Content-Security-Policy/);
+  assert.match(headers, /X-Content-Type-Options = "nosniff"/);
+  assert.match(headers, /Referrer-Policy/);
+  assert.match(headers, /Permissions-Policy/);
+  assert.match(requestSecurity, /limitInputPixels/);
+  assert.match(requestSecurity, /sanitizeHtml/);
+  assert.match(testEmail, /isAdminRequest\(context\)/);
+  assert.match(notification, /isAdminRequest\(context\)/);
+});

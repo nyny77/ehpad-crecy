@@ -61,11 +61,11 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 ## Sécurité générale discrète
 
-- Vérifier l’authentification des fonctions `test-email`, `send-notification` et `ai-image`.
-- Valider strictement les données reçues par les fonctions Netlify.
-- Vérifier le type réel, la taille et les dimensions des fichiers envoyés.
-- Assainir le HTML produit dans l’éditeur de Gazette.
-- Ajouter progressivement les en-têtes de sécurité CSP, `X-Content-Type-Options`, `Referrer-Policy` et `Permissions-Policy`.
+- ~~Vérifier l’authentification des fonctions `test-email`, `send-notification` et `ai-image`.~~ — **Accès administrateur et méthodes HTTP vérifiés automatiquement le 17 août 2026.**
+- ~~Valider strictement les données reçues par les fonctions Netlify.~~ — **Corps JSON, actions, longueurs, formats et chemins validés côté serveur le 17 août 2026.**
+- ~~Vérifier le type réel, la taille et les dimensions des fichiers envoyés.~~ — **Images contrôlées par Sharp et PDF vérifiés par signature, avec limites de taille et dimensions, le 17 août 2026.**
+- ~~Assainir le HTML produit dans l’éditeur de Gazette.~~ — **Liste blanche de balises, attributs, styles et protocoles appliquée côté serveur le 17 août 2026.**
+- ~~Ajouter progressivement les en-têtes de sécurité CSP, `X-Content-Type-Options`, `Referrer-Policy` et `Permissions-Policy`.~~ — **CSP et en-têtes complémentaires activés globalement sur Netlify le 17 août 2026.**
 - Ne jamais ajouter de contrainte visible pour les familles sans nécessité démontrée.
 
 ## Performance et sobriété
