@@ -1,3 +1,10 @@
 {
-  "residents": []
+  "residents": [
+    {
+      "id": "75fb20793fd7e04a",
+      "name": "Alain",
+      "room": "104",
+      "secretCode": "ALAIN-7637"
+    }
+  ]
 }
