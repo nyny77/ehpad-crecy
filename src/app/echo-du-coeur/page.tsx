@@ -7,7 +7,6 @@ import { Calendar } from "lucide-react";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
 import Link from "next/link";
 import PdfViewer from "@/components/ui/PdfViewer";
-import { sanitizeContent } from "@/lib/sanitize";
 
 export default function EchoDuCoeurPage() {
     // Support backward compatibility
@@ -89,10 +88,10 @@ export default function EchoDuCoeurPage() {
                                                 : 'bg-white hover:bg-cream-50 text-charcoal-700 border-cream-200 hover:border-cream-300'
                                             }`}
                                         >
-                                                <div 
-                                                    className="font-semibold text-lg flex items-center gap-2 rich-text-content-inline"
-                                                    dangerouslySetInnerHTML={{ __html: sanitizeContent(g.title || `Gazette ${i + 1}`) }}
-                                                />
+                                            <div 
+                                                className="font-semibold text-lg flex items-center gap-2 rich-text-content-inline"
+                                                dangerouslySetInnerHTML={{ __html: g.title || `Gazette ${i + 1}` }}
+                                            />
                                             {g.date && (
                                                 <div className={`text-sm mt-2 flex items-center gap-1.5 ${isSelected ? 'text-terracotta-100' : 'text-charcoal-500'}`}>
                                                     <Calendar size={14} />

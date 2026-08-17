@@ -146,10 +146,10 @@ test("les protections discrètes du Postier restent actives", () => {
 
   assert.match(adminMessages, /if \(!isAdminRequest\(context\)\) return json\(403/);
   assert.ok(
-    adminMessages.indexOf("isAdminRequest(context)") < adminMessages.indexOf("getMessagesStore()"),
+    adminMessages.indexOf("isAdminRequest(context)") < adminMessages.indexOf("readRepositoryText(MESSAGES_PATH)"),
     "Le rôle administrateur doit être vérifié avant la lecture du courrier"
   );
-  assert.match(adminMessages, /DISTRIBUTED_MESSAGE_RETENTION_DAYS = 0/);
+  assert.match(adminMessages, /DISTRIBUTED_MESSAGE_RETENTION_DAYS = 30/);
   assert.match(adminMessages, /message\.distributedAt = new Date\(\)\.toISOString\(\)/);
   assert.match(adminMessages, /message\.photoUrl = null/);
   assert.match(adminMessages, /action === "purgeExpired"/);

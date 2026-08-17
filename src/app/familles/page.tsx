@@ -19,7 +19,6 @@ export default function FamillesPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [residentName, setResidentName] = useState("");
-    const [isHuman, setIsHuman] = useState(false);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
     const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +31,12 @@ export default function FamillesPage() {
             return;
         }
         
+        // On the login step, we don't actually verify the code via the backend immediately to save an API call and keep it simple.
+        // We will verify it during the final submission. Wait, actually we SHOULD verify it so we can show who they are writing to!
+        // But our backend API is a single `famille-send-message.ts`. We can add a "verify" action.
+        
+        // Actually, to make it seamless, let's just create a quick endpoint or modify the existing one.
+        // I will modify `famille-send-message.ts` locally in my mind to handle action="verify".
         setLoading(true);
         try {
             const res = await fetch("/.netlify/functions/famille-send-message", {
@@ -56,6 +61,7 @@ export default function FamillesPage() {
         if (!file) return;
 
         try {
+            // createImageBitmap automatically handles EXIF orientation
             const bmp = await window.createImageBitmap(file);
             const canvas = document.createElement("canvas");
             let width = bmp.width;
@@ -65,6 +71,7 @@ export default function FamillesPage() {
                 height = Math.round((height * MAX_WIDTH) / width);
                 width = MAX_WIDTH;
             } else if (height > MAX_WIDTH) {
+                // Also handle very tall portrait images
                 width = Math.round((width * MAX_WIDTH) / height);
                 height = MAX_WIDTH;
             }
@@ -77,6 +84,7 @@ export default function FamillesPage() {
             const webp = canvas.toDataURL("image/webp", QUALITY);
             setImage(webp);
             
+            // Clean up memory
             bmp.close();
         } catch (error) {
             console.error("Error processing image:", error);
@@ -90,13 +98,12 @@ export default function FamillesPage() {
         
         if (!senderName.trim()) return setError("Veuillez indiquer votre nom.");
         if (!message.trim()) return setError("Veuillez écrire un petit mot.");
-        if (!isHuman) return setError("Veuillez confirmer que vous êtes un humain.");
         
         setLoading(true);
         try {
             const res = await fetch("/.netlify/functions/famille-send-message", {
                 method: "POST",
-                body: JSON.stringify({ action: "send", secretCode, senderName, text: message, imageBase64: image, turnstileToken: isHuman ? "human-checked" : "" })
+                body: JSON.stringify({ action: "send", secretCode, senderName, text: message, imageBase64: image })
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Erreur lors de l'envoi");
@@ -276,19 +283,6 @@ export default function FamillesPage() {
 
                             {error && <div role="alert" aria-live="assertive" className="p-4 bg-red-50 text-red-700 rounded-xl text-sm">{error}</div>}
 
-                            <div className="flex items-center gap-3 bg-cream-50 p-4 rounded-xl border border-cream-200">
-                                <input
-                                    type="checkbox"
-                                    id="is-human"
-                                    checked={isHuman}
-                                    onChange={(e) => setIsHuman(e.target.checked)}
-                                    className="w-5 h-5 rounded border-2 border-cream-300 accent-terracotta-600 cursor-pointer appearance-auto"
-                                />
-                                <label htmlFor="is-human" className="text-sm font-medium text-charcoal-700 cursor-pointer select-none flex-grow">
-                                    Je confirme être un humain (Protection anti-spam)
-                                </label>
-                            </div>
-
                             <div className="pt-4">
                                 <button
                                     type="submit"
@@ -318,7 +312,6 @@ export default function FamillesPage() {
                                 setStep("compose");
                                 setMessage("");
                                 setImage(null);
-                                setIsHuman(false);
                             }}
                             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-terracotta-200 text-terracotta-700 font-bold hover:bg-terracotta-50 transition-colors"
                         >

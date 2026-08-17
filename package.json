@@ -14,7 +14,6 @@
     "check": "npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {
-    "@netlify/blobs": "^10.7.13",
     "@netlify/functions": "^5.1.2",
     "@studio-freight/lenis": "^1.0.42",
     "@types/pannellum": "^2.5.0",

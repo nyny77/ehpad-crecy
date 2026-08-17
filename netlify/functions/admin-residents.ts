@@ -2,8 +2,8 @@ import type { Handler } from "@netlify/functions";
 import { randomBytes } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
+import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
 import { parseJsonObject, validationStatus } from "./_shared/request-security";
-import { getResidentsStore } from "./_shared/blob-storage";
 
 export interface Resident {
     id: string;
@@ -11,6 +11,8 @@ export interface Resident {
     room: string;
     secretCode: string;
 }
+
+const RESIDENTS_PATH = "src/lib/data/residents.json";
 
 function generateSecretCode(name: string): string {
     const firstName = name.split(" ")[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z]/g, "");
@@ -22,23 +24,22 @@ export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
 
     try {
-        const residentsStore = getResidentsStore();
-        const { blobs } = await residentsStore.list();
-        const residents: Resident[] = [];
-        
-        for (const b of blobs) {
-            const data = await residentsStore.get(b.key, { type: "json" }) as Resident | null;
-            if (data) residents.push(data);
+        let data: { residents: Resident[] } = { residents: [] };
+        try {
+            data = JSON.parse(await readRepositoryText(RESIDENTS_PATH));
+        } catch (e: any) {
+            if (!e.message.includes("404")) throw e;
         }
 
         if (event.httpMethod === "GET") {
-            return json(200, { residents });
+            return json(200, data);
         }
 
         if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
         const body = parseJsonObject(event.body, 64 * 1024);
         const action = String(body.action || "add");
+        const changes: GitChange[] = [];
 
         if (action === "add") {
             const name = String(body.name || "").trim();
@@ -51,31 +52,27 @@ export const handler: Handler = async (event, context) => {
                 room,
                 secretCode: generateSecretCode(name)
             };
-            residents.push(resident);
-            await residentsStore.setJSON(resident.id, resident);
+            data.residents.push(resident);
         } else if (action === "update") {
-            const resident = residents.find(r => r.id === body.id);
+            const resident = data.residents.find(r => r.id === body.id);
             if (!resident) return json(404, { error: "Résident introuvable" });
             
             if (body.name) resident.name = String(body.name).trim().slice(0, 120);
             if (body.room !== undefined) resident.room = String(body.room).trim().slice(0, 40);
             if (body.resetCode) resident.secretCode = generateSecretCode(resident.name);
-            await residentsStore.setJSON(resident.id, resident);
         } else if (action === "delete") {
             const idsToDelete = Array.isArray(body.ids) ? body.ids : (body.id ? [body.id] : []);
             if (idsToDelete.length === 0) return json(400, { error: "Aucun résident sélectionné" });
-            
-            for (const id of idsToDelete) {
-                await residentsStore.delete(String(id));
-            }
-            return json(200, { success: true, residents: residents.filter(r => !idsToDelete.includes(r.id)) });
+            data.residents = data.residents.filter(r => !idsToDelete.includes(r.id));
         } else {
             return json(400, { error: "Action inconnue" });
         }
 
-        return json(200, { success: true, residents });
+        changes.push({ path: RESIDENTS_PATH, content: JSON.stringify(data, null, 2) + "\n" });
+        await commitChanges(`Résidents : ${action}`, changes);
+        return json(200, { success: true, residents: data.residents });
     } catch (error) {
-        logFunctionError("admin-residents", error, context.awsRequestId || "unknown");
+        logFunctionError("admin-residents", error, context.awsRequestId);
         return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de la sauvegarde" });
     }
 };
