@@ -22,6 +22,13 @@ interface GalleryAlbum {
     createdAt: string;
 }
 
+interface GalleryData {
+    photos: GalleryPhoto[];
+    albums?: GalleryAlbum[];
+    legacyAlbumTitle?: string;
+    lastPublishedAt?: string;
+}
+
 const GALLERY_PATH = "src/lib/data/gallery.json";
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
@@ -36,13 +43,17 @@ function repositoryPath(publicPath: string): string {
     return `public${publicPath}`;
 }
 
+export function galleryCommitMessage(message: string, skipNetlify: boolean): string {
+    return skipNetlify ? `${message} [skip netlify]` : message;
+}
+
 export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
         const body = parseJsonObject(event.body, 12 * 1024 * 1024);
-        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as { photos: GalleryPhoto[]; albums?: GalleryAlbum[]; legacyAlbumTitle?: string };
+        const data = JSON.parse(await readRepositoryText(GALLERY_PATH)) as GalleryData;
         data.albums ||= [];
         data.legacyAlbumTitle ||= "Photos précédentes";
         const action = body.action || "add";
@@ -75,8 +86,10 @@ export const handler: Handler = async (event, context) => {
             const album: GalleryAlbum = { id: randomUUID(), title: title.slice(0, 120), date, createdAt: new Date().toISOString() };
             data.albums.push(album);
             changes.push({ path: GALLERY_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges(`Galerie : création de l’album ${album.title}`, changes);
+            await commitChanges(galleryCommitMessage(`Galerie : création de l’album ${album.title}`, body.skipNetlify === true), changes);
             return json(200, { success: true, album });
+        } else if (action === "publishBatch") {
+            data.lastPublishedAt = new Date().toISOString();
         } else if (action === "deleteAlbum") {
             const albumId = String(body.albumId || "");
             const album = data.albums.find((item) => item.id === albumId);
@@ -132,7 +145,7 @@ export const handler: Handler = async (event, context) => {
         }
 
         changes.push({ path: GALLERY_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-        await commitChanges(`Galerie : ${action}`, changes);
+        await commitChanges(galleryCommitMessage(`Galerie : ${action}`, action === "add" && body.skipNetlify === true), changes);
         return json(200, { success: true, photo: resultPhoto });
     } catch (error) {
         logFunctionError("admin-gallery", error, context.awsRequestId);

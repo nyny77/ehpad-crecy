@@ -173,3 +173,13 @@ test("les protections générales discrètes restent configurées", () => {
   assert.match(testEmail, /isAdminRequest\(context\)/);
   assert.match(notification, /isAdminRequest\(context\)/);
 });
+
+test("un lot de photos ne déclenche qu’un seul déploiement Netlify", () => {
+  const manager = source("src/app/administration/PhotoManager.tsx");
+  const galleryFunction = source("netlify/functions/admin-gallery.ts");
+
+  assert.match(manager, /skipNetlify: index < items\.length - 1/);
+  assert.match(manager, /action: "publishBatch"/);
+  assert.match(galleryFunction, /\[skip netlify\]/);
+  assert.match(galleryFunction, /action === "publishBatch"/);
+});

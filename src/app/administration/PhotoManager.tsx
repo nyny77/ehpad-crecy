@@ -109,7 +109,7 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
         try {
             let albumId = targetAlbumId;
             if (albumId === "new") {
-                const result = await adminFetch<{ album: GalleryAlbum }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "createAlbum", title: albumTitle, date: albumDate }) });
+                const result = await adminFetch<{ album: GalleryAlbum }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "createAlbum", title: albumTitle, date: albumDate, skipNetlify: true }) });
                 albumId = result.album.id;
                 setAlbums((current) => current.some((album) => album.id === result.album.id) ? current : [...current, result.album]);
                 setTargetAlbumId(albumId);
@@ -119,16 +119,25 @@ export default function PhotoManager({ initialPhotos, initialAlbums, initialLega
                 const processed = await processImage(item.file);
                 if (processed.image.size + processed.thumbnail.size > 3.8 * 1024 * 1024) throw new Error(`${item.file.name} reste trop lourde après compression.`);
                 const [imageBase64, thumbnailBase64] = await Promise.all([blobToBase64(processed.image), blobToBase64(processed.thumbnail)]);
-                const result = await adminFetch<{ photo: GalleryImage }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "add", albumId, fileName: item.file.name, title: item.title, imageBase64, thumbnailBase64 }) });
+                const result = await adminFetch<{ photo: GalleryImage }>("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "add", albumId, fileName: item.file.name, title: item.title, imageBase64, thumbnailBase64, skipNetlify: index < items.length - 1 }) });
                 setPhotos((current) => [result.photo, ...current]);
                 setUploadPreviews((current) => ({ ...current, [result.photo.id]: item.preview }));
                 setPending((current) => current.filter((candidate) => candidate.id !== item.id));
                 completed += 1;
             }
             setAlbumTitle("");
-            setMessage({ type: "success", text: `${completed} photo${completed > 1 ? "s sont enregistrées" : " est enregistrée"}. Mise en ligne Netlify en cours : comptez environ 2 minutes. L’aperçu reste visible pendant ce délai.` });
+            setMessage({ type: "success", text: `${completed} photo${completed > 1 ? "s sont enregistrées" : " est enregistrée"}. Un seul déploiement Netlify est lancé pour tout le lot : comptez environ 2 minutes. L’aperçu reste visible pendant ce délai.` });
         } catch (error) {
-            setMessage({ type: "error", text: `${completed} photo(s) enregistrée(s). ${error instanceof Error ? error.message : "Envoi interrompu"}` });
+            let publicationQueued = false;
+            if (completed > 0) {
+                try {
+                    await adminFetch("/.netlify/functions/admin-gallery", { method: "POST", body: JSON.stringify({ action: "publishBatch" }) });
+                    publicationQueued = true;
+                } catch { /* Les fichiers restent sauvegardés et seront publiés au prochain commit normal. */ }
+            }
+            const publicationStatus = publicationQueued ? " Un déploiement unique a été lancé pour les photos déjà reçues." : "";
+            const errorMessage = error instanceof Error ? error.message : "Envoi interrompu.";
+            setMessage({ type: "error", text: `${completed} photo(s) enregistrée(s). ${errorMessage}${publicationStatus}` });
         } finally {
             setUploading(false);
             setUploadProgress(null);

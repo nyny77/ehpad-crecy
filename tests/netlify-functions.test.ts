@@ -6,6 +6,7 @@ import { handler as familyMessageHandler } from "../netlify/functions/famille-se
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 import { handler as testEmailHandler } from "../netlify/functions/test-email";
 import { handler as sendNotificationHandler } from "../netlify/functions/send-notification";
+import { galleryCommitMessage } from "../netlify/functions/admin-gallery";
 import sharp from "sharp";
 import {
     parseJsonObject,
@@ -112,4 +113,9 @@ test("le HTML de la Gazette conserve la mise en forme sans code actif", () => {
     assert.match(cleaned, /<strong>Bonjour<\/strong>/);
     assert.match(cleaned, /color:#c05621/);
     assert.doesNotMatch(cleaned, /onclick|onerror|javascript:|script|<img/i);
+});
+
+test("les lots de photos ne déclenchent Netlify qu’au dernier commit", () => {
+    assert.equal(galleryCommitMessage("Galerie : add", true), "Galerie : add [skip netlify]");
+    assert.equal(galleryCommitMessage("Galerie : add", false), "Galerie : add");
 });
