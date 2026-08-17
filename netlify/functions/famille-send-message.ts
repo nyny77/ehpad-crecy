@@ -1,4 +1,4 @@
-import type { Context } from "@netlify/functions";
+import type { Handler } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
 import crypto from "node:crypto";
 import { logFunctionError } from "./_shared/technical-log";
