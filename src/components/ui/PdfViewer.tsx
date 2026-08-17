@@ -11,6 +11,7 @@ interface PdfViewerProps {
 
 export default function PdfViewer({ src, title, className = "" }: PdfViewerProps) {
     const [isAppleMobile, setIsAppleMobile] = useState<boolean | null>(null);
+    const viewerSrc = src.includes("#") ? src : `${src}#view=Fit`;
 
     useEffect(() => {
         const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent)
@@ -20,12 +21,12 @@ export default function PdfViewer({ src, title, className = "" }: PdfViewerProps
 
     return (
         <section className={`flex min-h-0 flex-col overflow-hidden rounded-2xl bg-white ${className}`} aria-label={title}>
-            <div className="flex flex-wrap items-center justify-center gap-3 border-b border-charcoal-200 bg-white p-3">
+            <div className="flex flex-wrap items-center justify-center gap-2 border-b border-charcoal-200 bg-white px-3 py-2">
                 <a
                     href={src}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-terracotta-600 px-5 py-2.5 font-semibold text-white"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-terracotta-600 px-4 py-2 text-sm font-semibold text-white"
                 >
                     <ExternalLink aria-hidden="true" className="h-4 w-4" />
                     Ouvrir le PDF complet
@@ -33,7 +34,7 @@ export default function PdfViewer({ src, title, className = "" }: PdfViewerProps
                 <a
                     href={src}
                     download
-                    className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-charcoal-600 bg-white px-5 py-2 font-semibold text-charcoal-700"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-charcoal-600 bg-white px-4 py-1.5 text-sm font-semibold text-charcoal-700"
                 >
                     <Download aria-hidden="true" className="h-4 w-4" />
                     Télécharger
@@ -65,8 +66,8 @@ export default function PdfViewer({ src, title, className = "" }: PdfViewerProps
                 </div>
             ) : (
                 <iframe
-                    src={src}
-                    className="min-h-[600px] w-full flex-1 border-none bg-white"
+                    src={viewerSrc}
+                    className="min-h-[500px] w-full flex-1 border-none bg-white md:min-h-0"
                     title={title}
                 />
             )}

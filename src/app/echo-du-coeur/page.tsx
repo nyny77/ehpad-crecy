@@ -15,18 +15,15 @@ export default function EchoDuCoeurPage() {
     const [selectedGazette, setSelectedGazette] = useState<any>(allGazettes[0] || null);
 
     return (
-        <main className="min-h-screen pt-24 md:pt-32 pb-12 bg-cream-100 print:bg-white print:pt-0 print:pb-0">
-            <div className="container-custom px-4 mb-8 print:hidden">
-                <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900">Le Petit Écho du Cœur</h1>
-                <p className="mt-3 text-charcoal-600">Le journal de la vie de l’établissement, rédigé avec les résidents.</p>
-            </div>
-            <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 print:px-0 print:gap-0">
+        <main className="min-h-screen bg-cream-100 px-2 pb-2 pt-36 md:px-4 md:pb-3 md:pt-44 lg:h-[100dvh] lg:overflow-hidden print:h-auto print:overflow-visible print:bg-white print:pt-0 print:pb-0">
+            <h1 className="sr-only">Le Petit Écho du Cœur</h1>
+            <div className="mx-auto flex h-full w-full max-w-[1600px] flex-col gap-3 lg:flex-row print:gap-0 print:px-0">
                 {/* Main View */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="flex-grow bg-charcoal-900 rounded-3xl p-2 md:p-3 shadow-2xl border border-charcoal-700 lg:h-[calc(100vh-10rem)] overflow-y-auto print:shadow-none print:border-none print:bg-white print:h-auto print:overflow-visible print:p-0"
+                    className="min-h-[650px] flex-grow overflow-y-auto rounded-3xl border border-charcoal-700 bg-charcoal-900 p-2 shadow-2xl md:p-3 lg:h-full lg:min-h-0 print:h-auto print:overflow-visible print:border-none print:bg-white print:p-0 print:shadow-none"
                 >
                     {selectedGazette ? (
                         selectedGazette.type === "generated" ? (
@@ -67,9 +64,11 @@ export default function EchoDuCoeurPage() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="w-full lg:w-80 flex-shrink-0 bg-white rounded-3xl p-6 shadow-sm border border-cream-200 h-fit print:hidden"
+                        className="h-fit w-full flex-shrink-0 rounded-3xl border border-cream-200 bg-white p-4 shadow-sm lg:w-72 print:hidden"
                     >
-                        <h2 className="font-serif text-2xl text-charcoal-900 mb-6">Anciens numéros</h2>
+                        <h2 className="mb-3 font-serif text-xl text-charcoal-900">Le Petit Écho du Cœur</h2>
+                        <p className="mb-4 text-sm text-charcoal-600">Le journal de la vie de l’établissement.</p>
+                        <h3 className="mb-3 font-semibold text-charcoal-900">Anciens numéros</h3>
                         <ul className="space-y-3">
                             {allGazettes.map((g: any, i: number) => {
                                 const isSelected = selectedGazette && (
