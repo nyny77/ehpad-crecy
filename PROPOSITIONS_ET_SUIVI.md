@@ -1,6 +1,6 @@
 # Propositions et suivi des avancées
 
-**Dernière mise à jour : 16 août 2026**
+**Dernière mise à jour : 17 août 2026**
 
 Ce fichier est la liste de référence des améliorations proposées pour le site. À chaque nouvelle avancée, l’action terminée doit être barrée avec `~~action terminée~~`, accompagnée de la date si elle est connue.
 
@@ -70,6 +70,7 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 ## Performance et sobriété
 
+- ~~Regrouper les déploiements Netlify lors du chargement de plusieurs photos.~~ — **Les commits intermédiaires sont ignorés par Netlify et un seul déploiement est lancé à la fin du lot, avec publication de secours en cas d’interruption, le 17 août 2026. Tests, build, fonctions Netlify, parcours navigateur et contrôle de production validés.**
 - Ne plus inclure dans le déploiement les originaux d’images qui ne sont jamais affichés.
 - Supprimer les doublons stricts de médias.
 - Produire automatiquement plusieurs tailles WebP et AVIF.
