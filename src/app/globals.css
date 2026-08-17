@@ -3,6 +3,10 @@
 
 /* ===== VARIABLES CSS GLOBALES ===== */
 :root {
+  /* Polices système : aucun téléchargement externe requis pendant le build. */
+  --font-inter: Arial, Helvetica, sans-serif;
+  --font-playfair: Georgia, "Times New Roman", serif;
+
   /* Couleurs principales - Updated to match new palette */
   --color-cream: #FDF7F0;
   --color-cream-dark: #EEDCC0;

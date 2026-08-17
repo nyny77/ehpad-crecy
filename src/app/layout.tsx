@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -11,20 +10,6 @@ import NetlifyIdentityRedirect from "@/components/providers/NetlifyIdentityRedir
 import AccessibilityToggle from "@/components/ui/AccessibilityToggle";
 import ChatBot from "@/components/ui/ChatBotWrapper";
 import PerformanceMotionProvider from "@/components/providers/PerformanceMotionProvider";
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
 
 export const viewport: Viewport = {
   themeColor: "#962d3a",
@@ -83,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="fr">
       <head>
         <Script
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"

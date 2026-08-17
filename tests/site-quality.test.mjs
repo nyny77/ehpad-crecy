@@ -117,6 +117,8 @@ test("les fondations d’accessibilité restent présentes", () => {
   assert.match(source("src/components/ui/PdfViewer.tsx"), /Ouvrir le PDF complet/);
   assert.match(source("src/app/livret-accueil/page.tsx"), /<PdfViewer/);
   assert.match(source("src/app/echo-du-coeur/page.tsx"), /<PdfViewer/);
+  assert.doesNotMatch(source("src/app/layout.tsx"), /next\/font\/google/);
+  assert.match(source("src/app/globals.css"), /--font-inter:\s*Arial/);
   assert.ok(existsSync(join(ROOT, "src/app/accessibilite/schema-pluriannuel/page.tsx")));
   assert.ok(existsSync(join(ROOT, "src/app/accessibilite/plan-annuel-2026/page.tsx")));
 });
