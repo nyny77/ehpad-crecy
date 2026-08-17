@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { handler as healthHandler } from "../netlify/functions/health";
 import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
-import { handler as familyMessageHandler } from "../netlify/functions/famille-send-message";
+import familyMessageHandler from "../netlify/functions/famille-send-message";
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 import { handler as testEmailHandler } from "../netlify/functions/test-email";
 import { handler as sendNotificationHandler } from "../netlify/functions/send-notification";
@@ -52,14 +52,14 @@ test("la gestion du courrier refuse un visiteur et accepte un administrateur", a
 });
 
 test("le Postier refuse une mauvaise méthode et un code inconnu", async () => {
-    const wrongMethod = await familyMessageHandler(event("GET") as never, anonymousContext as never);
+    const wrongMethod = await familyMessageHandler(new Request("http://localhost/", { method: "GET" }), anonymousContext as never);
     const unknownCode = await familyMessageHandler(
-        event("POST", { action: "verify", secretCode: "CODE-TEST-INEXISTANT" }) as never,
+        new Request("http://localhost/", { method: "POST", body: JSON.stringify({ action: "verify", secretCode: "CODE-TEST-INEXISTANT" }) }),
         anonymousContext as never,
     );
 
-    assert.equal(wrongMethod?.statusCode, 405);
-    assert.equal(unknownCode?.statusCode, 401);
+    assert.equal(wrongMethod?.status, 405);
+    assert.equal(unknownCode?.status, 401);
 });
 
 test("la génération d'image IA reste réservée à l'administration", async () => {

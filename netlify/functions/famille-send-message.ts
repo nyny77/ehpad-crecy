@@ -1,7 +1,6 @@
-import type { Handler } from "@netlify/functions";
+import type { Context } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
 import crypto from "node:crypto";
-import { json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { getMessagesStore, getResidentsStore, getImagesStore } from "./_shared/blob-storage";
 import type { Resident } from "./admin-residents";
@@ -20,12 +19,15 @@ export interface FamilyMessage {
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-export const handler: Handler = async (event, context) => {
+const json = (status: number, body: unknown) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
+
+export default async (req: Request, context: Context) => {
     // Endpoint public
-    if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
+    if (req.method !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
-        const body = parseJsonObject(event.body, 8 * 1024 * 1024);
+        const bodyText = await req.text();
+        const body = parseJsonObject(bodyText, 8 * 1024 * 1024);
         const action = String(body.action || "send").trim();
         const secretCode = String(body.secretCode || "").trim().toUpperCase();
         const senderName = String(body.senderName || "").trim();
@@ -46,7 +48,7 @@ export const handler: Handler = async (event, context) => {
                 const formData = new FormData();
                 formData.append("secret", process.env.CF_TURNSTILE_SECRET);
                 formData.append("response", turnstileToken);
-                formData.append("remoteip", event.headers["client-ip"] || "");
+                formData.append("remoteip", req.headers.get("client-ip") || req.headers.get("x-forwarded-for") || "");
 
                 const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
                     body: formData,
@@ -116,7 +118,7 @@ export const handler: Handler = async (event, context) => {
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {
-        logFunctionError("famille-send-message", error, context.awsRequestId);
+        logFunctionError("famille-send-message", error, context.requestId || "unknown");
         return json(validationStatus(error), { error: error instanceof Error ? error.message : "Erreur lors de l'envoi du message" });
     }
 };
