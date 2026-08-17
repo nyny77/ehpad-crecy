@@ -7,7 +7,7 @@ import gazetteData from "@/lib/data/gazette.json";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
 import RichTextEditor from "@/components/ui/RichTextEditor";
 import { processGazetteImage } from "@/lib/image-processing";
-
+import { sanitizeContent } from "@/lib/sanitize";
 function encodeBlobBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -352,7 +352,7 @@ export default function GazetteManager() {
                                         <div key={i} className="bg-cream-50 rounded-2xl p-4 border border-cream-200 flex items-center justify-between gap-4">
                                             <div className="flex flex-col min-w-0">
                                                 <span className="text-charcoal-900 font-medium flex items-center gap-2">
-                                                    <span dangerouslySetInnerHTML={{ __html: g.title || "" }} className="inline-block rich-text-content-inline" /> 
+                                                    <span dangerouslySetInnerHTML={{ __html: sanitizeContent(g.title || "") }} className="inline-block rich-text-content-inline" /> 
                                                     {g.type === "generated" && <span className="text-xs bg-sage-100 text-sage-700 px-2 py-0.5 rounded-full">Générée</span>}
                                                     {(!g.type || g.type === "pdf") && <span className="text-xs bg-cream-200 text-charcoal-600 px-2 py-0.5 rounded-full">PDF</span>}
                                                 </span>

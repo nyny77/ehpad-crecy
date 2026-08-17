@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "@/components/ui/OptimizedImage";
+import { sanitizeContent } from "@/lib/sanitize";
 
 interface GazetteBlock {
     id: string;
@@ -32,7 +33,7 @@ export default function GazetteRenderer({ title, date, blocks, backgroundColor }
                 </div>
                 <h1 
                     className="font-serif text-4xl md:text-5xl lg:text-6xl text-charcoal-900 font-black mb-4 uppercase rich-text-content"
-                    dangerouslySetInnerHTML={{ __html: title }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeContent(title) }}
                 />
                 <div className="inline-block border-t border-b border-charcoal-900 py-1 px-8">
                     <span className="italic text-charcoal-600 capitalize">Parution de {formattedDate}</span>
@@ -61,7 +62,7 @@ export default function GazetteRenderer({ title, date, blocks, backgroundColor }
                                             <li key={t.id} className="flex items-baseline gap-4 text-charcoal-800 font-medium print:text-black">
                                                 <span className="text-terracotta-500 font-bold shrink-0">{String(idx + 1).padStart(2, '0')}</span>
                                                 <span className="flex-grow border-b border-dotted border-charcoal-300 mr-2 relative top-[-4px]"></span>
-                                                <span dangerouslySetInnerHTML={{ __html: t.content }} className="rich-text-content inline-block" />
+                                                <span dangerouslySetInnerHTML={{ __html: sanitizeContent(t.content) }} className="rich-text-content inline-block" />
                                             </li>
                                         ))}
                                     </ul>
@@ -75,7 +76,7 @@ export default function GazetteRenderer({ title, date, blocks, backgroundColor }
                                     key={block.id} 
                                     className={`font-serif text-2xl md:text-3xl text-terracotta-700 mt-10 mb-4 print:text-charcoal-900 print:mt-6 print:break-after-avoid rich-text-content ${block.backgroundColor && block.backgroundColor !== '#ffffff' ? 'p-4 rounded-xl' : ''}`}
                                     style={block.backgroundColor && block.backgroundColor !== '#ffffff' ? { backgroundColor: block.backgroundColor } : undefined}
-                                    dangerouslySetInnerHTML={{ __html: block.content }}
+                                    dangerouslySetInnerHTML={{ __html: sanitizeContent(block.content) }}
                                 />
                             );
                         }
@@ -86,7 +87,7 @@ export default function GazetteRenderer({ title, date, blocks, backgroundColor }
                                     key={block.id} 
                                     className="mb-6 text-charcoal-700 print:text-black rich-text-content rounded-xl p-1"
                                     style={block.backgroundColor && block.backgroundColor !== '#ffffff' ? { backgroundColor: block.backgroundColor, padding: '1.5rem' } : undefined}
-                                    dangerouslySetInnerHTML={{ __html: block.content }}
+                                    dangerouslySetInnerHTML={{ __html: sanitizeContent(block.content) }}
                                 />
                             );
                         }
@@ -107,7 +108,7 @@ export default function GazetteRenderer({ title, date, blocks, backgroundColor }
                                         </div>
                                         <div className="w-full md:w-1/2 text-charcoal-700 print:text-black rich-text-content">
                                             {block.caption ? (
-                                                <div dangerouslySetInnerHTML={{ __html: block.caption }} />
+                                                <div dangerouslySetInnerHTML={{ __html: sanitizeContent(block.caption) }} />
                                             ) : (
                                                 <p className="italic text-charcoal-400">Ajoutez du texte à côté de l'image...</p>
                                             )}

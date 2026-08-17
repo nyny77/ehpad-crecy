@@ -3,6 +3,7 @@ import { Mail, CheckCircle2, Trash2, LoaderCircle, Printer, Image as ImageIcon }
 import type { FamilyMessage } from "../../../netlify/functions/famille-send-message";
 import type { Resident } from "../../../netlify/functions/admin-residents";
 import { adminFetch } from "@/lib/admin-api";
+import AdminImage from "@/components/ui/AdminImage";
 
 const POSTCARD_THEMES = [
     { name: "Aurore", primary: "#D64C63", secondary: "#F4B860", accent: "#4F8A75", paper: "#FFF8F1", ink: "#26333D" },
@@ -838,25 +839,14 @@ export default function CourrierManager() {
                                     </div>
 
                                     <div className="flex flex-col md:flex-row gap-6 pr-8">
-                                        
                                         {/* Image thumbnail if any */}
                                         <div className="md:w-1/4 flex-shrink-0">
                                             {msg.photoUrl ? (
                                                 <div className="aspect-[4/3] rounded-xl overflow-hidden bg-cream-100 shadow-sm relative">
-                                                    <img
-                                                        src={msg.photoUrl} 
+                                                    <AdminImage
+                                                        photoUrl={msg.photoUrl} 
                                                         alt={`Photo jointe au message de ${msg.senderName}`}
                                                         className="w-full h-full object-cover" 
-                                                        onError={(e) => {
-                                                            const target = e.target as HTMLImageElement;
-                                                            if (!target.src.includes('raw.githubusercontent.com')) {
-                                                                target.src = `https://raw.githubusercontent.com/nyny77/ehpad-crecy/main/public${msg.photoUrl}`;
-                                                            } else {
-                                                                // If even GitHub raw fails, show a fallback icon
-                                                                target.style.display = 'none';
-                                                                target.parentElement!.innerHTML = '<div class="absolute inset-0 flex flex-col items-center justify-center text-cream-400 bg-cream-50"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg><span class="text-xs font-medium text-center px-2">Image en cours<br/>de traitement</span></div>';
-                                                            }
-                                                        }}
                                                     />
                                                 </div>
                                             ) : isNew ? (

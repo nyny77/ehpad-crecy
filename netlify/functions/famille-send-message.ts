@@ -1,8 +1,9 @@
 import type { Handler } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
+import crypto from "node:crypto";
 import { json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
-import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { getMessagesStore, getResidentsStore, getImagesStore } from "./_shared/blob-storage";
 import type { Resident } from "./admin-residents";
 import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
@@ -17,12 +18,10 @@ export interface FamilyMessage {
     distributedAt?: string;
 }
 
-const RESIDENTS_PATH = "src/lib/data/residents.json";
-const MESSAGES_PATH = "src/lib/data/messages.json";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
 export const handler: Handler = async (event, context) => {
-    // Note: Public endpoint, no admin-auth required. We authenticate via secretCode.
+    // Endpoint public
     if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
 
     try {
@@ -32,27 +31,55 @@ export const handler: Handler = async (event, context) => {
         const senderName = String(body.senderName || "").trim();
         const text = String(body.text || "").trim();
         const imageBase64 = body.imageBase64;
+        const turnstileToken = String(body.turnstileToken || "");
 
-        if (!secretCode) {
-            return json(400, { error: "Le code secret est obligatoire." });
-        }
+        if (!secretCode) return json(400, { error: "Le code secret est obligatoire." });
         if (!new Set(["send", "verify"]).has(action)) return json(400, { error: "Action invalide." });
         if (senderName.length > 100 || text.length > 2_000) return json(400, { error: "Le nom ou le message est trop long." });
         if (action === "send" && (!senderName || !text)) {
             return json(400, { error: "Le nom et le message sont obligatoires." });
         }
 
-        // 1. Verify Secret Code
-        let residentsData: { residents: Resident[] } = { residents: [] };
-        try {
-            residentsData = JSON.parse(await readRepositoryText(RESIDENTS_PATH));
-        } catch (e: any) {
-            if (!e.message.includes("404")) throw e;
+        // --- 1. Validation du CAPTCHA ---
+        if (process.env.CF_TURNSTILE_SECRET) {
+            const formData = new FormData();
+            formData.append("secret", process.env.CF_TURNSTILE_SECRET);
+            formData.append("response", turnstileToken);
+            formData.append("remoteip", event.headers["client-ip"] || "");
+
+            const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+                body: formData,
+                method: "POST",
+            });
+            const outcome = await result.json();
+            if (!outcome.success) {
+                return json(403, { error: "Échec de la validation du CAPTCHA (humain)." });
+            }
+        } else {
+            // Mode fallback si pas configuré
+            if (!turnstileToken) {
+                return json(400, { error: "Veuillez cocher la case 'Je suis un humain'." });
+            }
         }
 
-        const resident = residentsData.residents.find(r => r.secretCode === secretCode);
+        // --- 2. Vérification du Code Secret ---
+        const residentsStore = getResidentsStore();
+        const { blobs } = await residentsStore.list();
+        let resident: Resident | null = null;
+        const hashedInputCode = crypto.createHash("sha256").update(secretCode).digest("hex");
+
+        for (const b of blobs) {
+            const res = await residentsStore.getJSON(b.key) as Resident;
+            // Support rétro-compatible pendant la migration
+            const storedHash = res.secretCode.length === 64 ? res.secretCode : crypto.createHash("sha256").update(res.secretCode).digest("hex");
+            if (storedHash === hashedInputCode) {
+                resident = res;
+                break;
+            }
+        }
+
         if (!resident) {
-            // Give a generic error to avoid code enumeration
+            // Erreur générique pour éviter l'énumération
             return json(401, { error: "Code secret incorrect." });
         }
 
@@ -60,26 +87,19 @@ export const handler: Handler = async (event, context) => {
             return json(200, { success: true, residentName: resident.name });
         }
 
-        // 2. Fetch Messages
-        let messagesData: { messages: FamilyMessage[] } = { messages: [] };
-        try {
-            messagesData = JSON.parse(await readRepositoryText(MESSAGES_PATH));
-        } catch (e: any) {
-            if (!e.message.includes("404")) throw e;
-        }
-
-        const changes: GitChange[] = [];
+        // --- 3. Traitement de la photo ---
         let photoUrl: string | null = null;
-
-        // 3. Process Photo if present
         if (imageBase64) {
             const image = (await validateImage(imageBase64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000, formats: ["webp"] })).buffer;
             const name = `msg-${Date.now()}-${randomUUID().slice(0, 8)}.webp`;
-            photoUrl = `/images/messages/${name}`;
-            changes.push({ path: `public${photoUrl}`, content: image.toString("base64"), encoding: "base64" });
+            
+            const imagesStore = getImagesStore();
+            await imagesStore.set(name, image);
+            photoUrl = name; // On ne stocke que la clé de l'image
         }
 
-        // 4. Create Message
+        // --- 4. Enregistrement du message ---
+        const messagesStore = getMessagesStore();
         const newMessage: FamilyMessage = {
             id: randomUUID(),
             residentId: resident.id,
@@ -89,11 +109,8 @@ export const handler: Handler = async (event, context) => {
             date: new Date().toISOString(),
             status: "nouveau"
         };
-        messagesData.messages.push(newMessage);
 
-        // 5. Commit
-        changes.push({ path: MESSAGES_PATH, content: JSON.stringify(messagesData, null, 2) + "\n" });
-        await commitChanges("Postier : nouveau courrier familial", changes);
+        await messagesStore.setJSON(newMessage.id, newMessage);
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {

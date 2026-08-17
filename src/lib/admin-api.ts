@@ -18,3 +18,20 @@ export async function adminFetch<T>(url: string, init: RequestInit = {}): Promis
     }
     return data as T;
 }
+
+export async function adminFetchBlob(url: string, init: RequestInit = {}): Promise<Blob> {
+    const token = getCurrentUser()?.token?.access_token;
+    if (!token) throw new Error("La session administrateur a expiré.");
+
+    const response = await fetch(url, {
+        ...init,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            ...init.headers,
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`Erreur HTTP ${response.status}`);
+    }
+    return await response.blob();
+}
