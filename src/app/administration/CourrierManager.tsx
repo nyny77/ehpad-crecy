@@ -899,7 +899,7 @@ export default function CourrierManager() {
                                                                 onClick={() => handlePrint(msg)}
                                                                 className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal-800 text-white text-sm font-semibold rounded-lg hover:bg-charcoal-900 transition-colors"
                                                             >
-                                                                <Printer size={16} /> Imprimer
+                                                    <Printer size={16} /> Imprimer — design 2026
                                                             </button>
                                                             <button 
                                                                 onClick={() => handleMarkDistributed(msg.id)}
