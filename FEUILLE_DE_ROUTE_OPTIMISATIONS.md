@@ -68,7 +68,8 @@ Ces chiffres mesurent surtout le poids du déploiement. L’instrumentation LCP,
 - page de recrutement et candidature ;
 - livret d'accueil interactif pour les agents ;
 - page de contact conversationnelle ;
-- assistant virtuel local à base de règles ;
+- page Histoire enrichie (bâtiment de 1868 à Montplaisir, cuisine/restaurant) et frise chronologique accessible (RGAA) ;
+- assistant virtuel IA « Bonjour Crécy » avec modèle Llama 3.2, commandes vocales par micro (Speech-to-Text) et synthèse vocale (Text-to-Speech), suggestions rapides et secours local ;
 - affichage adapté, focus visible et réduction des mouvements ;
 - PWA, icônes d'installation et fonctionnement hors connexion minimal.
 
@@ -320,7 +321,7 @@ Le service existe déjà sur `/admissions` avec un guide complet, les aides fina
 4. **Visite virtuelle racontée** : *(Mis en pause)*
 5. **La Place du village** : *(Mis en pause)*
 6. **Gazette augmentée** : *(Génération IA opérationnelle, extensions audio/TV mises en pause)*
-7. **Assistant « Bonjour Crécy »** : *(Mis en pause)*
+7. **Assistant « Bonjour Crécy »** : *(Livré et mis en ligne le 18 août 2026 : IA Llama 3.2, commandes vocales micro Speech-to-Text et lecture audio Text-to-Speech, suggestions en 1 clic, conformité RGAA)*
 
 ## 6. Matrice de décision
 

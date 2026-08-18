@@ -35,9 +35,9 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - ~~PWA et page hors connexion.~~
 - ~~Sitemap, robots.txt et données structurées de l’établissement.~~
 - ~~Correction des anciens liens et coordonnées.~~
-- ~~Tests automatiques, ESLint, TypeScript et build de production.~~
-- ~~CI GitHub et point de contrôle de santé.~~
 - ~~Alignement des informations de la barre inférieure du pied de page sur une seule ligne sur ordinateur.~~ — **Terminé le 16 août 2026.**
+- ~~Enrichissement historique du bâtiment de 1868 (annexion de Montplaisir, hospice communal, école, cuisine et salle de restaurant) et ajout d'une frise chronologique accessible (RGAA) sur la page Histoire.~~ — **Terminé le 18 août 2026.**
+- ~~Assistant IA « Bonjour Crécy » avec fonctions vocales : connexion à Llama 3.2 (Cloudflare Workers AI gratuit), reconnaissance vocale micro (Speech-to-Text) et lecture audio (Text-to-Speech), suggestions en 1 clic et mise en valeur spotlight (RGAA).~~ — **Terminé le 18 août 2026.**
 
 ## Protections simples du Postier — sans modifier le parcours famille
 
@@ -132,9 +132,9 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 
 - Calendrier d'ateliers ouverts, bénévolat et mur des mercis.
 
-### Assistant Bonjour Crécy — *Mis en pause le 18 août 2026*
+### Assistant Bonjour Crécy — ~~Mis en ligne le 18 août 2026~~
 
-- Évolution du chatbot vers un assistant documentaire strict.
+- ~~Évolution du chatbot vers un assistant documentaire avec IA Llama 3.2 (Cloudflare Workers AI), commandes vocales (Speech-to-Text et Text-to-Speech), suggestions rapides et conformité RGAA.~~ — **Terminé le 18 août 2026.**
 
 ## Ordre de travail recommandé
 
