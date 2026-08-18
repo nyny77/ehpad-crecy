@@ -5,9 +5,10 @@
       "residentId": "1ce6ace3953c1f96",
       "senderName": "Ta ninette favorite",
       "text": "Coucou les amis !",
-      "photoUrl": "/images/messages/msg-1787030846895-5523cce8.webp",
+      "photoUrl": null,
       "date": "2026-08-18T05:27:26.896Z",
-      "status": "nouveau"
+      "status": "distribue",
+      "distributedAt": "2026-08-18T05:35:45.210Z"
     }
   ]
 }
