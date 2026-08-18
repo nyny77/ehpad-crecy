@@ -66,6 +66,34 @@ const LOCATIONS = [
     }
 ];
 
+const TIMELINE_STEPS = [
+    {
+        date: "XIIe siècle",
+        title: "Les Remparts & le Beffroi",
+        description: "Édification des tours de garde et des fortifications médiévales défendant la cité au confluent des bras du Grand Morin."
+    },
+    {
+        date: "XIIIe siècle",
+        title: "La Collégiale Notre-Dame",
+        description: "Construction de ce joyau de l'art gothique rayonnant, classé monument historique et repère spirituel et artistique de la vallée."
+    },
+    {
+        date: "1868",
+        title: "Fondation de l’Hospice de Montplaisir",
+        description: "La commune annexe une parcelle à Montplaisir pour y bâtir l’Hospice et l'école. Cette même bâtisse abrite aujourd'hui notre cuisine et notre salle de restaurant."
+    },
+    {
+        date: "1972",
+        title: "Création de Crécy-la-Chapelle",
+        description: "Fusion historique des communes de Crécy-en-Brie et La Chapelle-sur-Crécy, unissant patrimoine d'exception et cadre naturel préservé."
+    },
+    {
+        date: "Aujourd'hui",
+        title: "L'EHPAD de Crécy",
+        description: "Un lieu de vie moderne, chaleureux et médicalisé, qui perpétue plus de 150 ans de bienveillance et d'accueil au cœur de la ville."
+    }
+];
+
 // Helper pour les tailles
 const getSizeClasses = (size: string) => {
     switch (size) {
@@ -224,6 +252,50 @@ export default function HistoirePage() {
                         </p>
                     </div>
                 </motion.div>
+
+                {/* Timeline Section */}
+                <motion.section
+                    aria-labelledby="timeline-heading"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-4xl mx-auto mt-24 px-4"
+                >
+                    <div className="text-center mb-12">
+                        <h2 id="timeline-heading" className="text-3xl md:text-4xl font-serif font-bold text-charcoal-900 mb-4">
+                            Les grandes étapes de notre histoire
+                        </h2>
+                        <div className="w-20 h-1 bg-gradient-to-r from-terracotta-400 to-sage-400 mx-auto rounded-full mb-4" />
+                        <p className="text-charcoal-600 max-w-xl mx-auto text-base md:text-lg">
+                            De la cité fortifiée du Moyen Âge à la résidence d’aujourd’hui, plus de huit siècles d’histoire au fil de l’eau.
+                        </p>
+                    </div>
+
+                    <ol className="relative border-l-2 border-terracotta-300 ml-4 md:ml-32 space-y-10">
+                        {TIMELINE_STEPS.map((step, idx) => (
+                            <li key={idx} className="relative pl-8 md:pl-10">
+                                {/* Timeline Dot */}
+                                <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-terracotta-500 border-4 border-cream-100 shadow-sm" aria-hidden="true" />
+                                
+                                {/* Date Badge */}
+                                <div className="md:absolute md:-left-36 md:top-0 md:w-28 md:text-right mb-2 md:mb-0">
+                                    <span className="inline-block px-3 py-1 bg-terracotta-100 text-terracotta-800 rounded-full font-bold text-xs md:text-sm shadow-sm border border-terracotta-200">
+                                        {step.date}
+                                    </span>
+                                </div>
+
+                                <div className="bg-white p-6 rounded-2xl border border-cream-300 shadow-sm hover:shadow-md transition-shadow">
+                                    <h3 className="text-xl font-serif font-bold text-charcoal-900 mb-2">
+                                        {step.title}
+                                    </h3>
+                                    <p className="text-charcoal-700 leading-relaxed text-sm md:text-base">
+                                        {step.description}
+                                    </p>
+                                </div>
+                            </li>
+                        ))}
+                    </ol>
+                </motion.section>
 
                 {/* Video Section */}
                 <motion.div
