@@ -56,9 +56,10 @@ const LOCATIONS = [
     },
     {
         id: "hospice",
-        title: "L'Hospice & l'École",
-        subtitle: "Une double vocation",
-        description: "L'histoire de notre établissement est riche. Construit comme Hospice en 1868, il accueillait aussi une école primaire tenue par des bonnes sœurs où des générations d'enfants ont grandi.",
+        title: "L'Hospice de 1868",
+        subtitle: "Notre cuisine & restaurant d'aujourd'hui",
+        description: "En 1868, une portion de terrain sise à Montplaisir est annexée à Crécy-en-Brie pour y construire l’Hospice, qui accueillait aussi une école primaire. Toujours debout et au cœur de la vie de notre établissement, cette bâtisse historique abrite aujourd'hui notre cuisine et notre salle de restaurant où nous partageons chaque repas.",
+        quote: "Plus de 150 ans de convivialité",
         image: "/images/history/hospice-ecole.jpg",
         size: "wide",
         theme: "terracotta"
@@ -153,21 +154,24 @@ export default function HistoirePage() {
                                 damping: 20, 
                                 delay: index * 0.1 
                             }}
-                            className={`relative rounded-3xl overflow-hidden group shadow-xl ${getSizeClasses(loc.size)}`}
+                            className={`relative rounded-3xl overflow-hidden group shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-500 ${getSizeClasses(loc.size)}`}
+                            tabIndex={0}
+                            aria-label={`${loc.title} - ${loc.subtitle}`}
                         >
                             {/* Background Image */}
                             <Image
                                 src={loc.image}
-                                alt={loc.title}
+                                alt=""
+                                aria-hidden="true"
                                 fill
                                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                             />
                             
                             {/* Always visible bottom gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-charcoal-900/20 to-transparent opacity-80" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-charcoal-900/20 to-transparent opacity-80" aria-hidden="true" />
                             
                             {/* Default State Content */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform transition-transform duration-500 group-hover:translate-y-full">
+                            <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform transition-transform duration-500 group-hover:translate-y-full group-focus:translate-y-full" aria-hidden="true">
                                 <h3 className="text-2xl md:text-3xl font-serif font-bold !text-white mb-1 drop-shadow-md">
                                     {loc.title}
                                 </h3>
@@ -176,8 +180,8 @@ export default function HistoirePage() {
                                 </p>
                             </div>
 
-                            {/* Hover Reveal Overlay (Glassmorphism) */}
-                            <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-xl overflow-y-auto ${getThemeColors(loc.theme)}`}>
+                            {/* Hover / Focus Reveal Overlay (Glassmorphism) */}
+                            <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-all duration-500 backdrop-blur-xl overflow-y-auto ${getThemeColors(loc.theme)}`}>
                                 <motion.div
                                     initial={{ y: 20, opacity: 0 }}
                                     whileHover={{ y: 0, opacity: 1 }}
@@ -200,6 +204,26 @@ export default function HistoirePage() {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Encart Le saviez-vous ? */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-4xl mx-auto mt-12 bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-3xl border-2 border-terracotta-200 shadow-soft flex flex-col md:flex-row items-center gap-6"
+                >
+                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-terracotta-50 border border-terracotta-200 flex items-center justify-center text-terracotta-600 text-2xl shadow-sm">
+                        💡
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                        <h2 className="text-xl font-serif font-bold text-charcoal-900 mb-2">
+                            Le saviez-vous ?
+                        </h2>
+                        <p className="text-charcoal-700 leading-relaxed text-sm md:text-base">
+                            Le bâtiment en pierre dans lequel résidents et équipes se retrouvent chaque jour pour les repas est l’Hospice d’origine érigé en <strong>1868</strong>. Vous pouvez retrouver plusieurs cartes postales et photographies d’époque de l’Hospice dans notre <a href="/visite" className="text-terracotta-600 hover:text-terracotta-700 underline font-medium">galerie de visite</a>.
+                        </p>
+                    </div>
+                </motion.div>
 
                 {/* Video Section */}
                 <motion.div
