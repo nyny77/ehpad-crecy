@@ -1,14 +1,24 @@
 import { Metadata } from "next";
 import { EHPAD_INFO } from "@/lib/constants";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
     title: "Mentions Légales | EHPAD de Crécy",
     description: "Mentions légales et informations juridiques de l'EHPAD de Crécy-la-Chapelle.",
+    alternates: {
+        canonical: "/mentions-legales",
+    },
 };
 
 export default function MentionsLegalesPage() {
     return (
         <main className="min-h-screen bg-cream-100 pt-32 pb-20">
+            <BreadcrumbJsonLd
+                items={[
+                    { name: "Accueil", url: "/" },
+                    { name: "Mentions Légales", url: "/mentions-legales" },
+                ]}
+            />
             <div className="container-custom">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900 mb-8">

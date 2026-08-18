@@ -2,6 +2,7 @@ import { SERVICES_EXTENDED } from "@/lib/services-data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export async function generateStaticParams() {
     return SERVICES_EXTENDED.map((service) => ({
@@ -21,9 +22,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: `${service.title} | Équipe de l’EHPAD de Crécy`,
         description: service.shortDescription,
+        alternates: {
+            canonical: `/equipe/${service.id}`,
+        },
         openGraph: {
             title: `${service.title} | EHPAD de Crécy`,
             description: service.shortDescription,
+            url: `/equipe/${service.id}`,
             images: [service.image],
         },
     };
@@ -44,10 +49,19 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const nextService = currentIndex < SERVICES_EXTENDED.length - 1 ? SERVICES_EXTENDED[currentIndex + 1] : null;
 
     return (
-        <ServiceDetailClient
-            service={service}
-            prevService={prevService}
-            nextService={nextService}
-        />
+        <>
+            <BreadcrumbJsonLd
+                items={[
+                    { name: "Accueil", url: "/" },
+                    { name: "Notre Équipe", url: "/equipe" },
+                    { name: service.title, url: `/equipe/${service.id}` },
+                ]}
+            />
+            <ServiceDetailClient
+                service={service}
+                prevService={prevService}
+                nextService={nextService}
+            />
+        </>
     );
 }

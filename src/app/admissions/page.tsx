@@ -6,15 +6,49 @@ import AdmissionChecklists from "@/components/admissions/AdmissionChecklists";
 import AdmissionFAQ from "@/components/admissions/AdmissionFAQ";
 import { EHPAD_INFO } from "@/lib/constants";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
     title: "Préparer mon entrée | EHPAD de Crécy-la-Chapelle",
     description: "Le guide complet pas-à-pas pour préparer votre admission : aides financières, démarches ViaTrajectoire, documents à fournir et trousseau.",
+    alternates: {
+        canonical: "/admissions",
+    },
 };
+
+const ADMISSION_FAQS = [
+    {
+        question: "Puis-je apporter mes propres meubles ?",
+        answer: "Oui ! Nous encourageons fortement les résidents à personnaliser leur espace pour se sentir chez eux. Vous pouvez apporter des petits meubles (fauteuil, commode, petite télévision, cadres photos, etc.), sous réserve que l'espace permette une circulation sécurisée pour le personnel soignant. Le lit médicalisé est quant à lui fourni par nos soins.",
+    },
+    {
+        question: "Comment est géré le linge ?",
+        answer: "Le linge plat (draps, serviettes, gants de toilette) est fourni et entretenu par l'établissement. L'entretien des vêtements personnels est également inclus. Afin d'éviter toute perte en blanchisserie, les vêtements doivent être étiquetés au nom du résident. Bonne nouvelle : notre équipe peut se charger du marquage pour vous lors de l'admission !",
+    },
+    {
+        question: "Quelles sont les heures de visite ?",
+        answer: "Les visites sont libres, généralement conseillées de 11h à 19h pour respecter le rythme de vie, les repas et les soins des résidents. Les familles et proches sont toujours les bienvenus.",
+    },
+    {
+        question: "Mon animal de compagnie peut-il me rendre visite ?",
+        answer: "Oui, les animaux de compagnie tenus en laisse et à jour de leurs vaccins sont les bienvenus pour rendre visite à leur maître. Toutefois, ils ne peuvent pas résider de manière permanente avec vous.",
+    },
+    {
+        question: "Puis-je manger avec ma famille à l'EHPAD ?",
+        answer: "Tout à fait. Une « table invités » peut être réservée pour déjeuner avec vos proches. Il suffit de prévenir l'accueil au moins 48h à l'avance pour que les repas supplémentaires soient préparés par notre chef.",
+    },
+];
 
 export default function AdmissionsPage() {
     return (
         <main className="pt-32 md:pt-40 bg-cream-100 min-h-screen">
+            <BreadcrumbJsonLd
+                items={[
+                    { name: "Accueil", url: "/" },
+                    { name: "Préparer mon entrée", url: "/admissions" },
+                ]}
+            />
+            <FaqJsonLd items={ADMISSION_FAQS} />
             {/* Hero Section */}
             <section className="container-custom mb-16 text-center">
                 <ScrollReveal direction="up">

@@ -1,14 +1,24 @@
 import { Metadata } from "next";
 import { EHPAD_INFO } from "@/lib/constants";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
     title: "Politique de Confidentialité | EHPAD de Crécy",
     description: "Politique de confidentialité et protection des données personnelles (RGPD) de l'EHPAD de Crécy-la-Chapelle.",
+    alternates: {
+        canonical: "/politique-confidentialite",
+    },
 };
 
 export default function PolitiqueConfidentialitePage() {
     return (
         <main className="min-h-screen bg-cream-100 pt-32 pb-20">
+            <BreadcrumbJsonLd
+                items={[
+                    { name: "Accueil", url: "/" },
+                    { name: "Politique de Confidentialité", url: "/politique-confidentialite" },
+                ]}
+            />
             <div className="container-custom">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="font-serif text-4xl md:text-5xl font-bold text-charcoal-900 mb-8">

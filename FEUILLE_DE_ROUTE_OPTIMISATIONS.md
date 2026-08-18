@@ -1,6 +1,6 @@
 # Feuille de route 2026-2027 — EHPAD de Crécy
 
-**Dernière mise à jour : 16 août 2026**
+**Dernière mise à jour : 18 août 2026**
 
 **Rôle du document :** source de vérité pour les travaux terminés, les risques à traiter et les prochaines évolutions du site.
 
@@ -283,18 +283,17 @@ Deux choix cohérents sont possibles :
 - [ ] réévaluer le défilement fluide global pour les appareils modestes ;
 - [x] instrumenter la collecte anonymisée de LCP, INP et CLS en production ;
 - [x] ajouter un budget de performance dans la CI ;
-- [x] créer sitemap, robots, carte sociale globale et données structurées de l'établissement ;
-- [ ] compléter les canoniques et données structurées propres aux articles, FAQ et fils d'Ariane ;
-- [ ] suivre les conversions utiles sans profilage publicitaire.
+- [x] compléter les canoniques et données structurées propres aux articles, FAQ et fils d'Ariane ;
+- [x] suivre les conversions utiles sans profilage publicitaire (GoatCounter sans cookies).
 
 **Cibles :** LCP < 2,5 s, INP < 200 ms, CLS < 0,1 et aucune régression au-delà du budget défini.
 
-### Phase 3 — rendre le site utile chaque semaine (1 à 2 mois)
+### Phase 3 — services du quotidien *(Archivés / Mis en pause le 18 août 2026)*
 
-#### A. « Aujourd'hui à Crécy » — priorité produit n°1
+> **Arbitrage du 18 août 2026 :** Afin de maintenir un site stable, ultra-léger et centré sur l'essentiel, les nouveaux développements de services sont suspendus.
 
+#### A. « Aujourd'hui à Crécy » — *(Mis en pause)*
 Une page vivante, très lisible sur téléphone, écran d'accueil et borne :
-
 - menu du jour et allergènes généraux ;
 - activités du jour et de la semaine ;
 - prochain événement ;
@@ -303,90 +302,25 @@ Une page vivante, très lisible sur téléphone, écran d'accueil et borne :
 - boutons Appeler, Envoyer une carte, Voir la Gazette et S'inscrire à un événement ;
 - mode affichage TV pour le hall.
 
-**Effet attendu :** donner une raison concrète de revenir chaque jour.
+#### B. « Préparer mon entrée » — *(Déjà opérationnel sur `/admissions`, ajouts mis en pause)*
+Le service existe déjà sur `/admissions` avec un guide complet, les aides financières, les étapes du parcours, l’accès à ViaTrajectoire, les listes de préparation et une FAQ.
 
-#### B. « Préparer mon entrée » — déjà livré, améliorations en pause
-
-Le service existe déjà sur `/admissions` avec un guide complet, les aides financières, les étapes du parcours, l’accès à ViaTrajectoire, les listes de préparation et une FAQ. Les points suivants décrivent seulement des extensions possibles :
-
-- parcours guidé selon la situation ;
-- simulateur pédagogique hébergement + GIR + aides, avec avertissement non contractuel ;
-- comparaison chambre simple/double ;
-- checklist personnalisée et imprimable ;
-- chronologie avant, pendant et après l'arrivée ;
-- prise de rendez-vous ;
-- départ clair vers ViaTrajectoire ;
-- FAQ issue des vraies questions reçues à l'accueil.
-
-**Effet attendu :** réduire l'anxiété et le nombre d'appels répétitifs.
-
-#### C. « Vous avez dit, nous avons fait »
-
+#### C. « Vous avez dit, nous avons fait » — *(Mis en pause)*
 - décisions du Conseil de la vie sociale ;
 - propositions anonymisées ;
 - engagements, responsable et date cible ;
 - réalisations avant/après ;
 - résultats simplifiés des enquêtes de satisfaction.
 
-**Effet attendu :** matérialiser la transparence et la qualité.
+### Phase 4 — services “effet waouh” *(Archivés / Mis en pause le 18 août 2026)*
 
-### Phase 4 — services “effet waouh” (trimestre suivant)
-
-#### 1. Le Postier vivant
-
-Faire évoluer la carte postale vers une expérience émotionnelle :
-
-- message vocal avec transcription imprimable ;
-- mini-vidéo familiale convertie en QR code privé sur la carte ;
-- accusé simple « remis à votre proche » sans donnée médicale ;
-- modèles anniversaire, saison et souvenir ;
-- programmation d'une carte pour une date future ;
-- réponse du résident dictée à un professionnel, avec consentement.
-
-#### 2. La Capsule de souvenirs
-
-Chaque famille peut préparer un petit musée numérique privé : photos, voix, chansons évoquées sans héberger d'œuvres protégées, lieux importants et anecdotes. L'équipe peut générer une fiche « sujets qui font sourire » utilisable lors des animations.
-
-#### 3. Mémoire vivante de Crécy
-
-- carte interactive de Crécy-la-Chapelle ;
-- témoignages audio des résidents ;
-- photos anciennes et actuelles ;
-- parcours sonore dans la ville ;
-- contributions modérées des familles, écoles et associations ;
-- exposition annuelle et épisode de podcast.
-
-**Vision :** les résidents deviennent les passeurs de mémoire de la commune.
-
-#### 4. Visite virtuelle racontée
-
-Transformer la visite 360° en parcours guidé par des voix de résidents et de professionnels, avec sous-titres, plan interactif et versions « une journée type », « première visite » et « futur professionnel ».
-
-#### 5. La Place du village
-
-- calendrier d'ateliers ouverts ;
-- appels à bénévoles et compétences recherchées ;
-- partenariats écoles, médiathèque, associations et commerces ;
-- formulaire de proposition d'activité ;
-- mur des mercis modéré.
-
-#### 6. Gazette augmentée
-
-- version audio lue par les résidents ou une voix validée ;
-- QR codes vers des témoignages et galeries ;
-- édition automatique grand contraste ;
-- version imprimée A4 et version écran TV ;
-- compilation annuelle « L'année à Crécy ».
-
-#### 7. Assistant « Bonjour Crécy »
-
-Remplacer progressivement le chatbot à mots-clés par un guide strictement fondé sur les contenus validés du site :
-
-- réponses sourcées avec lien vers la page officielle ;
-- mode vocal et gros caractères ;
-- aucune réponse médicale individuelle ;
-- transfert immédiat vers le téléphone ou le formulaire en cas de doute ;
-- tableau des questions sans réponse pour améliorer le contenu.
+1. **Le Postier vivant** : *(Annulé pour préserver la simplicité)*
+2. **La Capsule de souvenirs** : *(Mis en pause)*
+3. **Mémoire vivante de Crécy** : *(Mis en pause)*
+4. **Visite virtuelle racontée** : *(Mis en pause)*
+5. **La Place du village** : *(Mis en pause)*
+6. **Gazette augmentée** : *(Génération IA opérationnelle, extensions audio/TV mises en pause)*
+7. **Assistant « Bonjour Crécy »** : *(Mis en pause)*
 
 ## 6. Matrice de décision
 

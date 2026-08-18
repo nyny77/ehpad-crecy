@@ -1,14 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Schéma pluriannuel d’accessibilité 2026-2028 | EHPAD de Crécy",
   description: "Stratégie pluriannuelle de mise en accessibilité numérique de l’EHPAD de Crécy-la-Chapelle.",
+  alternates: {
+    canonical: "/accessibilite/schema-pluriannuel",
+  },
 };
 
 export default function SchemaPluriannuelPage() {
   return (
     <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Accessibilité", url: "/accessibilite" },
+          { name: "Schéma pluriannuel", url: "/accessibilite/schema-pluriannuel" },
+        ]}
+      />
       <section className="section-padding">
         <div className="container-custom max-w-4xl space-y-8">
           <div>

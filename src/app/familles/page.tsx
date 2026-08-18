@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Mail, KeyRound, Upload, Send, CheckCircle2, Loader2, ArrowLeft, Camera, Image as ImageIcon } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import { Mail, KeyRound, Send, CheckCircle2, Loader2, ArrowLeft, Camera, Image as ImageIcon } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 type Step = "login" | "compose" | "success";
 
@@ -19,7 +18,7 @@ export default function FamillesPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [residentName, setResidentName] = useState("");
-    
+
     const fileInputRef = useRef<HTMLInputElement>(null);
     const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,13 +29,7 @@ export default function FamillesPage() {
             setError("Veuillez entrer le code secret.");
             return;
         }
-        
-        // On the login step, we don't actually verify the code via the backend immediately to save an API call and keep it simple.
-        // We will verify it during the final submission. Wait, actually we SHOULD verify it so we can show who they are writing to!
-        // But our backend API is a single `famille-send-message.ts`. We can add a "verify" action.
-        
-        // Actually, to make it seamless, let's just create a quick endpoint or modify the existing one.
-        // I will modify `famille-send-message.ts` locally in my mind to handle action="verify".
+
         setLoading(true);
         try {
             const res = await fetch("/.netlify/functions/famille-send-message", {
@@ -45,7 +38,7 @@ export default function FamillesPage() {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Code invalide");
-            
+
             setResidentName(data.residentName);
             setStep("compose");
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -61,30 +54,27 @@ export default function FamillesPage() {
         if (!file) return;
 
         try {
-            // createImageBitmap automatically handles EXIF orientation
             const bmp = await window.createImageBitmap(file);
             const canvas = document.createElement("canvas");
             let width = bmp.width;
             let height = bmp.height;
-            
+
             if (width > MAX_WIDTH) {
                 height = Math.round((height * MAX_WIDTH) / width);
                 width = MAX_WIDTH;
             } else if (height > MAX_WIDTH) {
-                // Also handle very tall portrait images
                 width = Math.round((width * MAX_WIDTH) / height);
                 height = MAX_WIDTH;
             }
-            
+
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext("2d");
             ctx?.drawImage(bmp, 0, 0, width, height);
-            
+
             const webp = canvas.toDataURL("image/webp", QUALITY);
             setImage(webp);
-            
-            // Clean up memory
+
             bmp.close();
         } catch (error) {
             console.error("Error processing image:", error);
@@ -95,10 +85,10 @@ export default function FamillesPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        
+
         if (!senderName.trim()) return setError("Veuillez indiquer votre nom.");
         if (!message.trim()) return setError("Veuillez écrire un petit mot.");
-        
+
         setLoading(true);
         try {
             const res = await fetch("/.netlify/functions/famille-send-message", {
@@ -107,7 +97,8 @@ export default function FamillesPage() {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Erreur lors de l'envoi");
-            
+
+            trackEvent("postier_message_sent", "Carte Postier envoyée");
             setStep("success");
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err: any) {
@@ -120,7 +111,6 @@ export default function FamillesPage() {
     return (
         <main className="min-h-screen bg-cream-50 pt-32 pb-20">
             <div className="container-custom px-4 max-w-2xl mx-auto">
-                
                 {/* Header */}
                 <div className="text-center mb-12">
                     <div className="w-16 h-16 rounded-full bg-terracotta-100 text-terracotta-600 flex items-center justify-center mx-auto mb-4">
@@ -159,7 +149,7 @@ export default function FamillesPage() {
                                     Ce code vous a été transmis par l'équipe de l'EHPAD.
                                 </p>
                             </div>
-                            
+
                             {error && <div role="alert" aria-live="assertive" className="p-4 bg-red-50 text-red-700 rounded-xl text-sm">{error}</div>}
 
                             <button
@@ -182,7 +172,7 @@ export default function FamillesPage() {
                             </button>
                             <h2 className="font-serif text-xl font-bold text-terracotta-900">Nouveau message pour {residentName}</h2>
                         </div>
-                        
+
                         <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-6">
                             <div>
                                 <label htmlFor="sender-name" className="block text-sm font-medium text-charcoal-700 mb-2">Votre nom (ex: "Ton fils Paul")</label>
@@ -213,12 +203,12 @@ export default function FamillesPage() {
 
                             <div>
                                 <p className="block text-sm font-medium text-charcoal-700 mb-2">Ajouter une photo (optionnel)</p>
-                                
+
                                 {!image ? (
                                     <>
                                         <div className="mb-4 bg-terracotta-50/50 border border-terracotta-100 rounded-xl p-3 flex items-start gap-3">
                                             <div className="mt-0.5 text-terracotta-500">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/></svg>
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /></svg>
                                             </div>
                                             <p className="text-xs text-charcoal-600 leading-relaxed">
                                                 <strong className="text-terracotta-700 font-semibold block mb-0.5">Conseil pour un plus beau rendu :</strong>
@@ -226,31 +216,31 @@ export default function FamillesPage() {
                                             </p>
                                         </div>
                                         <div className="flex flex-col sm:flex-row gap-4">
-                                        <button
-                                            type="button"
-                                            aria-controls="camera-photo-input"
-                                            onClick={() => cameraInputRef.current?.click()}
-                                            className="flex-1 border-2 border-dashed border-terracotta-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-terracotta-50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2"
-                                        >
-                                            <Camera className="mx-auto h-10 w-10 text-terracotta-500 group-hover:scale-110 transition-transform mb-3" />
-                                            <p className="text-sm font-bold text-terracotta-700">Prendre une photo</p>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            aria-controls="gallery-photo-input"
-                                            onClick={() => fileInputRef.current?.click()}
-                                            className="flex-1 border-2 border-dashed border-cream-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-cream-50 hover:border-terracotta-300 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2"
-                                        >
-                                            <ImageIcon className="mx-auto h-10 w-10 text-cream-400 group-hover:text-terracotta-500 transition-colors mb-3" />
-                                            <p className="text-sm font-medium text-charcoal-700">Choisir dans la galerie</p>
-                                        </button>
+                                            <button
+                                                type="button"
+                                                aria-controls="camera-photo-input"
+                                                onClick={() => cameraInputRef.current?.click()}
+                                                className="flex-1 border-2 border-dashed border-terracotta-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-terracotta-50 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2"
+                                            >
+                                                <Camera className="mx-auto h-10 w-10 text-terracotta-500 group-hover:scale-110 transition-transform mb-3" />
+                                                <p className="text-sm font-bold text-terracotta-700">Prendre une photo</p>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                aria-controls="gallery-photo-input"
+                                                onClick={() => fileInputRef.current?.click()}
+                                                className="flex-1 border-2 border-dashed border-cream-300 rounded-2xl p-6 text-center cursor-pointer hover:bg-cream-50 hover:border-terracotta-300 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2"
+                                            >
+                                                <ImageIcon className="mx-auto h-10 w-10 text-cream-400 group-hover:text-terracotta-500 transition-colors mb-3" />
+                                                <p className="text-sm font-medium text-charcoal-700">Choisir dans la galerie</p>
+                                            </button>
                                         </div>
                                     </>
                                 ) : (
                                     <div className="relative rounded-2xl overflow-hidden group">
                                         <img src={image} alt="Photo sélectionnée" className="w-full h-auto object-cover" />
                                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center justify-center">
-                                            <button 
+                                            <button
                                                 type="button"
                                                 onClick={() => setImage(null)}
                                                 className="px-4 py-2 bg-white text-red-600 font-bold rounded-lg"
@@ -319,7 +309,6 @@ export default function FamillesPage() {
                         </button>
                     </div>
                 )}
-
             </div>
         </main>
     );

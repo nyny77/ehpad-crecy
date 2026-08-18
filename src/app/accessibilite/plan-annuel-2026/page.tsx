@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Plan annuel d’accessibilité 2026 | EHPAD de Crécy",
   description: "Actions d’accessibilité numérique prévues et réalisées en 2026 par l’EHPAD de Crécy-la-Chapelle.",
+  alternates: {
+    canonical: "/accessibilite/plan-annuel-2026",
+  },
 };
 
 const actions = [
@@ -27,6 +31,13 @@ const actions = [
 export default function PlanAnnuelPage() {
   return (
     <main className="pt-32 md:pt-40 min-h-screen bg-cream-100">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Accessibilité", url: "/accessibilite" },
+          { name: "Plan annuel 2026", url: "/accessibilite/plan-annuel-2026" },
+        ]}
+      />
       <section className="section-padding">
         <div className="container-custom max-w-4xl space-y-8">
           <div>

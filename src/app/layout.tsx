@@ -59,8 +59,10 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "EHPAD Crécy",
   },
+  alternates: {
+    canonical: "/",
+  },
 };
-
 
 export default function RootLayout({
   children,
@@ -117,12 +119,12 @@ export default function RootLayout({
             </ErrorBoundary>
           </div>
         </PerformanceMotionProvider>
-		<Script
-  data-goatcounter="https://ehpadcrecy.goatcounter.com/count"
-  async
-  src="https://gc.zgo.at/count.js"
-  strategy="afterInteractive"
-/>
+        <Script
+          data-goatcounter="https://ehpadcrecy.goatcounter.com/count"
+          async
+          src="https://gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
         <Script
           id="register-sw"
           strategy="afterInteractive"

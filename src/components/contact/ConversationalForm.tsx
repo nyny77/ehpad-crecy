@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, User, MessageCircle, FileText, CheckCircle, ChevronLeft, ChevronRight, Upload } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export default function ConversationalForm() {
     const [step, setStep] = useState(1);
@@ -24,14 +25,12 @@ export default function ConversationalForm() {
         wantsVisit: false,
     });
 
-    // Nom du fichier sélectionné (pour l'affichage)
     const [cvFileName, setCvFileName] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const formRef = useRef<HTMLDivElement>(null);
     const stepHeadingRef = useRef<HTMLHeadingElement>(null);
-    // Ref vers l'input file permanent (hors AnimatePresence)
     const cvInputRef = useRef<HTMLInputElement>(null);
 
     const handleStepChange = (newStep: number) => {
@@ -48,26 +47,14 @@ export default function ConversationalForm() {
         setIsSubmitting(true);
 
         try {
-            // new FormData(form) capture :
-            // - les hidden inputs (form-name, subject, message, firstName, lastName, email, phone, wantsVisit)
-            // - l'input file persistant (cv) — toujours dans le DOM
-            // - le honeypot (bot-field)
             const body = new FormData(e.currentTarget as HTMLFormElement);
-
-            // Debug
-            console.log("=== ENVOI FORMULAIRE contact-v5 ===");
-            for (const [key, value] of body.entries()) {
-                if (value instanceof File) {
-                    console.log(`  ${key}: [FILE] ${value.name} (${value.size} bytes)`);
-                } else {
-                    console.log(`  ${key}: ${value}`);
-                }
-            }
 
             await fetch("/", {
                 method: "POST",
                 body: body,
             });
+
+            trackEvent("contact_submission", formData.wantsVisit ? "Contact (demande de visite)" : "Contact général");
 
             setIsSubmitting(false);
             setIsSubmitted(true);
@@ -86,7 +73,6 @@ export default function ConversationalForm() {
         if (step > 1) handleStepChange(step - 1);
     };
 
-    // Validation basique
     const isStep1Valid = formData.subject !== "";
     const isStep2Valid = formData.message.length > 5;
     const isStep3Valid = formData.firstName && formData.lastName && formData.email;
@@ -151,12 +137,8 @@ export default function ConversationalForm() {
                 onSubmit={handleSubmit}
                 className="p-6 md:p-8"
             >
-                {/* Champ technique Netlify */}
                 <input type="hidden" name="form-name" value="contact-v5" />
 
-                {/* Hidden mirrors pour TOUS les champs texte.
-                    Ces inputs sont HORS AnimatePresence = toujours dans le DOM au moment du submit.
-                    Les inputs visibles dans les étapes n'ont PAS de name= pour éviter les doublons. */}
                 <input type="hidden" name="subject" value={formData.subject} />
                 <input type="hidden" name="message" value={formData.message} />
                 <input type="hidden" name="firstName" value={formData.firstName} />
@@ -165,13 +147,10 @@ export default function ConversationalForm() {
                 <input type="hidden" name="phone" value={formData.phone} />
                 <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
 
-                {/* Honeypot */}
                 <p className="hidden">
                     <label>Don&apos;t fill this out if you&apos;re human: <input name="bot-field" /></label>
                 </p>
 
-                {/* INPUT FILE PERSISTANT — TOUJOURS dans le DOM, HORS AnimatePresence.
-                    Caché visuellement mais présent pour que new FormData(form) le capture. */}
                 <input
                     id="contact-cv"
                     ref={cvInputRef}
@@ -237,7 +216,6 @@ export default function ConversationalForm() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-6"
                         >
-                            {/* Message — PAS de name= ici, le hidden mirror s'en charge */}
                             <div>
                                 <label htmlFor="contact-message" className="block text-sm font-medium text-charcoal-700 mb-2">
                                     {formData.subject === 'recrutement' ? 'Votre motivation' : 'Votre message'} <span className="text-terracotta-500">*</span>
@@ -253,7 +231,6 @@ export default function ConversationalForm() {
                                 />
                             </div>
 
-                            {/* Bouton pour déclencher l'input file persistant */}
                             {formData.subject === 'recrutement' && (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
@@ -273,7 +250,6 @@ export default function ConversationalForm() {
                                 </div>
                             )}
 
-                            {/* Visite Checkbox (si pas recrutement) */}
                             {formData.subject !== 'recrutement' && (
                                 <label className="flex items-start gap-3 cursor-pointer p-4 bg-cream-50 rounded-xl border border-cream-100 hover:border-terracotta-200 transition-colors">
                                     <input
@@ -299,7 +275,6 @@ export default function ConversationalForm() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-4"
                         >
-                            {/* PAS de name= sur ces inputs — les hidden mirrors s'en chargent */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label htmlFor="contact-first-name" className="block text-sm font-medium text-charcoal-700 mb-2">Prénom *</label>

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Petit Écho du Cœur — Janvier 2026 | Version accessible",
   description: "Version textuelle accessible du Petit Écho du Cœur de janvier 2026, journal rédigé par les résidents de l’EHPAD de Crécy.",
+  alternates: {
+    canonical: "/echo-du-coeur/janvier-2026",
+  },
 };
 
 const retrospective = [
@@ -39,6 +43,21 @@ const agenda = [
 export default function GazetteJanvier2026AccessiblePage() {
   return (
     <main className="min-h-screen bg-cream-100 pt-32 pb-20">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "L’Écho du Cœur", url: "/echo-du-coeur" },
+          { name: "Janvier 2026 (Accessible)", url: "/echo-du-coeur/janvier-2026" },
+        ]}
+      />
+      <ArticleJsonLd
+        article={{
+          title: "Le Petit Écho du Cœur — janvier 2026",
+          description: "Version textuelle accessible du Petit Écho du Cœur de janvier 2026.",
+          datePublished: "2026-01-01T00:00:00+01:00",
+          url: "/echo-du-coeur/janvier-2026",
+        }}
+      />
       <article className="container-custom max-w-4xl px-4">
         <header className="rounded-3xl bg-white p-7 shadow-soft md:p-10">
           <p className="font-bold uppercase tracking-wider text-terracotta-600">Version textuelle accessible</p>

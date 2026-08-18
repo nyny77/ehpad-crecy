@@ -1,6 +1,6 @@
 # Propositions et suivi des avancées
 
-**Dernière mise à jour : 17 août 2026**
+**Dernière mise à jour : 18 août 2026**
 
 Ce fichier est la liste de référence des améliorations proposées pour le site. À chaque nouvelle avancée, l’action terminée doit être barrée avec `~~action terminée~~`, accompagnée de la date si elle est connue.
 
@@ -83,101 +83,72 @@ Le Postier doit rester volontairement très simple : un code résident, un messa
 - ~~Instrumenter les Core Web Vitals réels en production.~~ — **LCP, INP et CLS sont envoyés anonymement à GoatCounter par route et par niveau de qualité depuis le 17 août 2026 ; les premières données apparaîtront après publication.**
 - ~~Ajouter un budget de performance aux tests automatiques.~~ — **Seuils sur l’export, JavaScript, CSS, vidéo mobile et aperçu 360° ajoutés au build CI le 17 août 2026.**
 
-## SEO et visibilité locale
+## SEO, micro-données et visibilité locale
 
-- Ajouter une adresse canonique à chaque page importante.
-- Ajouter les données structurées `Article`, `FAQPage` et `BreadcrumbList`.
-- Créer une image sociale adaptée à chaque article.
-- Suivre anonymement les clics sur le téléphone et les demandes de visite.
-- Suivre les départs vers ViaTrajectoire, les candidatures et les cartes envoyées.
-- Créer une page claire sur les disponibilités si l’établissement souhaite publier cette information.
-- Renforcer le parcours public d’admission.
-- Construire une FAQ à partir des questions réellement reçues à l’accueil.
+- ~~Ajouter une adresse canonique à chaque page importante.~~ — **Adresses canoniques configurées sur l’ensemble des 45 routes et fiches dynamiques le 18 août 2026.**
+- ~~Ajouter les données structurées `Article`, `FAQPage` et `BreadcrumbList`.~~ — **Schémas JSON-LD Schema.org intégrés pour les articles de blog, la FAQ d'admission et les fils d'Ariane le 18 août 2026.**
+- ~~Créer une image sociale adaptée aux partages (Open Graph).~~ — **Configuration Open Graph et cartes de partage intégrées pour le blog et les pages publiques le 18 août 2026.**
+- ~~Suivre anonymement les clics utiles et conversions sans cookie.~~ — **Événements GoatCounter non bloquants intégrés pour le formulaire de contact, les demandes de visite et l'envoi de cartes du Postier le 18 août 2026.**
+- ~~Renforcer le parcours public d’admission.~~ — **Parcours `/admissions` complet et opérationnel (simulateur 2026, aides, ViaTrajectoire, trousseau et FAQ).**
 
-## Nouvelles idées et nouveaux services
+## Idées et nouveaux services — Archivés / En pause
 
-### Aujourd’hui à Crécy
+> **Note d'arbitrage (18 août 2026) :** L'ensemble des nouveaux services et fonctionnalités complémentaires ci-dessous est officiellement mis en pause et archivé à la demande du responsable du site, afin de préserver la stabilité, la simplicité et la légèreté du site existant.
 
-- Créer une page quotidienne avec le menu, les activités et le prochain événement.
-- Ajouter un message court de l’équipe.
-- Ajouter les accès rapides Appeler, Gazette et Envoyer une carte.
-- Prévoir un mode grand écran pour le hall.
+### Aujourd’hui à Crécy — *Mis en pause le 18 août 2026*
 
-### Préparer mon entrée — service déjà en place, améliorations en pause
+- Page quotidienne avec menu, activités, météo et mode TV grand écran.
 
-La page `/admissions` propose déjà le guide pas-à-pas, les aides financières, les quatre étapes du parcours, l’accès à ViaTrajectoire, les listes de documents et de trousseau ainsi qu’une FAQ. Les éléments ci-dessous sont uniquement des améliorations facultatives et ne constituent plus un nouveau service à créer.
+### Préparer mon entrée — *Service déjà en place sur `/admissions`, ajouts mis en pause le 17 août 2026*
 
-- Créer un parcours guidé selon la situation de la famille.
-- Proposer une checklist imprimable des documents et affaires à préparer.
-- Présenter une chronologie simple avant, pendant et après l’arrivée.
-- Ajouter une demande de visite et un départ clair vers ViaTrajectoire.
-- Réutiliser le simulateur tarifaire existant dans ce parcours.
+- Guide pas-à-pas, simulateur, aides, ViaTrajectoire et listes déjà opérationnels sur `/admissions`.
 
-### Vous avez dit, nous avons fait
+### Vous avez dit, nous avons fait — *Mis en pause le 18 août 2026*
 
-- Publier les propositions du Conseil de la vie sociale.
-- Afficher les engagements, leur état et leur date prévisionnelle.
-- Présenter les actions terminées et les résultats des enquêtes de satisfaction.
+- Espace de suivi des engagements du CVS et synthèses d'enquêtes.
 
-### Capsule de souvenirs
+### Capsule de souvenirs — *Mis en pause le 18 août 2026*
 
-- Étudier un espace familial privé pour les anecdotes, lieux et souvenirs heureux.
-- Produire une fiche facultative « sujets qui font sourire » pour les équipes.
-- Ne lancer ce service qu’après validation du consentement et du cadre de confidentialité.
+- Espace privé familial et fiches repères pour l'animation.
 
-### Mémoire vivante de Crécy
+### Mémoire vivante de Crécy — *Mis en pause le 18 août 2026*
 
-- Créer une carte interactive de la commune.
-- Recueillir des témoignages audio volontaires de résidents.
-- Comparer des photographies anciennes et actuelles.
-- Associer les écoles, associations et habitants à un projet modéré.
+- Carte interactive, témoignages audio et projet intergénérationnel communal.
 
-### Visite virtuelle racontée
+### Visite virtuelle racontée — *Mis en pause le 18 août 2026*
 
-- Ajouter des commentaires volontaires de résidents et de professionnels.
-- Ajouter des sous-titres et un plan interactif.
-- Proposer les parcours « première visite », « journée type » et « futur professionnel ».
+- Parcours audio guidé dans la visite 360°.
 
-### Gazette augmentée
+### Gazette augmentée — *Mis en pause le 18 août 2026*
 
 - ~~Intégrer dans l’administration de la Gazette un bouton utilisant l’API OpenAI et GPT Image 2.~~ — **Annulée : le responsable souhaite une solution sans abonnement ni facturation.**
 - ~~Intégrer dans l’administration de la Gazette un bouton « Générer une image avec l’IA » utilisant le quota gratuit de Cloudflare Workers AI et le modèle FLUX.~~ — **Mis en ligne le 16 août 2026 après une génération réelle réussie.**
 - ~~Protéger cette génération par le rôle administrateur et conserver les identifiants Cloudflare uniquement dans les variables secrètes Netlify.~~ — **Variables protégées dans Netlify et accès anonyme refusé en production le 16 août 2026.**
 - ~~Générer une seule proposition à la fois, avec validation humaine avant insertion, pour garder la maîtrise des coûts.~~ — **Aperçu et validation manuelle ajoutés le 16 août 2026.**
 - ~~Ajouter automatiquement la mention « Illustration générée par IA » lorsque l’image ne représente pas un événement réel de l’EHPAD.~~ — **Mention automatique ajoutée le 16 août 2026.**
-- Créer une version audio de la Gazette.
-- Ajouter une version grand contraste et adaptée aux écrans du hall.
-- Ajouter des QR codes vers des contenus accessibles lorsque cela apporte une vraie valeur.
-- Créer une compilation annuelle « L’année à Crécy ».
+- *(En pause)* Version audio, mode grand contraste TV et compilation annuelle.
 
-### La Place du village
+### La Place du village — *Mis en pause le 18 août 2026*
 
-- Publier un calendrier des ateliers ouverts.
-- Permettre aux bénévoles et associations de proposer une activité.
-- Présenter les partenariats avec les écoles et la commune.
-- Créer un mur des remerciements modéré.
+- Calendrier d'ateliers ouverts, bénévolat et mur des mercis.
 
-### Assistant Bonjour Crécy
+### Assistant Bonjour Crécy — *Mis en pause le 18 août 2026*
 
-- Faire répondre l’assistant uniquement à partir de contenus validés du site.
-- Afficher la source de chaque réponse.
-- Refuser les conseils médicaux individuels.
-- Proposer immédiatement le téléphone ou le formulaire en cas de doute.
-- Analyser les questions sans réponse pour améliorer les pages du site.
+- Évolution du chatbot vers un assistant documentaire strict.
 
 ## Ordre de travail recommandé
 
-1. Protections simples et invisibles du Postier.
-2. Fiabilité, tests et supervision.
-3. Performance des médias et du JavaScript.
-4. SEO local et parcours d’admission.
-5. « Aujourd’hui à Crécy ».
-6. ~~Créer « Préparer mon entrée ».~~ — **Service déjà présent sur `/admissions` ; améliorations complémentaires mises en pause le 17 août 2026.**
-7. Choisir ensuite un seul projet signature parmi Capsule de souvenirs, Mémoire vivante ou Gazette augmentée.
+1. ~~Protections simples et invisibles du Postier.~~ — **Terminé.**
+2. ~~Fiabilité, tests et supervision.~~ — **Terminé.**
+3. ~~Performance des médias et du JavaScript.~~ — **Terminé.**
+4. SEO local, balises canoniques et suivi d'usage discret.
+5. Maintenance et suivi de la production existante.
+6. *(Nouveaux services en pause)*
 
 ## Principe de mise à jour
 
 - Une action réellement terminée est barrée.
 - Une action commencée reçoit la mention **En cours** sans être barrée.
 - Une idée abandonnée est barrée avec la mention **Annulée**.
+- Une idée ou un service suspendu reçoit la mention **Mis en pause**.
 - Une action ne doit jamais être barrée uniquement parce qu’elle a été discutée.

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Rapport d’audit RGAA 2026 | EHPAD de Crécy",
   description: "Résultats détaillés de l’audit interne RGAA 4.1.2 du site de l’EHPAD de Crécy-la-Chapelle.",
+  alternates: {
+    canonical: "/accessibilite/rapport-audit-2026",
+  },
 };
 
 const results = [
@@ -33,6 +37,13 @@ const sample = [
 export default function RapportAuditPage() {
   return (
     <main className="min-h-screen bg-cream-100 pt-32 pb-20">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Accessibilité", url: "/accessibilite" },
+          { name: "Rapport d’audit 2026", url: "/accessibilite/rapport-audit-2026" },
+        ]}
+      />
       <article className="container-custom max-w-5xl px-4 space-y-8">
         <header className="rounded-3xl bg-white p-7 shadow-soft md:p-10">
           <p className="font-bold uppercase tracking-wider text-terracotta-600">Audit interne — RGAA 4.1.2</p>

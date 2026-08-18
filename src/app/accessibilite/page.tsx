@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EHPAD_INFO } from "@/lib/constants";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Accessibilité | EHPAD de Crécy-la-Chapelle",
   description: "Déclaration d’accessibilité et résultats de l’audit RGAA 2026 de l’EHPAD de Crécy-la-Chapelle.",
+  alternates: {
+    canonical: "/accessibilite",
+  },
 };
 
 export default function AccessibilitePage() {
   return (
     <main className="min-h-screen bg-cream-100 pt-32 md:pt-40">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Accessibilité", url: "/accessibilite" },
+        ]}
+      />
       <section className="section-padding">
         <div className="container-custom max-w-4xl space-y-8">
           <header><h1 className="font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Accessibilité du site</h1></header>
