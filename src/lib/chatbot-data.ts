@@ -18,7 +18,7 @@ export const CHAT_RULES: ChatRule[] = [
     {
         id: "visite",
         keywords: ["visite", "voir", "rencontrer", "rendez-vous", "rdv", "horaire", "venir"],
-        response: "Vous pouvez venir visiter l'EHPAD sur rendez-vous. Nous organisons des visites personnalisées pour vous faire découvrir les chambres et les lieux de vie. N'hésitez pas à nous contacter pour fixer une date.",
+        response: "Vous pouvez venir visiter l'EHPAD sur rendez-vous. Les visites aux résidents sont libres tous les jours, particulièrement entre 14h et 18h.",
         relatedLinks: [{ label: "Prendre rendez-vous", url: "/contact" }, { label: "Visite Virtuelle", url: "/visite" }]
     },
     {
@@ -28,14 +28,14 @@ export const CHAT_RULES: ChatRule[] = [
     },
     {
         id: "restauration",
-        keywords: ["manger", "repas", "cuisine", "nourriture", "menu", "cantine"],
-        response: "Notre chef prépare tous les repas sur place avec des produits frais. Les menus sont validés par une diététicienne et s'adaptent aux régimes spécifiques (sans sel, texture modifiée...). Les familles peuvent aussi venir déjeuner !",
-        relatedLinks: [{ label: "Voir le Blog", url: "/blog" }]
+        keywords: ["manger", "repas", "cuisine", "nourriture", "menu", "cantine", "restaurant"],
+        response: "Notre chef prépare tous les repas sur place avec des produits frais. Les menus sont validés par une diététicienne. La cuisine et le restaurant sont situés dans notre bâtiment historique de 1868 !",
+        relatedLinks: [{ label: "Découvrir notre histoire", url: "/histoire" }]
     },
     {
         id: "admission",
-        keywords: ["inscription", "dossier", "entrée", "inscrire", "place", "disponible"],
-        response: "Pour une demande d'admission, le plus simple est de remplir le dossier via Trajectoire ou de nous contacter directement. Nous avons parfois des places disponibles rapidement.",
+        keywords: ["inscription", "dossier", "entrée", "inscrire", "place", "disponible", "admission"],
+        response: "Pour une demande d'admission, le plus simple est de remplir le dossier via le portail Trajectoire ou de nous contacter directement à l'accueil.",
         relatedLinks: [{ label: "En savoir plus sur l'Admission", url: "/admissions" }]
     },
     {
@@ -51,10 +51,35 @@ export const CHAT_RULES: ChatRule[] = [
         relatedLinks: [{ label: "Nous contacter", url: "/contact" }]
     },
     {
+        id: "postier",
+        keywords: ["postier", "courrier", "lettre", "carte", "photo", "famille", "message"],
+        response: "Le service gratuit « Le Postier » permet aux proches d'envoyer un message et une photo à un résident. L'équipe d'animation l'imprime et le remet en main propre !",
+        relatedLinks: [{ label: "Envoyer un courrier", url: "/familles" }]
+    },
+    {
+        id: "histoire",
+        keywords: ["histoire", "1868", "fondation", "bâtiment", "batiment", "origine", "hospice"],
+        response: "L'EHPAD trouve ses origines en 1868 avec la construction de l'Hospice communal sur un terrain annexé à Montplaisir. Cette bâtisse historique abrite aujourd'hui notre cuisine et notre salle de restaurant !",
+        relatedLinks: [{ label: "Découvrir notre histoire", url: "/histoire" }]
+    },
+    {
+        id: "aides",
+        keywords: ["aide", "apa", "ash", "apl", "caf", "financière", "allocation"],
+        response: "L'établissement est habilité à l'Aide Sociale à l'Hébergement (ASH) et conventionné pour l'APL/ALS. L'APA (Allocation Personnalisée d'Autonomie) est directement déductible selon votre GIR.",
+        relatedLinks: [{ label: "Simuler mes aides et tarifs", url: "/admissions#tarifs" }]
+    },
+    {
         id: "hello",
         keywords: ["bonjour", "salut", "hello", "coucou", "hého", "aide"],
-        response: "Bonjour ! Je suis l'assistant virtuel de l'EHPAD. Je peux répondre à vos questions sur les tarifs, les visites, la vie quotidienne ou les admissions. Que souhaitez-vous savoir ?",
+        response: "Bonjour ! Je suis l'assistant officiel de l'EHPAD de Crécy. Je peux répondre à vos questions par écrit ou à la voix sur les tarifs, les admissions, la vie quotidienne ou les visites.",
     }
 ];
 
-export const FALLBACK_MESSAGE = "Je n'ai pas bien compris votre question. Essayez avec des mots clés simples comme 'tarifs', 'visite', 'repas' ou 'recrutement'. Vous pouvez aussi nous appeler directement.";
+export const SUGGESTED_QUESTIONS = [
+    "Quels sont les tarifs 2026 ?",
+    "Quels sont les horaires de visite ?",
+    "Comment envoyer une carte avec Le Postier ?",
+    "Quelle est l'histoire du bâtiment de 1868 ?"
+];
+
+export const FALLBACK_MESSAGE = "Je n'ai pas trouvé l'information exacte. Vous pouvez reformuler ou joindre directement notre accueil au 01 64 63 80 00.";

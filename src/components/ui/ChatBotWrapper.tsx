@@ -12,16 +12,39 @@ export default function ChatBotWrapper() {
 
     return (
         <div className="fixed bottom-6 right-6 z-40 font-sans">
+            {/* Spotlight Banner on load */}
+            <div className="absolute bottom-16 right-0 mb-2 w-64 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border-2 border-terracotta-300 text-charcoal-800 text-xs flex items-center justify-between gap-2 animate-fade-in">
+                <button
+                    type="button"
+                    onClick={() => setIsActivated(true)}
+                    className="flex items-center gap-2 text-left hover:text-terracotta-600 focus:outline-none focus:underline"
+                    aria-label="Ouvrir l'assistant : Une question ? Écrivez ou parlez-moi !"
+                >
+                    <span className="text-xl" aria-hidden="true">🎙️</span>
+                    <span><strong>Une question ?</strong> Écrivez ou parlez-moi en direct !</span>
+                </button>
+            </div>
+
+            {/* Spotlight FAB */}
             <button
                 type="button"
                 onClick={() => setIsActivated(true)}
-                className="relative z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-terracotta-500 to-terracotta-400 text-white shadow-lg transition-transform hover:scale-105 hover:brightness-110"
-                aria-label="Ouvrir l’assistant"
+                className="relative z-50 flex h-14 px-4 items-center gap-2.5 rounded-full bg-gradient-to-r from-terracotta-500 via-terracotta-600 to-terracotta-700 text-white border-2 border-white/60 shadow-2xl transition-all hover:scale-106 hover:brightness-110 focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400"
+                aria-label="Ouvrir l’assistant virtuel Bonjour Crécy (IA & Voix)"
             >
-                <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
-                <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full border-2 border-white bg-forest-500" aria-hidden="true" />
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg" aria-hidden="true">
+                    🎙️
+                </div>
+                <div className="text-left">
+                    <span className="block text-xs font-bold leading-tight">Une question ?</span>
+                    <span className="block text-[10px] text-cream-100 leading-tight">IA & Voix</span>
+                </div>
+
+                {/* Ping badge */}
+                <span className="absolute -top-1 -right-1 flex h-4 w-4" aria-hidden="true">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terracotta-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-forest-500 border-2 border-white"></span>
+                </span>
             </button>
         </div>
     );
