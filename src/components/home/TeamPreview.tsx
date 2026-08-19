@@ -71,7 +71,7 @@ export default function TeamPreview() {
                             <div className="bg-cream-50/80 p-6 rounded-2xl border border-terracotta-100 shadow-sm relative">
                                 <div className="absolute -left-3 top-6 w-1 h-12 bg-gradient-to-r from-terracotta-500 to-terracotta-400 rounded-full"></div>
                                 <p className="italic text-charcoal-800 font-medium">
-                                    « En 1868, une portion de terrain sise à Montplaisir sera annexée à Crécy-en-Brie pour y construire l’Hospice. »
+                                    « Un cadre de vie chaleureux, paisible et verdoyant au bord de l’eau, dédié au bien-être de nos aînés. »
                                 </p>
                             </div>
 

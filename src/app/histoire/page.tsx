@@ -55,11 +55,11 @@ const LOCATIONS = [
         theme: "charcoal"
     },
     {
-        id: "hospice",
-        title: "L'Hospice de 1868",
-        subtitle: "Notre cuisine & restaurant d'aujourd'hui",
-        description: "En 1868, une portion de terrain sise à Montplaisir est annexée à Crécy-en-Brie pour y construire l’Hospice, qui accueillait aussi une école primaire. Toujours debout et au cœur de la vie de notre établissement, cette bâtisse historique abrite aujourd'hui notre cuisine et notre salle de restaurant où nous partageons chaque repas.",
-        quote: "Plus de 150 ans de convivialité",
+        id: "patrimoine-site",
+        title: "Mémoire & Patrimoine",
+        subtitle: "L’ancien corps de bâtiment",
+        description: "Témoin architectural du passé communal, cette bâtisse en pierre d’époque illustre la longue tradition d’accueil et d’évolution du domaine au cœur de Crécy.",
+        quote: "Histoire & architecture",
         image: "/images/history/hospice-ecole.jpg",
         size: "wide",
         theme: "terracotta"
@@ -78,9 +78,9 @@ const TIMELINE_STEPS = [
         description: "Construction de ce joyau de l'art gothique rayonnant, classé monument historique et repère spirituel et artistique de la vallée."
     },
     {
-        date: "1868",
-        title: "Fondation de l’Hospice de Montplaisir",
-        description: "La commune annexe une parcelle à Montplaisir pour y bâtir l’Hospice et l'école. Cette même bâtisse abrite aujourd'hui notre cuisine et notre salle de restaurant."
+        date: "XIXe siècle",
+        title: "L'Essor de la Venise Briarde",
+        description: "Aménagement des promenades le long du Grand Morin, essor des commerces locaux et villégiature prisée des artistes peintres."
     },
     {
         date: "1972",
@@ -90,7 +90,7 @@ const TIMELINE_STEPS = [
     {
         date: "Aujourd'hui",
         title: "L'EHPAD de Crécy",
-        description: "Un lieu de vie moderne, chaleureux et médicalisé, qui perpétue plus de 150 ans de bienveillance et d'accueil au cœur de la ville."
+        description: "Un lieu de vie moderne, chaleureux et médicalisé, dédié au bien-être, à l'écoute et à l'accompagnement des résidents au cœur de la ville."
     }
 ];
 
@@ -248,7 +248,7 @@ export default function HistoirePage() {
                             Le saviez-vous ?
                         </h2>
                         <p className="text-charcoal-700 leading-relaxed text-sm md:text-base">
-                            Le bâtiment en pierre dans lequel résidents et équipes se retrouvent chaque jour pour les repas est l’Hospice d’origine érigé en <strong>1868</strong>. Vous pouvez retrouver plusieurs cartes postales et photographies d’époque de l’Hospice dans notre <a href="/visite" className="text-terracotta-600 hover:text-terracotta-700 underline font-medium">galerie de visite</a>.
+                            Crécy-la-Chapelle compte plus d’une vingtaine de ponts et passerelles qui enjambent les méandres du Grand Morin. C’est cet entrelacement unique au fil de l’eau qui lui vaut son doux surnom de <strong>« Venise Briarde »</strong>.
                         </p>
                     </div>
                 </motion.div>

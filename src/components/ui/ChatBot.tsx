@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CHAT_RULES, FALLBACK_MESSAGE, SUGGESTED_QUESTIONS, ChatRule } from "@/lib/chatbot-data";
 import Link from "next/link";
@@ -13,20 +13,7 @@ type Message = {
     sender: "user" | "bot";
     links?: MessageLink[];
     timestamp: Date;
-    isAudioPlaying?: boolean;
 };
-
-// Helper to parse markdown links like [Texte](/url) from AI output
-function parseMarkdownLinks(text: string): { cleanText: string; links: MessageLink[] } {
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    const links: MessageLink[] = [];
-    let match;
-    while ((match = linkRegex.exec(text)) !== null) {
-        links.push({ label: match[1], url: match[2] });
-    }
-    const cleanText = text.replace(linkRegex, "$1").trim();
-    return { cleanText, links };
-}
 
 let msgSequence = 0;
 function createUniqueId(): string {
@@ -46,85 +33,11 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
     ]);
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const [isListening, setIsListening] = useState(false);
-    const [speechSupported, setSpeechSupported] = useState(false);
-    const [ttsEnabled, setTtsEnabled] = useState(false);
-    const [currentlySpeakingId, setCurrentlySpeakingId] = useState<string | null>(null);
     const [showSpotlightPrompt, setShowSpotlightPrompt] = useState(true);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const toggleRef = useRef<HTMLButtonElement>(null);
-    const recognitionRef = useRef<any>(null);
-    const sendVoiceRef = useRef<(text: string) => void>(() => {});
-
-    // Check Speech Recognition & Speech Synthesis support
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-            if (SpeechRec) {
-                setSpeechSupported(true);
-                try {
-                    const recognition = new SpeechRec();
-                    recognition.continuous = false;
-                    recognition.interimResults = false;
-                    recognition.lang = "fr-FR";
-
-                    recognition.onresult = (event: any) => {
-                        const transcript = event.results[0]?.[0]?.transcript;
-                        if (transcript) {
-                            setInputValue(transcript);
-                            setIsListening(false);
-                            // Auto submit after voice capture
-                            setTimeout(() => {
-                                sendVoiceRef.current(transcript);
-                            }, 300);
-                        }
-                    };
-
-                    recognition.onerror = () => {
-                        setIsListening(false);
-                    };
-
-                    recognition.onend = () => {
-                        setIsListening(false);
-                    };
-
-                    recognitionRef.current = recognition;
-                } catch {
-                    setSpeechSupported(false);
-                }
-            }
-        }
-    }, []);
-
-    // Text-to-Speech handler
-    const speakText = useCallback((text: string, msgId: string) => {
-        if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-
-        window.speechSynthesis.cancel();
-
-        if (currentlySpeakingId === msgId) {
-            setCurrentlySpeakingId(null);
-            return;
-        }
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = "fr-FR";
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-
-        // Try to pick a French voice
-        const voices = window.speechSynthesis.getVoices();
-        const frenchVoice = voices.find(v => v.lang.startsWith("fr"));
-        if (frenchVoice) utterance.voice = frenchVoice;
-
-        utterance.onstart = () => setCurrentlySpeakingId(msgId);
-        utterance.onend = () => setCurrentlySpeakingId(null);
-        utterance.onerror = () => setCurrentlySpeakingId(null);
-
-        window.speechSynthesis.speak(utterance);
-    }, [currentlySpeakingId]);
 
     // Auto-scroll to bottom
     const scrollToBottom = () => {
@@ -137,13 +50,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
 
     // Accessibility: Focus trap & Escape key
     useEffect(() => {
-        if (!isOpen) {
-            if (typeof window !== "undefined" && "speechSynthesis" in window) {
-                window.speechSynthesis.cancel();
-                setCurrentlySpeakingId(null);
-            }
-            return;
-        }
+        if (!isOpen) return;
         setShowSpotlightPrompt(false);
         inputRef.current?.focus();
         const handleEscape = (event: KeyboardEvent) => {
@@ -155,22 +62,6 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
         window.addEventListener("keydown", handleEscape);
         return () => window.removeEventListener("keydown", handleEscape);
     }, [isOpen]);
-
-    // Toggle speech recognition
-    const toggleListening = () => {
-        if (!recognitionRef.current) return;
-        if (isListening) {
-            recognitionRef.current.stop();
-            setIsListening(false);
-        } else {
-            try {
-                recognitionRef.current.start();
-                setIsListening(true);
-            } catch {
-                setIsListening(false);
-            }
-        }
-    };
 
     // Process verified rule-based response
     const processMessage = async (userText: string) => {
@@ -195,14 +86,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
 
             setMessages(prev => [...prev, botResponse]);
             setIsTyping(false);
-
-            // Auto-read aloud if TTS enabled
-            if (ttsEnabled) {
-                setTimeout(() => {
-                    speakText(botReplyText, msgId);
-                }, 200);
-            }
-        }, 400);
+        }, 350);
     };
 
     const handleSendMessage = async (e: React.FormEvent) => {
@@ -222,22 +106,6 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
         await processMessage(userText);
     };
 
-    const handleSendVoiceMessage = async (voiceText: string) => {
-        const userMessage: Message = {
-            id: createUniqueId(),
-            text: voiceText,
-            sender: "user",
-            timestamp: new Date()
-        };
-        setMessages(prev => [...prev, userMessage]);
-        setInputValue("");
-        await processMessage(voiceText);
-    };
-
-    useEffect(() => {
-        sendVoiceRef.current = handleSendVoiceMessage;
-    });
-
     const handleSuggestionClick = async (question: string) => {
         const userMessage: Message = {
             id: createUniqueId(),
@@ -250,13 +118,13 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-40 font-sans">
-            {/* Spotlight Prompt (Visible once on load when closed) */}
+        <div className="fixed bottom-6 right-6 z-50 font-sans">
+            {/* Spotlight Banner on load (clickable prompt) */}
             <AnimatePresence>
                 {!isOpen && showSpotlightPrompt && (
                     <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ delay: 1, duration: 0.4 }}
                         className="absolute bottom-16 right-0 mb-2 w-64 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border-2 border-terracotta-300 text-charcoal-800 text-xs flex items-center justify-between gap-2"
@@ -312,29 +180,16 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                                 </div>
                             </div>
                             
-                            <div className="flex items-center gap-1">
-                                {/* Toggle auto speech */}
-                                <button
-                                    type="button"
-                                    onClick={() => setTtsEnabled(!ttsEnabled)}
-                                    className={`p-2 rounded-xl text-xs font-medium transition-all ${ttsEnabled ? "bg-white text-terracotta-700 shadow-sm" : "bg-white/10 text-white hover:bg-white/20"}`}
-                                    title={ttsEnabled ? "Désactiver la lecture vocale automatique" : "Activer la lecture vocale automatique"}
-                                    aria-label={ttsEnabled ? "Désactiver la lecture vocale automatique" : "Activer la lecture vocale automatique"}
-                                >
-                                    {ttsEnabled ? "🔊 Voix ON" : "🔇 Voix OFF"}
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() => setIsOpen(false)}
-                                    className="p-2 hover:bg-white/20 rounded-xl transition-colors text-white"
-                                    aria-label="Fermer l’assistant"
-                                >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setIsOpen(false)}
+                                className="p-2 hover:bg-white/20 rounded-xl transition-colors text-white"
+                                aria-label="Fermer l’assistant"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
 
                         {/* Messages Area */}
@@ -352,18 +207,6 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                                     >
                                         <p className="leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                                         
-                                        {/* Audio Playback button for bot messages */}
-                                        {msg.sender === "bot" && (
-                                            <button
-                                                type="button"
-                                                onClick={() => speakText(msg.text, msg.id)}
-                                                className="mt-2 inline-flex items-center gap-1.5 text-xs text-terracotta-600 hover:text-terracotta-700 bg-cream-100 hover:bg-cream-200 px-2.5 py-1 rounded-full border border-terracotta-200 font-medium transition-colors"
-                                                aria-label={currentlySpeakingId === msg.id ? "Arrêter la lecture" : "Écouter la réponse"}
-                                            >
-                                                {currentlySpeakingId === msg.id ? "⏹️ Arrêter" : "🔊 Écouter"}
-                                            </button>
-                                        )}
-
                                         {msg.links && (
                                             <div className="mt-3 flex flex-wrap gap-2">
                                                 {msg.links.map((link, idx) => (
@@ -410,7 +253,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                             {isTyping && (
                                 <div className="flex justify-start">
                                     <div className="bg-white rounded-2xl rounded-bl-none px-4 py-3 shadow-sm border border-cream-300 flex items-center gap-2">
-                                        <span className="text-xs text-charcoal-500 font-medium">L'assistant réfléchit...</span>
+                                        <span className="text-xs text-charcoal-500 font-medium">L'assistant répond...</span>
                                         <div className="flex gap-1">
                                             <span className="w-2 h-2 bg-terracotta-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
                                             <span className="w-2 h-2 bg-terracotta-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
@@ -421,23 +264,6 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                             )}
                             <div ref={messagesEndRef} />
                         </div>
-
-                        {/* Listening Indicator */}
-                        {isListening && (
-                            <div className="px-4 py-2 bg-terracotta-50 border-t border-terracotta-200 flex items-center justify-between text-xs text-terracotta-700 animate-pulse">
-                                <span className="flex items-center gap-2 font-bold">
-                                    <span className="w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
-                                    🎙️ Écoute en cours... Parlez maintenant
-                                </span>
-                                <button
-                                    type="button"
-                                    onClick={toggleListening}
-                                    className="font-bold underline text-terracotta-800"
-                                >
-                                    Annuler
-                                </button>
-                            </div>
-                        )}
 
                         {/* Input Area */}
                         <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-cream-200">
@@ -450,23 +276,8 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                     placeholder="Écrivez votre question..."
-                                    className="flex-1 px-4 py-2.5 rounded-2xl border border-charcoal-200 bg-cream-50 text-charcoal-900 focus:outline-none focus:border-terracotta-500 focus:ring-2 focus:ring-terracotta-200 text-sm placeholder:text-charcoal-400"
+                                    className="flex-1 bg-cream-50 border border-cream-300 rounded-2xl px-4 py-2.5 text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-terracotta-400 focus:bg-white transition-all placeholder:text-charcoal-400"
                                 />
-
-                                {/* Speech-to-Text Button */}
-                                {speechSupported && (
-                                    <button
-                                        type="button"
-                                        onClick={toggleListening}
-                                        className={`p-2.5 rounded-2xl transition-all ${isListening ? "bg-red-500 text-white animate-bounce shadow-md" : "bg-cream-100 text-charcoal-700 hover:bg-terracotta-50 hover:text-terracotta-600 border border-charcoal-200"}`}
-                                        title={isListening ? "Arrêter l'écoute" : "Poser une question à la voix (micro)"}
-                                        aria-label={isListening ? "Arrêter l'écoute vocale" : "Parler au micro pour poser votre question"}
-                                    >
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                                        </svg>
-                                    </button>
-                                )}
 
                                 <button
                                     type="submit"
@@ -484,7 +295,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                 )}
             </AnimatePresence>
 
-            {/* Toggle Button (FAB with Spotlight Style) */}
+            {/* Toggle Button (FAB) */}
             <motion.button
                 ref={toggleRef}
                 type="button"

@@ -42,7 +42,7 @@ const FAMILLE_FAQS = [
     },
     {
         q: "Comment réserver un repas avec mon proche (Table des Invités) ?",
-        a: "Il vous suffit de prévenir l'accueil au moins 48 heures à l'avance (par téléphone au 01 64 63 82 62 ou directement sur place) pour que notre chef prépare vos couverts supplémentaires."
+        a: "Il vous suffit de prévenir l'accueil au moins 48 heures à l'avance (par téléphone au 01 64 63 82 62 ou directement sur place) pour que notre chef prépare vos couverts supplémentaires. Pour le règlement et le tarif du repas par personne, s'adresser à l'accueil."
     },
     {
         q: "Comment fonctionne le marquage et l'entretien du linge ?",
@@ -578,7 +578,7 @@ export default function FamillesPage() {
                                         Déjeuner avec votre proche
                                     </h2>
                                     <p className="text-sm text-charcoal-500">
-                                        Partagez un moment gourmand dans notre restaurant historique de 1868
+                                        Partagez un moment gourmand et convivial au restaurant
                                     </p>
                                 </div>
                             </div>
@@ -617,8 +617,8 @@ export default function FamillesPage() {
                                     <span className="inline-block w-7 h-7 rounded-full bg-terracotta-500 text-white font-bold text-xs text-center leading-7 mb-2">
                                         3
                                     </span>
-                                    <h4 className="font-semibold text-charcoal-900 text-sm mb-1">Règlement à l&apos;accueil</h4>
-                                    <p className="text-xs text-charcoal-600">Tarif invité réglementaire abordable facturé sur place.</p>
+                                    <h4 className="font-semibold text-charcoal-900 text-sm mb-1">Règlement & Tarif</h4>
+                                    <p className="text-xs text-charcoal-600">Pour le règlement et le tarif du repas par personne, s&apos;adresser à l&apos;accueil.</p>
                                 </div>
                             </div>
 

@@ -29,8 +29,8 @@ export const CHAT_RULES: ChatRule[] = [
     {
         id: "restauration",
         keywords: ["manger", "repas", "cuisine", "nourriture", "menu", "cantine", "restaurant"],
-        response: "Notre chef prépare tous les repas sur place avec des produits frais. Les menus sont validés par une diététicienne. La cuisine et le restaurant sont situés dans notre bâtiment historique de 1868 !",
-        relatedLinks: [{ label: "Découvrir notre histoire", url: "/histoire" }]
+        response: "Notre chef prépare tous les repas sur place avec des produits frais. Les menus sont savoureux, équilibrés et validés par une diététicienne.",
+        relatedLinks: [{ label: "En savoir plus sur la restauration", url: "/hebergement" }]
     },
     {
         id: "admission",
@@ -58,9 +58,9 @@ export const CHAT_RULES: ChatRule[] = [
     },
     {
         id: "histoire",
-        keywords: ["histoire", "1868", "fondation", "bâtiment", "batiment", "origine", "hospice"],
-        response: "L'EHPAD trouve ses origines en 1868 avec la construction de l'Hospice communal sur un terrain annexé à Montplaisir. Cette bâtisse historique abrite aujourd'hui notre cuisine et notre salle de restaurant !",
-        relatedLinks: [{ label: "Découvrir notre histoire", url: "/histoire" }]
+        keywords: ["histoire", "crécy", "origine", "patrimoine", "ville", "venise briarde"],
+        response: "L'EHPAD de Crécy est ancré au cœur de la Venise Briarde, offrant un cadre de vie paisible, verdoyant et convivial.",
+        relatedLinks: [{ label: "Découvrir notre ville & histoire", url: "/histoire" }]
     },
     {
         id: "aides",
@@ -71,7 +71,7 @@ export const CHAT_RULES: ChatRule[] = [
     {
         id: "hello",
         keywords: ["bonjour", "salut", "hello", "coucou", "hého", "aide"],
-        response: "Bonjour ! Je suis l'assistant officiel de l'EHPAD de Crécy. Je peux répondre à vos questions par écrit ou à la voix sur les tarifs, les admissions, la vie quotidienne ou les visites.",
+        response: "Bonjour ! Je suis l'assistant officiel de l'EHPAD de Crécy. Je peux répondre à toutes vos questions sur les tarifs, les admissions, la vie quotidienne ou les visites.",
     }
 ];
 
@@ -79,7 +79,7 @@ export const SUGGESTED_QUESTIONS = [
     "Quels sont les tarifs 2026 ?",
     "Quels sont les horaires de visite ?",
     "Comment envoyer une carte avec Le Postier ?",
-    "Quelle est l'histoire du bâtiment de 1868 ?"
+    "Quelles sont les activités proposées ?"
 ];
 
 export const FALLBACK_MESSAGE = "Je n'ai pas trouvé l'information exacte. Vous pouvez reformuler ou joindre directement notre accueil au 01 64 63 80 00.";
