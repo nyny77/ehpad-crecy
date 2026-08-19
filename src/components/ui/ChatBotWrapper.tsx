@@ -18,10 +18,10 @@ export default function ChatBotWrapper() {
                     type="button"
                     onClick={() => setIsActivated(true)}
                     className="flex items-center gap-2 text-left hover:text-terracotta-600 focus:outline-none focus:underline"
-                    aria-label="Ouvrir l'assistant : Une question ? Écrivez ou parlez-moi !"
+                    aria-label="Ouvrir l'assistant : Une question ? Posez-la ici !"
                 >
-                    <span className="text-xl" aria-hidden="true">🎙️</span>
-                    <span><strong>Une question ?</strong> Écrivez ou parlez-moi en direct !</span>
+                    <span className="text-xl" aria-hidden="true">💬</span>
+                    <span><strong>Une question ?</strong> Je suis là pour vous renseigner !</span>
                 </button>
             </div>
 
@@ -30,14 +30,14 @@ export default function ChatBotWrapper() {
                 type="button"
                 onClick={() => setIsActivated(true)}
                 className="relative z-50 flex h-14 px-4 items-center gap-2.5 rounded-full bg-gradient-to-r from-terracotta-500 via-terracotta-600 to-terracotta-700 text-white border-2 border-white/60 shadow-2xl transition-all hover:scale-106 hover:brightness-110 focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400"
-                aria-label="Ouvrir l’assistant virtuel Bonjour Crécy (IA & Voix)"
+                aria-label="Ouvrir l'assistant virtuel Bonjour Crécy"
             >
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg" aria-hidden="true">
-                    🎙️
+                    💬
                 </div>
                 <div className="text-left">
                     <span className="block text-xs font-bold leading-tight">Une question ?</span>
-                    <span className="block text-[10px] text-cream-100 leading-tight">IA & Voix</span>
+                    <span className="block text-[10px] text-cream-100 leading-tight">En ligne</span>
                 </div>
 
                 {/* Ping badge */}
