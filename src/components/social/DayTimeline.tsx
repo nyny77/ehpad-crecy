@@ -1,250 +1,170 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sun, Coffee, Utensils, Moon, Music, BookOpen } from "lucide-react";
 import Image from "@/components/ui/OptimizedImage";
-import { useRef } from "react";
 
 const EVENTS = [
     {
+        step: 1,
         time: "08h00",
-        title: "Réveil en douceur & Petit déjeuner",
+        title: "Réveil & Petit déjeuner",
         description: "Un réveil personnalisé respectant le rythme de chacun, suivi d'un petit déjeuner gourmand servi en chambre.",
-        icon: <Sun className="w-6 h-6" />,
-        color: "bg-terracotta-100 text-terracotta-600",
-        badgeColor: "bg-terracotta-500",
+        icon: <Sun className="w-5 h-5" />,
+        badgeBg: "bg-terracotta-600 text-white",
+        iconBg: "bg-terracotta-50 text-terracotta-600",
+        borderAccent: "border-terracotta-200",
         image: "/images/timeline/reveil.png",
-        side: "left"
     },
     {
+        step: 2,
         time: "10h30",
         title: "Ateliers & Activités",
         description: "Stimulation cognitive, gym douce, revue de presse... Des moments d'échange et de maintien de l'autonomie.",
-        icon: <BookOpen className="w-6 h-6" />,
-        color: "bg-forest-100 text-forest-600",
-        badgeColor: "bg-forest-500",
+        icon: <BookOpen className="w-5 h-5" />,
+        badgeBg: "bg-forest-600 text-white",
+        iconBg: "bg-forest-50 text-forest-600",
+        borderAccent: "border-forest-200",
         image: "/images/timeline/activites.png",
-        side: "right"
     },
     {
+        step: 3,
         time: "12h30",
         title: "Déjeuner du Chef",
-        description: "Une cuisine savoureuse et équilibrée, servie à l'assiette.",
-        icon: <Utensils className="w-6 h-6" />,
-        color: "bg-terracotta-100 text-terracotta-600",
-        badgeColor: "bg-terracotta-500",
+        description: "Une cuisine savoureuse et équilibrée élaborée sur place, servie à l'assiette en salle de restaurant.",
+        icon: <Utensils className="w-5 h-5" />,
+        badgeBg: "bg-terracotta-600 text-white",
+        iconBg: "bg-terracotta-50 text-terracotta-600",
+        borderAccent: "border-terracotta-200",
         image: "/images/timeline/dejeuner.png",
-        side: "left"
     },
     {
+        step: 4,
         time: "15h00",
         title: "Vie Sociale & Animations",
-        description: "Lotos, chorale, jeux de société, sorties... L'après-midi est dédié au partage et à la détente.",
-        icon: <Music className="w-6 h-6" />,
-        color: "bg-forest-100 text-forest-600",
-        badgeColor: "bg-forest-500",
+        description: "Lotos, chorale, jeux de société, rencontres intergénérationnelles... Un après-midi dédié au partage.",
+        icon: <Music className="w-5 h-5" />,
+        badgeBg: "bg-forest-600 text-white",
+        iconBg: "bg-forest-50 text-forest-600",
+        borderAccent: "border-forest-200",
         image: "/images/timeline/vie-sociale.png",
-        side: "right"
     },
     {
+        step: 5,
         time: "16h30",
         title: "Goûter Gourmand",
-        description: "Le moment plaisir de la journée avec pâtisseries et boissons chaudes.",
-        icon: <Coffee className="w-6 h-6" />,
-        color: "bg-terracotta-100 text-terracotta-600",
-        badgeColor: "bg-terracotta-500",
+        description: "Un moment convivial de pause et de plaisir avec pâtisseries fraîches et boissons chaudes.",
+        icon: <Coffee className="w-5 h-5" />,
+        badgeBg: "bg-terracotta-600 text-white",
+        iconBg: "bg-terracotta-50 text-terracotta-600",
+        borderAccent: "border-terracotta-200",
         image: "/images/timeline/gouter.png",
-        side: "left"
     },
     {
+        step: 6,
         time: "19h00",
         title: "Dîner & Soirée Calme",
-        description: "Un repas léger suivi d'une soirée apaisante pour préparer une bonne nuit de sommeil.",
-        icon: <Moon className="w-6 h-6" />,
-        color: "bg-charcoal-100 text-charcoal-600",
-        badgeColor: "bg-charcoal-700",
+        description: "Un repas léger et équilibré suivi d'une soirée apaisante pour préparer une douce nuit de repos.",
+        icon: <Moon className="w-5 h-5" />,
+        badgeBg: "bg-charcoal-700 text-white",
+        iconBg: "bg-charcoal-100 text-charcoal-700",
+        borderAccent: "border-cream-300",
         image: "/images/timeline/diner.png",
-        side: "right"
     }
 ];
 
 export default function DayTimeline() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Ligne qui se dessine au scroll (plus fluide)
-    const scaleY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
-
     return (
-        <section className="section-padding bg-cream-100 relative overflow-hidden" ref={containerRef}>
-            {/* Éléments décoratifs de fond animés (Breathing Effect) */}
-            <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-20 left-10 w-64 h-64 bg-terracotta-200/20 rounded-full blur-[80px]"
-            />
-            <motion.div
-                animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-40 right-10 w-80 h-80 bg-forest-200/20 rounded-full blur-[100px]"
-            />
-
-            <div className="container-custom relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-center mb-16"
-                >
-                    <span className="inline-block px-4 py-2 bg-terracotta-100 text-terracotta-600 rounded-full text-sm font-semibold mb-4 border border-terracotta-200">Au quotidien</span>
-                    <h2 className="font-serif text-3xl md:text-5xl text-charcoal-900 mt-2">
+        <section className="section-padding bg-cream-100 relative overflow-hidden py-16 md:py-24 font-sans">
+            <div className="container-custom max-w-6xl relative z-10">
+                {/* En-tête de section */}
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                    <span className="inline-block px-4 py-1.5 bg-terracotta-100 text-terracotta-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3 border border-terracotta-200">
+                        Au quotidien
+                    </span>
+                    <h2
+                        className="!font-sans font-bold text-charcoal-900 mb-3 tracking-tight"
+                        style={{ fontSize: "28px", lineHeight: "1.3" }}
+                    >
                         Une journée type à la maison
                     </h2>
-                    <motion.div
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.3 }}
-                        className="w-24 h-1 bg-gradient-to-r from-terracotta-400 via-forest-400 to-terracotta-400 mx-auto rounded-full mt-6"
-                    />
-                </motion.div>
+                    <p className="text-sm md:text-base text-charcoal-600 leading-relaxed">
+                        Le quotidien à l’EHPAD de Crécy s&apos;articule autour de repères rassurants, tout en respectant les habitudes et le rythme de chaque résident.
+                    </p>
+                </div>
 
-                <div className="relative max-w-6xl mx-auto">
-                    {/* Règle temporelle (Graduated Line) - Desktop Only */}
-                    <div className="absolute left-0 top-0 bottom-0 w-16 hidden xl:flex flex-col justify-between py-12 pointer-events-none z-0">
-                        {/* Ligne verticale de fond */}
-                        <div className="absolute right-0 top-0 bottom-0 w-px bg-terracotta-200" />
+                {/* Frise chronologique horizontale (Ruban d'étapes) - Masquée sur mobile */}
+                <div className="hidden lg:block mb-10">
+                    <div className="relative flex items-center justify-between max-w-4xl mx-auto">
+                        {/* Ligne horizontale connectrice */}
+                        <div className="absolute top-1/2 left-4 right-4 h-1 bg-cream-300 -translate-y-1/2 rounded-full -z-0" />
 
-                        {/* Ligne de progression (remplissage) */}
-                        <motion.div
-                            className="absolute right-0 top-0 w-[3px] bg-terracotta-500 origin-top translate-x-[1px]"
-                            style={{ scaleY }}
-                        />
-
-                        {/* Graduations */}
-                        {Array.from({ length: 13 }).map((_, i) => {
-                            const hour = 8 + i; // 8h à 20h
-                            return (
-                                <div key={hour} className="relative flex items-center justify-end w-full pr-6 h-0 group">
-                                    <motion.div 
-                                        className="px-3 py-1 bg-white border-2 border-terracotta-200 rounded-full text-terracotta-500 font-bold font-serif text-sm shadow-sm relative z-10"
-                                        whileHover={{ scale: 1.1, rotate: 5 }}
-                                    >
-                                        {hour}h
-                                    </motion.div>
-                                    {/* Tiret avec point */}
-                                    <div className="absolute right-0 w-6 h-px border-dashed border-t-2 border-terracotta-300" />
-                                    <div className="absolute right-[-4px] w-2 h-2 rounded-full bg-terracotta-400 z-10" />
+                        {EVENTS.map((event) => (
+                            <div key={event.step} className="relative z-10 flex flex-col items-center group">
+                                <div className={`w-10 h-10 rounded-full ${event.badgeBg} shadow-sm flex items-center justify-center font-bold text-xs border-2 border-white transition-transform group-hover:scale-110`}>
+                                    {event.time}
                                 </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Ligne centrale animée (connecteur des cartes) */}
-                    <motion.div
-                        className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-terracotta-300 via-forest-300 to-charcoal-300 -translate-x-1/2 hidden md:block rounded-full origin-top opacity-30"
-                        style={{ scaleY }}
-                    />
-
-                    <div className="space-y-24 relative">
-                        {EVENTS.map((event, index) => (
-                            <div
-                                key={index}
-                                className={`flex flex-col md:flex-row gap-8 items-center ${event.side === "right" ? "md:flex-row-reverse" : ""
-                                    }`}
-                            >
-                                {/* Contenu avec image */}
-                                <motion.div
-                                    className="flex-1 w-full md:w-1/2"
-                                    initial={{ opacity: 0, x: event.side === 'left' ? -50 : 50, rotate: event.side === 'left' ? -2 : 2 }}
-                                    whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-                                    viewport={{ once: true, margin: "-10%" }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 50,
-                                        damping: 20,
-                                        delay: 0.1
-                                    }}
-                                >
-                                    <motion.div
-                                        className="relative bg-white rounded-[2rem] shadow-xl border border-white/50 overflow-hidden group hover:shadow-2xl transition-all duration-500"
-                                        whileHover={{ y: -8, scale: 1.02 }}
-                                    >
-                                        {/* Image watercolor */}
-                                        <div className="relative h-56 md:h-64 overflow-hidden">
-                                            <Image
-                                                src={event.image}
-                                                alt={event.title}
-                                                fill
-                                                className="object-cover group-hover:scale-105 transition-transform duration-1000"
-                                            />
-                                            {/* Overlay gradient */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
-
-                                            {/* Badge horaire flottant */}
-                                            <motion.div
-                                                className={`absolute bottom-[-10px] right-6 px-6 py-2 ${event.badgeColor} text-white rounded-[2rem] rounded-tr-none text-base font-black shadow-xl backdrop-blur-sm bg-opacity-95 flex items-center gap-2 border-4 border-white`}
-                                                whileHover={{ scale: 1.1, rotate: 5, y: -5 }}
-                                                initial={{ rotate: -3 }}
-                                                animate={{ rotate: [-3, 3, -3] }}
-                                                transition={{ rotate: { repeat: Infinity, duration: 3, ease: "easeInOut" } }}
-                                            >
-                                                <svg className="w-4 h-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                {event.time}
-                                            </motion.div>
-                                        </div>
-
-                                        {/* Contenu texte */}
-                                        <div className="p-8 pt-4">
-                                            <h3 className="font-serif text-2xl font-bold text-charcoal-900 mb-3 group-hover:text-terracotta-600 transition-colors">
-                                                {event.title}
-                                            </h3>
-                                            <p className="text-charcoal-600 leading-relaxed text-lg">
-                                                {event.description}
-                                            </p>
-                                        </div>
-                                    </motion.div>
-                                </motion.div>
-
-                                {/* Point central avec icône */}
-                                <div className="relative z-10 flex-shrink-0">
-                                    <motion.div
-                                        initial={{ scale: 0, rotate: -180 }}
-                                        whileInView={{ scale: 1, rotate: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 260,
-                                            damping: 20,
-                                            delay: 0.2
-                                        }}
-                                        className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-4 border-white ${event.color}`}
-                                        whileHover={{ scale: 1.2, rotate: 15 }}
-                                    >
-                                        {event.icon}
-                                    </motion.div>
-
-                                    {/* Pulse effect constant */}
-                                    <div className="absolute inset-0 -z-10">
-                                        <span className={`absolute inset-0 rounded-full ${event.color.split(' ')[0]} animate-ping opacity-20`}></span>
-                                    </div>
-                                </div>
-
-                                {/* Espace vide pour l'équilibre */}
-                                <div className="flex-1 hidden md:block" />
+                                <span className="text-[11px] font-semibold text-charcoal-700 mt-2 whitespace-nowrap">
+                                    Étape {event.step}
+                                </span>
                             </div>
                         ))}
                     </div>
+                </div>
+
+                {/* Grille horizontale des 6 moments de la journée */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {EVENTS.map((event) => (
+                        <motion.div
+                            key={event.step}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: event.step * 0.08 }}
+                            className={`bg-white rounded-2xl border ${event.borderAccent} shadow-2xs overflow-hidden flex flex-col hover:shadow-md transition-all duration-300 group`}
+                        >
+                            {/* Image du moment avec badge heure intégré */}
+                            <div className="relative h-44 w-full bg-cream-200 overflow-hidden shrink-0">
+                                <Image
+                                    src={event.image}
+                                    alt={event.title}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+                                {/* Heure intégrée directement sur l'image */}
+                                <div className={`absolute top-3 left-3 px-3 py-1 rounded-full ${event.badgeBg} text-xs font-bold shadow-sm flex items-center gap-1.5`}>
+                                    <span>{event.time}</span>
+                                </div>
+
+                                {/* Numéro d'étape */}
+                                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/90 backdrop-blur-xs text-charcoal-700 text-xs font-bold flex items-center justify-center shadow-xs">
+                                    {event.step}
+                                </div>
+                            </div>
+
+                            {/* Contenu textuel */}
+                            <div className="p-5 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div className="flex items-center gap-2.5 mb-2">
+                                        <div className={`w-8 h-8 rounded-lg ${event.iconBg} flex items-center justify-center shrink-0`}>
+                                            {event.icon}
+                                        </div>
+                                        <h3
+                                            className="!font-sans font-bold text-charcoal-900 group-hover:text-terracotta-600 transition-colors"
+                                            style={{ fontSize: "16px", lineHeight: "1.3" }}
+                                        >
+                                            {event.title}
+                                        </h3>
+                                    </div>
+                                    <p className="text-xs md:text-sm text-charcoal-600 leading-relaxed">
+                                        {event.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

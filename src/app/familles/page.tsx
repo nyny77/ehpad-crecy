@@ -84,7 +84,7 @@ export default function FamillesPage() {
                 method: "POST",
                 body: JSON.stringify({ action: "verify", secretCode })
             });
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
             if (!res.ok) throw new Error(data.error || "Code invalide");
 
             setResidentName(data.residentName);
@@ -143,7 +143,7 @@ export default function FamillesPage() {
                 method: "POST",
                 body: JSON.stringify({ action: "send", secretCode, senderName, text: message, imageBase64: image })
             });
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
             if (!res.ok) throw new Error(data.error || "Erreur lors de l'envoi");
 
             trackEvent("postier_message_sent", "Carte Postier envoyée");
@@ -262,8 +262,8 @@ export default function FamillesPage() {
                                         <Mail size={24} />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-charcoal-900">Envoyer une carte postale</h2>
-                                        <p className="text-xs text-charcoal-500">Service gratuit imprimé et remis par l&apos;équipe d&apos;animation</p>
+                                        <h2 className="!font-sans font-bold text-charcoal-900 leading-tight whitespace-nowrap" style={{ fontSize: "20px" }}>Envoyer une carte postale</h2>
+                                        <p className="text-xs text-charcoal-500 mt-0.5">Service gratuit imprimé et remis par l&apos;équipe d&apos;animation</p>
                                     </div>
                                 </div>
 
@@ -318,7 +318,7 @@ export default function FamillesPage() {
                                     >
                                         <ArrowLeft size={20} />
                                     </button>
-                                    <h2 className="font-serif text-xl font-bold text-terracotta-900">
+                                    <h2 className="!font-sans font-bold text-terracotta-900 leading-tight" style={{ fontSize: "20px" }}>
                                         Nouveau message pour {residentName}
                                     </h2>
                                 </div>

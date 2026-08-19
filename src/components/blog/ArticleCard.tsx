@@ -20,21 +20,27 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
 
 
 
-    useEffect(() => {
-        // Vérifier si l'article est dans les favoris
-        if (typeof window !== 'undefined') {
-            const favorites = JSON.parse(localStorage.getItem('ehpad_favorites') || '[]');
-            setIsFavorite(favorites.includes(article.id));
+    const getFavorites = (): string[] => {
+        if (typeof window === 'undefined') return [];
+        try {
+            const raw = localStorage.getItem('ehpad_favorites');
+            return raw ? JSON.parse(raw) : [];
+        } catch {
+            return [];
         }
+    };
+
+    useEffect(() => {
+        const favorites = getFavorites();
+        setIsFavorite(favorites.includes(article.id));
     }, [article.id]);
 
     const handleToggleFavorite = (e: React.MouseEvent) => {
         e.stopPropagation();
-
         if (typeof window === 'undefined') return;
 
-        const favorites = JSON.parse(localStorage.getItem('ehpad_favorites') || '[]');
-        let newFavorites;
+        const favorites = getFavorites();
+        let newFavorites: string[];
 
         if (favorites.includes(article.id)) {
             newFavorites = favorites.filter((id: string) => id !== article.id);
@@ -44,7 +50,11 @@ export default function ArticleCard({ article, onClick, isAdmin, onDelete, index
             setIsFavorite(true);
         }
 
-        localStorage.setItem('ehpad_favorites', JSON.stringify(newFavorites));
+        try {
+            localStorage.setItem('ehpad_favorites', JSON.stringify(newFavorites));
+        } catch {
+            // ignore
+        }
     };
 
     const formatDate = (dateStr: string) => {

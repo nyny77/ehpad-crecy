@@ -54,9 +54,10 @@ export const NAV_LINKS: NavLink[] = [
     {
         label: "Découvrir",
         subLinks: [
-            { label: "Visite Virtuelle", href: "/visite" },
+            { label: "Accueil", href: "/" },
             { label: "Notre Ville", href: "/histoire" },
             { label: "Notre Équipe", href: "/equipe" },
+            { label: "Visite Virtuelle", href: "/visite" },
         ]
     },
     {

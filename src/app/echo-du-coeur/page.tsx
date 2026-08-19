@@ -64,11 +64,11 @@ export default function EchoDuCoeurPage() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="h-fit w-full flex-shrink-0 rounded-3xl border border-cream-200 bg-white p-4 shadow-sm lg:w-72 print:hidden"
+                        className="h-fit w-full flex-shrink-0 rounded-2xl border border-cream-200 bg-white p-5 shadow-sm lg:w-80 print:hidden font-sans"
                     >
-                        <h2 className="mb-3 font-serif text-xl text-charcoal-900">Le Petit Écho du Cœur</h2>
-                        <p className="mb-4 text-sm text-charcoal-600">Le journal de la vie de l’établissement.</p>
-                        <h3 className="mb-3 font-semibold text-charcoal-900">Anciens numéros</h3>
+                        <h2 className="!font-sans font-bold text-charcoal-900 leading-tight mb-1" style={{ fontSize: "18px" }}>Le Petit Écho du Cœur</h2>
+                        <p className="mb-4 text-xs text-charcoal-500">Le journal de la vie de l’établissement.</p>
+                        <h3 className="!font-sans font-semibold text-xs uppercase tracking-wider text-charcoal-600 mb-3" style={{ fontSize: "12px" }}>Anciens numéros</h3>
                         <ul className="space-y-3">
                             {allGazettes.map((g: any, i: number) => {
                                 const isSelected = selectedGazette && (

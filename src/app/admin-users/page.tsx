@@ -86,7 +86,7 @@ export default function AdminUsersPage() {
                 throw new Error(`Erreur serveur: ${errorMessage}`);
             }
 
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
 
             // L'API Netlify Identity / GoTrue retourne souvent un objet { users: [...] } et non un tableau direct
             if (data && Array.isArray(data.users)) {
@@ -162,7 +162,7 @@ export default function AdminUsersPage() {
                 return;
             }
 
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
 
             if (!res.ok) {
                 throw new Error(data.error || "Erreur lors de la validation");

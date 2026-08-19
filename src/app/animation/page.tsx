@@ -191,14 +191,14 @@ export default function AnimationPage() {
                             Animations
                         </span>
                         
-                        <h1 className="font-serif text-5xl md:text-7xl text-charcoal-900 mt-2 mb-6 font-bold drop-shadow-sm">
+                        <h1 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4 font-bold">
                             Un programme varié
                         </h1>
                         
                         {/* Colorful fun underline */}
-                        <div className="w-32 h-1.5 bg-gradient-to-r from-terracotta-400 via-yellow-400 to-blue-400 mx-auto rounded-full mb-8" />
+                        <div className="w-24 h-1 bg-gradient-to-r from-terracotta-400 via-yellow-400 to-forest-400 mx-auto rounded-full mb-6" />
                         
-                        <p className="text-charcoal-600 max-w-2xl mx-auto text-xl md:text-2xl leading-relaxed">
+                        <p className="text-charcoal-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
                             Notre coordinatrice de la vie sociale propose chaque semaine un programme d&apos;activités
                             adapté aux envies et capacités de chacun.
                         </p>
