@@ -1,235 +1,180 @@
 "use client";
 
-import { motion } from "framer-motion";
 import ConversationalForm from "@/components/contact/ConversationalForm";
 import { EHPAD_INFO } from "@/lib/constants";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import { MapPin, Phone, Clock, ExternalLink } from "lucide-react";
 
 export default function ContactPage() {
     return (
-        <main>
-            {/* Hero compact */}
-            
-            {/* Section Contact */}
-            <section className="pt-32 md:pt-40 section-padding bg-cream-100">
-                <div className="container-custom">
-                    <h1 className="mb-10 font-serif text-4xl font-bold text-charcoal-900 md:text-5xl">Contactez l’EHPAD de Crécy</h1>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        {/* Informations de contact */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="lg:col-span-1"
-                        >
-                            <h2 className="font-serif text-2xl md:text-3xl text-charcoal-900 mb-6">
-                                Nos coordonnées
-                            </h2>
-                            <div className="space-y-6">
-                                {/* Adresse */}
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-terracotta-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg
-                                            className="w-6 h-6 text-terracotta-500"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-charcoal-900 mb-1">Adresse</h3>
-                                        <p className="text-charcoal-600">
-                                            {EHPAD_INFO.address.street}
-                                            <br />
-                                            {EHPAD_INFO.address.postalCode} {EHPAD_INFO.address.city}
-                                            <br />
-                                            <span className="text-charcoal-500">Seine-et-Marne, Île-de-France</span>
-                                        </p>
-                                    </div>
-                                </div>
+        <main className="bg-cream-100 min-h-screen pt-36 md:pt-44 pb-16 font-sans">
+            <div className="container-custom max-w-5xl">
+                {/* En-tête de page sobre et bien proportionné */}
+                <div className="mb-6">
+                    <p className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide mb-1">
+                        Nous contacter
+                    </p>
+                    <h1
+                        className="!font-sans font-bold text-charcoal-900 mb-1.5 tracking-tight"
+                        style={{ fontSize: "26px", lineHeight: "1.3" }}
+                    >
+                        Contactez l’EHPAD de Crécy
+                    </h1>
+                    <p className="text-sm text-charcoal-600 max-w-xl leading-relaxed">
+                        Une question sur un hébergement, une visite ou un renseignement ? Nos équipes sont à votre écoute.
+                    </p>
+                </div>
 
-                                {/* Téléphone */}
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-forest-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg
-                                            className="w-6 h-6 text-forest-500"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-charcoal-900 mb-1">Téléphone</h3>
-                                        <a
-                                            href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}
-                                            className="text-terracotta-500 hover:text-terracotta-600 transition-colors text-lg font-medium"
-                                        >
-                                            {EHPAD_INFO.phone}
-                                        </a>
-                                    </div>
-                                </div>
-
-                                {/* Horaires */}
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-wood-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg
-                                            className="w-6 h-6 text-wood-500"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={1.5}
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-charcoal-900 mb-1">Accueil Administratif</h3>
-                                        <p className="text-charcoal-600">
-                                            {EHPAD_INFO.officeHours.main}
-                                        </p>
-                                        <p className="text-terracotta-500 font-medium mt-1">
-                                            {EHPAD_INFO.officeHours.thursday}
-                                        </p>
-                                    </div>
-                                </div>
+                {/* Grille principale : Coordonnées (gauche) + Formulaire (droite) */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    {/* Colonne gauche : Coordonnées & Plan (5 colonnes) */}
+                    <div className="lg:col-span-5 space-y-3.5">
+                        {/* Bloc Téléphone */}
+                        <div className="bg-white rounded-xl p-4 shadow-2xs border border-cream-300 flex items-start gap-3.5">
+                            <div className="w-9 h-9 rounded-lg bg-forest-50 text-forest-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <Phone className="w-4 h-4" />
                             </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider mb-0.5">
+                                    Téléphone direct
+                                </p>
+                                <a
+                                    href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}
+                                    className="text-base font-bold text-charcoal-900 hover:text-terracotta-600 transition-colors"
+                                >
+                                    {EHPAD_INFO.phone}
+                                </a>
+                                <p className="text-xs text-charcoal-500 mt-0.5">
+                                    Standard d&apos;accueil de l&apos;établissement
+                                </p>
+                            </div>
+                        </div>
 
-                            {/* Carte */}
-                            <div className="mt-8">
-                                <div className="relative h-48 bg-cream-200 rounded-2xl overflow-hidden">
-                                    <iframe
-                                        title="Localisation de l’EHPAD de Crécy-la-Chapelle"
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.5!2d2.9137!3d48.8575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61287a1c1be67%3A0x9c95b4a3b0e6a7d!2s18%20Rue%20de%20la%20Chapelle%2C%2077580%20Cr%C3%A9cy-la-Chapelle!5e0!3m2!1sfr!2sfr!4v1707239400000"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        className="grayscale hover:grayscale-0 transition-all duration-500"
-                                    />
-                                    <div className="absolute inset-0 pointer-events-none border-2 border-white/50 rounded-2xl" />
-                                </div>
+                        {/* Bloc Horaires */}
+                        <div className="bg-white rounded-xl p-4 shadow-2xs border border-cream-300 flex items-start gap-3.5">
+                            <div className="w-9 h-9 rounded-lg bg-wood-50 text-wood-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <Clock className="w-4 h-4" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider mb-0.5">
+                                    Horaires d&apos;accueil
+                                </p>
+                                <p className="text-xs text-charcoal-800 font-medium leading-relaxed">
+                                    {EHPAD_INFO.officeHours.main}
+                                </p>
+                                <p className="text-xs text-terracotta-600 font-medium mt-0.5">
+                                    {EHPAD_INFO.officeHours.thursday}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Bloc Adresse */}
+                        <div className="bg-white rounded-xl p-4 shadow-2xs border border-cream-300 flex items-start gap-3.5">
+                            <div className="w-9 h-9 rounded-lg bg-terracotta-50 text-terracotta-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <MapPin className="w-4 h-4" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-charcoal-500 uppercase tracking-wider mb-0.5">
+                                    Adresse postale
+                                </p>
+                                <p className="text-xs text-charcoal-800 font-medium leading-relaxed">
+                                    {EHPAD_INFO.address.street}
+                                    <br />
+                                    {EHPAD_INFO.address.postalCode} {EHPAD_INFO.address.city}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Plan d'accès */}
+                        <div className="bg-white rounded-xl p-2.5 shadow-2xs border border-cream-300">
+                            <div className="relative h-40 rounded-lg overflow-hidden bg-cream-200">
+                                <iframe
+                                    title="Localisation de l’EHPAD de Crécy-la-Chapelle"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.5!2d2.9137!3d48.8575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61287a1c1be67%3A0x9c95b4a3b0e6a7d!2s18%20Rue%20de%20la%20Chapelle%2C%2077580%20Cr%C3%A9cy-la-Chapelle!5e0!3m2!1sfr!2sfr!4v1707239400000"
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
+                            </div>
+                            <div className="pt-2 px-1.5 flex justify-between items-center text-xs">
+                                <span className="text-charcoal-500">Crécy-la-Chapelle</span>
                                 <a
                                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                                         EHPAD_INFO.address.full
                                     )}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 mt-4 text-terracotta-500 hover:text-terracotta-600 font-medium"
+                                    className="inline-flex items-center gap-1 text-terracotta-600 hover:text-terracotta-700 font-semibold"
                                 >
-                                    Voir sur Google Maps
-                                    <svg
-                                        className="w-4 h-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                        />
-                                    </svg>
+                                    Itinéraire
+                                    <ExternalLink className="w-3.5 h-3.5" />
                                 </a>
                             </div>
-                        </motion.div>
+                        </div>
+                    </div>
 
-                        {/* Formulaire */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="lg:col-span-2"
-                        >
-                            <ConversationalForm />
-                        </motion.div>
+                    {/* Colonne droite : Formulaire (7 colonnes) */}
+                    <div className="lg:col-span-7">
+                        <ConversationalForm />
                     </div>
                 </div>
-            </section>
 
-            {/* FAQ rapide */}
-            <section className="section-padding bg-cream-100">
-                <div className="container-custom">
-                    <ScrollReveal direction="up">
-                        <div className="text-center mb-12">
-                            <span className="text-forest-600 font-medium">FAQ</span>
-                            <h2 className="font-serif text-3xl md:text-4xl text-charcoal-900 mt-2 mb-4">
-                                Questions fréquentes
-                            </h2>
-                        </div>
-                    </ScrollReveal>
+                {/* FAQ compacte */}
+                <div className="mt-10 pt-8 border-t border-cream-300">
+                    <div className="mb-4">
+                        <h2
+                            className="!font-sans font-bold text-charcoal-900 mb-0.5"
+                            style={{ fontSize: "18px", lineHeight: "1.4" }}
+                        >
+                            Questions fréquentes
+                        </h2>
+                        <p className="text-xs text-charcoal-500">
+                            Quelques réponses utiles avant votre prise de contact
+                        </p>
+                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                         {[
                             {
                                 question: "Comment programmer une visite ?",
-                                answer:
-                                    "Utilisez le formulaire ci-dessus en cochant la case 'Je souhaite programmer une visite' ou appelez-nous directement.",
+                                answer: "Sélectionnez 'Programmer une visite' dans le formulaire ou contactez directement l'accueil pour convenir d'un rendez-vous."
                             },
                             {
                                 question: "Quels documents pour un dossier d'admission ?",
-                                answer:
-                                    "L'inscription se fait désormais exclusivement en ligne via le portail national ViaTrajectoire. Le site vous guidera pour téléverser les justificatifs nécessaires.",
+                                answer: "Les dossiers d'admission se déposent via le portail national ViaTrajectoire. Notre secrétariat vous accompagne si besoin."
                             },
                             {
                                 question: "L'établissement est-il habilité à l'aide sociale ?",
-                                answer:
-                                    "Oui, nous sommes habilités ASH et conventionnés APL. Nous vous accompagnons dans vos démarches.",
+                                answer: "Oui, l'EHPAD de Crécy est habilité ASH (Aide Sociale à l'Hébergement) et conventionné pour les aides au logement (APL/ALS)."
                             },
                             {
-                                question: "Puis-je apporter les meubles personnels ?",
-                                answer:
-                                    "Oui, les résidents peuvent personnaliser leur chambre avec photos, petits meubles et objets personnels.",
-                            },
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="card-warm p-6"
+                                question: "Puis-je apporter des meubles personnels ?",
+                                answer: "Oui, chaque résident peut personnaliser son espace privatif avec tableaux, petits meubles et objets familiers."
+                            }
+                        ].map((item, idx) => (
+                            <div
+                                key={idx}
+                                className="bg-white rounded-xl p-3.5 border border-cream-200 shadow-2xs"
                             >
-                                <h3 className="font-semibold text-charcoal-900 mb-2 flex items-start gap-3">
-                                    <span className="w-6 h-6 bg-terracotta-100 text-terracotta-500 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                                <h3
+                                    className="!font-sans font-semibold text-charcoal-900 mb-1 flex items-center gap-2"
+                                    style={{ fontSize: "13px", lineHeight: "1.4" }}
+                                >
+                                    <span className="w-4 h-4 rounded-full bg-terracotta-100 text-terracotta-600 flex items-center justify-center text-[10px] font-bold shrink-0">
                                         ?
                                     </span>
                                     {item.question}
                                 </h3>
-                                <p className="text-charcoal-600 text-sm pl-9">{item.answer}</p>
-                            </motion.div>
+                                <p className="text-xs text-charcoal-600 pl-6 leading-relaxed">
+                                    {item.answer}
+                                </p>
+                            </div>
                         ))}
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     );
 }
