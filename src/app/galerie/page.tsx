@@ -103,7 +103,6 @@ export default function GaleriePage() {
                         Cette galerie rassemble des souvenirs des activités, rencontres et fêtes de l’établissement. Les photographies purement illustratives sont volontairement ignorées par les lecteurs d’écran afin d’éviter des annonces répétitives.
                     </p>
                 </div>
-
             </section>
 
             {/* Albums */}

@@ -28,12 +28,18 @@ function parseMarkdownLinks(text: string): { cleanText: string; links: MessageLi
     return { cleanText, links };
 }
 
+let msgSequence = 0;
+function createUniqueId(): string {
+    msgSequence += 1;
+    return `msg_${msgSequence}_${Math.random().toString(36).slice(2, 6)}`;
+}
+
 export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boolean }) {
     const [isOpen, setIsOpen] = useState(initiallyOpen);
     const [messages, setMessages] = useState<Message[]>([
         {
             id: "welcome",
-            text: "Bonjour ! 👋 Je suis l’assistant officiel de l’EHPAD de Crécy. Posez-moi vos questions par écrit ou directement à la voix !",
+            text: "Bonjour ! 👋 Je suis l’assistant virtuel de l’EHPAD de Crécy. Comment puis-je vous renseigner aujourd’hui ?",
             sender: "bot",
             timestamp: new Date()
         }
@@ -50,6 +56,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
     const inputRef = useRef<HTMLInputElement>(null);
     const toggleRef = useRef<HTMLButtonElement>(null);
     const recognitionRef = useRef<any>(null);
+    const sendVoiceRef = useRef<(text: string) => void>(() => {});
 
     // Check Speech Recognition & Speech Synthesis support
     useEffect(() => {
@@ -70,7 +77,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                             setIsListening(false);
                             // Auto submit after voice capture
                             setTimeout(() => {
-                                handleSendVoiceMessage(transcript);
+                                sendVoiceRef.current(transcript);
                             }, 300);
                         }
                     };
@@ -165,66 +172,37 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
         }
     };
 
-    // Process AI or Fallback Response
+    // Process verified rule-based response
     const processMessage = async (userText: string) => {
         setIsTyping(true);
 
-        let botReplyText = "";
-        let botLinks: MessageLink[] | undefined = undefined;
+        const lower = userText.toLowerCase();
+        const matchedRule: ChatRule | undefined = CHAT_RULES.find(rule =>
+            rule.keywords.some(keyword => lower.includes(keyword))
+        );
+        const botReplyText = matchedRule ? matchedRule.response : FALLBACK_MESSAGE;
+        const botLinks = matchedRule?.relatedLinks;
 
-        try {
-            // Call Netlify Function with Llama 3.2 AI
-            const res = await fetch("/.netlify/functions/chat-ai", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: userText,
-                    history: messages.map(m => ({ sender: m.sender, text: m.text })),
-                }),
-            });
+        setTimeout(() => {
+            const msgId = createUniqueId();
+            const botResponse: Message = {
+                id: msgId,
+                text: botReplyText,
+                sender: "bot",
+                links: botLinks,
+                timestamp: new Date()
+            };
 
-            if (res.ok) {
-                const data = await res.json();
-                if (data.response) {
-                    const parsed = parseMarkdownLinks(data.response);
-                    botReplyText = parsed.cleanText;
-                    if (parsed.links.length > 0) {
-                        botLinks = parsed.links;
-                    }
-                }
+            setMessages(prev => [...prev, botResponse]);
+            setIsTyping(false);
+
+            // Auto-read aloud if TTS enabled
+            if (ttsEnabled) {
+                setTimeout(() => {
+                    speakText(botReplyText, msgId);
+                }, 200);
             }
-        } catch {
-            // Network failure: fallback to local rules
-        }
-
-        // Fallback to local rule-based matching if AI endpoint was unavailable
-        if (!botReplyText) {
-            const lower = userText.toLowerCase();
-            const matchedRule: ChatRule | undefined = CHAT_RULES.find(rule =>
-                rule.keywords.some(keyword => lower.includes(keyword))
-            );
-            botReplyText = matchedRule ? matchedRule.response : FALLBACK_MESSAGE;
-            botLinks = matchedRule?.relatedLinks;
-        }
-
-        const msgId = (Date.now() + 1).toString();
-        const botResponse: Message = {
-            id: msgId,
-            text: botReplyText,
-            sender: "bot",
-            links: botLinks,
-            timestamp: new Date()
-        };
-
-        setMessages(prev => [...prev, botResponse]);
-        setIsTyping(false);
-
-        // Auto-read aloud if TTS enabled
-        if (ttsEnabled) {
-            setTimeout(() => {
-                speakText(botReplyText, msgId);
-            }, 200);
-        }
+        }, 400);
     };
 
     const handleSendMessage = async (e: React.FormEvent) => {
@@ -233,7 +211,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
 
         const userText = inputValue.trim();
         const userMessage: Message = {
-            id: Date.now().toString(),
+            id: createUniqueId(),
             text: userText,
             sender: "user",
             timestamp: new Date()
@@ -246,7 +224,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
 
     const handleSendVoiceMessage = async (voiceText: string) => {
         const userMessage: Message = {
-            id: Date.now().toString(),
+            id: createUniqueId(),
             text: voiceText,
             sender: "user",
             timestamp: new Date()
@@ -256,9 +234,13 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
         await processMessage(voiceText);
     };
 
+    useEffect(() => {
+        sendVoiceRef.current = handleSendVoiceMessage;
+    });
+
     const handleSuggestionClick = async (question: string) => {
         const userMessage: Message = {
-            id: Date.now().toString(),
+            id: createUniqueId(),
             text: question,
             sender: "user",
             timestamp: new Date()
@@ -283,10 +265,10 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                             type="button"
                             onClick={() => setIsOpen(true)}
                             className="flex items-center gap-2 text-left hover:text-terracotta-600 focus:outline-none focus:underline"
-                            aria-label="Ouvrir l'assistant : Une question ? Écrivez ou parlez-moi !"
+                            aria-label="Ouvrir l'assistant : Une question ? Posez-la ici !"
                         >
-                            <span className="text-xl">🎙️</span>
-                            <span><strong>Une question ?</strong> Écrivez ou parlez-moi en direct !</span>
+                            <span className="text-xl">💬</span>
+                            <span><strong>Une question ?</strong> Je suis là pour vous renseigner !</span>
                         </button>
                         <button
                             type="button"
@@ -317,16 +299,15 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                         <div className="bg-gradient-to-r from-terracotta-600 via-terracotta-500 to-terracotta-400 p-4 flex items-center justify-between text-white shrink-0 shadow-md">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl shadow-inner">
-                                    🤖
+                                    💬
                                 </div>
                                 <div>
-                                    <h3 id="assistant-ehpad-title" className="font-serif font-bold text-base text-white flex items-center gap-1.5">
+                                    <h3 id="assistant-ehpad-title" className="font-serif font-bold text-base text-white">
                                         Bonjour Crécy
-                                        <span className="text-[10px] uppercase font-sans tracking-wider bg-white/20 px-2 py-0.5 rounded-full font-semibold">IA & Voix</span>
                                     </h3>
                                     <p className="text-xs text-cream-100 flex items-center gap-1">
                                         <span className="w-2 h-2 rounded-full bg-forest-400 inline-block animate-pulse"></span>
-                                        En ligne • Écoute & Répond
+                                        Assistant en ligne
                                     </p>
                                 </div>
                             </div>
@@ -516,7 +497,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                     }`}
                 aria-expanded={isOpen}
                 aria-controls="assistant-ehpad"
-                aria-label={isOpen ? "Fermer l’assistant virtuel" : "Ouvrir l’assistant virtuel Bonjour Crécy (IA & Voix)"}
+                aria-label={isOpen ? "Fermer l’assistant virtuel" : "Ouvrir l’assistant virtuel Bonjour Crécy"}
             >
                 {isOpen ? (
                     <>
@@ -528,11 +509,11 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                 ) : (
                     <>
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg">
-                            🎙️
+                            💬
                         </div>
                         <div className="text-left">
                             <span className="block text-xs font-bold leading-tight">Une question ?</span>
-                            <span className="block text-[10px] text-cream-100 leading-tight">IA & Voix</span>
+                            <span className="block text-[10px] text-cream-100 leading-tight">En ligne</span>
                         </div>
                     </>
                 )}

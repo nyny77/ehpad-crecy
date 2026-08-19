@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site Officiel de l'EHPAD de Crécy-la-Chapelle
+
+Site web public, accessible (RGAA 100%), éco-conçu et intégrant des services d'assistance IA et de vie sociale.
+
+---
+
+## 🚀 Déploiement & Préservation du Quota Netlify
+
+> **⚠️ Quota Netlify (Build Minutes) :** Les builds automatiques sont mis en pause (**Stopped builds**) pour ne pas gaspiller le quota gratuit de 300 minutes.
+
+### 1. Déploiement direct en local (Recommandé — 0 minute Netlify !)
+```bash
+npm run deploy:direct
+```
+*Cette commande compile le site en local et le publie directement sur Netlify en quelques secondes sans utiliser de minutes de build serveur.*
+
+### 2. Développement local
+```bash
+npm run dev
+```
+
+---
 
 ## Getting Started
 

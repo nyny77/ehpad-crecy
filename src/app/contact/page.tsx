@@ -26,7 +26,6 @@ export default function ContactPage() {
                             <h2 className="font-serif text-2xl md:text-3xl text-charcoal-900 mb-6">
                                 Nos coordonnées
                             </h2>
-
                             <div className="space-y-6">
                                 {/* Adresse */}
                                 <div className="flex items-start gap-4">

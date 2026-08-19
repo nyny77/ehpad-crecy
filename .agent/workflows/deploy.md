@@ -1,22 +1,25 @@
+# Déploiement en Production (Préservation du Quota Netlify)
+
+> **⚠️ Quota Netlify (Build Minutes) :** Les builds automatiques sont en mode **Stopped builds** sur Netlify pour éviter de consommer les 300 min/mois gratuites.
+
 ---
-description: How to deploy changes to the production site
+
+## Méthode 1 : Déploiement direct en local (Recommandé — 0 minute Netlify !)
+
+Cette méthode compile le site sur votre PC et l'envoie directement en ligne sans consommer aucune minute Netlify :
+
+```powershell
+npm run deploy:direct
+```
+*(Ou demander simplement à Antigravity : « Déploie le site en production »).*
+
 ---
 
-# Deployment Workflow
+## Méthode 2 : Push GitHub & Déclenchement manuel
 
-The user uses **GitHub Desktop** for version control and deployment.
+1. Dans **GitHub Desktop**, commiter les modifications (mettre `[skip ci]` dans le titre pour les commits intermédiaires).
+2. Cliquer sur **Push origin**.
+3. Quand vous souhaitez publier la version en ligne :
+   - Aller sur [app.netlify.com](https://app.netlify.com) ➡️ **Deploys**
+   - Cliquer sur **Trigger deploy** ➡️ **Deploy site**.
 
-## Steps to Deploy
-
-1. Open **GitHub Desktop**
-2. Select the `ehpad-crecy` repository
-3. Review the changed files in the "Changes" tab
-4. Write a commit message describing the changes
-5. Click "Commit to main" (or the current branch)
-6. Click "Push origin" to deploy to Netlify
-
-## Notes
-
-- Netlify automatically builds and deploys when changes are pushed to the main branch
-- Build typically takes 1-2 minutes
-- Check https://app.netlify.com for deployment status

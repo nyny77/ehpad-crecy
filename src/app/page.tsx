@@ -30,5 +30,5 @@ export default async function Home() {
       <TeamPreview />
       <CTASection />
     </main>
-  )
+  );
 }

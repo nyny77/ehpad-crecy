@@ -324,11 +324,6 @@ export default function RecrutementPage() {
 
     return (
         <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
-            {/* Hero Section */}
-            
-
-            {/* Admin Button - Removed */}
-
             {/* Pourquoi nous rejoindre - Section Avantages */}
             <section className="py-24 bg-cream-100 texture-paper relative overflow-hidden">
                 {/* Formes organiques d'arrière-plan */}
@@ -342,7 +337,7 @@ export default function RecrutementPage() {
                             Pourquoi nous rejoindre ?
                         </h1>
                         <p className="text-charcoal-600 max-w-2xl mx-auto text-lg leading-relaxed">
-                            L'EHPAD de Crécy est un établissement <strong>public</strong> rattaché à la Fonction Publique Hospitalière,
+                            L&apos;EHPAD de Crécy est un établissement <strong>public</strong> rattaché à la Fonction Publique Hospitalière,
                             offrant un cadre de travail privilégié en milieu rural.
                         </p>
                     </div>
