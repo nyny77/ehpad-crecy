@@ -67,9 +67,9 @@ function OfferEditor({ offer, onSave, busy }: { offer: JobOffer; onSave: (offer:
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
                 <button disabled={busy || !draft.title.trim() || !draft.description.trim()} onClick={() => onSave({ ...draft, requirements: requirements.split("\n").map((req) => ({ req: req.trim() })).filter((item) => item.req) })} className="inline-flex items-center gap-2 rounded-xl bg-terracotta-600 px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50">
-                    <Save size={17} /> {offer.id === "new" ? "Créer l’offre" : "Enregistrer"}
+                    <Save size={17} /> {busy ? "Enregistrement…" : offer.id === "new" ? "Créer l’offre" : "Enregistrer"}
                 </button>
-                {offer.id !== "new" && draft.status !== "published" && <button disabled={busy} onClick={() => onSave({ ...draft, status: "published", requirements: requirements.split("\n").map((req) => ({ req: req.trim() })).filter((item) => item.req) })} className="rounded-xl border border-forest-300 px-4 py-2.5 text-sm font-bold text-forest-700">Publier</button>}
+                {offer.id !== "new" && draft.status !== "published" && <button disabled={busy} onClick={() => onSave({ ...draft, status: "published", requirements: requirements.split("\n").map((req) => ({ req: req.trim() })).filter((item) => item.req) })} className="rounded-xl border border-forest-300 px-4 py-2.5 text-sm font-bold text-forest-700 disabled:opacity-50">{busy ? "Publication…" : "Publier"}</button>}
             </div>
         </article>
     );
@@ -114,6 +114,7 @@ export default function JobManager({ initialData }: { initialData: JobsData }) {
                 </div>
             </div>
             {message && <p role="status" className="rounded-xl bg-cream-50 px-4 py-3 text-sm text-charcoal-700">{message}</p>}
+            {message && <div role="status" className="fixed bottom-4 left-4 right-4 z-[100] rounded-xl border border-charcoal-200 bg-charcoal-900 px-5 py-4 text-sm font-semibold text-white shadow-2xl md:left-auto md:max-w-md">{message}</div>}
             {creating && <OfferEditor offer={emptyOffer()} onSave={save} busy={busy} />}
             <div className="flex flex-wrap gap-2" aria-label="Filtrer les offres">
                 {(["pending", "published", "hidden", "ignored", "all"] as const).map((status) => <button key={status} aria-pressed={filter === status} onClick={() => setFilter(status)} className={`rounded-full px-4 py-2 text-sm font-bold ${filter === status ? "bg-charcoal-900 text-white" : "bg-white text-charcoal-700"}`}>{status === "all" ? "Toutes" : STATUS_LABELS[status]}</button>)}
@@ -122,4 +123,3 @@ export default function JobManager({ initialData }: { initialData: JobsData }) {
         </section>
     );
 }
-
