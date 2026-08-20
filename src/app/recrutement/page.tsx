@@ -198,50 +198,49 @@ const ADVANTAGES = [
     }
 ];
 
-// Styles for Job Cards based on contract type
+// Une identité visuelle propre à chaque établissement de la direction commune.
 const jobStyles = {
-    CDI: {
-        gradient: "from-emerald-500 via-green-500 to-teal-500",
-        bg: "bg-emerald-500",
+    crecy: {
+        gradient: "from-red-600 via-rose-600 to-red-500",
+        bg: "bg-red-600",
+        lightBg: "bg-red-50",
+        text: "text-red-700",
+        border: "border-red-200",
+        badge: "bg-red-100 text-red-800 border-red-200",
+        button: "from-red-600 to-rose-600"
+    },
+    "le-marais": {
+        gradient: "from-orange-500 via-amber-500 to-yellow-500",
+        bg: "bg-orange-500",
+        lightBg: "bg-amber-50",
+        text: "text-orange-800",
+        border: "border-orange-200",
+        badge: "bg-orange-100 text-orange-800 border-orange-200",
+        button: "from-orange-500 to-amber-500"
+    },
+    "saint-aile": {
+        gradient: "from-violet-600 via-purple-600 to-fuchsia-500",
+        bg: "bg-violet-600",
+        lightBg: "bg-violet-50",
+        text: "text-violet-700",
+        border: "border-violet-200",
+        badge: "bg-violet-100 text-violet-800 border-violet-200",
+        button: "from-violet-600 to-purple-600"
+    },
+    "pierre-comby": {
+        gradient: "from-emerald-600 via-green-600 to-teal-500",
+        bg: "bg-emerald-600",
         lightBg: "bg-emerald-50",
         text: "text-emerald-700",
         border: "border-emerald-200",
         badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
-        button: "from-emerald-600 to-teal-600"
-    },
-    CDD: {
-        gradient: "from-amber-400 via-orange-500 to-yellow-500",
-        bg: "bg-amber-500",
-        lightBg: "bg-amber-50",
-        text: "text-amber-800",
-        border: "border-amber-200",
-        badge: "bg-amber-100 text-amber-800 border-amber-200",
-        button: "from-amber-500 to-orange-500"
-    },
-    Vacataire: {
-        gradient: "from-sky-500 via-blue-500 to-indigo-500",
-        bg: "bg-blue-500",
-        lightBg: "bg-blue-50",
-        text: "text-blue-700",
-        border: "border-blue-200",
-        badge: "bg-blue-100 text-blue-800 border-blue-200",
-        button: "from-blue-600 to-indigo-600"
-    },
-    Default: {
-        gradient: "from-terracotta-500 via-rose-500 to-red-500",
-        bg: "bg-terracotta-500",
-        lightBg: "bg-terracotta-50",
-        text: "text-terracotta-700",
-        border: "border-terracotta-200",
-        badge: "bg-terracotta-100 text-terracotta-800 border-terracotta-200",
-        button: "from-terracotta-500 to-rose-500"
+        button: "from-emerald-600 to-green-600"
     }
 };
 
 function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: number }) {
-    // Determine style based on contract type (or default)
-    const styleKey = Object.keys(jobStyles).find(key => offer.contract.includes(key)) || "Default";
-    const style = jobStyles[styleKey as keyof typeof jobStyles];
+    const style = jobStyles[offer.facilityId];
+    const facility = JOB_FACILITIES.find((item) => item.id === offer.facilityId);
 
     return (
         <motion.div
@@ -261,7 +260,7 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                 <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${style.gradient}`} />
 
                 <p className="mb-3 mt-2 text-xs font-bold uppercase tracking-wide text-terracotta-700">
-                    {offer.facilityName} · {offer.city}
+                    {facility?.name || offer.facilityName} · {facility?.city || offer.city}
                 </p>
                 <div className="flex justify-between items-start mb-6">
                     <h3 className="font-serif font-bold text-charcoal-900 leading-snug group-hover:text-terracotta-700 transition-colors" style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.65rem)" }}>
@@ -383,7 +382,7 @@ export default function RecrutementPage() {
                         <button onClick={() => setSelectedFacility("all")} aria-pressed={selectedFacility === "all"} className={`rounded-full px-4 py-2 text-sm font-bold ${selectedFacility === "all" ? "bg-charcoal-900 text-white" : "bg-white text-charcoal-700 border border-cream-300"}`}>Tous les EHPAD</button>
                         {JOB_FACILITIES.map((facility) => (
                             <button key={facility.id} onClick={() => setSelectedFacility(facility.id)} aria-pressed={selectedFacility === facility.id} className={`rounded-full px-4 py-2 text-sm font-bold ${selectedFacility === facility.id ? "bg-terracotta-600 text-white" : "bg-white text-charcoal-700 border border-cream-300"}`}>
-                                {facility.name.replace("EHPAD ", "")} — {facility.city}
+                                {facility.name} — {facility.city}
                             </button>
                         ))}
                     </div>

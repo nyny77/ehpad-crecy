@@ -5,7 +5,13 @@ export const handler: Handler = async (event) => {
     if (event.httpMethod !== "GET") return { statusCode: 405, body: "Méthode non autorisée" };
     try {
         const data = await readJobs(event);
-        const offers = data.offers.filter((offer) => offer.status === "published").map((offer) => {
+        const today = new Date().toISOString().slice(0, 10);
+        const offers = data.offers.filter((offer) => {
+            if (offer.source === "fhf") {
+                return offer.sourceActive !== false && (!offer.deadline || offer.deadline >= today);
+            }
+            return offer.status === "published";
+        }).map((offer) => {
             const publicOffer = { ...offer };
             delete publicOffer.sourceUrl;
             return publicOffer;

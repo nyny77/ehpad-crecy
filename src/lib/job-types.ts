@@ -1,5 +1,5 @@
 export const JOB_FACILITIES = [
-    { id: "crecy", name: "EHPAD de Crécy-la-Chapelle", city: "Crécy-la-Chapelle" },
+    { id: "crecy", name: "EHPAD de Crécy", city: "Crécy-la-Chapelle" },
     { id: "le-marais", name: "EHPAD Le Marais", city: "La Ferté-Gaucher" },
     { id: "saint-aile", name: "EHPAD Saint Aile", city: "Rebais" },
     { id: "pierre-comby", name: "EHPAD Pierre Comby", city: "Rozay-en-Brie" },
@@ -32,4 +32,3 @@ export interface JobsData {
     offers: JobOffer[];
     lastFhfSyncAt?: string;
 }
-

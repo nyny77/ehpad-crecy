@@ -5,9 +5,12 @@ export type { JobOffer, JobsData } from "@/lib/job-types";
 export { JOB_FACILITIES } from "@/lib/job-types";
 
 const facilityOrder = new Map(JOB_FACILITIES.map((facility, index) => [facility.id, index]));
+const today = new Date().toISOString().slice(0, 10);
 export const ALL_CAREERS_OFFERS = (jobsData as JobsData).offers;
 export const CAREERS_OFFERS: JobOffer[] = ALL_CAREERS_OFFERS
-    .filter((offer) => offer.status === "published")
+    .filter((offer) => offer.source === "fhf"
+        ? offer.sourceActive !== false && (!offer.deadline || offer.deadline >= today)
+        : offer.status === "published")
     .sort((a, b) => (facilityOrder.get(a.facilityId) ?? 99) - (facilityOrder.get(b.facilityId) ?? 99)
         || String(b.publishedAt || b.createdAt).localeCompare(String(a.publishedAt || a.createdAt)));
 export const JOBS_LAST_SYNC_AT = (jobsData as JobsData).lastFhfSyncAt;

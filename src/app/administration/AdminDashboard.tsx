@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, BriefcaseBusiness, Camera, LogIn, LogOut, Mail, Newspaper, ShieldCheck, Users } from "lucide-react";
+import { BookOpen, Camera, LogIn, LogOut, Mail, Newspaper, ShieldCheck, Users } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
 import type { GalleryAlbum, GalleryImage } from "@/lib/gallery";
 import {
@@ -17,21 +17,18 @@ import BlogManager from "./BlogManager";
 import GazetteManager from "./GazetteManager";
 import ResidentManager from "./ResidentManager";
 import CourrierManager from "./CourrierManager";
-import JobManager from "./JobManager";
-import type { JobsData } from "@/lib/job-types";
 
 type AccessState = "loading" | "guest" | "forbidden" | "admin";
 
-export default function AdminDashboard({ initialArticles, initialPhotos, initialAlbums, initialLegacyAlbumTitle, initialJobs }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[]; initialAlbums: GalleryAlbum[]; initialLegacyAlbumTitle: string; initialJobs: JobsData }) {
+export default function AdminDashboard({ initialArticles, initialPhotos, initialAlbums, initialLegacyAlbumTitle }: { initialArticles: BlogPost[]; initialPhotos: GalleryImage[]; initialAlbums: GalleryAlbum[]; initialLegacyAlbumTitle: string }) {
     const [access, setAccess] = useState<AccessState>("loading");
-    const [tab, setTab] = useState<"photos" | "blog" | "gazette" | "jobs" | "residents" | "courrier">("photos");
+    const [tab, setTab] = useState<"photos" | "blog" | "gazette" | "residents" | "courrier">("photos");
 
     useEffect(() => {
         if (window.location.hash === "#blog") setTab("blog");
         if (window.location.hash === "#gazette") setTab("gazette");
         if (window.location.hash === "#residents") setTab("residents");
         if (window.location.hash === "#courrier") setTab("courrier");
-        if (window.location.hash === "#jobs") setTab("jobs");
         let unsubscribe = () => {};
         let attempts = 0;
         const timer = window.setInterval(() => {
@@ -113,7 +110,6 @@ export default function AdminDashboard({ initialArticles, initialPhotos, initial
                             <button aria-pressed={tab === "photos"} aria-controls="admin-current-panel" onClick={() => { setTab("photos"); window.history.replaceState(null, "", "#photos"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "photos" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><Camera size={19} /> Photos</button>
                             <button aria-pressed={tab === "blog"} aria-controls="admin-current-panel" onClick={() => { setTab("blog"); window.history.replaceState(null, "", "#blog"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "blog" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><BookOpen size={19} /> Blog</button>
                             <button aria-pressed={tab === "gazette"} aria-controls="admin-current-panel" onClick={() => { setTab("gazette"); window.history.replaceState(null, "", "#gazette"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "gazette" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><Newspaper size={19} /> Écho du Cœur</button>
-                            <button aria-pressed={tab === "jobs"} aria-controls="admin-current-panel" onClick={() => { setTab("jobs"); window.history.replaceState(null, "", "#jobs"); }} className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition-colors ${tab === "jobs" ? "bg-terracotta-600 text-white" : "text-charcoal-600 hover:bg-cream-100"}`}><BriefcaseBusiness size={19} /> Emplois</button>
                         </div>
                     </div>
                 </nav>
@@ -122,7 +118,6 @@ export default function AdminDashboard({ initialArticles, initialPhotos, initial
                     {tab === "photos" && <PhotoManager initialPhotos={initialPhotos} initialAlbums={initialAlbums} initialLegacyAlbumTitle={initialLegacyAlbumTitle} />}
                     {tab === "blog" && <BlogManager initialArticles={initialArticles} />}
                     {tab === "gazette" && <GazetteManager />}
-                    {tab === "jobs" && <JobManager initialData={initialJobs} />}
                     {tab === "residents" && <ResidentManager />}
                     {tab === "courrier" && <CourrierManager />}
                 </div>
