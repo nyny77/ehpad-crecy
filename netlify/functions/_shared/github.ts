@@ -45,7 +45,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 export async function readRepositoryText(filePath: string): Promise<string> {
-    if (!process.env.GITHUB_CONTENT_TOKEN || process.env.CONTEXT === "dev") {
+    if (process.env.CONTEXT === "dev") {
         try {
             return await fs.readFile(path.resolve(process.cwd(), filePath), "utf-8");
         } catch (e: any) {
@@ -63,7 +63,7 @@ export async function readRepositoryText(filePath: string): Promise<string> {
 }
 
 export async function commitChanges(message: string, changes: GitChange[]): Promise<void> {
-    if (!process.env.GITHUB_CONTENT_TOKEN || process.env.CONTEXT === "dev") {
+    if (process.env.CONTEXT === "dev") {
         for (const change of changes) {
             const absolutePath = path.resolve(process.cwd(), change.path);
             if (change.content === null) {
