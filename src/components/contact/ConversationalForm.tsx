@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle, Upload } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { CAREERS_OFFERS, type JobOffer } from "@/lib/careers";
 
 export default function ConversationalForm() {
     const [formData, setFormData] = useState<{
@@ -25,11 +26,27 @@ export default function ConversationalForm() {
     });
 
     const [cvFileName, setCvFileName] = useState<string>("");
+    const [applicationOffer, setApplicationOffer] = useState<JobOffer | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     
     const stepHeadingRef = useRef<HTMLHeadingElement>(null);
     const cvInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const offer = CAREERS_OFFERS.find((item) => item.id === params.get("offer"));
+        if (offer) {
+            setApplicationOffer(offer);
+            setFormData((current) => ({
+                ...current,
+                subject: "recrutement",
+                message: current.message || `Je souhaite postuler au poste « ${offer.title} » à ${offer.facilityName} (${offer.city}).`,
+            }));
+        } else if (params.get("subject") === "recrutement") {
+            setFormData((current) => ({ ...current, subject: "recrutement" }));
+        }
+    }, []);
 
     const handleChange = (field: string, value: any) => {
         setFormData(prev => ({ ...prev, [field]: value }));
@@ -78,6 +95,7 @@ export default function ConversationalForm() {
                 <button
                     onClick={() => {
                         setIsSubmitted(false);
+                        setApplicationOffer(null);
                         setFormData({
                             firstName: "",
                             lastName: "",
@@ -118,12 +136,21 @@ export default function ConversationalForm() {
             >
                 <input type="hidden" name="form-name" value="contact-v5" />
                 <input type="hidden" name="wantsVisit" value={formData.wantsVisit ? "true" : "false"} />
+                <input type="hidden" name="jobOfferId" value={applicationOffer?.id || ""} />
+                <input type="hidden" name="jobTitle" value={applicationOffer?.title || ""} />
+                <input type="hidden" name="jobFacility" value={applicationOffer ? `${applicationOffer.facilityName} — ${applicationOffer.city}` : ""} />
 
                 <p className="hidden">
                     <label>Don&apos;t fill this out if you&apos;re human: <input name="bot-field" /></label>
                 </p>
 
                 {/* Objet de la demande */}
+                {applicationOffer && (
+                    <div className="rounded-xl border border-forest-200 bg-forest-50 px-4 py-3 text-sm text-forest-900">
+                        <p className="font-bold">Candidature : {applicationOffer.title}</p>
+                        <p className="text-xs">{applicationOffer.facilityName} — {applicationOffer.city}</p>
+                    </div>
+                )}
                 <div>
                     <label htmlFor="contact-subject" className="block text-xs font-semibold text-charcoal-700 uppercase tracking-wider mb-1.5">
                         Objet de votre demande <span className="text-terracotta-600">*</span>

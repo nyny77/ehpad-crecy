@@ -30,6 +30,8 @@ type Step = "login" | "compose" | "success";
 
 const MAX_WIDTH = 1200;
 const QUALITY = 0.8;
+const CUISINE_PHONE = "01 64 63 97 39";
+const CUISINE_EMAIL = "cusine@ehpad-crecy.fr";
 
 const FAMILLE_FAQS = [
     {
@@ -42,7 +44,7 @@ const FAMILLE_FAQS = [
     },
     {
         q: "Comment réserver un repas avec mon proche (Table des Invités) ?",
-        a: "Il vous suffit de prévenir l'accueil au moins 48 heures à l'avance (par téléphone au 01 64 63 82 62 ou directement sur place) pour que notre chef prépare vos couverts supplémentaires. Pour le règlement et le tarif du repas par personne, s'adresser à l'accueil."
+        a: `Contactez la responsable cuisine au moins 48 heures à l'avance, du lundi au vendredi de 8h à 16h, par téléphone au ${CUISINE_PHONE} ou par e-mail à ${CUISINE_EMAIL}. Elle vous précisera également le tarif et les modalités de règlement.`
     },
     {
         q: "Comment fonctionne le marquage et l'entretien du linge ?",
@@ -610,7 +612,7 @@ export default function FamillesPage() {
                                         2
                                     </span>
                                     <h4 className="font-semibold text-charcoal-900 text-sm mb-1">Indiquer le nombre</h4>
-                                    <p className="text-xs text-charcoal-600">Précisez les régimes éventuels auprès du standard d&apos;accueil.</p>
+                                    <p className="text-xs text-charcoal-600">Précisez le nombre de convives et les régimes éventuels à la responsable cuisine.</p>
                                 </div>
 
                                 <div className="p-5 rounded-2xl bg-cream-50 border border-cream-200">
@@ -618,7 +620,7 @@ export default function FamillesPage() {
                                         3
                                     </span>
                                     <h4 className="font-semibold text-charcoal-900 text-sm mb-1">Règlement & Tarif</h4>
-                                    <p className="text-xs text-charcoal-600">Pour le règlement et le tarif du repas par personne, s&apos;adresser à l&apos;accueil.</p>
+                                    <p className="text-xs text-charcoal-600">La responsable cuisine vous précisera le tarif et les modalités de règlement.</p>
                                 </div>
                             </div>
 
@@ -627,15 +629,26 @@ export default function FamillesPage() {
                                 <div className="flex items-center gap-3">
                                     <Phone className="w-5 h-5 text-forest-700" />
                                     <div>
-                                        <p className="font-bold text-forest-900 text-sm">Réservation au standard :</p>
-                                        <p className="text-xs text-forest-700">{EHPAD_INFO.phone} · {EHPAD_INFO.officeHours.main}</p>
+                                        <p className="font-bold text-forest-900 text-sm">Réservation auprès de la responsable cuisine :</p>
+                                        <p className="text-xs text-forest-700">
+                                            <a className="underline hover:no-underline" href={`tel:${CUISINE_PHONE.replace(/\s/g, "")}`}>{CUISINE_PHONE}</a>
+                                            {" · "}
+                                            <a className="underline hover:no-underline" href={`mailto:${CUISINE_EMAIL}`}>{CUISINE_EMAIL}</a>
+                                        </p>
+                                        <p className="text-xs text-forest-700">Du lundi au vendredi, de 8h à 16h</p>
                                     </div>
                                 </div>
                                 <a
-                                    href={`tel:${EHPAD_INFO.phone.replace(/\s/g, "")}`}
-                                    className="px-6 py-2.5 rounded-full bg-forest-600 text-white text-xs font-bold hover:bg-forest-700 transition-colors shadow-sm whitespace-nowrap"
+                                    href={`tel:${CUISINE_PHONE.replace(/\s/g, "")}`}
+                                    className="sm:hidden px-6 py-2.5 rounded-full bg-forest-600 text-white text-xs font-bold hover:bg-forest-700 transition-colors shadow-sm whitespace-nowrap"
                                 >
                                     Appeler pour réserver
+                                </a>
+                                <a
+                                    href={`mailto:${CUISINE_EMAIL}?subject=${encodeURIComponent("Réservation d'un déjeuner avec un proche")}`}
+                                    className="hidden sm:inline-flex px-6 py-2.5 rounded-full bg-forest-600 text-white text-xs font-bold hover:bg-forest-700 transition-colors shadow-sm whitespace-nowrap"
+                                >
+                                    Envoyer un e-mail
                                 </a>
                             </div>
                         </div>
@@ -653,16 +666,22 @@ export default function FamillesPage() {
                         className="space-y-8"
                     >
                         {/* Questions fréquentes */}
-                        <div className="bg-white rounded-3xl p-8 md:p-10 border border-cream-200 shadow-md">
-                            <h2 className="font-serif text-2xl font-bold text-charcoal-900 mb-6 flex items-center gap-2">
-                                <HelpCircle className="w-6 h-6 text-terracotta-500" />
+                        <div className="bg-white rounded-3xl p-6 md:p-8 border border-cream-200 shadow-md">
+                            <h2
+                                className="font-serif font-bold text-charcoal-900 mb-5 flex items-center gap-2"
+                                style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
+                            >
+                                <HelpCircle className="w-5 h-5 text-terracotta-500" />
                                 Questions fréquentes des familles
                             </h2>
 
-                            <div className="space-y-6 divide-y divide-cream-100">
+                            <div className="space-y-4 divide-y divide-cream-100">
                                 {FAMILLE_FAQS.map((faq, index) => (
-                                    <div key={index} className={index > 0 ? "pt-6" : ""}>
-                                        <h3 className="font-semibold text-charcoal-900 text-base mb-2">
+                                    <div key={index} className={index > 0 ? "pt-4" : ""}>
+                                        <h3
+                                            className="font-semibold text-charcoal-900 mb-1.5"
+                                            style={{ fontSize: "clamp(1.05rem, 1.8vw, 1.3rem)" }}
+                                        >
                                             {faq.q}
                                         </h3>
                                         <p className="text-sm text-charcoal-600 leading-relaxed">
@@ -675,15 +694,15 @@ export default function FamillesPage() {
 
                         {/* Annuaire des contacts utiles */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="p-6 rounded-3xl bg-white border border-cream-200 shadow-sm">
-                                <h3 className="font-bold text-charcoal-900 text-base mb-1">Standard / Accueil</h3>
+                            <div className="p-5 rounded-3xl bg-white border border-cream-200 shadow-sm">
+                                <h3 className="font-bold text-charcoal-900 mb-1" style={{ fontSize: "clamp(1.05rem, 1.8vw, 1.3rem)" }}>Standard / Accueil</h3>
                                 <p className="text-xs text-charcoal-500 mb-4">Renseignements généraux, rendez-vous</p>
                                 <p className="font-bold text-terracotta-600 text-lg mb-1">{EHPAD_INFO.phone}</p>
                                 <p className="text-xs text-charcoal-500">{EHPAD_INFO.email}</p>
                             </div>
 
-                            <div className="p-6 rounded-3xl bg-white border border-cream-200 shadow-sm">
-                                <h3 className="font-bold text-charcoal-900 text-base mb-1">Animation & Vie Sociale</h3>
+                            <div className="p-5 rounded-3xl bg-white border border-cream-200 shadow-sm">
+                                <h3 className="font-bold text-charcoal-900 mb-1" style={{ fontSize: "clamp(1.05rem, 1.8vw, 1.3rem)" }}>Animation & Vie Sociale</h3>
                                 <p className="text-xs text-charcoal-500 mb-4">Activités, sorties, gazette, postier</p>
                                 <Link
                                     href="/animation"
@@ -693,8 +712,8 @@ export default function FamillesPage() {
                                 </Link>
                             </div>
 
-                            <div className="p-6 rounded-3xl bg-white border border-cream-200 shadow-sm">
-                                <h3 className="font-bold text-charcoal-900 text-base mb-1">Admissions & Facturation</h3>
+                            <div className="p-5 rounded-3xl bg-white border border-cream-200 shadow-sm">
+                                <h3 className="font-bold text-charcoal-900 mb-1" style={{ fontSize: "clamp(1.05rem, 1.8vw, 1.3rem)" }}>Admissions & Facturation</h3>
                                 <p className="text-xs text-charcoal-500 mb-4">Dossiers APA, aides ASH, factures</p>
                                 <Link
                                     href="/hebergement"

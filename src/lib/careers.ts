@@ -1,14 +1,16 @@
 import jobsData from "@/lib/data/jobs.json";
+import { JOB_FACILITIES, type JobOffer, type JobsData } from "@/lib/job-types";
 
-export interface JobOffer {
-    id: string;
-    title: string;
-    contract: string;
-    description: string;
-    requirements: { req: string }[];
-}
+export type { JobOffer, JobsData } from "@/lib/job-types";
+export { JOB_FACILITIES } from "@/lib/job-types";
 
-export const CAREERS_OFFERS: JobOffer[] = (jobsData.offers as unknown) as JobOffer[];
+const facilityOrder = new Map(JOB_FACILITIES.map((facility, index) => [facility.id, index]));
+export const ALL_CAREERS_OFFERS = (jobsData as JobsData).offers;
+export const CAREERS_OFFERS: JobOffer[] = ALL_CAREERS_OFFERS
+    .filter((offer) => offer.status === "published")
+    .sort((a, b) => (facilityOrder.get(a.facilityId) ?? 99) - (facilityOrder.get(b.facilityId) ?? 99)
+        || String(b.publishedAt || b.createdAt).localeCompare(String(a.publishedAt || a.createdAt)));
+export const JOBS_LAST_SYNC_AT = (jobsData as JobsData).lastFhfSyncAt;
 
 export const SPONTANEOUS_APPLICATION = {
     title: "Envie de nous rejoindre ?",

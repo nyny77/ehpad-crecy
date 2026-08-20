@@ -1,0 +1,42 @@
+name: Synchronisation des offres FHF
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Récupérer les offres des quatre EHPAD
+        run: npm run sync:fhf-jobs
+
+      - name: Enregistrer les nouvelles propositions
+        run: |
+          if git diff --quiet -- src/lib/data/jobs.json; then
+            echo "Aucun changement"
+            exit 0
+          fi
+          git config user.name "ehpad-crecy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/lib/data/jobs.json
+          git commit -m "Synchroniser les offres FHF"
+          git push
+

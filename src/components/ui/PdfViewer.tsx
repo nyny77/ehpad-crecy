@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Download, ExternalLink } from "lucide-react";
+import { Download, ExternalLink, FileText } from "lucide-react";
 
 interface PdfViewerProps {
     src: string;
     title: string;
+    accessibleUrl?: string;
     className?: string;
 }
 
-export default function PdfViewer({ src, title, className = "" }: PdfViewerProps) {
+export default function PdfViewer({ src, title, accessibleUrl, className = "" }: PdfViewerProps) {
     const [mobilePlatform, setMobilePlatform] = useState<"ios" | "android" | "other" | null>(null);
+    const [deviceChecked, setDeviceChecked] = useState(false);
     const viewerSrc = src.includes("#") ? src : `${src}#view=Fit`;
 
     useEffect(() => {
@@ -21,6 +23,7 @@ export default function PdfViewer({ src, title, className = "" }: PdfViewerProps
         const isNarrowScreen = window.matchMedia("(max-width: 1024px)").matches;
 
         setMobilePlatform(isIOS ? "ios" : isAndroid ? "android" : isTouchScreen && isNarrowScreen ? "other" : null);
+        setDeviceChecked(true);
     }, []);
 
     const isMobile = mobilePlatform !== null;
@@ -46,9 +49,22 @@ export default function PdfViewer({ src, title, className = "" }: PdfViewerProps
                     <Download aria-hidden="true" className="h-4 w-4" />
                     Télécharger
                 </a>
+                {accessibleUrl && (
+                    <a
+                        href={accessibleUrl}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-cream-100 px-4 py-2 text-sm font-semibold text-terracotta-600 hover:bg-cream-200 hover:text-terracotta-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta-600 focus-visible:ring-offset-2"
+                    >
+                        <FileText aria-hidden="true" className="h-4 w-4" />
+                        Version texte accessible
+                    </a>
+                )}
             </div>
 
-            {isMobile ? (
+            {!deviceChecked ? (
+                <div role="status" className="flex min-h-[430px] flex-1 items-center justify-center bg-cream-50 p-8 text-center text-charcoal-600">
+                    Préparation du lecteur PDF…
+                </div>
+            ) : isMobile ? (
                 <div className="flex min-h-[430px] flex-1 flex-col items-center justify-center gap-5 bg-cream-50 p-5 text-center sm:p-8">
                     <div aria-hidden="true" className="text-5xl sm:text-6xl">📄</div>
                     <div className="max-w-xl">

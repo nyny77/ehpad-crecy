@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import gazetteData from "@/lib/data/gazette.json";
 import { Calendar } from "lucide-react";
 import GazetteRenderer from "@/components/gazette/GazetteRenderer";
-import Link from "next/link";
 import PdfViewer from "@/components/ui/PdfViewer";
 
 export default function EchoDuCoeurPage() {
@@ -35,17 +34,10 @@ export default function EchoDuCoeurPage() {
                                 />
                             </div>
                         ) : (
-                            <div className="flex h-full min-h-[600px] flex-col gap-3 print:hidden">
-                                {selectedGazette.accessibleUrl && (
-                                    <div className="flex flex-col gap-3 rounded-2xl bg-white p-4 text-charcoal-700 sm:flex-row sm:items-center sm:justify-between">
-                                        <p>Ce numéro PDF est également proposé dans une version textuelle compatible avec les lecteurs d’écran.</p>
-                                        <Link href={selectedGazette.accessibleUrl} className="inline-flex shrink-0 justify-center rounded-full bg-terracotta-600 px-5 py-2.5 font-semibold text-white hover:bg-terracotta-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal-900">
-                                            Lire la version accessible
-                                        </Link>
-                                    </div>
-                                )}
+                            <div className="flex h-full min-h-[600px] flex-col print:hidden">
                                 <PdfViewer
                                     src={selectedGazette.file}
+                                    accessibleUrl={selectedGazette.accessibleUrl}
                                     className="w-full flex-1"
                                     title={`Le Petit Écho du Cœur — ${selectedGazette.title}`}
                                 />

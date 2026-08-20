@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, MouseEvent } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { CAREERS_OFFERS, SPONTANEOUS_APPLICATION } from "@/lib/careers";
-import { isAdmin, initNetlifyIdentity, onAuthChange } from "@/lib/netlifyAuth";
+import { CAREERS_OFFERS, JOB_FACILITIES, SPONTANEOUS_APPLICATION } from "@/lib/careers";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 
@@ -261,8 +260,11 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                 {/* Top colored accent line */}
                 <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${style.gradient}`} />
 
-                <div className="flex justify-between items-start mb-6 mt-2">
-                    <h3 className="text-2xl font-serif font-bold text-charcoal-900 leading-snug group-hover:text-terracotta-700 transition-colors">
+                <p className="mb-3 mt-2 text-xs font-bold uppercase tracking-wide text-terracotta-700">
+                    {offer.facilityName} · {offer.city}
+                </p>
+                <div className="flex justify-between items-start mb-6">
+                    <h3 className="font-serif font-bold text-charcoal-900 leading-snug group-hover:text-terracotta-700 transition-colors" style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.65rem)" }}>
                         {offer.title}
                     </h3>
                     <span className={`text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider text-center whitespace-nowrap ml-3 border ${style.badge} shadow-sm`}>
@@ -274,7 +276,9 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                     {offer.description}
                 </p>
 
-                <div className={`p-6 rounded-2xl ${style.lightBg} mb-8 border ${style.border}`}>
+                {offer.deadline && <p className="mb-5 text-sm font-semibold text-charcoal-600">Candidature avant le {new Date(`${offer.deadline}T12:00:00`).toLocaleDateString("fr-FR")}</p>}
+
+                {offer.requirements.length > 0 && <div className={`p-6 rounded-2xl ${style.lightBg} mb-8 border ${style.border}`}>
                     <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${style.text} flex items-center gap-2`}>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                         Profil recherché
@@ -289,10 +293,10 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                             </li>
                         ))}
                     </ul>
-                </div>
+                </div>}
 
                 <Link
-                    href={`/contact?subject=Candidature - ${offer.title}`}
+                    href={`/contact?subject=recrutement&offer=${encodeURIComponent(offer.id)}`}
                     className={`block w-full text-center bg-gradient-to-r ${style.button} text-white font-bold py-4 rounded-xl hover:brightness-110 hover:scale-[1.02] transition-all shadow-md hover:shadow-lg active:scale-95`}
                 >
                     Postuler maintenant
@@ -303,24 +307,8 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
 }
 
 export default function RecrutementPage() {
-    const [adminMode, setAdminMode] = useState(false);
-
-    useEffect(() => {
-        let unsubscribe = () => {};
-        const setupIdentity = () => {
-            unsubscribe();
-            initNetlifyIdentity();
-            setAdminMode(isAdmin());
-            unsubscribe = onAuthChange((user) => setAdminMode(!!user && isAdmin()));
-        };
-
-        setupIdentity();
-        window.addEventListener("netlify-identity-ready", setupIdentity);
-        return () => {
-            window.removeEventListener("netlify-identity-ready", setupIdentity);
-            unsubscribe();
-        };
-    }, []);
+    const [selectedFacility, setSelectedFacility] = useState<string>("all");
+    const visibleOffers = selectedFacility === "all" ? CAREERS_OFFERS : CAREERS_OFFERS.filter((offer) => offer.facilityId === selectedFacility);
 
     return (
         <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
@@ -378,15 +366,27 @@ export default function RecrutementPage() {
             {/* Postes ouverts */}
             <section className="py-12 bg-cream-100">
                 <div className="container-custom">
-                    <h2 className="text-3xl font-serif text-charcoal-900 mb-12 text-center">Nos postes actuellement ouverts</h2>
+                    <div className="mb-8 text-center">
+                        <p className="mb-2 text-sm font-bold uppercase tracking-wider text-terracotta-600">Direction commune</p>
+                        <h2 className="font-serif text-charcoal-900" style={{ fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)" }}>Les offres de nos quatre EHPAD</h2>
+                    </div>
 
-                    {CAREERS_OFFERS.length === 0 ? (
+                    <div className="mb-10 flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrer les offres par établissement">
+                        <button onClick={() => setSelectedFacility("all")} aria-pressed={selectedFacility === "all"} className={`rounded-full px-4 py-2 text-sm font-bold ${selectedFacility === "all" ? "bg-charcoal-900 text-white" : "bg-white text-charcoal-700 border border-cream-300"}`}>Tous les EHPAD</button>
+                        {JOB_FACILITIES.map((facility) => (
+                            <button key={facility.id} onClick={() => setSelectedFacility(facility.id)} aria-pressed={selectedFacility === facility.id} className={`rounded-full px-4 py-2 text-sm font-bold ${selectedFacility === facility.id ? "bg-terracotta-600 text-white" : "bg-white text-charcoal-700 border border-cream-300"}`}>
+                                {facility.name.replace("EHPAD ", "")} — {facility.city}
+                            </button>
+                        ))}
+                    </div>
+
+                    {visibleOffers.length === 0 ? (
                         <div className="text-center text-charcoal-500 italic py-16 bg-white rounded-3xl shadow-sm border border-cream-200 max-w-2xl mx-auto">
-                            Aucun poste ouvert pour le moment.
+                            Aucun poste publié actuellement pour cette sélection.
                         </div>
                     ) : (
                         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                            {CAREERS_OFFERS.map((offer, index) => (
+                            {visibleOffers.map((offer, index) => (
                                 <JobCard key={offer.id} offer={offer} index={index} />
                             ))}
                         </div>
