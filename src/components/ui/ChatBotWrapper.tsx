@@ -11,7 +11,7 @@ export default function ChatBotWrapper() {
     if (isActivated) return <ChatBot initiallyOpen />;
 
     return (
-        <div className="fixed bottom-6 right-6 z-[999] font-sans">
+        <div className="fixed bottom-24 right-4 z-[999] font-sans sm:bottom-6 sm:right-6">
             {/* Spotlight Banner on load */}
             <div className="absolute bottom-16 right-0 mb-2 w-64 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border-2 border-terracotta-300 text-charcoal-800 text-xs flex items-center justify-between gap-2 animate-fade-in">
                 <button

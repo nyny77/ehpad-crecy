@@ -35,15 +35,25 @@ export default function ConversationalForm() {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const offer = CAREERS_OFFERS.find((item) => item.id === params.get("offer"));
-        if (offer) {
+        const offerId = params.get("offer");
+        const applyOffer = (offer?: JobOffer) => {
+            if (!offer) return;
             setApplicationOffer(offer);
             setFormData((current) => ({
                 ...current,
                 subject: "recrutement",
                 message: current.message || `Je souhaite postuler au poste « ${offer.title} » à ${offer.facilityName} (${offer.city}).`,
             }));
-        } else if (params.get("subject") === "recrutement") {
+        };
+        const localOffer = CAREERS_OFFERS.find((item) => item.id === offerId);
+        if (localOffer) applyOffer(localOffer);
+        else if (offerId) {
+            fetch("/.netlify/functions/jobs", { cache: "no-store" })
+                .then((response) => response.ok ? response.json() : Promise.reject(new Error("Offres indisponibles")))
+                .then((data: { offers?: JobOffer[] }) => applyOffer(data.offers?.find((item) => item.id === offerId)))
+                .catch(() => undefined);
+        }
+        if (params.get("subject") === "recrutement") {
             setFormData((current) => ({ ...current, subject: "recrutement" }));
         }
     }, []);

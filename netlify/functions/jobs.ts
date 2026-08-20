@@ -1,0 +1,21 @@
+import type { Handler } from "@netlify/functions";
+import { readJobs } from "./_shared/jobs-store";
+
+export const handler: Handler = async (event) => {
+    if (event.httpMethod !== "GET") return { statusCode: 405, body: "Méthode non autorisée" };
+    try {
+        const data = await readJobs(event);
+        const offers = data.offers.filter((offer) => offer.status === "published").map((offer) => {
+            const publicOffer = { ...offer };
+            delete publicOffer.sourceUrl;
+            return publicOffer;
+        });
+        return {
+            statusCode: 200,
+            headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+            body: JSON.stringify({ offers, lastFhfSyncAt: data.lastFhfSyncAt }),
+        };
+    } catch (error) {
+        return { statusCode: 500, body: JSON.stringify({ error: error instanceof Error ? error.message : "Offres indisponibles" }) };
+    }
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BriefcaseBusiness, Plus, RefreshCw, Save } from "lucide-react";
 import { adminFetch } from "@/lib/admin-api";
 import { JOB_FACILITIES, type JobOffer, type JobsData, type JobStatus } from "@/lib/job-types";
@@ -83,11 +83,18 @@ export default function JobManager({ initialData }: { initialData: JobsData }) {
     const [message, setMessage] = useState("");
     const offers = useMemo(() => data.offers.filter((offer) => filter === "all" || offer.status === filter), [data.offers, filter]);
 
+    useEffect(() => {
+        adminFetch<{ data: JobsData }>("/.netlify/functions/admin-jobs")
+            .then((response) => setData(response.data))
+            .catch((error) => setMessage(error instanceof Error ? error.message : "Chargement des offres impossible."));
+    }, []);
+
     const request = async (payload: Record<string, unknown>) => {
         setBusy(true); setMessage("");
         try {
             const response = await adminFetch<{ data: JobsData }>("/.netlify/functions/admin-jobs", { method: "POST", body: JSON.stringify(payload) });
-            setData(response.data); setMessage("Modification enregistrée. La mise à jour du site va être déployée.");
+            setData(response.data);
+            setMessage(payload.status === "published" ? "Annonce publiée : elle est maintenant visible dans Recrutement." : "Modification enregistrée.");
             return true;
         } catch (error) {
             setMessage(error instanceof Error ? error.message : "Une erreur est survenue.");
@@ -114,7 +121,7 @@ export default function JobManager({ initialData }: { initialData: JobsData }) {
                 </div>
             </div>
             {message && <p role="status" className="rounded-xl bg-cream-50 px-4 py-3 text-sm text-charcoal-700">{message}</p>}
-            {message && <div role="status" className="fixed bottom-4 left-4 right-4 z-[100] rounded-xl border border-charcoal-200 bg-charcoal-900 px-5 py-4 text-sm font-semibold text-white shadow-2xl md:left-auto md:max-w-md">{message}</div>}
+            {message && <div role="status" className="fixed left-4 right-4 top-24 z-[2000] rounded-xl border border-charcoal-200 bg-charcoal-900 px-5 py-4 text-sm font-semibold text-white shadow-2xl md:left-auto md:right-6 md:max-w-md">{message}</div>}
             {creating && <OfferEditor offer={emptyOffer()} onSave={save} busy={busy} />}
             <div className="flex flex-wrap gap-2" aria-label="Filtrer les offres">
                 {(["pending", "published", "hidden", "ignored", "all"] as const).map((status) => <button key={status} aria-pressed={filter === status} onClick={() => setFilter(status)} className={`rounded-full px-4 py-2 text-sm font-bold ${filter === status ? "bg-charcoal-900 text-white" : "bg-white text-charcoal-700"}`}>{status === "all" ? "Toutes" : STATUS_LABELS[status]}</button>)}

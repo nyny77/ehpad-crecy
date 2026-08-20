@@ -1,13 +1,12 @@
 import type { Handler } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
-import { commitChanges, readRepositoryText } from "./_shared/github";
 import { fetchFhfOffers, mergeFhfOffers } from "./_shared/fhf-jobs";
+import { readJobs, writeJobs } from "./_shared/jobs-store";
 import { logFunctionError } from "./_shared/technical-log";
 import { parseJsonObject, validationStatus } from "./_shared/request-security";
 import { JOB_FACILITIES, type JobOffer, type JobsData, type JobStatus } from "../../src/lib/job-types";
 
-const JOBS_PATH = "src/lib/data/jobs.json";
 const STATUSES = new Set<JobStatus>(["pending", "published", "hidden", "ignored"]);
 
 function text(value: unknown, max: number): string {
@@ -49,10 +48,11 @@ function editedOffer(body: Record<string, any>, existing?: JobOffer): JobOffer {
 
 export const handler: Handler = async (event, context) => {
     if (!isAdminRequest(context)) return json(403, { error: "Accès administrateur requis" });
-    if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
     try {
+        const current = await readJobs(event);
+        if (event.httpMethod === "GET") return json(200, { success: true, data: current });
+        if (event.httpMethod !== "POST") return json(405, { error: "Méthode non autorisée" });
         const body = parseJsonObject(event.body, 128 * 1024);
-        const current = JSON.parse(await readRepositoryText(JOBS_PATH)) as JobsData;
         let next = current;
         const action = text(body.action, 20);
 
@@ -70,13 +70,10 @@ export const handler: Handler = async (event, context) => {
             return json(400, { error: "Action inconnue" });
         }
 
-        await commitChanges(`Recrutement : ${action === "sync" ? "synchronisation FHF" : "mise à jour des offres"}`, [
-            { path: JOBS_PATH, content: JSON.stringify(next, null, 2) + "\n" },
-        ]);
+        await writeJobs(event, next);
         return json(200, { success: true, data: next });
     } catch (error) {
         logFunctionError("admin-jobs", error, context.awsRequestId);
         return json(validationStatus(error), { error: error instanceof Error ? error.message : "Gestion des offres impossible" });
     }
 };
-

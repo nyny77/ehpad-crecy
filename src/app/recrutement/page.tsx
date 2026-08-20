@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CAREERS_OFFERS, JOB_FACILITIES, SPONTANEOUS_APPLICATION } from "@/lib/careers";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -308,7 +308,15 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
 
 export default function RecrutementPage() {
     const [selectedFacility, setSelectedFacility] = useState<string>("all");
-    const visibleOffers = selectedFacility === "all" ? CAREERS_OFFERS : CAREERS_OFFERS.filter((offer) => offer.facilityId === selectedFacility);
+    const [offers, setOffers] = useState(CAREERS_OFFERS);
+    const visibleOffers = selectedFacility === "all" ? offers : offers.filter((offer) => offer.facilityId === selectedFacility);
+
+    useEffect(() => {
+        fetch("/.netlify/functions/jobs", { cache: "no-store" })
+            .then((response) => response.ok ? response.json() : Promise.reject(new Error("Offres indisponibles")))
+            .then((data: { offers?: typeof CAREERS_OFFERS }) => setOffers(Array.isArray(data.offers) ? data.offers : CAREERS_OFFERS))
+            .catch(() => setOffers(CAREERS_OFFERS));
+    }, []);
 
     return (
         <main className="pt-32 md:pt-40 pb-20 bg-cream-100 min-h-screen">
