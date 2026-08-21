@@ -28,7 +28,7 @@ import { motion } from "framer-motion";
 type TabId = "postier" | "visites" | "table" | "faq";
 type Step = "login" | "compose" | "success";
 
-const MAX_WIDTH = 1200;
+const MAX_IMAGE_DIMENSION = 1200;
 const QUALITY = 0.8;
 const CUISINE_PHONE = "01 64 63 97 39";
 const CUISINE_EMAIL = "cusine@ehpad-crecy.fr";
@@ -100,22 +100,17 @@ export default function FamillesPage() {
     };
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+        const input = e.currentTarget;
+        const file = input.files?.[0];
         if (!file) return;
 
+        setError("");
         try {
             const bmp = await window.createImageBitmap(file);
             const canvas = document.createElement("canvas");
-            let width = bmp.width;
-            let height = bmp.height;
-
-            if (width > MAX_WIDTH) {
-                height = Math.round((height * MAX_WIDTH) / width);
-                width = MAX_WIDTH;
-            } else if (height > MAX_WIDTH) {
-                width = Math.round((width * MAX_WIDTH) / height);
-                height = MAX_WIDTH;
-            }
+            const scale = Math.min(1, MAX_IMAGE_DIMENSION / Math.max(bmp.width, bmp.height));
+            const width = Math.max(1, Math.round(bmp.width * scale));
+            const height = Math.max(1, Math.round(bmp.height * scale));
 
             canvas.width = width;
             canvas.height = height;
@@ -128,7 +123,9 @@ export default function FamillesPage() {
             bmp.close();
         } catch (error) {
             console.error("Error processing image:", error);
-            setError("Erreur lors du traitement de l'image. Veuillez essayer une autre photo.");
+            setError("Cette photo n’a pas pu être préparée. Essayez de la reprendre ou choisissez-la dans la galerie.");
+        } finally {
+            input.value = "";
         }
     };
 
@@ -259,12 +256,12 @@ export default function FamillesPage() {
                         {/* Login Step */}
                         {step === "login" && (
                             <div className="bg-white rounded-3xl shadow-xl border border-cream-200 p-6 md:p-10">
-                                <div className="flex items-center gap-3 mb-6">
+                                <div className="mb-6 flex min-w-0 items-start gap-3 sm:items-center">
                                     <div className="w-12 h-12 rounded-2xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center flex-shrink-0">
                                         <Mail size={24} />
                                     </div>
-                                    <div>
-                                        <h2 className="!font-sans font-bold text-charcoal-900 leading-tight whitespace-nowrap" style={{ fontSize: "20px" }}>Envoyer une carte postale</h2>
+                                    <div className="min-w-0 flex-1">
+                                        <h2 className="break-words !font-sans text-lg font-bold leading-tight text-charcoal-900 sm:text-xl">Envoyer une carte postale</h2>
                                         <p className="text-xs text-charcoal-500 mt-0.5">Service gratuit imprimé et remis par l&apos;équipe d&apos;animation</p>
                                     </div>
                                 </div>
@@ -311,7 +308,7 @@ export default function FamillesPage() {
                         {/* Compose Step */}
                         {step === "compose" && (
                             <div className="bg-white rounded-3xl shadow-xl border border-cream-200 overflow-hidden">
-                                <div className="bg-terracotta-50 border-b border-cream-200 p-6 text-center relative">
+                                <div className="relative border-b border-cream-200 bg-terracotta-50 px-12 py-5 text-center sm:p-6">
                                     <button
                                         type="button"
                                         aria-label="Retour à la saisie du code résident"
@@ -320,7 +317,7 @@ export default function FamillesPage() {
                                     >
                                         <ArrowLeft size={20} />
                                     </button>
-                                    <h2 className="!font-sans font-bold text-terracotta-900 leading-tight" style={{ fontSize: "20px" }}>
+                                    <h2 className="break-words !font-sans text-lg font-bold leading-tight text-terracotta-900 sm:text-xl">
                                         Nouveau message pour {residentName}
                                     </h2>
                                 </div>

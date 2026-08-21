@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import sharp from "sharp";
 
 test.describe.configure({ mode: "serial" });
 test.setTimeout(120_000);
@@ -77,4 +78,53 @@ test("mobile 320px : la fenêtre des options d'affichage conserve des marges", a
     expect(bounds).not.toBeNull();
     expect(bounds!.x).toBeGreaterThanOrEqual(16);
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(304);
+});
+
+test("mobile 320px : le Postier replie son titre et prépare une photo verticale", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    let sentImage = "";
+    await page.route("**/.netlify/functions/famille-send-message", async (route) => {
+        const payload = route.request().postDataJSON();
+        if (payload.action === "send") sentImage = payload.imageBase64 || "";
+        await route.fulfill({
+            status: 200,
+            contentType: "application/json",
+            body: JSON.stringify({ success: true, residentName: "Résidente test" }),
+        });
+    });
+    await page.goto("/familles", { waitUntil: "domcontentloaded" });
+    await waitForMobileHydration(page);
+
+    const title = page.getByRole("heading", { name: "Envoyer une carte postale" });
+    const titleBounds = await title.boundingBox();
+    expect(titleBounds).not.toBeNull();
+    expect(titleBounds!.x + titleBounds!.width).toBeLessThanOrEqual(296);
+
+    await page.getByLabel("Code secret du résident").fill("TEST-1234");
+    await page.getByRole("button", { name: "Accéder à la composition de la carte" }).click();
+    const tallPhoto = await sharp({
+        create: { width: 1_500, height: 4_000, channels: 3, background: "#d8c5a8" },
+    }).png().toBuffer();
+    await page.locator("#camera-photo-input").setInputFiles({
+        name: "capture-telephone.png",
+        mimeType: "image/png",
+        buffer: tallPhoto,
+    });
+
+    const preview = page.getByAltText("Photo sélectionnée");
+    await expect(preview).toBeVisible();
+    const previewDimensions = await preview.evaluate((image: HTMLImageElement) => ({
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+    }));
+    expect(Math.max(previewDimensions.width, previewDimensions.height)).toBeLessThanOrEqual(1_200);
+
+    await page.getByLabel(/Votre nom ou signature/).fill("Famille test");
+    await page.getByLabel("Votre message").fill("Bonjour depuis le téléphone.");
+    await page.getByRole("button", { name: "Envoyer la carte postale" }).click();
+    await expect(page.getByRole("heading", { name: "Carte postale envoyée avec succès !" })).toBeVisible();
+
+    expect(sentImage).toMatch(/^data:image\/webp;base64,/);
+    const metadata = await sharp(Buffer.from(sentImage.split(",")[1], "base64")).metadata();
+    expect(Math.max(metadata.width || 0, metadata.height || 0)).toBeLessThanOrEqual(1_200);
 });

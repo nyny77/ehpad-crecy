@@ -1,5 +1,6 @@
 import type { Handler } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
+import sharp from "sharp";
 import { json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
 import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
@@ -20,6 +21,20 @@ export interface FamilyMessage {
 const RESIDENTS_PATH = "src/lib/data/residents.json";
 const MESSAGES_PATH = "src/lib/data/messages.json";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+export async function normalizeFamilyMessageImage(value: unknown): Promise<Buffer> {
+    const validatedImage = await validateImage(value, {
+        maxBytes: MAX_IMAGE_BYTES,
+        maxWidth: 8_000,
+        maxHeight: 8_000,
+        formats: ["webp"],
+    });
+    return sharp(validatedImage.buffer, { limitInputPixels: 40_000_000, animated: false })
+        .rotate()
+        .resize({ width: 1_600, height: 1_600, fit: "inside", withoutEnlargement: true })
+        .webp({ quality: 82 })
+        .toBuffer();
+}
 
 export const handler: Handler = async (event, context) => {
     // Note: Public endpoint, no admin-auth required. We authenticate via secretCode.
@@ -73,7 +88,7 @@ export const handler: Handler = async (event, context) => {
 
         // 3. Process Photo if present
         if (imageBase64) {
-            const image = (await validateImage(imageBase64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000, formats: ["webp"] })).buffer;
+            const image = await normalizeFamilyMessageImage(imageBase64);
             const name = `msg-${Date.now()}-${randomUUID().slice(0, 8)}.webp`;
             photoUrl = `/images/messages/${name}`;
             changes.push({ path: `public${photoUrl}`, content: image.toString("base64"), encoding: "base64" });

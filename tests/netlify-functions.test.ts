@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { handler as healthHandler } from "../netlify/functions/health";
 import { handler as adminMessagesHandler } from "../netlify/functions/admin-messages";
-import { handler as familyMessageHandler } from "../netlify/functions/famille-send-message";
+import { handler as familyMessageHandler, normalizeFamilyMessageImage } from "../netlify/functions/famille-send-message";
 import { handler as aiImageHandler } from "../netlify/functions/ai-image";
 import { handler as testEmailHandler } from "../netlify/functions/test-email";
 import { handler as sendNotificationHandler } from "../netlify/functions/send-notification";
@@ -105,6 +105,18 @@ test("la validation d’image contrôle le format réel et les dimensions", asyn
     assert.equal(checked.width, 4);
     assert.equal(checked.height, 3);
     await assert.rejects(validateImage(image.toString("base64"), { maxBytes: 10_000, maxWidth: 2 }), /dimensions/);
+});
+
+test("le Postier normalise les photos verticales prises sur téléphone", async () => {
+    const tallPhoto = await sharp({
+        create: { width: 1_500, height: 4_000, channels: 3, background: "#d8c5a8" },
+    }).webp({ quality: 90 }).toBuffer();
+    const normalized = await normalizeFamilyMessageImage(`data:image/webp;base64,${tallPhoto.toString("base64")}`);
+    const metadata = await sharp(normalized).metadata();
+
+    assert.equal(metadata.format, "webp");
+    assert.ok((metadata.width || 0) <= 1_600);
+    assert.ok((metadata.height || 0) <= 1_600);
 });
 
 test("le HTML de la Gazette conserve la mise en forme sans code actif", () => {
