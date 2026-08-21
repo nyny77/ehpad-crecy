@@ -9,6 +9,15 @@
       "date": "2026-08-18T05:27:26.896Z",
       "status": "distribue",
       "distributedAt": "2026-08-18T05:35:45.210Z"
+    },
+    {
+      "id": "373f407b-49ea-42d0-b1e9-00456a613526",
+      "residentId": "1ce6ace3953c1f96",
+      "senderName": "Cluado ton fils",
+      "text": "Coucou papy, comment va ?",
+      "photoUrl": "/images/messages/msg-1787314463285-4515ae27.webp",
+      "date": "2026-08-21T12:14:23.286Z",
+      "status": "nouveau"
     }
   ]
 }
