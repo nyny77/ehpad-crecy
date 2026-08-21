@@ -95,7 +95,7 @@ export default function HebergementClient() {
     return (
         <>
             {/* Section Chambres */}
-            <section className="pt-32 md:pt-40 section-padding bg-cream-100">
+            <section id="chambres" className="scroll-mt-24 bg-cream-100 py-10 md:py-20">
                 <div className="container-custom">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Images */}

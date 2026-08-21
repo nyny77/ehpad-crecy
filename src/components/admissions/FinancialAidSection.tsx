@@ -192,7 +192,7 @@ function AidCard({ aid, index }: { aid: typeof aids[0]; index: number }) {
 
 export default function FinancialAidSection() {
     return (
-        <section className="py-16 md:py-24 bg-cream-100 relative overflow-hidden">
+        <section id="aides-financieres" className="relative scroll-mt-24 overflow-hidden bg-cream-100 py-14 md:py-24">
             <div className="container-custom relative z-10">
                 <div className="text-center mb-16">
                     <motion.span

@@ -37,13 +37,16 @@ export default function ConfirmationModal({
                     {/* Modal */}
                     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
                         <motion.div
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="confirmation-modal-title"
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             className="bg-cream-50 w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden pointer-events-auto border border-cream-200"
                         >
                             <div className="p-6 text-center">
-                                <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">
+                                <h3 id="confirmation-modal-title" className="font-serif text-xl font-bold text-charcoal-900 mb-2">
                                     {title}
                                 </h3>
                                 <p className="text-charcoal-600 mb-6">

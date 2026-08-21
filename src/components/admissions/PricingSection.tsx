@@ -43,7 +43,7 @@ export default function PricingSection({
         calculateMonthlyPricing(roomType, selectedGir, hasApa);
 
     return (
-        <section className="py-24 bg-cream-100 relative overflow-hidden" id="tarifs">
+        <section className="relative scroll-mt-24 overflow-hidden bg-cream-100 py-14 md:py-24" id="tarifs">
             <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-terracotta-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-sage-100/40 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 

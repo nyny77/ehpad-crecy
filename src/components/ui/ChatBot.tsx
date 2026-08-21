@@ -118,7 +118,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
     };
 
     return (
-        <div className="fixed bottom-24 right-4 z-[999] font-sans sm:bottom-6 sm:right-6">
+        <div className="site-floating-tool fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 font-sans sm:bottom-6 sm:right-6">
             {/* Spotlight Banner on load (clickable prompt) */}
             <AnimatePresence>
                 {!isOpen && showSpotlightPrompt && (
@@ -127,7 +127,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ delay: 1, duration: 0.4 }}
-                        className="absolute bottom-16 right-0 mb-2 w-64 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border-2 border-terracotta-300 text-charcoal-800 text-xs flex items-center justify-between gap-2"
+                        className="absolute bottom-16 right-0 mb-2 hidden w-64 items-center justify-between gap-2 rounded-2xl border-2 border-terracotta-300 bg-white/95 p-3.5 text-xs text-charcoal-800 shadow-xl backdrop-blur-md sm:flex"
                     >
                         <button
                             type="button"
@@ -161,7 +161,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="chatbot-container absolute bottom-20 right-0 w-[360px] sm:w-[410px] bg-cream-50 rounded-3xl shadow-2xl border-2 border-terracotta-200 overflow-hidden flex flex-col max-h-[580px]"
+                        className="chatbot-container absolute bottom-16 right-0 flex h-[min(36rem,calc(100dvh-10rem))] w-[min(360px,calc(100vw-24px))] flex-col overflow-hidden rounded-3xl border-2 border-terracotta-200 bg-cream-50 shadow-2xl sm:bottom-20 sm:h-auto sm:max-h-[580px] sm:w-[410px]"
                     >
                         {/* Header */}
                         <div className="bg-gradient-to-r from-terracotta-600 via-terracotta-500 to-terracotta-400 p-4 flex items-center justify-between text-white shrink-0 shadow-md">
@@ -193,7 +193,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                         </div>
 
                         {/* Messages Area */}
-                        <div className="chatbot-messages-area flex-1 overflow-y-auto p-4 space-y-4 min-h-[280px] max-h-[380px] bg-cream-100/60" aria-live="polite" aria-relevant="additions">
+                        <div className="chatbot-messages-area min-h-0 flex-1 space-y-4 overflow-y-auto bg-cream-100/60 p-4 sm:min-h-[280px] sm:max-h-[380px]" aria-live="polite" aria-relevant="additions">
                             {messages.map((msg) => (
                                 <div
                                     key={msg.id}
@@ -302,7 +302,7 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                 onClick={() => setIsOpen(!isOpen)}
                 whileHover={{ scale: 1.06 }}
                 whileTap={{ scale: 0.94 }}
-                className={`h-14 px-4 rounded-full shadow-2xl flex items-center gap-2.5 transition-all relative z-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400 ${isOpen
+                className={`relative z-50 flex h-14 w-14 items-center justify-center gap-2.5 rounded-full px-0 shadow-2xl transition-all focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400 sm:w-auto sm:justify-start sm:px-4 ${isOpen
                     ? "bg-charcoal-900 text-white"
                     : "bg-gradient-to-r from-terracotta-500 via-terracotta-600 to-terracotta-700 text-white border-2 border-white/60 hover:shadow-terracotta-500/40"
                     }`}
@@ -315,14 +315,14 @@ export default function ChatBot({ initiallyOpen = false }: { initiallyOpen?: boo
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                        <span className="text-xs font-bold font-sans">Fermer</span>
+                        <span className="hidden text-xs font-bold font-sans sm:inline">Fermer</span>
                     </>
                 ) : (
                     <>
                         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg">
                             💬
                         </div>
-                        <div className="text-left">
+                        <div className="hidden text-left sm:block">
                             <span className="block text-xs font-bold leading-tight">Une question ?</span>
                             <span className="block text-[10px] text-cream-100 leading-tight">En ligne</span>
                         </div>

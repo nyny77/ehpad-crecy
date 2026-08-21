@@ -133,7 +133,7 @@ export default function PageHeader({
     return (
         <section
             ref={containerRef}
-            className="page-header-section relative flex items-center justify-center min-h-[100vh] overflow-hidden bg-cream-50"
+            className="page-header-section relative flex min-h-[72svh] items-center justify-center overflow-hidden bg-cream-50 pb-14 pt-24 md:min-h-[100svh] md:pb-0 md:pt-0"
             style={{ perspective: "1000px" }}
         >
             {/* Image de fond avec parallax */}

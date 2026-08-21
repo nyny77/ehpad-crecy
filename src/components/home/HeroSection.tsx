@@ -34,7 +34,7 @@ export default function HeroSection({ eventFiles = [] }: HeroSectionProps) {
     return (
         <section
             ref={containerRef}
-            className="relative flex flex-col items-center justify-center min-h-[100vh] overflow-hidden bg-cream-100 perspective-1000 pt-24 pb-8 xl:pt-0 xl:pb-0"
+            className="relative flex min-h-[82svh] flex-col items-center justify-center overflow-hidden bg-cream-100 perspective-1000 pb-12 pt-24 md:min-h-[100svh] xl:pb-0 xl:pt-0"
             style={{ perspective: "1000px" }}
         >
             {/* Background Image with Parallax */}

@@ -1,0 +1,899 @@
+DOSSIER DE PRÉSENTATION DES FONCTIONNALITÉS
+SITE INTERNET DE L’EHPAD DE CRÉCY-LA-CHAPELLE
+
+Document préparatoire destiné à la réalisation d’une présentation PDF pour la direction
+État du projet analysé au 20 août 2026
+
+
+======================================================================
+1. PRÉSENTATION GÉNÉRALE DU PROJET
+======================================================================
+
+Le site de l’EHPAD de Crécy-la-Chapelle n’est pas seulement un site vitrine. Il a été conçu comme un portail d’information et de services destiné aux futurs résidents, aux familles, aux proches, aux professionnels, aux candidats et aux équipes de l’établissement.
+
+Ses objectifs principaux sont les suivants :
+
+- présenter clairement l’établissement, ses valeurs, ses chambres et ses équipes ;
+- rassurer les familles et faciliter la préparation d’une admission ;
+- rendre les tarifs et les aides financières compréhensibles ;
+- valoriser la vie sociale, les activités et les événements ;
+- permettre aux proches d’envoyer facilement une carte à un résident ;
+- publier les actualités, les photographies et le journal de l’établissement ;
+- faciliter le recrutement des quatre EHPAD placés en direction commune ;
+- donner aux agents autorisés des outils simples pour mettre à jour le contenu ;
+- garantir un niveau élevé d’accessibilité, de sécurité et de performance ;
+- assurer la continuité du service grâce aux sauvegardes, aux tests et à la supervision.
+
+L’identité visuelle repose sur une présentation chaleureuse, moderne et institutionnelle, avec des couleurs adaptées, des cartes illustrées, des dégradés, des animations mesurées et une mise en page responsive pour ordinateur, tablette et téléphone.
+
+Le site présente notamment l’EHPAD comme un établissement public de 63 places, implanté à Crécy-la-Chapelle en Seine-et-Marne, habilité à l’aide sociale et proposant des chambres simples et doubles.
+
+
+======================================================================
+2. PUBLICS CONCERNÉS
+======================================================================
+
+Le site répond aux besoins de plusieurs catégories d’utilisateurs :
+
+- les personnes âgées et leurs proches recherchant un établissement ;
+- les familles souhaitant comprendre les démarches, les tarifs et la vie quotidienne ;
+- les proches d’un résident utilisant le Postier numérique ;
+- les visiteurs souhaitant découvrir les locaux avant une visite réelle ;
+- les candidats recherchant un emploi dans l’un des quatre EHPAD de la direction commune ;
+- les agents et responsables chargés de publier des actualités, des photos ou une Gazette ;
+- les administrateurs chargés des résidents, des courriers et des comptes ;
+- les personnes en situation de handicap ou utilisant des technologies d’assistance.
+
+
+======================================================================
+3. PAGE D’ACCUEIL ET PRÉSENTATION DE L’ÉTABLISSEMENT
+======================================================================
+
+La page d’accueil offre une vision immédiate et rassurante de l’établissement.
+
+Fonctions et contenus présents :
+
+- présentation du nom, du slogan et de l’identité de l’EHPAD ;
+- mise en avant de la localisation à Crécy-la-Chapelle ;
+- indication de la capacité d’accueil et de l’habilitation à l’aide sociale ;
+- accès direct à la prise de contact et aux tarifs ;
+- présentation de l’établissement, des chambres et du cadre de vie ;
+- informations sur l’accompagnement soignant, la présence des équipes et la restauration préparée sur place ;
+- mise en avant du jardin, de la vie sociale et des équipements ;
+- présentation des quatre valeurs : bienveillance, professionnalisme, transparence et vie sociale ;
+- aperçu des équipes et accès aux pages détaillées ;
+- affichage des événements et documents placés dans l’espace dédié ;
+- présence d’une vidéo locale liée à Crécy-la-Chapelle ;
+- boutons d’appel à l’action pour visiter, téléphoner ou demander des renseignements.
+
+La navigation principale est organisée en grands ensembles : Découvrir, Vie à l’EHPAD, Admissions et Contact. Un accès direct « Familles » et un accès discret à l’administration sont également disponibles.
+
+
+======================================================================
+4. DÉCOUVERTE DE L’ÉTABLISSEMENT ET DE SON ENVIRONNEMENT
+======================================================================
+
+4.1. Histoire et patrimoine
+
+Une page présente l’histoire de Crécy-la-Chapelle et l’ancrage historique de l’établissement.
+
+Elle comprend notamment :
+
+- une présentation de la ville et de son patrimoine ;
+- l’histoire du bâtiment et de ses usages depuis le XIXe siècle ;
+- une frise chronologique structurée et accessible ;
+- des illustrations historiques ;
+- une vidéo locale avec commandes natives ;
+- des sous-titres et une transcription pour les personnes qui ne peuvent pas entendre ou lire la vidéo ;
+- un accès vers la prise de rendez-vous pour une visite réelle.
+
+4.2. Visite virtuelle
+
+Le site propose une visite virtuelle du jardin à 360 degrés.
+
+Cette fonction comprend :
+
+- un aperçu léger affiché avant le chargement du panorama ;
+- un déclenchement volontaire par le visiteur afin d’éviter de charger un média lourd inutilement ;
+- une navigation interactive dans le panorama ;
+- des indications d’utilisation ;
+- une galerie complémentaire de photographies des espaces de l’établissement.
+
+Cette visite permet aux familles éloignées ou aux personnes à mobilité réduite d’avoir une première vision des lieux avant un rendez-vous.
+
+
+======================================================================
+5. PRÉSENTATION DES ÉQUIPES ET DES SERVICES
+======================================================================
+
+Le site contient une page générale consacrée à l’équipe pluridisciplinaire ainsi que 17 fiches de services ou de métiers.
+
+Les fiches peuvent présenter :
+
+- le rôle du service ou du professionnel ;
+- une description détaillée de ses missions ;
+- ses principaux domaines d’intervention ;
+- ses compétences ;
+- une journée type ;
+- les formations ou qualifications lorsque l’information est disponible ;
+- des photographies ;
+- une citation ou un message métier ;
+- une navigation vers le service précédent ou suivant ;
+- un bouton permettant de contacter l’établissement.
+
+Les domaines représentés couvrent notamment la direction, l’hôtellerie, l’animation, la psychologie, le service technique, les soins, la restauration, la lingerie, l’administration et les autres fonctions participant à la vie de l’EHPAD.
+
+Cette partie valorise le travail des équipes et permet aux familles de mieux comprendre l’organisation de l’établissement.
+
+
+======================================================================
+6. HÉBERGEMENT, CHAMBRES ET TARIFS
+======================================================================
+
+La page Hébergement présente les conditions d’accueil et permet de comparer les chambres simples et doubles.
+
+Elle comprend :
+
+- des photographies des chambres et salles d’eau ;
+- un sélecteur entre chambre simple et chambre double ;
+- une description du confort, de l’intimité et de la possibilité de personnaliser la chambre ;
+- une présentation adaptée aux couples pour les chambres doubles ;
+- les principales caractéristiques des espaces ;
+- un rappel de la capacité globale de l’établissement ;
+- un accès direct à ViaTrajectoire et au guide d’admission.
+
+6.1. Tarifs publiés
+
+Les tarifs en vigueur depuis avril 2026 sont centralisés dans une source unique afin d’éviter les incohérences entre les pages.
+
+Le site présente :
+
+- le tarif d’hébergement en chambre simple ;
+- le tarif d’hébergement en chambre double ;
+- le tarif applicable aux personnes de moins de 60 ans ;
+- les tarifs dépendance par groupes GIR ;
+- le ticket modérateur ;
+- les prestations incluses ;
+- les prestations restant à la charge du résident.
+
+Les prestations incluses mentionnées comprennent notamment les repas, le linge de lit et de toilette, l’entretien du linge personnel, les protections, les soins assurés par les professionnels de l’établissement et les animations.
+
+6.2. Simulateur de reste à charge
+
+Un simulateur interactif permet d’obtenir une estimation personnalisée.
+
+L’utilisateur peut choisir :
+
+- le type de chambre ;
+- le niveau de dépendance GIR ;
+- la prise en compte ou non de l’APA.
+
+Le simulateur calcule ensuite :
+
+- le coût journalier d’hébergement ;
+- le coût journalier lié à la dépendance ;
+- le total journalier ;
+- une estimation mensuelle du reste à charge.
+
+Il s’agit d’une estimation pédagogique permettant aux familles de mieux comprendre la structure de la facturation avant de contacter l’établissement.
+
+
+======================================================================
+7. PARCOURS D’ADMISSION
+======================================================================
+
+La page « Préparer mon entrée » transforme les démarches d’admission en parcours clair et progressif.
+
+Elle présente quatre grandes étapes :
+
+1. la demande ;
+2. la visite de l’établissement ;
+3. l’étude du dossier en commission ;
+4. la préparation de l’entrée.
+
+Fonctions proposées :
+
+- lien direct vers le service public ViaTrajectoire ;
+- explication du dépôt du dossier ;
+- présentation du rendez-vous et de la visite ;
+- informations sur la commission d’admission ;
+- aide à la préparation de l’arrivée ;
+- listes des documents administratifs et médicaux à préparer ;
+- liste indicative du trousseau et des effets personnels ;
+- informations sur le marquage et l’entretien du linge ;
+- conseils pour personnaliser la chambre ;
+- présentation des aides APA, APL/ALS et ASH ;
+- accès au simulateur tarifaire ;
+- foire aux questions sur les meubles, le linge, les visites, les animaux et les repas avec les proches.
+
+La page vise à diminuer l’incertitude des familles et à limiter les oublis de documents au moment de l’admission.
+
+
+======================================================================
+8. VIE SOCIALE, ANIMATIONS ET JOURNÉE TYPE
+======================================================================
+
+La page Animation valorise le programme proposé par la coordinatrice de la vie sociale.
+
+Elle présente notamment :
+
+- les activités musicales et le chant ;
+- les arts créatifs ;
+- les rencontres avec les associations, les écoles et les partenaires ;
+- les jeux, lotos, quiz et loisirs ;
+- une journée type, du réveil au dîner ;
+- le petit-déjeuner, les activités, le déjeuner, la vie sociale, le goûter et la soirée ;
+- des illustrations adaptées aux différents moments de la journée.
+
+Cette page montre que l’établissement est un lieu de vie et pas uniquement un lieu de soins.
+
+
+======================================================================
+9. ACTUALITÉS, BLOG ET GALERIE PHOTOS
+======================================================================
+
+9.1. Blog de l’établissement
+
+Le blog diffuse les actualités de la vie de l’EHPAD :
+
+- activités ;
+- événements ;
+- sorties ;
+- fêtes ;
+- informations générales sur les projets ou équipements.
+
+Les articles peuvent comprendre un titre, une date, une catégorie, une photographie, un résumé et un contenu détaillé. Ils sont présentés sous forme de cartes puis ouverts dans une lecture plus complète.
+
+9.2. Galerie photographique
+
+La galerie rassemble les souvenirs des activités, rencontres et fêtes.
+
+Elle propose :
+
+- un classement des photographies par albums datés ;
+- l’indication du nombre de photographies dans chaque album ;
+- un affichage adapté aux téléphones, tablettes et ordinateurs ;
+- des miniatures légères pour accélérer le chargement ;
+- une visionneuse plein écran ;
+- une fermeture au clavier avec la touche Échap ;
+- un chargement différé des photographies.
+
+Dans le cadre de l’accessibilité, les photographies purement illustratives sont décrites globalement et évitées dans les annonces répétitives des lecteurs d’écran.
+
+
+======================================================================
+10. LE PETIT ÉCHO DU CŒUR ET LES DOCUMENTS PDF
+======================================================================
+
+La page « Le Petit Écho du Cœur » permet de publier et consulter le journal de l’établissement.
+
+Fonctions proposées :
+
+- affichage du dernier numéro ;
+- consultation des anciens numéros dans une colonne d’archives ;
+- lecture des éditions PDF ;
+- téléchargement du document ;
+- ouverture du PDF dans le lecteur complet de l’appareil ;
+- possibilité de publier une Gazette créée directement en HTML ;
+- impression des Gazettes numériques ;
+- version textuelle accessible lorsqu’elle existe.
+
+Le numéro de janvier 2026 dispose d’une véritable alternative HTML structurée. Son contenu peut être lu au clavier et avec un lecteur d’écran : rétrospective, activités, agenda et articles sont restitués sans dépendre uniquement des images du PDF.
+
+10.1. Lecture sur iPhone, iPad et Android
+
+Le lecteur PDF détecte les appareils mobiles.
+
+Sur ordinateur, le PDF peut être affiché dans un lecteur intégré allégé.
+
+Sur iPhone, iPad et Android, l’aperçu intégré est remplacé par des commandes fiables permettant :
+
+- d’ouvrir toutes les pages dans le lecteur natif de l’appareil ;
+- de télécharger le fichier ;
+- d’éviter le problème courant où Safari ou certains navigateurs mobiles n’affichent que la première page.
+
+Le même dispositif est utilisé pour le livret d’accueil des agents.
+
+
+======================================================================
+11. LIVRET D’ACCUEIL DES AGENTS
+======================================================================
+
+Une page dédiée donne accès au livret d’accueil interne destiné aux agents.
+
+Le document peut être :
+
+- lu sur ordinateur ;
+- ouvert en plein écran ;
+- téléchargé ;
+- consulté sur iOS et Android avec le lecteur natif de l’appareil.
+
+Cette fonction permet de diffuser facilement un document d’intégration actualisé sans impression systématique.
+
+
+======================================================================
+12. ESPACE FAMILLES ET INFORMATIONS PRATIQUES
+======================================================================
+
+La page Familles regroupe les informations les plus utiles aux proches dans un espace unique.
+
+Elle est organisée en plusieurs rubriques :
+
+- le Postier numérique ;
+- les visites ;
+- la Table des Invités ;
+- les questions fréquentes.
+
+12.1. Informations sur les visites
+
+La page rappelle que les visites sont libres et indique les horaires particulièrement recommandés afin de respecter les soins et les repas. Elle présente également :
+
+- les règles générales de visite ;
+- la possibilité de venir avec un animal tenu en laisse et à jour de ses vaccinations ;
+- l’accès à la visite virtuelle à 360 degrés ;
+- la possibilité de demander une visite découverte.
+
+12.2. Déjeuner avec un proche – Table des Invités
+
+La réservation d’un déjeuner avec un résident est orientée vers la responsable cuisine, et non vers l’accueil.
+
+Les informations indiquées sont :
+
+- réservation au moins 48 heures à l’avance ;
+- contact du lundi au vendredi de 8 h à 16 h ;
+- téléphone : 01 64 63 97 39 ;
+- courriel : cusine@ehpad-crecy.fr ;
+- bouton d’appel sur mobile ;
+- bouton d’envoi d’un courriel ;
+- rappel que la responsable cuisine communique le tarif et les modalités de règlement.
+
+12.3. Questions fréquentes des familles
+
+La FAQ répond directement aux questions concernant :
+
+- les horaires de visite ;
+- la venue avec un animal ;
+- la réservation d’un repas avec un proche ;
+- le marquage et l’entretien du linge ;
+- la participation à la vie de l’EHPAD, au CVS et au bénévolat.
+
+Les coordonnées utiles sont réparties par besoin : standard et accueil, animation et vie sociale, admissions et facturation.
+
+
+======================================================================
+13. LE POSTIER NUMÉRIQUE
+======================================================================
+
+Le Postier numérique est l’une des principales fonctions de service du site. Il permet à un proche d’envoyer gratuitement une carte numérique à un résident.
+
+13.1. Parcours de la famille
+
+Le parcours a volontairement été maintenu très simple :
+
+1. la famille saisit le code secret transmis pour le résident ;
+2. le système vérifie le code sans révéler d’informations si celui-ci est incorrect ;
+3. le proche indique son nom ;
+4. il écrit son message ;
+5. il peut ajouter une photographie facultative depuis son téléphone ou sa galerie ;
+6. il envoie la carte ;
+7. une confirmation indique que l’équipe imprimera et remettra la carte au résident.
+
+La photographie est optimisée avant son envoi afin de réduire son poids.
+
+13.2. Gestion par l’établissement
+
+Dans l’administration, les agents autorisés peuvent :
+
+- consulter les nouveaux courriers ;
+- filtrer et sélectionner les messages ;
+- visualiser le texte et la photographie ;
+- imprimer une carte mise en page pour le résident ;
+- marquer le courrier comme distribué ;
+- supprimer un message ;
+- supprimer plusieurs messages en une seule opération.
+
+Lorsqu’un courrier est marqué comme distribué, sa photographie est supprimée afin de limiter la conservation des données. Les courriers distribués peuvent être purgés après une durée de conservation de 30 jours.
+
+13.3. Gestion des résidents et des codes
+
+L’administration permet :
+
+- d’ajouter un résident ;
+- d’indiquer sa chambre ;
+- de générer automatiquement un code secret individuel ;
+- de régénérer le code si nécessaire, ce qui invalide l’ancien ;
+- de supprimer le dossier du résident ;
+- de consulter la liste des codes à transmettre aux familles.
+
+L’accès à ces fonctions est réservé aux comptes possédant le rôle administrateur.
+
+
+======================================================================
+14. FORMULAIRE DE CONTACT
+======================================================================
+
+Le formulaire de contact centralise plusieurs types de demandes :
+
+- demande d’information générale ;
+- programmation d’une visite ;
+- dossier d’admission ou question sur les tarifs ;
+- recrutement et candidature ;
+- autre demande.
+
+Le formulaire recueille le prénom, le nom, le courriel, le téléphone facultatif et le message. Une personne peut également demander à programmer une visite.
+
+Pour une candidature, le formulaire s’adapte automatiquement :
+
+- l’objet Recrutement est présélectionné ;
+- l’offre et l’établissement concernés sont ajoutés à la demande ;
+- le message est prérempli avec le titre du poste ;
+- le candidat peut joindre un CV au format PDF, DOC ou DOCX ;
+- la candidature est envoyée par le site, sans obliger le candidat à passer par la FHF.
+
+Le formulaire utilise la gestion sécurisée des formulaires Netlify et comporte un champ anti-robots invisible qui ne complique pas le parcours humain.
+
+
+======================================================================
+15. RECRUTEMENT ET SYNCHRONISATION AVEC LA FHF
+======================================================================
+
+La page Recrutement présente les avantages de travailler dans la Fonction publique hospitalière et les offres de la direction commune.
+
+Les quatre établissements distingués sont :
+
+- EHPAD de Crécy – Crécy-la-Chapelle ;
+- EHPAD Le Marais – La Ferté-Gaucher ;
+- EHPAD Saint Aile – Rebais ;
+- EHPAD Pierre Comby – Rozay-en-Brie.
+
+15.1. Synchronisation automatique
+
+Les offres publiées sur les pages FHF de ces quatre établissements sont synchronisées automatiquement une fois par jour.
+
+L’établissement n’a aucune action manuelle à effectuer dans l’administration :
+
+- une nouvelle annonce FHF apparaît automatiquement sur le site ;
+- une annonce dont la date limite est dépassée est masquée ;
+- une annonce retirée de la FHF disparaît après la synchronisation suivante ;
+- si la FHF est temporairement inaccessible, la synchronisation échoue sans effacer volontairement la dernière liste connue.
+
+Les données synchronisées sont conservées dans un stockage Netlify dédié, avec une copie locale de secours permettant de continuer à afficher les dernières offres disponibles.
+
+15.2. Parcours de candidature maîtrisé par l’EHPAD
+
+La FHF sert uniquement de source pour identifier les postes ouverts. Le visiteur reste sur le site de l’EHPAD pour consulter l’offre et postuler.
+
+Le site ne met pas en avant les coordonnées ni le lien de candidature de la FHF. Le bouton « Postuler maintenant » ouvre le formulaire interne avec l’offre et l’établissement déjà identifiés.
+
+Une candidature spontanée reste également possible.
+
+15.3. Identification visuelle des quatre établissements
+
+Chaque établissement possède une couleur avec dégradé :
+
+- Crécy : rouge ;
+- Le Marais / La Ferté-Gaucher : orange ;
+- Saint Aile / Rebais : violet ;
+- Pierre Comby / Rozay-en-Brie : vert.
+
+Un filtre permet d’afficher tous les postes ou seulement les annonces d’un établissement.
+
+
+======================================================================
+16. ASSISTANT VIRTUEL « BONJOUR CRÉCY »
+======================================================================
+
+Un assistant virtuel est disponible sur les pages du site afin d’aider les visiteurs à trouver rapidement une information.
+
+Il propose :
+
+- une bulle d’aide visible mais refermable ;
+- des questions suggérées ;
+- des réponses vérifiées à partir d’une base locale de mots-clés ;
+- des liens directs vers les pages utiles ;
+- des réponses sur les tarifs, les visites, les animaux, la restauration, les admissions, le recrutement, les aides, le Postier et les coordonnées ;
+- une réponse de secours invitant à contacter l’accueil lorsque la question n’est pas reconnue ;
+- une fermeture au clavier avec la touche Échap ;
+- une position adaptée sur mobile afin de ne pas masquer les autres boutons.
+
+L’assistant actuellement présent sur le site est un système de réponses préparées et contrôlées. Il ne remplace pas un professionnel et n’accède pas aux données médicales ou personnelles des résidents.
+
+
+======================================================================
+17. ESPACE D’ADMINISTRATION
+======================================================================
+
+L’administration est protégée par Netlify Identity et par la vérification du rôle « admin ». Les contrôles sont effectués à la fois dans l’interface et dans les fonctions serveur.
+
+Les sections disponibles sont :
+
+- Photos ;
+- Blog ;
+- Écho du Cœur ;
+- Résidents ;
+- Courriers.
+
+17.1. Gestion des photos
+
+L’administrateur peut :
+
+- créer un album avec un titre et une date ;
+- ajouter plusieurs photographies en une seule sélection ;
+- voir un aperçu avant publication ;
+- modifier le titre d’une photographie ;
+- ajouter les photographies à un album existant ;
+- renommer un album ;
+- sélectionner plusieurs photographies ;
+- supprimer une photographie, une sélection ou un album ;
+- suivre la progression d’un envoi en lot.
+
+Les photographies sont compressées et des miniatures sont créées. Les envois multiples sont regroupés afin de limiter le nombre de déploiements Netlify.
+
+17.2. Gestion du blog
+
+L’administrateur peut :
+
+- créer un article ;
+- choisir sa date et sa catégorie ;
+- ajouter et optimiser une image ;
+- rédiger un résumé et le contenu ;
+- enregistrer un brouillon ;
+- publier un article ;
+- modifier ou supprimer un article existant.
+
+17.3. Gestion du Petit Écho du Cœur
+
+Deux modes de publication sont disponibles :
+
+- publication traditionnelle d’un PDF ;
+- création d’une Gazette numérique directement dans le site.
+
+L’éditeur de Gazette numérique permet :
+
+- d’ajouter un sommaire automatique ;
+- d’ajouter des titres et des paragraphes enrichis ;
+- d’ajouter des photographies ;
+- de placer une image au centre, à gauche ou à droite d’un texte ;
+- de choisir des couleurs de fond ;
+- de rechercher une illustration dans une banque d’images ;
+- de créer une illustration avec l’outil d’intelligence artificielle Cloudflare lorsque le service est configuré ;
+- de prévisualiser le résultat ;
+- d’imprimer la Gazette ;
+- de publier ou supprimer une édition.
+
+Une image produite par intelligence artificielle n’est insérée qu’après validation humaine et reçoit automatiquement la mention « Illustration générée par IA ».
+
+17.4. Gestion du Postier
+
+L’administration regroupe la gestion des résidents, des codes secrets, des courriers reçus, de l’impression, de la distribution et de la suppression, comme décrit dans la partie consacrée au Postier numérique.
+
+
+======================================================================
+18. GESTION DES COMPTES ET DES ACCÈS
+======================================================================
+
+Le projet comprend un système de comptes reposant sur Netlify Identity.
+
+Fonctions prévues et disponibles :
+
+- connexion et déconnexion ;
+- inscription avec prénom, nom, courriel, mot de passe et fonction ;
+- indication du lien de parenté pour une famille ;
+- lecture et acceptation d’une charte de confidentialité et de droit à l’image ;
+- mise en attente d’un compte sans rôle ;
+- validation manuelle par un administrateur ;
+- attribution d’un rôle ;
+- envoi d’un courriel de bienvenue après validation ;
+- gestion des utilisateurs en attente et déjà validés ;
+- restriction des outils d’administration aux administrateurs.
+
+Les pages d’administration et de gestion des utilisateurs sont exclues de l’indexation des moteurs de recherche.
+
+
+======================================================================
+19. ACCESSIBILITÉ NUMÉRIQUE ET RGAA
+======================================================================
+
+L’accessibilité a été traitée comme une fonction centrale du projet et non comme un simple ajout visuel.
+
+Le site publie :
+
+- une déclaration d’accessibilité ;
+- un rapport d’audit détaillé ;
+- un schéma pluriannuel 2026-2028 ;
+- un plan d’action annuel 2026 ;
+- les coordonnées permettant de signaler une difficulté ;
+- les informations relatives au recours auprès du Défenseur des droits.
+
+L’audit interne RGAA 4.1.2 publié le 16 août 2026 déclare le site totalement conforme, avec 84 critères respectés sur 84 critères applicables, soit 100 % sur l’échantillon audité.
+
+Les améliorations réalisées comprennent notamment :
+
+- lien d’évitement vers le contenu principal ;
+- titres et régions de page structurés ;
+- navigation possible au clavier ;
+- focus visible ;
+- fermeture des fenêtres avec Échap ;
+- noms accessibles pour les boutons ;
+- états ARIA pour les menus, onglets, FAQ, formulaires et fenêtres ;
+- messages d’erreur et confirmations annoncés aux lecteurs d’écran ;
+- contraste renforcé ;
+- fonctionnement vérifié avec un zoom à 200 % et 400 % ;
+- mode d’affichage avec texte agrandi et contraste élevé ;
+- mémorisation locale de la préférence d’affichage ;
+- tests avec le lecteur d’écran NVDA sous Windows ;
+- sous-titres et transcription de la vidéo ;
+- alternative HTML pour la Gazette composée d’images ;
+- lecteur PDF adapté aux limites d’iOS et d’Android ;
+- respect de la préférence système de réduction des animations.
+
+Une vérification VoiceOver sur Safari reste recommandée dans le cadre de l’amélioration continue, notamment après les évolutions importantes.
+
+
+======================================================================
+20. ADAPTATION MOBILE ET APPLICATION WEB INSTALLABLE
+======================================================================
+
+Le site est responsive et s’adapte aux ordinateurs, tablettes, iPhone, iPad et appareils Android.
+
+Les adaptations comprennent :
+
+- menu de navigation mobile ;
+- boutons d’appel utilisables directement sur téléphone ;
+- boutons d’envoi de courriel ;
+- formulaires réorganisés pour les petits écrans ;
+- prise de photographie directement depuis le téléphone pour le Postier ;
+- galerie et visionneuse adaptées au tactile ;
+- lecteur PDF spécifique à iOS et Android ;
+- vidéo mobile allégée ;
+- repositionnement des boutons flottants pour éviter les chevauchements.
+
+Le site est également une PWA, c’est-à-dire une application web installable. Il possède :
+
+- un manifeste d’application ;
+- des icônes pour Android et Apple ;
+- un affichage autonome ;
+- un service worker ;
+- une page hors connexion ;
+- une mise en cache minimale de l’accueil et des éléments essentiels.
+
+
+======================================================================
+21. PERFORMANCE, ÉCOCONCEPTION ET SOBRIÉTÉ
+======================================================================
+
+Plusieurs travaux ont été réalisés pour rendre le site plus rapide et limiter son poids :
+
+- conversion automatique des images vers des formats WebP et AVIF ;
+- création de plusieurs tailles adaptées à la largeur de l’écran ;
+- utilisation de miniatures dans la galerie ;
+- chargement différé des médias lourds ;
+- optimisation des photographies avant publication ;
+- suppression des originaux inutiles dans le dossier final de déploiement, sans supprimer les sources de travail ;
+- déduplication automatique des médias strictement identiques ;
+- version vidéo spécifique plus légère pour les téléphones ;
+- aperçu très léger du panorama 360 degrés avant son activation ;
+- chargement de l’assistant complet uniquement lors de son ouverture ;
+- chargement de Netlify Identity seulement sur les pages qui en ont besoin ;
+- polices hébergées localement afin que le build ne dépende pas de Google Fonts ;
+- cache longue durée pour les fichiers statiques optimisés ;
+- budget automatique limitant la taille du JavaScript, du CSS, de la vidéo mobile, du panorama et de l’export global.
+
+Ces optimisations améliorent le temps d’affichage, réduisent la consommation de données mobiles et limitent l’utilisation inutile des ressources Netlify.
+
+
+======================================================================
+22. SÉCURITÉ ET PROTECTION DES DONNÉES
+======================================================================
+
+Les mesures techniques comprennent :
+
+- authentification Netlify Identity ;
+- contrôle obligatoire du rôle administrateur sur les fonctions sensibles ;
+- restriction des méthodes HTTP autorisées ;
+- validation des corps JSON et limitation de leur taille ;
+- contrôle des formats, dimensions et poids des images ;
+- vérification de la signature réelle des fichiers PDF ;
+- assainissement du HTML produit par l’éditeur de Gazette ;
+- limitation des balises, attributs, couleurs et protocoles autorisés ;
+- noms de commits techniques ne contenant pas les messages ni les noms des familles ;
+- erreur générique en cas de mauvais code résident afin de limiter la recherche automatisée de codes ;
+- suppression de la photographie du Postier après distribution ;
+- possibilité de purger les courriers distribués après 30 jours ;
+- journalisation technique des erreurs sans recopier le contenu personnel des messages ;
+- politique de sécurité des contenus CSP ;
+- protection contre l’intégration du site dans une fenêtre externe ;
+- en-têtes contre la détection incorrecte des types de fichiers ;
+- politique restrictive concernant caméra, microphone, géolocalisation, paiement et périphériques ;
+- pages légales et politique de confidentialité ;
+- absence de données médicales dans les contenus publics.
+
+Le Postier ne comporte volontairement pas de CAPTCHA visible afin de conserver un parcours simple pour les familles. Les protections sont autant que possible techniques et invisibles.
+
+
+======================================================================
+23. RÉFÉRENCEMENT, VISIBILITÉ ET STATISTIQUES
+======================================================================
+
+Le site dispose des éléments nécessaires à un référencement local de qualité :
+
+- titres et descriptions propres aux pages ;
+- adresses canoniques ;
+- sitemap XML ;
+- fichier robots.txt ;
+- exclusion des espaces administratifs ;
+- données structurées Schema.org de type établissement médico-social ;
+- données structurées pour les articles, les FAQ et les fils d’Ariane ;
+- informations de contact et adresse centralisées ;
+- métadonnées Open Graph pour le partage sur les réseaux ou messageries ;
+- pages spécifiques consacrées à Crécy-la-Chapelle, aux équipes et aux services.
+
+Les statistiques sont réalisées avec GoatCounter, dans une logique respectueuse de la vie privée et sans cookie publicitaire.
+
+Les éléments suivis comprennent :
+
+- les visites de pages ;
+- les envois du formulaire de contact ;
+- les demandes de visite ;
+- les cartes envoyées avec le Postier ;
+- les indicateurs réels de performance LCP, INP et CLS, classés par page et par niveau de qualité.
+
+
+======================================================================
+24. SAUVEGARDE, DÉPLOIEMENT ET SUPERVISION
+======================================================================
+
+24.1. Sauvegarde et historique
+
+Le dépôt GitHub constitue la source de référence du site. Il conserve :
+
+- le code ;
+- les pages ;
+- les médias publiés ;
+- les articles ;
+- les données utilisées par l’administration et le Postier ;
+- l’historique des modifications.
+
+Chaque modification enregistrée crée une version récupérable. Une procédure documentée explique comment créer une sauvegarde datée, restaurer un fichier ou revenir proprement à une version saine sans effacer l’historique.
+
+Les secrets techniques ne sont pas stockés dans GitHub. Ils restent dans les variables protégées de Netlify.
+
+24.2. Déploiement
+
+Le site est généré sous forme statique avec Next.js puis publié sur Netlify. Les fonctions nécessitant un traitement serveur sont exécutées par Netlify Functions.
+
+Les mises à jour effectuées dans l’administration créent une modification du dépôt, puis Netlify reconstruit le site. Les envois de photographies en lot sont regroupés pour éviter de déclencher inutilement plusieurs builds.
+
+Un déploiement direct depuis le poste de travail est également prévu afin de préserver le quota de minutes de build Netlify.
+
+24.3. Supervision automatique
+
+Un script contrôle les parcours essentiels de production :
+
+- page d’accueil ;
+- page Contact ;
+- page Admissions ;
+- page Administration ;
+- page Familles ;
+- état des fonctions serveur ;
+- refus attendu d’un appel incorrect au Postier ;
+- refus attendu d’un accès non authentifié à l’administration des courriers.
+
+Les contrôles vérifient le code HTTP et la présence d’éléments attendus dans les pages. Un journal technique aide à diagnostiquer les erreurs sans enregistrer les données personnelles des familles.
+
+
+======================================================================
+25. TESTS ET CONTRÔLE QUALITÉ
+======================================================================
+
+Le projet comprend plusieurs niveaux de contrôle :
+
+- vérification TypeScript ;
+- contrôle ESLint ;
+- tests unitaires du calculateur tarifaire ;
+- tests de contraste ;
+- tests des fonctions Netlify ;
+- tests du Postier et de ses protections ;
+- tests de la synchronisation FHF ;
+- tests d’optimisation et de déduplication des médias ;
+- tests du budget de performance ;
+- tests de structure des pages et du référencement ;
+- parcours Playwright sur les fonctions essentielles ;
+- tests spécifiques de lecture des PDF sur mobile ;
+- contrôle de l’accueil, du contact, de l’admission et de l’administration après déploiement.
+
+Ces contrôles réduisent le risque qu’une évolution locale provoque une régression invisible en production.
+
+
+======================================================================
+26. SOCLE TECHNIQUE
+======================================================================
+
+Le site repose principalement sur :
+
+- Next.js 16 ;
+- React 19 ;
+- TypeScript ;
+- Tailwind CSS ;
+- Framer Motion pour certaines animations ;
+- Netlify pour l’hébergement, les formulaires, l’identité et les fonctions ;
+- GitHub pour l’historique, la sauvegarde et la publication des contenus ;
+- Netlify Blobs pour les offres d’emploi synchronisées ;
+- Sharp pour la validation et le traitement des images ;
+- Pannellum pour la visite à 360 degrés ;
+- Nodemailer pour les notifications par courriel ;
+- GoatCounter pour les statistiques respectueuses de la vie privée ;
+- Cloudflare Workers AI pour la génération facultative d’illustrations de Gazette.
+
+À la date de cet inventaire, le projet comprend :
+
+- 24 pages ou parcours de base dans l’application ;
+- 17 fiches détaillées de services ou métiers ;
+- 16 fonctions Netlify actives ;
+- 16 articles de blog dans le contenu actuel ;
+- 49 photographies référencées dans la galerie actuelle ;
+- une Gazette publiée avec alternative accessible ;
+- huit offres FHF présentes dans la copie de données au moment de l’analyse, ce nombre évoluant automatiquement selon les publications de la FHF.
+
+
+======================================================================
+27. BÉNÉFICES POUR L’ÉTABLISSEMENT ET LA DIRECTION
+======================================================================
+
+Le projet apporte plusieurs bénéfices concrets :
+
+- amélioration de l’image de l’établissement ;
+- information claire et disponible 24 heures sur 24 ;
+- réduction des appels répétitifs sur les tarifs et les admissions ;
+- meilleure préparation des dossiers et des entrées ;
+- valorisation des professionnels et de la vie sociale ;
+- maintien du lien entre les résidents et leurs proches ;
+- outil de communication autonome pour les actualités, les photos et la Gazette ;
+- recrutement mutualisé pour les quatre EHPAD de la direction commune ;
+- centralisation des candidatures sur le site ;
+- prise en compte des besoins des personnes handicapées ;
+- réduction du poids des médias et amélioration de la rapidité ;
+- maîtrise des coûts grâce à l’export statique, aux optimisations et aux services gratuits ou à faible coût ;
+- historique complet et capacité de restauration ;
+- surveillance automatisée des principales fonctions ;
+- contrôle humain conservé sur les contenus sensibles ou produits avec l’intelligence artificielle.
+
+
+======================================================================
+28. RÉSUMÉ COURT UTILISABLE EN INTRODUCTION D’UN PDF
+======================================================================
+
+Le site internet de l’EHPAD de Crécy-la-Chapelle est un portail public, accessible et orienté services. Il présente l’établissement, ses chambres, ses équipes, ses tarifs et son parcours d’admission. Il valorise la vie sociale grâce au blog, à la galerie, aux événements et au Petit Écho du Cœur. Il facilite le lien avec les familles grâce au Postier numérique, qui permet d’envoyer un message et une photographie à un résident en quelques étapes. Il comprend également une visite virtuelle à 360 degrés, un simulateur tarifaire, un formulaire de contact et de candidature, ainsi qu’une synchronisation automatique des offres d’emploi FHF des quatre EHPAD de la direction commune. Un espace d’administration sécurisé permet aux équipes de gérer les photos, les articles, les Gazettes, les résidents et les courriers. L’ensemble a été travaillé pour l’accessibilité RGAA, l’utilisation sur iPhone et Android, la sécurité, la performance, la sauvegarde et la supervision.
+
+
+======================================================================
+29. CONSEIL POUR LA FUTURE PRÉSENTATION PDF
+======================================================================
+
+Pour une présentation destinée à la direction, il est conseillé d’organiser le PDF en huit grandes parties :
+
+1. vision et objectifs du site ;
+2. information des futurs résidents et parcours d’admission ;
+3. services destinés aux familles et Postier numérique ;
+4. valorisation de la vie sociale et des équipes ;
+5. recrutement mutualisé de la direction commune ;
+6. administration et autonomie éditoriale ;
+7. accessibilité, sécurité et performance ;
+8. bénéfices pour l’établissement et perspectives de maintenance.
+
+Les captures d’écran les plus pertinentes seraient :
+
+- la page d’accueil ;
+- le simulateur tarifaire ;
+- le parcours d’admission ;
+- le Postier numérique côté famille ;
+- le courrier imprimable côté administration ;
+- la galerie ;
+- le lecteur du Petit Écho du Cœur sur ordinateur et mobile ;
+- la visite virtuelle à 360 degrés ;
+- les offres d’emploi différenciées par établissement ;
+- la déclaration d’accessibilité ;
+- le tableau de bord d’administration.
+
+
+FIN DU DOCUMENT

@@ -48,7 +48,7 @@ export default function AccessibilityToggle() {
     };
 
     return (
-        <div className="fixed bottom-6 left-6 z-50">
+        <div className="site-floating-tool fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-30 sm:bottom-6 sm:left-6">
             {/* Hint bubble */}
             <AnimatePresence>
                 {showHint && !isOpen && (
@@ -119,7 +119,7 @@ export default function AccessibilityToggle() {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute bottom-20 left-0 rounded-2xl shadow-xl p-4 min-w-[300px] border bg-white border-charcoal-100"
+                        className="absolute bottom-20 left-0 w-[min(300px,calc(100vw-32px))] rounded-2xl border border-charcoal-100 bg-white p-4 shadow-xl"
                     >
                         <h3 className="font-serif font-semibold mb-4 text-lg flex items-center gap-2 text-charcoal-900">
                             <span className="text-2xl">⚙️</span>

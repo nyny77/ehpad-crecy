@@ -294,7 +294,7 @@ input[type="reset"],
 
 /* Section spacing */
 .section-padding {
-  padding: 5rem 0;
+  padding: 3.5rem 0;
 }
 
 @media (min-width: 768px) {
@@ -1555,6 +1555,13 @@ html.dark-mode #chatbot-window div[class*="dark:bg-charcoal-700"] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Les outils flottants ne doivent jamais recouvrir une navigation ou une fenêtre modale. */
+body.mobile-navigation-open .site-floating-tool,
+.site-shell:has(#contenu-principal [role="dialog"]) .site-floating-tool,
+body:has(> [role="dialog"]) .site-floating-tool {
+  display: none !important;
 }
 
 @keyframes content-in {

@@ -54,7 +54,7 @@ export default function AuthSelectionModal({
                         initial={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
                         animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
                         exit={{ opacity: 0, scale: 0.95, y: 20, x: "-50%" }}
-                        className="fixed left-1/2 top-1/2 w-full max-w-sm bg-white rounded-2xl shadow-xl z-[10000] p-6 overflow-hidden"
+                        className="fixed left-1/2 top-1/2 z-[10000] max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-sm overflow-y-auto rounded-2xl bg-white p-5 shadow-xl sm:p-6"
                     >
                         <button
                             type="button"

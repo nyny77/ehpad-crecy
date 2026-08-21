@@ -107,7 +107,7 @@ export default function RootLayout({
           <SplashScreen />
           <NetlifyIdentityLoader />
           <WebVitals />
-          <div className="max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
+          <div className="site-shell max-w-[1600px] mx-auto bg-cream-50 min-h-screen shadow-2xl overflow-hidden relative flex flex-col">
             <ErrorBoundary>
               <Header />
               <div id="contenu-principal" tabIndex={-1} className="flex-grow outline-none">

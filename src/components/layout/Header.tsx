@@ -20,6 +20,12 @@ export default function Header() {
     }, [pathname]);
 
     useEffect(() => {
+        document.body.classList.toggle("mobile-navigation-open", isMobileMenuOpen);
+        return () => document.body.classList.remove("mobile-navigation-open");
+    }, [isMobileMenuOpen]);
+
+    useEffect(() => {
+        document.documentElement.dataset.mobileNavigationReady = "true";
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
         };
@@ -34,6 +40,7 @@ export default function Header() {
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
         return () => {
+            delete document.documentElement.dataset.mobileNavigationReady;
             window.removeEventListener("scroll", handleScroll);
             observer.disconnect();
         };
@@ -259,6 +266,20 @@ export default function Header() {
                         </Link>
                     </div>
 
+                    {/* Accès prioritaire pour les proches sur mobile */}
+                    <Link
+                        href="/familles"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`ml-auto inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3 py-2 text-sm font-bold shadow-sm transition-colors lg:hidden ${isActiveLink("/familles")
+                            ? "border-terracotta-600 bg-terracotta-600 text-white"
+                            : "border-terracotta-200 bg-white text-terracotta-700 hover:bg-terracotta-50"
+                            }`}
+                        aria-label="Accéder à l’Espace familles"
+                    >
+                        <span aria-hidden="true">💌</span>
+                        <span>Familles</span>
+                    </Link>
+
                     {/* Mobile Menu Button - Enhanced */}
                     <motion.button
                         className={`lg:hidden relative w-12 h-12 flex flex-col items-center justify-center gap-1.5 rounded-full transition-all duration-300 ${isMobileMenuOpen
@@ -310,7 +331,16 @@ export default function Header() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="lg:hidden absolute top-full left-0 right-0 bg-cream-50/98 dark:bg-charcoal-900/98 backdrop-blur-xl shadow-2xl border-t border-cream-200/50 dark:border-charcoal-700/50"
                     >
-                        <div className="container-custom py-6 flex flex-col gap-2 max-h-[75vh] overflow-y-auto">
+                        <div className="container-custom flex max-h-[calc(100dvh-4.5rem)] flex-col gap-2 overflow-y-auto py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+                            <Link
+                                href="/familles"
+                                className="mb-2 flex min-h-12 items-center justify-center gap-2 rounded-xl border border-terracotta-300 bg-terracotta-600 px-5 py-3 font-bold text-white shadow-md"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                <span aria-hidden="true">💌</span>
+                                Espace familles
+                            </Link>
+
                             {NAV_LINKS.map((item, index) => {
                                 const isActive = item.href ? isActiveLink(item.href) : item.subLinks?.some(sub => isActiveLink(sub.href));
                                 return (
@@ -365,13 +395,6 @@ export default function Header() {
                                 className="pt-4 mt-2 border-t border-cream-200/50 dark:border-charcoal-700/50"
                             >
                                 <div className="mt-2 flex flex-col items-center gap-2">
-                                    <Link 
-                                        href="/familles"
-                                        className="text-sm text-terracotta-600 hover:text-white flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-terracotta-50 hover:bg-terracotta-500 transition-colors w-full border border-terracotta-200" 
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        💌 Portail Familles
-                                    </Link>
                                     <Link 
                                         href="/administration"
                                         className="text-sm text-charcoal-400 hover:text-terracotta-600 flex items-center justify-center gap-2 px-6 py-2 rounded-lg hover:bg-cream-100 transition-colors w-full" 

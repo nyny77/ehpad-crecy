@@ -11,9 +11,9 @@ export default function ChatBotWrapper() {
     if (isActivated) return <ChatBot initiallyOpen />;
 
     return (
-        <div className="fixed bottom-24 right-4 z-[999] font-sans sm:bottom-6 sm:right-6">
+        <div className="site-floating-tool fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-30 font-sans sm:bottom-6 sm:right-6">
             {/* Spotlight Banner on load */}
-            <div className="absolute bottom-16 right-0 mb-2 w-64 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border-2 border-terracotta-300 text-charcoal-800 text-xs flex items-center justify-between gap-2 animate-fade-in">
+            <div className="absolute bottom-16 right-0 mb-2 hidden w-64 items-center justify-between gap-2 rounded-2xl border-2 border-terracotta-300 bg-white/95 p-3.5 text-xs text-charcoal-800 shadow-xl backdrop-blur-md animate-fade-in sm:flex">
                 <button
                     type="button"
                     onClick={() => setIsActivated(true)}
@@ -29,13 +29,13 @@ export default function ChatBotWrapper() {
             <button
                 type="button"
                 onClick={() => setIsActivated(true)}
-                className="relative z-50 flex h-14 px-4 items-center gap-2.5 rounded-full bg-gradient-to-r from-terracotta-500 via-terracotta-600 to-terracotta-700 text-white border-2 border-white/60 shadow-2xl transition-all hover:scale-106 hover:brightness-110 focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400"
+                className="relative z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/60 bg-gradient-to-r from-terracotta-500 via-terracotta-600 to-terracotta-700 p-0 text-white shadow-2xl transition-all hover:scale-105 hover:brightness-110 focus:outline-none focus-visible:ring-4 focus-visible:ring-terracotta-400 sm:w-auto sm:justify-start sm:gap-2.5 sm:px-4"
                 aria-label="Ouvrir l'assistant virtuel Bonjour Crécy"
             >
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg" aria-hidden="true">
                     💬
                 </div>
-                <div className="text-left">
+                <div className="hidden text-left sm:block">
                     <span className="block text-xs font-bold leading-tight">Une question ?</span>
                     <span className="block text-[10px] text-cream-100 leading-tight">En ligne</span>
                 </div>

@@ -129,7 +129,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-xl z-50 p-8 border border-gray-200"
+                        className="fixed left-1/2 top-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-5 shadow-xl sm:p-8"
                     >
                         <button
                             type="button"
@@ -140,7 +140,7 @@ export default function SignupModal({ isOpen, onClose, onSignupSuccess }: Signup
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="text-center mb-8">
+                        <div className="mb-6 text-center sm:mb-8">
                             <h2 id="signup-modal-title" className="text-2xl font-serif text-terracotta-600 mb-2">Inscription</h2>
                             <p className="text-gray-600">
                                 Créez votre compte pour suivre l'actualité de l'EHPAD.

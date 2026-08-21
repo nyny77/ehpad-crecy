@@ -28,10 +28,10 @@ export default function RegistrationSuccessModal({ isOpen, onClose }: Registrati
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden pointer-events-auto border border-cream-200"
+                            className="pointer-events-auto max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl border border-cream-200 bg-white shadow-2xl"
                         >
                             {/* Header avec illustration/icon */}
-                            <div className="bg-amber-50 p-8 text-center border-b border-amber-100 relative overflow-hidden">
+                            <div className="relative overflow-hidden border-b border-amber-100 bg-amber-50 p-5 text-center sm:p-8">
                                 {/* Confettis décoratifs */}
                                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
                                     <div className="absolute top-2 left-4 w-2 h-2 bg-red-400 rounded-full animate-bounce"></div>
@@ -48,7 +48,7 @@ export default function RegistrationSuccessModal({ isOpen, onClose }: Registrati
                             </div>
 
                             {/* Content */}
-                            <div className="p-8 text-center">
+                            <div className="p-5 text-center sm:p-8">
                                 <p className="text-charcoal-600 font-medium mb-6 text-lg">
                                     Votre demande est bien partie ! 🚀
                                 </p>
