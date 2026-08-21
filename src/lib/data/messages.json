@@ -1,14 +1,3 @@
 {
-  "messages": [
-    {
-      "id": "9c57e7d6-0a88-4941-bde7-5688275ebd29",
-      "residentId": "1ce6ace3953c1f96",
-      "senderName": "Ta ninette favorite",
-      "text": "Coucou les amis !",
-      "photoUrl": null,
-      "date": "2026-08-18T05:27:26.896Z",
-      "status": "distribue",
-      "distributedAt": "2026-08-18T05:35:45.210Z"
-    }
-  ]
+  "messages": []
 }
