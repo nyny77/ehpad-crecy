@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mergeFhfOffers, parseFhfStructurePage } from "../netlify/functions/_shared/fhf-jobs";
+import { mergeFhfOffers, parseFhfDetailDescription, parseFhfStructurePage } from "../netlify/functions/_shared/fhf-jobs";
 import type { JobsData } from "../src/lib/job-types";
 
 const CARD = `
@@ -22,6 +22,20 @@ test("la page établissement FHF produit une offre en attente rattachée au bon 
     assert.match(offer.description, /l'équipe/);
 });
 
+test("la fiche détaillée FHF restitue le descriptif complet", () => {
+    const html = `
+      <div class="section">
+        <div class="section-title">Descriptif</div>
+        Première mission auprès des résidents.<br />
+        Deuxième mission avec l&apos;équipe.
+      </div>
+      <div class="section"><div class="section-title">Personne à contacter</div></div>`;
+    assert.equal(
+        parseFhfDetailDescription(html),
+        "Première mission auprès des résidents. Deuxième mission avec l'équipe.",
+    );
+});
+
 test("une synchronisation ne remplace pas le texte d’une offre déjà validée", () => {
     const [imported] = parseFhfStructurePage(CARD, "le-marais", "2026-08-20T10:00:00.000Z");
     const current: JobsData = {
@@ -32,4 +46,3 @@ test("une synchronisation ne remplace pas le texte d’une offre déjà validée
     assert.equal(merged.offers[0].status, "published");
     assert.equal(merged.offers[0].sourceActive, true);
 });
-

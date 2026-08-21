@@ -80,6 +80,32 @@ test("mobile 320px : la fenêtre des options d'affichage conserve des marges", a
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(304);
 });
 
+test("recrutement : l'annonce complète s'ouvre sur mobile et ordinateur", async ({ page }) => {
+    for (const viewport of [{ width: 320, height: 568 }, { width: 1280, height: 800 }]) {
+        await page.setViewportSize(viewport);
+        await page.goto("/recrutement", { waitUntil: "domcontentloaded" });
+        await waitForMobileHydration(page);
+
+        const firstOffer = page.getByRole("button", { name: "Voir l'annonce" }).first();
+        await expect(firstOffer).toBeVisible();
+        await firstOffer.click();
+
+        const dialog = page.getByRole("dialog", { name: "AIDE SOIGNANTE DE JOUR" });
+        await expect(dialog).toBeVisible();
+        await expect(dialog.getByText(/Ce métier exige de solides qualités humaines/)).toBeVisible();
+        await expect(dialog.getByRole("link", { name: "Voir l'annonce complète sur la FHF" })).toHaveAttribute("href", "https://emploi.fhf.fr/emploi/477249");
+        await expect(dialog.getByRole("link", { name: "Postuler à cette offre" })).toHaveAttribute("href", /offer=fhf-477249/);
+
+        const bounds = await dialog.boundingBox();
+        expect(bounds).not.toBeNull();
+        expect(bounds!.x).toBeGreaterThanOrEqual(0);
+        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(viewport.width);
+        expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(viewport.height);
+        await dialog.getByRole("button", { name: "Fermer l’annonce" }).click();
+        await expect(dialog).toBeHidden();
+    }
+});
+
 test("mobile 320px : le Postier replie son titre et prépare une photo verticale", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 568 });
     let sentImage = "";

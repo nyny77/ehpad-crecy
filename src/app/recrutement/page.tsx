@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CAREERS_OFFERS, JOB_FACILITIES, SPONTANEOUS_APPLICATION } from "@/lib/careers";
+import { CAREERS_OFFERS, JOB_FACILITIES, SPONTANEOUS_APPLICATION, type JobOffer } from "@/lib/careers";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 
@@ -238,7 +238,7 @@ const jobStyles = {
     }
 };
 
-function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: number }) {
+function JobCard({ offer, index, onOpen }: { offer: JobOffer, index: number, onOpen: (offer: JobOffer) => void }) {
     const style = jobStyles[offer.facilityId];
     const facility = JOB_FACILITIES.find((item) => item.id === offer.facilityId);
 
@@ -271,7 +271,7 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                     </span>
                 </div>
 
-                <p className="text-charcoal-600 mb-8 flex-grow leading-relaxed font-medium">
+                <p className="line-clamp-4 text-charcoal-600 mb-8 flex-grow leading-relaxed font-medium">
                     {offer.description}
                 </p>
 
@@ -294,26 +294,149 @@ function JobCard({ offer, index }: { offer: typeof CAREERS_OFFERS[0], index: num
                     </ul>
                 </div>}
 
-                <Link
-                    href={`/contact?subject=recrutement&offer=${encodeURIComponent(offer.id)}`}
-                    className={`block w-full text-center bg-gradient-to-r ${style.button} text-white font-bold py-4 rounded-xl hover:brightness-110 hover:scale-[1.02] transition-all shadow-md hover:shadow-lg active:scale-95`}
-                >
-                    Postuler maintenant
-                </Link>
+                <div className="grid gap-3 sm:grid-cols-2">
+                    <button
+                        type="button"
+                        onClick={() => onOpen(offer)}
+                        className={`w-full rounded-xl border-2 ${style.border} bg-white px-4 py-3.5 font-bold ${style.text} transition-all hover:bg-cream-100 active:scale-95`}
+                    >
+                        Voir l&apos;annonce
+                    </button>
+                    <Link
+                        href={`/contact?subject=recrutement&offer=${encodeURIComponent(offer.id)}`}
+                        className={`block w-full text-center bg-gradient-to-r ${style.button} text-white font-bold px-4 py-4 rounded-xl hover:brightness-110 hover:scale-[1.02] transition-all shadow-md hover:shadow-lg active:scale-95`}
+                    >
+                        Postuler
+                    </Link>
+                </div>
             </div>
         </motion.div>
+    );
+}
+
+function JobOfferModal({ offer, onClose }: { offer: JobOffer | null, onClose: () => void }) {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        if (!offer) return;
+        closeButtonRef.current?.focus();
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") onClose();
+        };
+        window.addEventListener("keydown", handleEscape);
+        return () => {
+            window.removeEventListener("keydown", handleEscape);
+            document.body.style.overflow = previousOverflow;
+        };
+    }, [offer, onClose]);
+
+    return (
+        <AnimatePresence>
+            {offer && (
+                <motion.div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="job-offer-title"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[70] flex items-center justify-center bg-charcoal-900/65 p-3 backdrop-blur-sm sm:p-6"
+                    onClick={onClose}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 24, scale: 0.97 }}
+                        className="flex max-h-[calc(100dvh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl sm:max-h-[calc(100dvh-3rem)]"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <header className="relative border-b border-cream-200 bg-cream-100 px-5 py-5 pr-16 sm:px-8 sm:py-6 sm:pr-20">
+                            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-terracotta-700">
+                                {offer.facilityName} · {offer.city}
+                            </p>
+                            <h2 id="job-offer-title" className="break-words font-serif text-2xl font-bold leading-tight text-charcoal-900 sm:text-3xl">
+                                {offer.title}
+                            </h2>
+                            <button
+                                ref={closeButtonRef}
+                                type="button"
+                                onClick={onClose}
+                                aria-label="Fermer l’annonce"
+                                className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white text-charcoal-700 shadow-md transition-colors hover:bg-cream-200 sm:right-6 sm:top-6"
+                            >
+                                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </header>
+
+                        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-8">
+                            <div className="mb-6 flex flex-wrap gap-2 text-sm font-semibold">
+                                <span className="rounded-full bg-terracotta-100 px-3 py-1.5 text-terracotta-800">{offer.contract}</span>
+                                {offer.publishedAt && <span className="rounded-full bg-cream-200 px-3 py-1.5 text-charcoal-700">Publiée le {new Date(offer.publishedAt).toLocaleDateString("fr-FR")}</span>}
+                                {offer.deadline && <span className="rounded-full bg-cream-200 px-3 py-1.5 text-charcoal-700">Candidature avant le {new Date(`${offer.deadline}T12:00:00`).toLocaleDateString("fr-FR")}</span>}
+                            </div>
+                            <h3 className="mb-3 font-serif text-xl font-bold text-charcoal-900">Description du poste</h3>
+                            <p className="whitespace-pre-line text-base leading-7 text-charcoal-700">{offer.description}</p>
+
+                            {offer.requirements.length > 0 && (
+                                <div className="mt-7 rounded-2xl bg-cream-100 p-5">
+                                    <h3 className="mb-3 font-bold text-charcoal-900">Profil recherché</h3>
+                                    <ul className="list-disc space-y-2 pl-5 text-charcoal-700">
+                                        {offer.requirements.map((item, index) => <li key={index}>{item.req}</li>)}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+
+                        <footer className="grid gap-3 border-t border-cream-200 bg-white p-4 sm:grid-cols-2 sm:p-6">
+                            {offer.sourceUrl ? (
+                                <a
+                                    href={offer.sourceUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex min-h-12 items-center justify-center rounded-xl border-2 border-terracotta-200 px-4 py-3 text-center font-bold text-terracotta-700 transition-colors hover:bg-terracotta-50"
+                                >
+                                    Voir l&apos;annonce complète sur la FHF
+                                </a>
+                            ) : <span className="hidden sm:block" />}
+                            <Link
+                                href={`/contact?subject=recrutement&offer=${encodeURIComponent(offer.id)}`}
+                                className="flex min-h-12 items-center justify-center rounded-xl bg-terracotta-600 px-5 py-3 text-center font-bold text-white shadow-md transition-colors hover:bg-terracotta-700"
+                            >
+                                Postuler à cette offre
+                            </Link>
+                        </footer>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
 
 export default function RecrutementPage() {
     const [selectedFacility, setSelectedFacility] = useState<string>("all");
     const [offers, setOffers] = useState(CAREERS_OFFERS);
+    const [selectedOffer, setSelectedOffer] = useState<JobOffer | null>(null);
     const visibleOffers = selectedFacility === "all" ? offers : offers.filter((offer) => offer.facilityId === selectedFacility);
 
     useEffect(() => {
         fetch("/.netlify/functions/jobs", { cache: "no-store" })
             .then((response) => response.ok ? response.json() : Promise.reject(new Error("Offres indisponibles")))
-            .then((data: { offers?: typeof CAREERS_OFFERS }) => setOffers(Array.isArray(data.offers) ? data.offers : CAREERS_OFFERS))
+            .then((data: { offers?: JobOffer[] }) => {
+                if (!Array.isArray(data.offers)) return setOffers(CAREERS_OFFERS);
+                setOffers(data.offers.map((offer) => {
+                    const bundledOffer = CAREERS_OFFERS.find((candidate) => candidate.id === offer.id);
+                    if (!bundledOffer || bundledOffer.description.length <= offer.description.length) return offer;
+                    return {
+                        ...offer,
+                        description: bundledOffer.description,
+                        sourceUrl: offer.sourceUrl || bundledOffer.sourceUrl,
+                    };
+                }));
+            })
             .catch(() => setOffers(CAREERS_OFFERS));
     }, []);
 
@@ -394,7 +517,7 @@ export default function RecrutementPage() {
                     ) : (
                         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                             {visibleOffers.map((offer, index) => (
-                                <JobCard key={offer.id} offer={offer} index={index} />
+                                <JobCard key={offer.id} offer={offer} index={index} onOpen={setSelectedOffer} />
                             ))}
                         </div>
                     )}
@@ -417,6 +540,7 @@ export default function RecrutementPage() {
                     </Link>
                 </div>
             </section>
+            <JobOfferModal offer={selectedOffer} onClose={() => setSelectedOffer(null)} />
         </main>
     );
 }

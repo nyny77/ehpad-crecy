@@ -11,10 +11,6 @@ export const handler: Handler = async (event) => {
                 return offer.sourceActive !== false && (!offer.deadline || offer.deadline >= today);
             }
             return offer.status === "published";
-        }).map((offer) => {
-            const publicOffer = { ...offer };
-            delete publicOffer.sourceUrl;
-            return publicOffer;
         });
         return {
             statusCode: 200,

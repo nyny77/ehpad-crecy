@@ -127,6 +127,14 @@ export function parseFhfStructurePage(html: string, facilityId: JobFacilityId, s
     return offers;
 }
 
+export function parseFhfDetailDescription(html: string): string | undefined {
+    const description = html.match(
+        /<div\s+class="section-title"[^>]*>\s*Descriptif\s*<\/div>([\s\S]*?)<\/div>/i,
+    )?.[1];
+    const cleaned = description ? cleanText(description) : "";
+    return cleaned || undefined;
+}
+
 export async function fetchFhfOffers(): Promise<JobOffer[]> {
     const syncedAt = new Date().toISOString();
     const pages = await Promise.all(FHF_STRUCTURE_PAGES.map(async ({ facilityId, structureId }) => {
@@ -140,7 +148,22 @@ export async function fetchFhfOffers(): Promise<JobOffer[]> {
     }));
     const byId = new Map<string, JobOffer>();
     pages.flatMap(({ facilityId, html }) => parseFhfStructurePage(html, facilityId, syncedAt)).forEach((offer) => byId.set(offer.id, offer));
-    return [...byId.values()];
+
+    return Promise.all([...byId.values()].map(async (offer) => {
+        if (!offer.sourceUrl) return offer;
+        try {
+            const response = await fetch(offer.sourceUrl, {
+                headers: { "User-Agent": "EHPAD-Crecy-Emploi/1.0" },
+                signal: AbortSignal.timeout(15_000),
+            });
+            if (!response.ok) return offer;
+            const fullDescription = parseFhfDetailDescription(await response.text());
+            return fullDescription ? { ...offer, description: fullDescription } : offer;
+        } catch {
+            // Une annonce reste publiable avec son extrait si la fiche FHF est momentanément indisponible.
+            return offer;
+        }
+    }));
 }
 
 export function mergeFhfOffers(data: JobsData, imported: JobOffer[], syncedAt = new Date().toISOString()): JobsData {
