@@ -44,7 +44,7 @@ function repositoryPath(publicPath: string): string {
 }
 
 export function galleryCommitMessage(message: string, skipNetlify: boolean): string {
-    return skipNetlify ? `${message} [skip netlify]` : message;
+    return skipNetlify ? `${message} [skip ci]` : message;
 }
 
 export const handler: Handler = async (event, context) => {

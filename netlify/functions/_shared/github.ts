@@ -11,6 +11,10 @@ export interface GitChange {
     encoding?: "utf-8" | "base64";
 }
 
+export function skipCiCommitMessage(message: string): string {
+    return `${message} [skip ci]`;
+}
+
 export function getGitHubConfig(): GitHubConfig {
     const repository = process.env.GITHUB_REPOSITORY || "nyny77/ehpad-crecy";
     const [owner, repo] = repository.split("/");

@@ -108,7 +108,7 @@ export default function BlogManager({ initialArticles }: { initialArticles: Blog
             };
             setArticles((current) => [saved, ...current.filter((article) => article.id !== saved.id)]);
             setForm(emptyForm());
-            setMessage({ type: "success", text: form.draft ? "Brouillon enregistré. Le déploiement Netlify va démarrer." : "Article publié. Il apparaîtra après le déploiement Netlify." });
+            setMessage({ type: "success", text: form.draft ? "Brouillon enregistré sans déploiement Netlify." : "Article publié. Il apparaîtra après le déploiement Netlify." });
         } catch (error) {
             setMessage({ type: "error", text: error instanceof Error ? error.message : "Publication impossible" });
         } finally {

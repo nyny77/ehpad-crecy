@@ -189,6 +189,10 @@ test("un lot de photos ne déclenche qu’un seul déploiement Netlify", () => {
 
   assert.match(manager, /skipNetlify: index < items\.length - 1/);
   assert.match(manager, /action: "publishBatch"/);
-  assert.match(galleryFunction, /\[skip netlify\]/);
+  assert.match(galleryFunction, /\[skip ci\]/);
   assert.match(galleryFunction, /action === "publishBatch"/);
+  assert.match(manager, /MAX_PHOTOS_PER_UPLOAD = 30/);
+  assert.match(manager, /pending\.length \+ files\.length > MAX_PHOTOS_PER_UPLOAD/);
+  assert.match(manager, /const publicationPending = Object\.keys\(uploadPreviews\)\.length > 0/);
+  assert.match(manager, /disabled=\{uploadUnavailable\}/);
 });

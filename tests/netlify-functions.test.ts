@@ -128,6 +128,6 @@ test("le HTML de la Gazette conserve la mise en forme sans code actif", () => {
 });
 
 test("les lots de photos ne déclenchent Netlify qu’au dernier commit", () => {
-    assert.equal(galleryCommitMessage("Galerie : add", true), "Galerie : add [skip netlify]");
+    assert.equal(galleryCommitMessage("Galerie : add", true), "Galerie : add [skip ci]");
     assert.equal(galleryCommitMessage("Galerie : add", false), "Galerie : add");
 });

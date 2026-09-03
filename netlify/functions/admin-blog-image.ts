@@ -1,7 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
-import { commitChanges } from "./_shared/github";
+import { commitChanges, skipCiCommitMessage } from "./_shared/github";
 import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
@@ -21,7 +21,7 @@ export const handler: Handler = async (event, context) => {
         const image = (await validateImage(body.imageBase64, { maxBytes: MAX_IMAGE_BYTES, maxWidth: 2_000, maxHeight: 2_000, formats: ["webp"] })).buffer;
         const name = `${Date.now()}-${safeBaseName(String(body.fileName || "article"))}.webp`;
         const publicPath = `/images/uploads/blog/${name}`;
-        await commitChanges(`Blog : ajoute l'image ${name}`, [{
+        await commitChanges(skipCiCommitMessage(`Blog : ajoute l'image ${name}`), [{
             path: `public${publicPath}`,
             content: image.toString("base64"),
             encoding: "base64",

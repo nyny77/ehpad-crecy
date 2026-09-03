@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import sharp from "sharp";
 import { json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
-import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { commitChanges, readRepositoryText, skipCiCommitMessage, type GitChange } from "./_shared/github";
 import type { Resident } from "./admin-residents";
 import { parseJsonObject, validateImage, validationStatus } from "./_shared/request-security";
 
@@ -108,7 +108,8 @@ export const handler: Handler = async (event, context) => {
 
         // 5. Commit
         changes.push({ path: MESSAGES_PATH, content: JSON.stringify(messagesData, null, 2) + "\n" });
-        await commitChanges("Postier : nouveau courrier familial", changes);
+        const commitMessage = "Postier : nouveau courrier familial";
+        await commitChanges(photoUrl ? commitMessage : skipCiCommitMessage(commitMessage), changes);
 
         return json(200, { success: true, residentName: resident.name });
     } catch (error) {

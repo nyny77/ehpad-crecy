@@ -2,7 +2,7 @@ import type { Handler } from "@netlify/functions";
 import { randomBytes } from "node:crypto";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
-import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { commitChanges, readRepositoryText, skipCiCommitMessage, type GitChange } from "./_shared/github";
 import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
 export interface Resident {
@@ -69,7 +69,7 @@ export const handler: Handler = async (event, context) => {
         }
 
         changes.push({ path: RESIDENTS_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-        await commitChanges(`Résidents : ${action}`, changes);
+        await commitChanges(skipCiCommitMessage(`Résidents : ${action}`), changes);
         return json(200, { success: true, residents: data.residents });
     } catch (error) {
         logFunctionError("admin-residents", error, context.awsRequestId);

@@ -1,7 +1,7 @@
 import type { Handler } from "@netlify/functions";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { logFunctionError } from "./_shared/technical-log";
-import { commitChanges, readRepositoryText, type GitChange } from "./_shared/github";
+import { commitChanges, readRepositoryText, skipCiCommitMessage, type GitChange } from "./_shared/github";
 import type { FamilyMessage } from "./famille-send-message";
 import { parseJsonObject, validationStatus } from "./_shared/request-security";
 
@@ -49,13 +49,15 @@ export const handler: Handler = async (event, context) => {
             message.distributedAt = new Date().toISOString();
 
             // If there's a photo, we delete it from GitHub to save space
+            const hadPhoto = Boolean(message.photoUrl);
             if (message.photoUrl) {
                 changes.push({ path: `public${message.photoUrl}`, content: null });
                 message.photoUrl = null;
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges("Postier : courrier distribué et photo nettoyée", changes);
+            const commitMessage = "Postier : courrier distribué et photo nettoyée";
+            await commitChanges(hadPhoto ? commitMessage : skipCiCommitMessage(commitMessage), changes);
 
             return json(200, { success: true, message });
         } else if (action === "delete") {
@@ -65,12 +67,14 @@ export const handler: Handler = async (event, context) => {
 
             data.messages = data.messages.filter(m => m.id !== messageId);
             
+            const hadPhoto = Boolean(message.photoUrl && message.status !== "distribue");
             if (message.photoUrl && message.status !== "distribue") {
                 changes.push({ path: `public${message.photoUrl}`, content: null });
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges("Postier : courrier supprimé", changes);
+            const commitMessage = "Postier : courrier supprimé";
+            await commitChanges(hadPhoto ? commitMessage : skipCiCommitMessage(commitMessage), changes);
 
             return json(200, { success: true });
         } else if (action === "bulkDelete") {
@@ -80,6 +84,7 @@ export const handler: Handler = async (event, context) => {
             const messagesToDelete = data.messages.filter(m => messageIds.includes(m.id));
             data.messages = data.messages.filter(m => !messageIds.includes(m.id));
             
+            const hasPhotos = messagesToDelete.some(message => message.photoUrl && message.status !== "distribue");
             for (const message of messagesToDelete) {
                 if (message.photoUrl && message.status !== "distribue") {
                     changes.push({ path: `public${message.photoUrl}`, content: null });
@@ -87,7 +92,8 @@ export const handler: Handler = async (event, context) => {
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges("Postier : courriers supprimés", changes);
+            const commitMessage = "Postier : courriers supprimés";
+            await commitChanges(hasPhotos ? commitMessage : skipCiCommitMessage(commitMessage), changes);
 
             return json(200, { success: true });
         } else if (action === "purgeExpired") {
@@ -97,6 +103,7 @@ export const handler: Handler = async (event, context) => {
             const expiredIds = new Set(expiredMessages.map(message => message.id));
             data.messages = data.messages.filter(message => !expiredIds.has(message.id));
 
+            const hasPhotos = expiredMessages.some(message => Boolean(message.photoUrl));
             for (const message of expiredMessages) {
                 if (message.photoUrl) {
                     changes.push({ path: `public${message.photoUrl}`, content: null });
@@ -104,7 +111,8 @@ export const handler: Handler = async (event, context) => {
             }
 
             changes.push({ path: MESSAGES_PATH, content: JSON.stringify(data, null, 2) + "\n" });
-            await commitChanges("Postier : purge automatique des courriers expirés", changes);
+            const commitMessage = "Postier : purge automatique des courriers expirés";
+            await commitChanges(hasPhotos ? commitMessage : skipCiCommitMessage(commitMessage), changes);
 
             return json(200, { success: true, deletedCount: expiredMessages.length });
         } else {

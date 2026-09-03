@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = "out"
+  ignore = "node ./scripts/ignore-netlify-build.js"
 
 # Disable the Next.js runtime plugin since we use static export
 [build.environment]

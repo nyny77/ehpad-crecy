@@ -2,6 +2,7 @@ import type { Handler } from "@netlify/functions";
 import { logFunctionError } from "./_shared/technical-log";
 import { isAdminRequest, json } from "./_shared/admin-auth";
 import { parseJsonObject, validationStatus } from "./_shared/request-security";
+import { skipCiCommitMessage } from "./_shared/github";
 
 type BlogCategory = "activite" | "evenement" | "sortie" | "fete" | "autre";
 
@@ -116,8 +117,9 @@ export const handler: Handler = async (event, context) => {
         const filePath = `content/articles/${id}.md`;
         const sha = await getSha(owner, repo, branch, filePath);
         const encodedPath = filePath.split("/").map(encodeURIComponent).join("/");
+        const commitMessage = `${sha ? "Met à jour" : "Publie"} l’article ${article.title.trim()}`;
         const payload: Record<string, unknown> = {
-            message: `${sha ? "Met à jour" : "Publie"} l’article ${article.title.trim()}`,
+            message: article.draft ? skipCiCommitMessage(commitMessage) : commitMessage,
             content: Buffer.from(articleMarkdown(article)).toString("base64"),
             branch,
         };
