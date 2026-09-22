@@ -8,7 +8,7 @@ const mobileProfile = (name: "iPhone 13" | "Pixel 7") => {
 };
 
 const documents = [
-    { page: "/livret-accueil", pdf: "/documents/livret-accueil.pdf?v=3" },
+    { page: "/livret-accueil", pdf: "/documents/livret-accueil.pdf?v=4" },
     { page: "/echo-du-coeur", pdf: "/images/uploads/janvier2026.pdf" },
 ];
 

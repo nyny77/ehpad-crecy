@@ -7,7 +7,7 @@ export default function LivretAccueilPage() {
         <h1 className="sr-only">Livret d’accueil</h1>
         <div className="animate-content-in min-h-[560px] rounded-3xl border border-charcoal-700 bg-charcoal-900 p-2 shadow-2xl md:p-3 lg:h-full lg:min-h-0">
             <PdfViewer
-                src="/documents/livret-accueil.pdf?v=3"
+                src="/documents/livret-accueil.pdf?v=4"
                 title="Livret d’accueil — version PDF"
                 className="min-h-[540px] w-full lg:h-full lg:min-h-0"
             />
