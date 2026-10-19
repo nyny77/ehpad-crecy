@@ -1,5 +1,12 @@
 {
-  "albums": [],
+  "albums": [
+    {
+      "id": "c2d0e2b0-d2ad-4472-bf39-6773dc207137",
+      "title": "Printemps-Eté 2026",
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T07:53:32.470Z"
+    }
+  ],
   "legacyAlbumTitle": "Divers 2025-2026",
   "photos": []
 }
