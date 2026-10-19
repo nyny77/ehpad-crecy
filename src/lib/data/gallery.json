@@ -8,5 +8,15 @@
     }
   ],
   "legacyAlbumTitle": "Divers 2025-2026",
-  "photos": []
+  "photos": [
+    {
+      "id": "20ca4411-c008-407d-a422-18daa682bb16",
+      "src": "/images/gallery/c2d0e2b0-d2ad-4472-bf39-6773dc207137/1792396417369-20260919_130650.webp",
+      "thumbSrc": "/images/gallery/c2d0e2b0-d2ad-4472-bf39-6773dc207137/thumbnails/1792396417369-20260919_130650.webp",
+      "title": "20260919 130650",
+      "alt": "",
+      "category": "autre",
+      "albumId": "c2d0e2b0-d2ad-4472-bf39-6773dc207137"
+    }
+  ]
 }
